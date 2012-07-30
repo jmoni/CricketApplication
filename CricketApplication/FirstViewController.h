@@ -8,6 +8,15 @@
 
 #import <UIKit/UIKit.h>
 
-@interface FirstViewController : UIViewController
+@interface FirstViewController : UIViewController <UIActionSheetDelegate>{
+    
+}
 
+@property (strong, nonatomic) IBOutlet UITextField *homeTeamEntered;
+@property (strong, nonatomic) IBOutlet UITextField *awayTeamEntered;
+@property (strong, nonatomic) IBOutlet UIButton *dateButton;
+@property (strong, nonatomic) IBOutlet UILabel *dateText;
+
+
+- (IBAction) showActionSheet: (id) sender;
 @end
