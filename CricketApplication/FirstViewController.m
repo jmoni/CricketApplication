@@ -67,7 +67,10 @@
     }
 }
 
-
+-(IBAction)textFieldReturn:(id)sender
+{
+    [sender resignFirstResponder];
+}
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {

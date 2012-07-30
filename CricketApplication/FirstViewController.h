@@ -9,7 +9,8 @@
 #import <UIKit/UIKit.h>
 
 @interface FirstViewController : UIViewController <UIActionSheetDelegate>{
-    
+    UITextField *homeTeamEntered;
+    UITextField *awayTeamEntered;
 }
 
 @property (strong, nonatomic) IBOutlet UITextField *homeTeamEntered;
