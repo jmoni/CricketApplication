@@ -35,6 +35,11 @@
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                                 <items>
                                     <navigationItem title="Home" id="YhO-MH-EH3">
+                                        <barButtonItem key="leftBarButtonItem" systemItem="add" id="yoe-3R-TNM">
+                                            <connections>
+                                                <action selector="AddCell:" destination="3" id="2QZ-Da-dKV"/>
+                                            </connections>
+                                        </barButtonItem>
                                         <barButtonItem key="rightBarButtonItem" title="Edit" id="Krc-so-T7m">
                                             <connections>
                                                 <action selector="EditTable:" destination="3" id="RQd-82-EVh"/>
@@ -167,6 +172,7 @@
                         <outlet property="editHomePlayers" destination="Krc-so-T7m" id="8hp-gW-LWg"/>
                         <outlet property="fieldingButton" destination="dlw-ts-1p9" id="6hh-fj-Z63"/>
                         <outlet property="homeNavBar" destination="lCD-LH-arY" id="cV4-4A-e1y"/>
+                        <outlet property="homeNavBarEditButton" destination="Krc-so-T7m" id="wOO-H5-vLi"/>
                         <outlet property="homePlayersTable" destination="db5-RW-BmL" id="EbE-e4-CS8"/>
                         <outlet property="homeWonToss" destination="VIW-A7-zs8" id="XL9-5b-exa"/>
                     </connections>
@@ -206,6 +212,28 @@
         <image name="homeWinner.png" width="23" height="22"/>
         <image name="second" width="16" height="16"/>
     </resources>
+    <classes>
+        <class className="FirstViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/FirstViewController.h"/>
+        </class>
+        <class className="SecondViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/SecondViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="AddCell:"/>
+                <relationship kind="action" name="EditTable:"/>
+                <relationship kind="outlet" name="awayPlayersTable" candidateClass="UITableView"/>
+                <relationship kind="outlet" name="awayWonToss" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="battingButton" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="editAwayPlayers" candidateClass="UIBarButtonItem"/>
+                <relationship kind="outlet" name="editHomePlayers" candidateClass="UIBarButtonItem"/>
+                <relationship kind="outlet" name="fieldingButton" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="homeNavBar" candidateClass="UINavigationBar"/>
+                <relationship kind="outlet" name="homeNavBarEditButton" candidateClass="UIBarButtonItem"/>
+                <relationship kind="outlet" name="homePlayersTable" candidateClass="UITableView"/>
+                <relationship kind="outlet" name="homeWonToss" candidateClass="UIButton"/>
+            </relationships>
+        </class>
+    </classes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
         <simulatedOrientationMetrics key="orientation"/>

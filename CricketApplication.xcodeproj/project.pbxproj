@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		BD0B8B3915C6F8410067584A /* addCellIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = BD0B8B3815C6F8410067584A /* addCellIcon.png */; };
 		BDE2B14215C6AA63009E9F40 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BDE2B14115C6AA63009E9F40 /* UIKit.framework */; };
 		BDE2B14415C6AA63009E9F40 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BDE2B14315C6AA63009E9F40 /* Foundation.framework */; };
 		BDE2B14615C6AA63009E9F40 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BDE2B14515C6AA63009E9F40 /* CoreGraphics.framework */; };
@@ -46,6 +47,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		BD0B8B3815C6F8410067584A /* addCellIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = addCellIcon.png; sourceTree = "<group>"; };
 		BDE2B13D15C6AA63009E9F40 /* CricketApplication.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CricketApplication.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BDE2B14115C6AA63009E9F40 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		BDE2B14315C6AA63009E9F40 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -181,6 +183,7 @@
 		BDE2B18115C6AD8C009E9F40 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				BD0B8B3815C6F8410067584A /* addCellIcon.png */,
 				BDE2B15915C6AA64009E9F40 /* first.png */,
 				BDE2B15B15C6AA64009E9F40 /* first@2x.png */,
 				BDE2B16015C6AA64009E9F40 /* second.png */,
@@ -309,6 +312,7 @@
 				BDE2B18F15C6AD9C009E9F40 /* fieldingUnselected.png in Resources */,
 				BDE2B19015C6AD9C009E9F40 /* homeLoser.png in Resources */,
 				BDE2B19115C6AD9C009E9F40 /* homeWinner.png in Resources */,
+				BD0B8B3915C6F8410067584A /* addCellIcon.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
