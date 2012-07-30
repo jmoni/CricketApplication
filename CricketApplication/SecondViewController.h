@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface SecondViewController : UIViewController <UITableViewDelegate, UITableViewDataSource> {
+@interface SecondViewController : UIViewController <UITableViewDelegate, UITableViewDataSource, UINavigationBarDelegate> {
 	NSMutableArray *homePlayersArray;
 	NSMutableArray *awayPlayersArray;
 }

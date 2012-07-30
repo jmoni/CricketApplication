@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		BD0B8B2515C6C3FB0067584A /* homeTableController.m in Sources */ = {isa = PBXBuildFile; fileRef = BD0B8B2415C6C3FB0067584A /* homeTableController.m */; };
 		BDE2B14215C6AA63009E9F40 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BDE2B14115C6AA63009E9F40 /* UIKit.framework */; };
 		BDE2B14415C6AA63009E9F40 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BDE2B14315C6AA63009E9F40 /* Foundation.framework */; };
 		BDE2B14615C6AA63009E9F40 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BDE2B14515C6AA63009E9F40 /* CoreGraphics.framework */; };
@@ -47,8 +46,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		BD0B8B2315C6C3FB0067584A /* homeTableController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = homeTableController.h; sourceTree = "<group>"; };
-		BD0B8B2415C6C3FB0067584A /* homeTableController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = homeTableController.m; sourceTree = "<group>"; };
 		BDE2B13D15C6AA63009E9F40 /* CricketApplication.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CricketApplication.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BDE2B14115C6AA63009E9F40 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		BDE2B14315C6AA63009E9F40 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -214,8 +211,6 @@
 			children = (
 				BDE2B15D15C6AA64009E9F40 /* SecondViewController.h */,
 				BDE2B15E15C6AA64009E9F40 /* SecondViewController.m */,
-				BD0B8B2315C6C3FB0067584A /* homeTableController.h */,
-				BD0B8B2415C6C3FB0067584A /* homeTableController.m */,
 			);
 			name = SecondTab;
 			sourceTree = "<group>";
@@ -352,7 +347,6 @@
 				BDE2B15215C6AA63009E9F40 /* AppDelegate.m in Sources */,
 				BDE2B15815C6AA64009E9F40 /* FirstViewController.m in Sources */,
 				BDE2B15F15C6AA64009E9F40 /* SecondViewController.m in Sources */,
-				BD0B8B2515C6C3FB0067584A /* homeTableController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

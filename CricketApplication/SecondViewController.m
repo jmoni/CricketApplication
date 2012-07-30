@@ -13,6 +13,9 @@
 @property (strong, nonatomic) IBOutlet UIButton *awayWonToss;
 @property (strong, nonatomic) IBOutlet UIButton *battingButton;
 @property (strong, nonatomic) IBOutlet UIButton *fieldingButton;
+@property (strong, nonatomic) IBOutlet UIBarButtonItem *editHomePlayers;
+@property (strong, nonatomic) IBOutlet UIBarButtonItem *editAwayPlayers;
+@property (strong, nonatomic) IBOutlet UINavigationBar *homeNavBar;
 
 @end
 
@@ -23,20 +26,27 @@
 @synthesize awayWonToss;
 @synthesize battingButton;
 @synthesize fieldingButton;
+@synthesize editHomePlayers;
+@synthesize editAwayPlayers;
+@synthesize homeNavBar;
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view, typically from a nib.
+	
+	//Button listener allocation
 	[homeWonToss addTarget:self action:@selector(tossButtonManage) forControlEvents:UIControlEventTouchUpInside];
 	[awayWonToss addTarget:self action:@selector(tossButtonManage) forControlEvents:UIControlEventTouchUpInside];
 	[battingButton addTarget:self action:@selector(decisionButtonManage) forControlEvents:UIControlEventTouchUpInside];
 	[fieldingButton addTarget:self action:@selector(decisionButtonManage) forControlEvents:UIControlEventTouchUpInside];
+	
+	//Setting initial players table values
 	homePlayersArray = [[NSMutableArray alloc] init];
 	awayPlayersArray = [[NSMutableArray alloc] init];
 	for (int i = 1; i < 12; i++){
-		[homePlayersArray addObject:[NSString stringWithFormat:@"Player%d", i]];
-		[awayPlayersArray addObject:[NSString stringWithFormat:@"Player%d", i]];
+		[homePlayersArray addObject:[NSString stringWithFormat:@"Player %d", i]];
+		[awayPlayersArray addObject:[NSString stringWithFormat:@"Player %d", i]];
 	}
 }
 
@@ -44,6 +54,9 @@
 {
 	[self setHomePlayersTable:nil];
 	[self setAwayPlayersTable:nil];
+	[self setEditHomePlayers:nil];
+	[self setEditAwayPlayers:nil];
+	[self setHomeNavBar:nil];
     [super viewDidUnload];
     // Release any retained subviews of the main view.
 	[self setHomeWonToss:nil];
@@ -60,12 +73,8 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
 	int cellNumber = 0;
-	if ([tableView isEqual:homePlayersTable])
-    {
-		cellNumber = [homePlayersArray count];
-	} else if ([tableView isEqual:awayPlayersTable]) {
-		cellNumber = [awayPlayersArray count];
-	}
+	if ([tableView isEqual:homePlayersTable]) cellNumber = [homePlayersArray count];
+	else if ([tableView isEqual:awayPlayersTable]) cellNumber = [awayPlayersArray count];
     return cellNumber;
 }
 
@@ -87,6 +96,47 @@
 		cell.textLabel.text = [awayPlayersArray objectAtIndex:indexPath.row];
 	}
     return cell;
+}
+
+#pragma mark Row reordering
+// Determine whether a given row is eligible for reordering or not.
+- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath {
+    return YES;
+}
+// Process the row move. This means updating the data model to correct the item indices.
+- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath
+	toIndexPath:(NSIndexPath *)toIndexPath {
+	NSString *item = [homePlayersArray objectAtIndex:fromIndexPath.row];
+	[homePlayersArray removeObject:item];
+	[homePlayersArray insertObject:item atIndex:toIndexPath.row];
+}
+
+- (IBAction) EditTable:(id)sender{
+	if(self.editing)
+	{
+		[super setEditing:NO animated:NO];
+		[homePlayersTable setEditing:NO animated:NO];
+		[homePlayersTable reloadData];
+		[self.navigationItem.rightBarButtonItem setTitle:@"Edit"];
+		[self.navigationItem.rightBarButtonItem setStyle:UIBarButtonItemStylePlain];
+	}
+	else
+	{
+		[super setEditing:YES animated:YES];
+		[homePlayersTable setEditing:YES animated:YES];
+		[homePlayersTable reloadData];
+		[self.navigationItem.rightBarButtonItem setTitle:@"Done"];
+		[self.navigationItem.rightBarButtonItem setStyle:UIBarButtonItemStyleDone];
+	}
+}
+
+
+- (void)editHomePlayersButtonManage {
+	
+}
+
+- (void)editAwayPlayersButtonManage {
+	
 }
 
 - (void)tossButtonManage
