@@ -16,6 +16,7 @@
 @property (strong, nonatomic) IBOutlet UIBarButtonItem *editHomePlayers;
 @property (strong, nonatomic) IBOutlet UIBarButtonItem *editAwayPlayers;
 @property (strong, nonatomic) IBOutlet UINavigationBar *homeNavBar;
+@property (strong, nonatomic) IBOutlet UIBarButtonItem *homeNavBarEditButton;
 
 @end
 
@@ -29,6 +30,7 @@
 @synthesize editHomePlayers;
 @synthesize editAwayPlayers;
 @synthesize homeNavBar;
+@synthesize homeNavBarEditButton;
 
 - (void)viewDidLoad
 {
@@ -57,6 +59,7 @@
 	[self setEditHomePlayers:nil];
 	[self setEditAwayPlayers:nil];
 	[self setHomeNavBar:nil];
+	[self setHomeNavBarEditButton:nil];
     [super viewDidUnload];
     // Release any retained subviews of the main view.
 	[self setHomeWonToss:nil];
@@ -89,6 +92,8 @@
     }
 	
     // configure your cell here...
+	cell.textLabel.font = [UIFont systemFontOfSize:14.0];
+	
 	if ([tableView isEqual:homePlayersTable])
     {
 		cell.textLabel.text = [homePlayersArray objectAtIndex:indexPath.row];
@@ -105,38 +110,44 @@
 }
 // Process the row move. This means updating the data model to correct the item indices.
 - (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath
-	toIndexPath:(NSIndexPath *)toIndexPath {
+	  toIndexPath:(NSIndexPath *)toIndexPath {
 	NSString *item = [homePlayersArray objectAtIndex:fromIndexPath.row];
 	[homePlayersArray removeObject:item];
 	[homePlayersArray insertObject:item atIndex:toIndexPath.row];
 }
 
-- (IBAction) EditTable:(id)sender{
+// Update the data model according to edit actions delete or insert.
+- (void)tableView:(UITableView *)aTableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle
+forRowAtIndexPath:(NSIndexPath *)indexPath {
+	
+    if (editingStyle == UITableViewCellEditingStyleDelete) {
+        [homePlayersArray removeObjectAtIndex:indexPath.row];
+		[homePlayersTable reloadData];
+    }
+}
+
+- (IBAction)EditTable:(id)sender{
 	if(self.editing)
 	{
 		[super setEditing:NO animated:NO];
 		[homePlayersTable setEditing:NO animated:NO];
 		[homePlayersTable reloadData];
-		[self.navigationItem.rightBarButtonItem setTitle:@"Edit"];
-		[self.navigationItem.rightBarButtonItem setStyle:UIBarButtonItemStylePlain];
+		homeNavBarEditButton.title = @"Edit";
+		homeNavBarEditButton.style = UIBarButtonItemStylePlain;
 	}
 	else
 	{
 		[super setEditing:YES animated:YES];
 		[homePlayersTable setEditing:YES animated:YES];
 		[homePlayersTable reloadData];
-		[self.navigationItem.rightBarButtonItem setTitle:@"Done"];
-		[self.navigationItem.rightBarButtonItem setStyle:UIBarButtonItemStyleDone];
+		homeNavBarEditButton.title = @"Done";
+		homeNavBarEditButton.style = UIBarButtonItemStyleDone;
 	}
 }
 
-
-- (void)editHomePlayersButtonManage {
-	
-}
-
-- (void)editAwayPlayersButtonManage {
-	
+- (IBAction)AddCell:(id)sender {
+	[homePlayersArray addObject:[NSString stringWithFormat:@"Player %d", [homePlayersArray count]+1]];
+	[homePlayersTable reloadData];
 }
 
 - (void)tossButtonManage
