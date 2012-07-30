@@ -10,6 +10,7 @@
 
 @interface SecondViewController : UIViewController <UITableViewDelegate, UITableViewDataSource> {
 	NSMutableArray *homePlayersArray;
+	NSMutableArray *awayPlayersArray;
 }
 
 @property (strong, nonatomic) IBOutlet UITableView *homePlayersTable;

@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="2.0" toolsVersion="2549" systemVersion="12A269" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" initialViewController="4">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="1.1" toolsVersion="2549" systemVersion="12A269" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" initialViewController="4">
     <dependencies>
         <deployment defaultVersion="1296" identifier="iOS"/>
+        <development version="4200" identifier="xcode"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="1498"/>
     </dependencies>
     <scenes>
@@ -138,19 +139,23 @@
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                             </view>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="db5-RW-BmL">
+                            <tableView clipsSubviews="YES" tag="1" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="db5-RW-BmL" userLabel="homePlayersTable">
                                 <rect key="frame" x="0.0" y="44" width="159" height="341"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <connections>
-                                    <outlet property="dataSource" destination="3" id="sY6-u4-7pB"/>
-                                    <outlet property="delegate" destination="3" id="Iul-wj-qHn"/>
+                                    <outlet property="dataSource" destination="3" id="fHS-3h-gNj"/>
+                                    <outlet property="delegate" destination="3" id="IUc-v3-VZX"/>
                                 </connections>
                             </tableView>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="0GV-5E-HRb">
+                            <tableView clipsSubviews="YES" tag="2" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="0GV-5E-HRb" userLabel="awayPlayersTable">
                                 <rect key="frame" x="160" y="44" width="160" height="341"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <connections>
+                                    <outlet property="dataSource" destination="3" id="ZKv-fA-CHc"/>
+                                    <outlet property="delegate" destination="3" id="bqa-1X-xAo"/>
+                                </connections>
                             </tableView>
                         </subviews>
                         <simulatedStatusBarMetrics key="simulatedStatusBarMetrics"/>
@@ -162,7 +167,7 @@
                         <outlet property="awayWonToss" destination="iG9-T2-YUd" id="YHx-pd-23n"/>
                         <outlet property="battingButton" destination="kfV-gC-qRo" id="Xhd-Mk-BCY"/>
                         <outlet property="fieldingButton" destination="dlw-ts-1p9" id="6hh-fj-Z63"/>
-                        <outlet property="homePlayersTable" destination="db5-RW-BmL" id="tCw-an-pkH"/>
+                        <outlet property="homePlayersTable" destination="db5-RW-BmL" id="EbE-e4-CS8"/>
                         <outlet property="homeWonToss" destination="VIW-A7-zs8" id="XL9-5b-exa"/>
                     </connections>
                 </viewController>

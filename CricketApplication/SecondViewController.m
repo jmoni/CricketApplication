@@ -33,11 +33,11 @@
 	[battingButton addTarget:self action:@selector(decisionButtonManage) forControlEvents:UIControlEventTouchUpInside];
 	[fieldingButton addTarget:self action:@selector(decisionButtonManage) forControlEvents:UIControlEventTouchUpInside];
 	homePlayersArray = [[NSMutableArray alloc] init];
-	[homePlayersArray addObject:@"Player1"];
-	[homePlayersArray addObject:@"Player2"];
-	[homePlayersArray addObject:@"Player3"];
-	[homePlayersArray addObject:@"Player4"];
-	[homePlayersArray addObject:@"Player5"];
+	awayPlayersArray = [[NSMutableArray alloc] init];
+	for (int i = 1; i < 12; i++){
+		[homePlayersArray addObject:[NSString stringWithFormat:@"Player%d", i]];
+		[awayPlayersArray addObject:[NSString stringWithFormat:@"Player%d", i]];
+	}
 }
 
 - (void)viewDidUnload
@@ -59,7 +59,14 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return [homePlayersArray count];
+	int cellNumber = 0;
+	if ([tableView isEqual:homePlayersTable])
+    {
+		cellNumber = [homePlayersArray count];
+	} else if ([tableView isEqual:awayPlayersTable]) {
+		cellNumber = [awayPlayersArray count];
+	}
+    return cellNumber;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -73,7 +80,12 @@
     }
 	
     // configure your cell here...
-	cell.textLabel.text = [homePlayersArray objectAtIndex:indexPath.row];
+	if ([tableView isEqual:homePlayersTable])
+    {
+		cell.textLabel.text = [homePlayersArray objectAtIndex:indexPath.row];
+	} else if ([tableView isEqual:awayPlayersTable]) {
+		cell.textLabel.text = [awayPlayersArray objectAtIndex:indexPath.row];
+	}
     return cell;
 }
 
