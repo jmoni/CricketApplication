@@ -8,7 +8,9 @@
 
 #import <UIKit/UIKit.h>
 
-@interface SecondViewController : UIViewController <UITableViewDelegate, UITableViewDataSource>
+@interface SecondViewController : UIViewController <UITableViewDelegate, UITableViewDataSource> {
+	NSMutableArray *homePlayersArray;
+}
 
 @property (strong, nonatomic) IBOutlet UITableView *homePlayersTable;
 @property (strong, nonatomic) IBOutlet UITableView *awayPlayersTable;

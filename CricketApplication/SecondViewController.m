@@ -32,6 +32,12 @@
 	[awayWonToss addTarget:self action:@selector(tossButtonManage) forControlEvents:UIControlEventTouchUpInside];
 	[battingButton addTarget:self action:@selector(decisionButtonManage) forControlEvents:UIControlEventTouchUpInside];
 	[fieldingButton addTarget:self action:@selector(decisionButtonManage) forControlEvents:UIControlEventTouchUpInside];
+	homePlayersArray = [[NSMutableArray alloc] init];
+	[homePlayersArray addObject:@"Player1"];
+	[homePlayersArray addObject:@"Player2"];
+	[homePlayersArray addObject:@"Player3"];
+	[homePlayersArray addObject:@"Player4"];
+	[homePlayersArray addObject:@"Player5"];
 }
 
 - (void)viewDidUnload
@@ -53,7 +59,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 1;
+    return [homePlayersArray count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -67,7 +73,7 @@
     }
 	
     // configure your cell here...
-	
+	cell.textLabel.text = [homePlayersArray objectAtIndex:indexPath.row];
     return cell;
 }
 
