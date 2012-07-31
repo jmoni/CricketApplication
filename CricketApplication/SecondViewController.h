@@ -8,10 +8,10 @@
 
 #import <UIKit/UIKit.h>
 
-@interface SecondViewController : UIViewController <UITableViewDelegate, UITableViewDataSource, UINavigationBarDelegate> {
-	NSMutableArray *homePlayersArray;
-	NSMutableArray *awayPlayersArray;
-}
+NSMutableArray *homePlayersArray;
+NSMutableArray *awayPlayersArray;
+int rowForDetaiView;
+@interface SecondViewController : UIViewController <UITableViewDelegate, UITableViewDataSource, UINavigationBarDelegate>
 
 @property (strong, nonatomic) IBOutlet UITableView *homePlayersTable;
 @property (strong, nonatomic) IBOutlet UITableView *awayPlayersTable;
