@@ -7,6 +7,7 @@
 //
 
 #import "FirstViewController.h"
+#import "sqlite3.h"
 
 @interface FirstViewController ()
 
