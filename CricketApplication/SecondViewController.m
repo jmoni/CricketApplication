@@ -7,6 +7,7 @@
 //
 
 #import "SecondViewController.h"
+#import "sqlite3.h"
 
 @interface SecondViewController ()
 @property (strong, nonatomic) IBOutlet UIButton *homeWonToss;

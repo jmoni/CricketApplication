@@ -34,6 +34,8 @@
 		BDE2B19015C6AD9C009E9F40 /* homeLoser.png in Resources */ = {isa = PBXBuildFile; fileRef = BDE2B18815C6AD9C009E9F40 /* homeLoser.png */; };
 		BDE2B19115C6AD9C009E9F40 /* homeWinner.png in Resources */ = {isa = PBXBuildFile; fileRef = BDE2B18915C6AD9C009E9F40 /* homeWinner.png */; };
 		CE19D6FC15C7F27E0023B990 /* ThirdViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CE19D6FB15C7F27E0023B990 /* ThirdViewController.m */; };
+		CE19D70015C81A260023B990 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = CE19D6FF15C81A260023B990 /* libsqlite3.dylib */; settings = {ATTRIBUTES = (Required, ); }; };
+		CE19D70215C81B500023B990 /* libsqlite3.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = CE19D70115C81B500023B990 /* libsqlite3.0.dylib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -82,6 +84,8 @@
 		BDE2B18915C6AD9C009E9F40 /* homeWinner.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = homeWinner.png; sourceTree = "<group>"; };
 		CE19D6FA15C7F27E0023B990 /* ThirdViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ThirdViewController.h; sourceTree = "<group>"; };
 		CE19D6FB15C7F27E0023B990 /* ThirdViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ThirdViewController.m; sourceTree = "<group>"; };
+		CE19D6FF15C81A260023B990 /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
+		CE19D70115C81B500023B990 /* libsqlite3.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.0.dylib; path = usr/lib/libsqlite3.0.dylib; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -89,6 +93,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CE19D70215C81B500023B990 /* libsqlite3.0.dylib in Frameworks */,
+				CE19D70015C81A260023B990 /* libsqlite3.dylib in Frameworks */,
 				BDE2B14215C6AA63009E9F40 /* UIKit.framework in Frameworks */,
 				BDE2B14415C6AA63009E9F40 /* Foundation.framework in Frameworks */,
 				BDE2B14615C6AA63009E9F40 /* CoreGraphics.framework in Frameworks */,
@@ -130,6 +136,8 @@
 		BDE2B14015C6AA63009E9F40 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				CE19D6FF15C81A260023B990 /* libsqlite3.dylib */,
+				CE19D70115C81B500023B990 /* libsqlite3.0.dylib */,
 				BDE2B14115C6AA63009E9F40 /* UIKit.framework */,
 				BDE2B14315C6AA63009E9F40 /* Foundation.framework */,
 				BDE2B14515C6AA63009E9F40 /* CoreGraphics.framework */,

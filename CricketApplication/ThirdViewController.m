@@ -7,6 +7,7 @@
 //
 
 #import "ThirdViewController.h"
+#import "sqlite3.h"
 
 @interface ThirdViewController ()
 
