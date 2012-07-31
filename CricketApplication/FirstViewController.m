@@ -17,54 +17,43 @@
 @synthesize awayTeamEntered = _awayTeamEntered;
 @synthesize dateButton = _dateButton;
 @synthesize dateText = _dateText;
+@synthesize myPicker = _myPicker;
 
-#define kDatePickerTag 100
 
 
--(IBAction)showActionSheet:(id)sender {
-	UIActionSheet *popUpDate = [[UIActionSheet alloc] initWithTitle:@"Set the match date" delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:@"Select", nil];
-	[popUpDate showInView:self.view];
-    [popUpDate setFrame:CGRectMake(0, 117, 320, 383)];
+-(IBAction)showActionSheet:(id)sender{
+    UIActionSheet *dateActionSheet = [[UIActionSheet alloc] initWithTitle:@""
+                                                                 delegate:self
+                                                        cancelButtonTitle:@"Cancel"
+                                                   destructiveButtonTitle:nil
+                                                        otherButtonTitles:@"Done", nil];
+    [dateActionSheet setActionSheetStyle:UIActionSheetStyleBlackTranslucent];
+    [dateActionSheet showInView:self.view];
+    [dateActionSheet setFrame:CGRectMake(0, 200, 320, 383)];
+
 }
 
-- (void)willPresentActionSheetUIActionSheet: (UIActionSheet *)actionSheet {
+#define kPickerTag 200
+#define SelectButtonIndex 1
+#define CancelButtonIndex 2
+-(void)willPresentActionSheet:(UIActionSheet *)actionSheet {
     
-    UIDatePicker *pickerView = [[UIDatePicker alloc] initWithFrame:CGRectMake(0, 40, 320, 216)];
+    UIDatePicker *pickerView = [[UIDatePicker alloc] initWithFrame:CGRectMake(0, 50, 100, 116)];
+    [pickerView setTag:kPickerTag];
     
-    //Configure picker...
-    [pickerView setMinuteInterval:5];
-    [pickerView setTag: kDatePickerTag];
+    [pickerView setDatePickerMode:UIDatePickerModeDate];
+    NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
+    [dateFormat setDateFormat:@"MMM-dd-yyyy"];
+    NSDate *myDate2 = myPicker.date;
     
-    //Add picker to action sheet
+    self.dateText.text = myDate2.description;
+    NSLog(@"text: %@", self.dateText.text);
     [actionSheet addSubview:pickerView];
     
-    //Gets an array af all of the subviews of our actionSheet
-    NSArray *subviews = [actionSheet subviews];
+    NSArray *subViews = [actionSheet subviews];
     
-    [[subviews objectAtIndex:1] setFrame:CGRectMake(20, 266, 280, 46)];
-    [[subviews objectAtIndex:2] setFrame:CGRectMake(20, 317, 280, 46)];
-    
-}
-
-- (void)actionSheet: (UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
-    if (buttonIndex != [actionSheet cancelButtonIndex]) {
-        
-        //set Date formatter
-        NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-        [formatter setDateFormat:@"DD/MM/YYYY"];
-        
-        //Gets our picker
-        UIDatePicker *ourDatePicker = (UIDatePicker *) [actionSheet viewWithTag:kDatePickerTag];
-        
-        NSDate *selectedDate = [ourDatePicker date];
-        
-        _dateText.self.text = [formatter stringFromDate:selectedDate];
-        
-        NSString *msg = [[NSString alloc] initWithFormat:@"The date that you had selected was, %@", [formatter stringFromDate:selectedDate]];
-        
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Date" message:msg delegate:nil cancelButtonTitle:@"Dismiss" otherButtonTitles:nil];
-        [alert show];
-    }
+    [[subViews objectAtIndex:SelectButtonIndex] setFrame:CGRectMake(0, 5, 75, 46)];
+    [[subViews objectAtIndex:CancelButtonIndex] setFrame:CGRectMake(225, 5, 85, 46)];
 }
 
 -(IBAction)textFieldReturn:(id)sender
