@@ -33,6 +33,7 @@
 		BDE2B18F15C6AD9C009E9F40 /* fieldingUnselected.png in Resources */ = {isa = PBXBuildFile; fileRef = BDE2B18715C6AD9C009E9F40 /* fieldingUnselected.png */; };
 		BDE2B19015C6AD9C009E9F40 /* homeLoser.png in Resources */ = {isa = PBXBuildFile; fileRef = BDE2B18815C6AD9C009E9F40 /* homeLoser.png */; };
 		BDE2B19115C6AD9C009E9F40 /* homeWinner.png in Resources */ = {isa = PBXBuildFile; fileRef = BDE2B18915C6AD9C009E9F40 /* homeWinner.png */; };
+		CE19D6FC15C7F27E0023B990 /* ThirdViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CE19D6FB15C7F27E0023B990 /* ThirdViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -79,6 +80,8 @@
 		BDE2B18715C6AD9C009E9F40 /* fieldingUnselected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = fieldingUnselected.png; sourceTree = "<group>"; };
 		BDE2B18815C6AD9C009E9F40 /* homeLoser.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = homeLoser.png; sourceTree = "<group>"; };
 		BDE2B18915C6AD9C009E9F40 /* homeWinner.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = homeWinner.png; sourceTree = "<group>"; };
+		CE19D6FA15C7F27E0023B990 /* ThirdViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ThirdViewController.h; sourceTree = "<group>"; };
+		CE19D6FB15C7F27E0023B990 /* ThirdViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ThirdViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -138,6 +141,7 @@
 		BDE2B14715C6AA63009E9F40 /* CricketApplication */ = {
 			isa = PBXGroup;
 			children = (
+				CE19D6F815C7F25D0023B990 /* ThirdTab */,
 				BDE2B15315C6AA64009E9F40 /* MainStoryboard.storyboard */,
 				BDE2B19415C6ADDF009E9F40 /* Delegate */,
 				BDE2B19315C6ADCD009E9F40 /* SecondTab */,
@@ -222,6 +226,15 @@
 				BDE2B15115C6AA63009E9F40 /* AppDelegate.m */,
 			);
 			name = Delegate;
+			sourceTree = "<group>";
+		};
+		CE19D6F815C7F25D0023B990 /* ThirdTab */ = {
+			isa = PBXGroup;
+			children = (
+				CE19D6FA15C7F27E0023B990 /* ThirdViewController.h */,
+				CE19D6FB15C7F27E0023B990 /* ThirdViewController.m */,
+			);
+			name = ThirdTab;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -347,6 +360,7 @@
 				BDE2B15215C6AA63009E9F40 /* AppDelegate.m in Sources */,
 				BDE2B15815C6AA64009E9F40 /* FirstViewController.m in Sources */,
 				BDE2B15F15C6AA64009E9F40 /* SecondViewController.m in Sources */,
+				CE19D6FC15C7F27E0023B990 /* ThirdViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
