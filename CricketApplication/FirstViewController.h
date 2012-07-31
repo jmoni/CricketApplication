@@ -18,9 +18,11 @@
 @property (strong, nonatomic) IBOutlet UITextField *awayTeamEntered;
 @property (strong, nonatomic) IBOutlet UIButton *dateButton;
 @property (strong, nonatomic) IBOutlet UILabel *dateText;
+@property (strong, nonatomic) IBOutlet UIBarButtonItem *infoButtonItem;
 
 
 
 - (IBAction) showActionSheet: (id) sender;
+- (IBAction) hideActionSheet: (id) sender;
 
 @end

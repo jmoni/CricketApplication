@@ -17,6 +17,7 @@
 @synthesize awayTeamEntered = _awayTeamEntered;
 @synthesize dateButton = _dateButton;
 @synthesize dateText = _dateText;
+@synthesize infoButtonItem = _infoButtonItem;
 
 
 
@@ -34,8 +35,8 @@
     toolbar.barStyle = UIBarStyleBlack;
 
     //add button
-    UIBarButtonItem *infoButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Done" style:UIBarButtonItemStyleDone     target:self action:nil];
-    toolbar.items = [NSArray arrayWithObjects:infoButtonItem, nil];
+    _infoButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Done" style:UIBarButtonItemStyleDone     target:self action:nil];
+    toolbar.items = [NSArray arrayWithObjects:_infoButtonItem, nil];
 
     //add date picker
     UIDatePicker *datePicker = [[UIDatePicker alloc] init];
@@ -58,6 +59,10 @@
     temp.origin.y -= height;
     newView.frame = temp;
     [UIView commitAnimations];
+}
+
+-(IBAction)hideActionSheet:(id)sender {
+    
 }
 
 
