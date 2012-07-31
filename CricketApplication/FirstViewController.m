@@ -17,44 +17,50 @@
 @synthesize awayTeamEntered = _awayTeamEntered;
 @synthesize dateButton = _dateButton;
 @synthesize dateText = _dateText;
-@synthesize myPicker = _myPicker;
 
 
 
--(IBAction)showActionSheet:(id)sender{
-    UIActionSheet *dateActionSheet = [[UIActionSheet alloc] initWithTitle:@""
-                                                                 delegate:self
-                                                        cancelButtonTitle:@"Cancel"
-                                                   destructiveButtonTitle:nil
-                                                        otherButtonTitles:@"Done", nil];
-    [dateActionSheet setActionSheetStyle:UIActionSheetStyleBlackTranslucent];
-    [dateActionSheet showInView:self.view];
-    [dateActionSheet setFrame:CGRectMake(0, 200, 320, 383)];
 
+-(IBAction)showActionSheet:(id)sender {
+
+    int height = 255;
+
+    //create new view
+    UIView * newView = [[UIView alloc] initWithFrame:CGRectMake(0, 200, 320, height)];
+    newView.backgroundColor = [UIColor colorWithWhite:1 alpha:1];
+
+    //add toolbar
+    UIToolbar * toolbar = [[UIToolbar alloc] initWithFrame: CGRectMake(0, 0, 320, 40)];
+    toolbar.barStyle = UIBarStyleBlack;
+
+    //add button
+    UIBarButtonItem *infoButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Done" style:UIBarButtonItemStyleDone     target:self action:nil];
+    toolbar.items = [NSArray arrayWithObjects:infoButtonItem, nil];
+
+    //add date picker
+    UIDatePicker *datePicker = [[UIDatePicker alloc] init];
+    datePicker.datePickerMode = UIDatePickerModeDate;
+    datePicker.hidden = NO;
+    datePicker.date = [NSDate date];
+    datePicker.frame = CGRectMake(0, 40, 320, 250);
+    [datePicker addTarget:self action:nil/*@selector(changeDateInLabel:)*/ forControlEvents:UIControlEventValueChanged];
+    [newView addSubview:datePicker];
+
+    //add popup view
+    [newView addSubview:toolbar];
+    [self.view addSubview:newView];
+
+    //animate it onto the screen
+    CGRect temp = newView.frame;
+    temp.origin.y = CGRectGetMaxY(self.view.bounds);
+    newView.frame = temp;
+    [UIView beginAnimations:nil context:nil];
+    temp.origin.y -= height;
+    newView.frame = temp;
+    [UIView commitAnimations];
 }
 
-#define kPickerTag 200
-#define SelectButtonIndex 1
-#define CancelButtonIndex 2
--(void)willPresentActionSheet:(UIActionSheet *)actionSheet {
-    
-    UIDatePicker *pickerView = [[UIDatePicker alloc] initWithFrame:CGRectMake(0, 50, 100, 116)];
-    [pickerView setTag:kPickerTag];
-    
-    [pickerView setDatePickerMode:UIDatePickerModeDate];
-    NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
-    [dateFormat setDateFormat:@"MMM-dd-yyyy"];
-    NSDate *myDate2 = myPicker.date;
-    
-    self.dateText.text = myDate2.description;
-    NSLog(@"text: %@", self.dateText.text);
-    [actionSheet addSubview:pickerView];
-    
-    NSArray *subViews = [actionSheet subviews];
-    
-    [[subViews objectAtIndex:SelectButtonIndex] setFrame:CGRectMake(0, 5, 75, 46)];
-    [[subViews objectAtIndex:CancelButtonIndex] setFrame:CGRectMake(225, 5, 85, 46)];
-}
+
 
 -(IBAction)textFieldReturn:(id)sender
 {
