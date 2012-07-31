@@ -7,6 +7,7 @@
 //
 
 #import "SecondViewController.h"
+#include "DetailViewController.h"
 
 @interface SecondViewController ()
 @property (strong, nonatomic) IBOutlet UIButton *homeWonToss;
@@ -124,6 +125,11 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
         [homePlayersArray removeObjectAtIndex:indexPath.row];
 		[homePlayersTable reloadData];
     }
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+	DetailViewController *detail = [self.storyboard instantiateViewControllerWithIdentifier:@"Detail"];
+	[self.navigationController pushViewController:detail animated:YES];
 }
 
 - (IBAction)EditTable:(id)sender{
