@@ -8,6 +8,10 @@
 
 #import <UIKit/UIKit.h>
 
-@interface ThirdViewController : UIViewController
+@interface ThirdViewController : UIViewController <UIPickerViewDelegate, UIActionSheetDelegate>{
 
+}
+
+-(IBAction)showActionSheet: (id) sender;
+-(IBAction)hideActionSheet: (UIBarButtonItem *)_infoButtonItem;
 @end
