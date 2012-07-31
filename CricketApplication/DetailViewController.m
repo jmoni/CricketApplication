@@ -7,12 +7,35 @@
 //
 
 #import "DetailViewController.h"
+#include "SecondViewController.h"
 
 @interface DetailViewController ()
+
 
 @end
 
 @implementation DetailViewController
+@synthesize PlayerEditTextBox;
+@synthesize NavBar;
+@synthesize CaptainSlider;
+@synthesize ViceCaptainSlider;
+@synthesize WicketKeeperSlider;
+
+- (IBAction)textFieldReturn:(id)sender
+{
+	[self changeArrayValue];
+	[PlayerEditTextBox resignFirstResponder];
+}
+
+- (IBAction)backgroundTouched:(id)sender
+{
+	[self changeArrayValue];
+	[PlayerEditTextBox resignFirstResponder];
+}
+
+- (void)changeArrayValue{
+	[homePlayersArray replaceObjectAtIndex:rowForDetaiView withObject:[PlayerEditTextBox text]];
+}
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -23,14 +46,36 @@
     return self;
 }
 
+- (IBAction)CSlider:(id)sender {
+	if (CaptainSlider.on) {
+		[ViceCaptainSlider setOn:NO animated:YES];
+
+	}
+}
+- (IBAction)VCSlider:(id)sender {
+	if (ViceCaptainSlider.on) {
+		[CaptainSlider setOn:NO animated:YES];
+
+	}
+}
+- (IBAction)WKSlider:(id)sender {
+	
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
+	NavBar.title = [homePlayersArray objectAtIndex:rowForDetaiView];
 }
 
 - (void)viewDidUnload
 {
+	[self setPlayerEditTextBox:nil];
+	[self setNavBar:nil];
+	[self setCaptainSlider:nil];
+	[self setViceCaptainSlider:nil];
+	[self setWicketKeeperSlider:nil];
     [super viewDidUnload];
     // Release any retained subviews of the main view.
 }

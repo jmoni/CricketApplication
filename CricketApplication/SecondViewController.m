@@ -33,6 +33,8 @@
 @synthesize editAwayPlayers;
 @synthesize homeNavBar;
 @synthesize homeNavBarEditButton;
+int homePlayersCount = 12;
+int awayPlayersCount = 12;
 
 - (void)viewDidLoad
 {
@@ -68,6 +70,10 @@
 	[self setAwayWonToss:nil];
 	[self setBattingButton:nil];
 	[self setFieldingButton:nil];
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+	[homePlayersTable reloadData];
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
@@ -129,8 +135,11 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+	rowForDetaiView = indexPath.row;
 	DetailViewController *detail = [self.storyboard instantiateViewControllerWithIdentifier:@"Detail"];
 	[self.navigationController pushViewController:detail animated:YES];
+	
+	detail.PlayerEditTextBox.text = [homePlayersArray objectAtIndex:indexPath.row];
 }
 
 - (IBAction)EditTable:(id)sender{
@@ -153,8 +162,10 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
 }
 
 - (IBAction)AddCell:(id)sender {
-	[homePlayersArray addObject:[NSString stringWithFormat:@"Player %d", [homePlayersArray count]+1]];
+	[homePlayersArray addObject:[NSString stringWithFormat:@"Player %d", homePlayersCount]];
 	[homePlayersTable reloadData];
+	homePlayersCount++;
+
 }
 
 - (void)tossButtonManage

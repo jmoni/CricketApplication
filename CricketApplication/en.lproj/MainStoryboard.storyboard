@@ -208,12 +208,12 @@
                                     <outlet property="delegate" destination="3" id="bqa-1X-xAo"/>
                                 </connections>
                             </tableView>
-                            <tableView clipsSubviews="YES" tag="1" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="29" sectionHeaderHeight="22" sectionFooterHeight="22" id="db5-RW-BmL" userLabel="homePlayersTable">
+                            <tableView clipsSubviews="YES" tag="1" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" allowsSelectionDuringEditing="YES" rowHeight="29" sectionHeaderHeight="22" sectionFooterHeight="22" id="db5-RW-BmL" userLabel="homePlayersTable">
                                 <rect key="frame" x="0.0" y="44" width="159" height="296"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" showsReorderControl="YES" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="Cell" editingAccessoryType="disclosureIndicator" id="8g9-ob-OkJ">
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" showsReorderControl="YES" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="Cell" id="8g9-ob-OkJ">
                                         <rect key="frame" x="0.0" y="22" width="159" height="29"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
@@ -251,31 +251,90 @@
             </objects>
             <point key="canvasLocation" x="645" y="90"/>
         </scene>
-        <!--Detail View Controller - Title-->
+        <!--Detail View Controller-->
         <scene sceneID="8pM-sV-Rru">
             <objects>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Hif-Xx-Kpn" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <viewController storyboardIdentifier="Detail" id="9Zc-2m-Uyv" customClass="DetailViewController" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="pyE-jh-Zah">
+                    <view key="view" contentMode="scaleToFill" id="pyE-jh-Zah" customClass="UIControl">
                         <rect key="frame" x="0.0" y="64" width="320" height="367"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" id="AOt-SA-iDa">
-                                <rect key="frame" x="182" y="195" width="42" height="21"/>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Name:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" id="AOt-SA-iDa">
+                                <rect key="frame" x="20" y="20" width="56" height="34"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" selected="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="bezel" minimumFontSize="17" clearButtonMode="whileEditing" id="Zm8-sJ-V8u">
+                                <rect key="frame" x="84" y="23" width="216" height="31"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="words" returnKeyType="done" enablesReturnKeyAutomatically="YES"/>
+                                <connections>
+                                    <action selector="textFieldReturn:" destination="9Zc-2m-Uyv" eventType="editingDidEndOnExit" id="NHy-UR-sZf"/>
+                                </connections>
+                            </textField>
+                            <switch opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" id="oeg-43-geI">
+                                <rect key="frame" x="221" y="97" width="79" height="27"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <connections>
+                                    <action selector="CSlider:" destination="9Zc-2m-Uyv" eventType="valueChanged" id="6Y0-6B-YGy"/>
+                                </connections>
+                            </switch>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Captain:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" id="oxY-S8-VHQ">
+                                <rect key="frame" x="20" y="97" width="64" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Vice Captain:" lineBreakMode="wordWrap" numberOfLines="2" baselineAdjustment="alignBaselines" minimumFontSize="10" id="UBB-jX-6F3">
+                                <rect key="frame" x="20" y="132" width="108" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Wicket Keeper:" lineBreakMode="wordWrap" numberOfLines="2" baselineAdjustment="alignBaselines" minimumFontSize="10" id="k4l-uF-o6g">
+                                <rect key="frame" x="20" y="167" width="119" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <switch opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" id="fxi-8S-mfb">
+                                <rect key="frame" x="221" y="132" width="79" height="27"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <connections>
+                                    <action selector="VCSlider:" destination="9Zc-2m-Uyv" eventType="valueChanged" id="fmj-EA-NZ5"/>
+                                </connections>
+                            </switch>
+                            <switch opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" id="KXx-n3-voW">
+                                <rect key="frame" x="221" y="167" width="79" height="27"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <connections>
+                                    <action selector="WKSlider:" destination="9Zc-2m-Uyv" eventType="valueChanged" id="TTn-Gq-0ja"/>
+                                </connections>
+                            </switch>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <connections>
+                            <action selector="backgroundTouched:" destination="9Zc-2m-Uyv" eventType="touchDown" id="7Tz-pK-0BS"/>
+                        </connections>
                     </view>
-                    <navigationItem key="navigationItem" title="Title" id="6uV-Pg-Z2c">
-                        <barButtonItem key="backBarButtonItem" title="Back" id="hSZ-LN-ebQ"/>
-                    </navigationItem>
+                    <navigationItem key="navigationItem" id="6uV-Pg-Z2c"/>
+                    <connections>
+                        <outlet property="CaptainSlider" destination="oeg-43-geI" id="HJ1-Hy-ypH"/>
+                        <outlet property="NavBar" destination="6uV-Pg-Z2c" id="OkX-AJ-BaK"/>
+                        <outlet property="PlayerEditTextBox" destination="Zm8-sJ-V8u" id="9Ie-gp-nqU"/>
+                        <outlet property="ViceCaptainSlider" destination="fxi-8S-mfb" id="Pf5-RZ-bTs"/>
+                        <outlet property="WicketKeeperSlider" destination="KXx-n3-voW" id="a4A-2f-lcS"/>
+                    </connections>
                 </viewController>
             </objects>
-            <point key="canvasLocation" x="1063" y="90"/>
+            <point key="canvasLocation" x="1067" y="90"/>
         </scene>
         <!--Third View Controller - Third Tab-->
         <scene sceneID="dLs-TD-eaK">
