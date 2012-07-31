@@ -7,6 +7,7 @@
 //
 
 #import "SecondViewController.h"
+#import "sqlite3.h"
 #include "DetailViewController.h"
 
 @interface SecondViewController ()
