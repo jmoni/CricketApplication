@@ -59,9 +59,9 @@
     //add a picker
     _choosePlayer = [[UIPickerView alloc] initWithFrame: CGRectMake(0,40,320,250)];
     _choosePlayer.hidden = false;
-    [_choosePlayer setDelegate: self];
+    _choosePlayer.delegate = self;
+    _choosePlayer.dataSource = self;
     _choosePlayer.showsSelectionIndicator = YES;
-
 
     //add popup view
     [newView addSubview:toolbar];
@@ -77,6 +77,13 @@
     newView.frame = temp;
     [UIView commitAnimations];
 }
+
+- (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)_choosePlayer;
+{
+    return 1;
+}  
+
+
 #pragma mark Button methods
 
 -(IBAction)hideActionSheet:(UIBarButtonItem *)_infoButtonItem{
