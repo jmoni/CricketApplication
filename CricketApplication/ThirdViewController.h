@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface ThirdViewController : UIViewController <UIPickerViewDelegate, UIActionSheetDelegate>{
+@interface ThirdViewController : UIViewController <UIPickerViewDelegate, UIPickerViewDataSource, UIActionSheetDelegate>{
 
 }
 
