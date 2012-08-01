@@ -208,16 +208,16 @@
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                             </view>
-                            <tableView clipsSubviews="YES" tag="2" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" allowsSelectionDuringEditing="YES" rowHeight="25" sectionHeaderHeight="22" sectionFooterHeight="22" id="0GV-5E-HRb" userLabel="awayPlayersTable">
+                            <tableView clipsSubviews="YES" tag="2" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" allowsSelectionDuringEditing="YES" rowHeight="34" sectionHeaderHeight="22" sectionFooterHeight="22" id="0GV-5E-HRb" userLabel="awayPlayersTable">
                                 <rect key="frame" x="160" y="44" width="160" height="296"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="blue" showsReorderControl="YES" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="Cell" id="a7C-SV-Wc0">
-                                        <rect key="frame" x="0.0" y="22" width="160" height="25"/>
+                                        <rect key="frame" x="0.0" y="22" width="160" height="34"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                            <rect key="frame" x="0.0" y="0.0" width="140" height="24"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="140" height="33"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         </view>
@@ -228,16 +228,16 @@
                                     <outlet property="delegate" destination="3" id="bqa-1X-xAo"/>
                                 </connections>
                             </tableView>
-                            <tableView clipsSubviews="YES" tag="1" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" allowsSelectionDuringEditing="YES" rowHeight="25" sectionHeaderHeight="22" sectionFooterHeight="22" id="db5-RW-BmL" userLabel="homePlayersTable">
+                            <tableView clipsSubviews="YES" tag="1" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" allowsSelectionDuringEditing="YES" rowHeight="34" sectionHeaderHeight="22" sectionFooterHeight="22" id="db5-RW-BmL" userLabel="homePlayersTable">
                                 <rect key="frame" x="0.0" y="44" width="159" height="296"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="blue" showsReorderControl="YES" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="Cell" id="8g9-ob-OkJ">
-                                        <rect key="frame" x="0.0" y="22" width="159" height="25"/>
+                                        <rect key="frame" x="0.0" y="22" width="159" height="34"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                            <rect key="frame" x="0.0" y="0.0" width="139" height="24"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="139" height="33"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         </view>
@@ -281,63 +281,86 @@
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Name:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" id="AOt-SA-iDa">
-                                <rect key="frame" x="20" y="20" width="56" height="34"/>
+                                <rect key="frame" x="20" y="28" width="56" height="21"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" selected="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="bezel" minimumFontSize="17" clearButtonMode="whileEditing" id="Zm8-sJ-V8u">
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" selected="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" clearButtonMode="whileEditing" id="Zm8-sJ-V8u">
                                 <rect key="frame" x="84" y="23" width="216" height="31"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits" autocapitalizationType="words" returnKeyType="done" enablesReturnKeyAutomatically="YES"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="words" returnKeyType="next" enablesReturnKeyAutomatically="YES"/>
                                 <connections>
                                     <action selector="textFieldReturn:" destination="9Zc-2m-Uyv" eventType="editingDidEndOnExit" id="NHy-UR-sZf"/>
                                 </connections>
                             </textField>
                             <switch opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" id="oeg-43-geI">
-                                <rect key="frame" x="221" y="97" width="79" height="27"/>
+                                <rect key="frame" x="221" y="105" width="79" height="27"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <connections>
                                     <action selector="CSlider:" destination="9Zc-2m-Uyv" eventType="valueChanged" id="6Y0-6B-YGy"/>
                                 </connections>
                             </switch>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Captain:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" id="oxY-S8-VHQ">
-                                <rect key="frame" x="20" y="97" width="64" height="21"/>
+                                <rect key="frame" x="20" y="108" width="64" height="21"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Vice Captain:" lineBreakMode="wordWrap" numberOfLines="2" baselineAdjustment="alignBaselines" minimumFontSize="10" id="UBB-jX-6F3">
-                                <rect key="frame" x="20" y="132" width="108" height="21"/>
+                                <rect key="frame" x="20" y="148" width="108" height="21"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Wicket Keeper:" lineBreakMode="wordWrap" numberOfLines="2" baselineAdjustment="alignBaselines" minimumFontSize="10" id="k4l-uF-o6g">
-                                <rect key="frame" x="20" y="167" width="119" height="21"/>
+                                <rect key="frame" x="20" y="188" width="119" height="21"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <switch opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" id="fxi-8S-mfb">
-                                <rect key="frame" x="221" y="132" width="79" height="27"/>
+                                <rect key="frame" x="221" y="145" width="79" height="27"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <connections>
                                     <action selector="VCSlider:" destination="9Zc-2m-Uyv" eventType="valueChanged" id="fmj-EA-NZ5"/>
                                 </connections>
                             </switch>
                             <switch opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" id="KXx-n3-voW">
-                                <rect key="frame" x="221" y="167" width="79" height="27"/>
+                                <rect key="frame" x="221" y="185" width="79" height="27"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <connections>
                                     <action selector="WKSlider:" destination="9Zc-2m-Uyv" eventType="valueChanged" id="TTn-Gq-0ja"/>
                                 </connections>
                             </switch>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Batting Position:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" id="IU7-Px-ox8">
+                                <rect key="frame" x="20" y="68" width="126" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="1" minValue="1" maxValue="11" continuous="NO" id="EgM-S1-pSO">
+                                <rect key="frame" x="152" y="68" width="123" height="23"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <connections>
+                                    <action selector="battingOrderSliderChanged:" destination="9Zc-2m-Uyv" eventType="valueChanged" id="bFK-kQ-E48"/>
+                                    <action selector="battingOrderSliderChanging:" destination="9Zc-2m-Uyv" eventType="touchDragInside" id="3wU-Xj-6vm"/>
+                                    <action selector="getInitialSlideValue:" destination="9Zc-2m-Uyv" eventType="touchDown" id="ODd-wA-X9z"/>
+                                </connections>
+                            </slider>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="11" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" id="6gN-8x-x1h">
+                                <rect key="frame" x="281" y="68" width="19" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <connections>
@@ -351,6 +374,8 @@
                         <outlet property="PlayerEditTextBox" destination="Zm8-sJ-V8u" id="9Ie-gp-nqU"/>
                         <outlet property="ViceCaptainSlider" destination="fxi-8S-mfb" id="Pf5-RZ-bTs"/>
                         <outlet property="WicketKeeperSlider" destination="KXx-n3-voW" id="a4A-2f-lcS"/>
+                        <outlet property="battingOrderSlider" destination="EgM-S1-pSO" id="sTG-eT-ZXp"/>
+                        <outlet property="sliderValueLabel" destination="6gN-8x-x1h" id="suV-Hu-Rj5"/>
                     </connections>
                 </viewController>
             </objects>
@@ -510,12 +535,17 @@
                 <relationship kind="action" name="VCSlider:"/>
                 <relationship kind="action" name="WKSlider:"/>
                 <relationship kind="action" name="backgroundTouched:"/>
+                <relationship kind="action" name="battingOrderSliderChanged:"/>
+                <relationship kind="action" name="battingOrderSliderChanging:"/>
+                <relationship kind="action" name="getInitialSlideValue:"/>
                 <relationship kind="action" name="textFieldReturn:"/>
                 <relationship kind="outlet" name="CaptainSlider" candidateClass="UISwitch"/>
                 <relationship kind="outlet" name="NavBar" candidateClass="UINavigationItem"/>
                 <relationship kind="outlet" name="PlayerEditTextBox" candidateClass="UITextField"/>
                 <relationship kind="outlet" name="ViceCaptainSlider" candidateClass="UISwitch"/>
                 <relationship kind="outlet" name="WicketKeeperSlider" candidateClass="UISwitch"/>
+                <relationship kind="outlet" name="battingOrderSlider" candidateClass="UISlider"/>
+                <relationship kind="outlet" name="sliderValueLabel" candidateClass="UILabel"/>
             </relationships>
         </class>
         <class className="FirstViewController" superclassName="UIViewController">

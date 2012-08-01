@@ -11,6 +11,8 @@
 @interface DetailViewController : UIViewController <UITextFieldDelegate>
 
 @property (strong, nonatomic) IBOutlet UITextField *PlayerEditTextBox;
+@property (strong, nonatomic) IBOutlet UISlider *battingOrderSlider;
+@property (strong, nonatomic) IBOutlet UILabel *sliderValueLabel;
 @property (strong, nonatomic) IBOutlet UINavigationItem *NavBar;
 @property (strong, nonatomic) IBOutlet UISwitch *CaptainSlider;
 @property (strong, nonatomic) IBOutlet UISwitch *ViceCaptainSlider;
@@ -18,6 +20,9 @@
 
 - (IBAction)textFieldReturn:(id)sender;
 - (IBAction)backgroundTouched:(id)sender;
+- (IBAction)battingOrderSliderChanged:(id)sender;
+- (IBAction)battingOrderSliderChanging:(id)sender;
+- (IBAction)getInitialSlideValue:(id)sender;
 - (IBAction)CSlider:(id)sender;
 - (IBAction)VCSlider:(id)sender;
 - (IBAction)WKSlider:(id)sender;

@@ -11,11 +11,14 @@
 
 @interface DetailViewController ()
 
-
 @end
+
+int initialSliderValue;
 
 @implementation DetailViewController
 @synthesize PlayerEditTextBox;
+@synthesize battingOrderSlider;
+@synthesize sliderValueLabel;
 @synthesize NavBar;
 @synthesize CaptainSlider;
 @synthesize ViceCaptainSlider;
@@ -46,6 +49,22 @@
     return self;
 }
 
+- (IBAction)battingOrderSliderChanged:(id)sender {
+	//NSLog([NSString stringWithFormat:@"after function: %d", initialSliderValue]);
+	NSString *item = [arrayForDetailView objectAtIndex:(initialSliderValue-1)];
+	[arrayForDetailView removeObject:item];
+	[arrayForDetailView insertObject:item atIndex:(int)([battingOrderSlider value]-1)];
+}
+
+- (IBAction)battingOrderSliderChanging:(id)sender {
+	sliderValueLabel.text = [NSString stringWithFormat:@"%d", (int)[battingOrderSlider value]];
+}
+
+- (IBAction)getInitialSlideValue:(id)sender {
+	//NSLog([NSString stringWithFormat:@"%d", (int)[battingOrderSlider value]]);
+	initialSliderValue = (int)[battingOrderSlider value];
+}
+
 - (IBAction)CSlider:(id)sender {
 	if (CaptainSlider.on) {
 		[ViceCaptainSlider setOn:NO animated:YES];
@@ -67,6 +86,7 @@
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
 	NavBar.title = [arrayForDetailView objectAtIndex:rowForDetaiView];
+	[battingOrderSlider setMaximumValue:([arrayForDetailView count]+0.9)];
 }
 
 - (void)viewDidUnload
@@ -76,6 +96,8 @@
 	[self setCaptainSlider:nil];
 	[self setViceCaptainSlider:nil];
 	[self setWicketKeeperSlider:nil];
+	[self setBattingOrderSlider:nil];
+	[self setSliderValueLabel:nil];
     [super viewDidUnload];
     // Release any retained subviews of the main view.
 }
