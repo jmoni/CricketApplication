@@ -8,6 +8,7 @@
 
 #import "ThirdViewController.h"
 #import "sqlite3.h"
+#include "SecondViewController.h"
 
 @interface ThirdViewController ()
 @property (strong, nonatomic) IBOutlet UIButton *batterName1;
@@ -81,7 +82,17 @@
 - (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)_choosePlayer;
 {
     return 1;
-}  
+}
+
+//number of rows in picker view
+- (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component{
+	return [homePlayersArray count];
+}
+
+//values in picker view (filled with homeTeam array for now)
+- (NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component {
+	return [homePlayersArray objectAtIndex:row];
+}
 
 
 #pragma mark Button methods
