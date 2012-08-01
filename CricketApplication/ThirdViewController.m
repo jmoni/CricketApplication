@@ -20,6 +20,10 @@
 @property (strong, nonatomic) IBOutlet UIPickerView *choosePlayer;
 @end
 
+UIView *newView;
+int height = 255;
+UIButton *batterButton;
+
 @implementation ThirdViewController
 @synthesize batterName1;
 @synthesize batterName2;
@@ -42,10 +46,10 @@
 -(IBAction)showActionSheet:(id)sender {
     batterName1.enabled = false;
     batterName2.enabled = false;
-    int height = 255;
+	batterButton = sender;
     
     //create new view
-    UIView * newView = [[UIView alloc] initWithFrame:CGRectMake(0, 200, 320, height)];
+    newView = [[UIView alloc] initWithFrame:CGRectMake(0, 200, 320, height)];
     newView.backgroundColor = [UIColor colorWithWhite:1 alpha:1];
     
     //add toolbar
@@ -79,7 +83,24 @@
     [UIView commitAnimations];
 }
 
-- (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)_choosePlayer;
+-(IBAction)hideActionSheet:(UIBarButtonItem *)_infoButtonItem{
+    batterName1.enabled = true;
+    batterName2.enabled = true;
+	
+	//animate onto screen
+	CGRect temp = newView.frame;
+    temp.origin.y = height;
+    newView.frame = temp;
+    [UIView beginAnimations:nil context:nil];
+    temp.origin.y += height;
+    newView.frame = temp;
+    [UIView commitAnimations];
+	
+	//remove view from page altogether
+	[newView removeFromSuperview];
+}
+
+- (NSInteger) numberOfComponentsInPickerView:(UIPickerView *)_choosePlayer;
 {
     return 1;
 }
@@ -94,14 +115,12 @@
 	return [homePlayersArray objectAtIndex:row];
 }
 
-
-#pragma mark Button methods
-
--(IBAction)hideActionSheet:(UIBarButtonItem *)_infoButtonItem{
-    batterName1.enabled = true;
-    batterName2.enabled = true;
-    
+- (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component
+{
+	//batterName1.titleLabel.text = [homePlayersArray objectAtIndex:row];
+	[batterButton setTitle:[homePlayersArray objectAtIndex:row] forState:UIControlStateNormal];
 }
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];

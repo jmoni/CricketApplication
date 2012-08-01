@@ -152,11 +152,11 @@
 		BDE2B14715C6AA63009E9F40 /* CricketApplication */ = {
 			isa = PBXGroup;
 			children = (
-				CE19D6F815C7F25D0023B990 /* ThirdTab */,
 				BDE2B15315C6AA64009E9F40 /* MainStoryboard.storyboard */,
-				BDE2B19415C6ADDF009E9F40 /* Delegate */,
-				BDE2B19315C6ADCD009E9F40 /* SecondTab */,
 				BDE2B19215C6ADBA009E9F40 /* FirstTab */,
+				BDE2B19315C6ADCD009E9F40 /* SecondTab */,
+				CE19D6F815C7F25D0023B990 /* ThirdTab */,
+				BDE2B19415C6ADDF009E9F40 /* Delegate */,
 				BDE2B18115C6AD8C009E9F40 /* Images */,
 				BDE2B14815C6AA63009E9F40 /* Supporting Files */,
 			);
