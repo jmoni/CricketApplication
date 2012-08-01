@@ -34,7 +34,7 @@
 }
 
 - (void)changeArrayValue{
-	[homePlayersArray replaceObjectAtIndex:rowForDetaiView withObject:[PlayerEditTextBox text]];
+	[arrayForDetailView replaceObjectAtIndex:rowForDetaiView withObject:[PlayerEditTextBox text]];
 }
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -66,7 +66,7 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
-	NavBar.title = [homePlayersArray objectAtIndex:rowForDetaiView];
+	NavBar.title = [arrayForDetailView objectAtIndex:rowForDetaiView];
 }
 
 - (void)viewDidUnload

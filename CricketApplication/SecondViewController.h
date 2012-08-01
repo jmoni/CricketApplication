@@ -10,6 +10,7 @@
 
 NSMutableArray *homePlayersArray;
 NSMutableArray *awayPlayersArray;
+NSMutableArray *arrayForDetailView;
 int rowForDetaiView;
 @interface SecondViewController : UIViewController <UITableViewDelegate, UITableViewDataSource, UINavigationBarDelegate>
 

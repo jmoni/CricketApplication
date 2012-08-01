@@ -15,10 +15,10 @@
 @property (strong, nonatomic) IBOutlet UIButton *awayWonToss;
 @property (strong, nonatomic) IBOutlet UIButton *battingButton;
 @property (strong, nonatomic) IBOutlet UIButton *fieldingButton;
-@property (strong, nonatomic) IBOutlet UIBarButtonItem *editHomePlayers;
-@property (strong, nonatomic) IBOutlet UIBarButtonItem *editAwayPlayers;
-@property (strong, nonatomic) IBOutlet UINavigationBar *homeNavBar;
 @property (strong, nonatomic) IBOutlet UIBarButtonItem *homeNavBarEditButton;
+@property (strong, nonatomic) IBOutlet UIBarButtonItem *awayNavBarEditButton;
+@property (strong, nonatomic) IBOutlet UIBarButtonItem *homeNavBarAddButton;
+@property (strong, nonatomic) IBOutlet UIBarButtonItem *awayNavBarAddButton;
 
 @end
 
@@ -29,10 +29,10 @@
 @synthesize awayWonToss;
 @synthesize battingButton;
 @synthesize fieldingButton;
-@synthesize editHomePlayers;
-@synthesize editAwayPlayers;
-@synthesize homeNavBar;
 @synthesize homeNavBarEditButton;
+@synthesize awayNavBarEditButton;
+@synthesize homeNavBarAddButton;
+@synthesize awayNavBarAddButton;
 int homePlayersCount = 12;
 int awayPlayersCount = 12;
 
@@ -60,10 +60,10 @@ int awayPlayersCount = 12;
 {
 	[self setHomePlayersTable:nil];
 	[self setAwayPlayersTable:nil];
-	[self setEditHomePlayers:nil];
-	[self setEditAwayPlayers:nil];
-	[self setHomeNavBar:nil];
 	[self setHomeNavBarEditButton:nil];
+	[self setAwayNavBarEditButton:nil];
+	[self setHomeNavBarAddButton:nil];
+	[self setAwayNavBarAddButton:nil];
     [super viewDidUnload];
     // Release any retained subviews of the main view.
 	[self setHomeWonToss:nil];
@@ -74,6 +74,7 @@ int awayPlayersCount = 12;
 
 - (void)viewDidAppear:(BOOL)animated {
 	[homePlayersTable reloadData];
+	[awayPlayersTable reloadData];
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
@@ -119,52 +120,93 @@ int awayPlayersCount = 12;
 // Process the row move. This means updating the data model to correct the item indices.
 - (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath
 	  toIndexPath:(NSIndexPath *)toIndexPath {
-	NSString *item = [homePlayersArray objectAtIndex:fromIndexPath.row];
-	[homePlayersArray removeObject:item];
-	[homePlayersArray insertObject:item atIndex:toIndexPath.row];
+	if([tableView isEqual:homePlayersTable]) {
+		NSString *item = [homePlayersArray objectAtIndex:fromIndexPath.row];
+		[homePlayersArray removeObject:item];
+		[homePlayersArray insertObject:item atIndex:toIndexPath.row];
+	} else if ([tableView isEqual:awayPlayersTable]) {
+		NSString *item = [awayPlayersArray objectAtIndex:fromIndexPath.row];
+		[awayPlayersArray removeObject:item];
+		[awayPlayersArray insertObject:item atIndex:toIndexPath.row];
+	}
 }
 
 // Update the data model according to edit actions delete or insert.
-- (void)tableView:(UITableView *)aTableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle
 forRowAtIndexPath:(NSIndexPath *)indexPath {
 	
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
+    if (editingStyle == UITableViewCellEditingStyleDelete && [tableView isEqual:homePlayersTable]) {
         [homePlayersArray removeObjectAtIndex:indexPath.row];
 		[homePlayersTable reloadData];
+    } else if (editingStyle == UITableViewCellEditingStyleDelete && [tableView isEqual:awayPlayersTable]) {
+        [awayPlayersArray removeObjectAtIndex:indexPath.row];
+		[awayPlayersTable reloadData];
     }
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
 	rowForDetaiView = indexPath.row;
 	DetailViewController *detail = [self.storyboard instantiateViewControllerWithIdentifier:@"Detail"];
+	
+	if ([tableView isEqual:homePlayersTable])
+		arrayForDetailView = homePlayersArray;
+	else if ([tableView isEqual:awayPlayersTable])
+		arrayForDetailView = awayPlayersArray;
+
 	[self.navigationController pushViewController:detail animated:YES];
 	
-	detail.PlayerEditTextBox.text = [homePlayersArray objectAtIndex:indexPath.row];
+	if ([tableView isEqual:homePlayersTable])
+		detail.PlayerEditTextBox.text = [homePlayersArray objectAtIndex:indexPath.row];
+	else if ([tableView isEqual:awayPlayersTable])
+		detail.PlayerEditTextBox.text = [awayPlayersArray objectAtIndex:indexPath.row];
 }
 
 - (IBAction)EditTable:(id)sender{
-	if(self.editing)
+	//NSLog(@"Sender of edit button is: %@\"", sender);
+	if(self.editing && [sender isEqual:homeNavBarEditButton])
 	{
-		[super setEditing:NO animated:NO];
+		//[super setEditing:NO animated:NO];
 		[homePlayersTable setEditing:NO animated:NO];
 		[homePlayersTable reloadData];
 		homeNavBarEditButton.title = @"Edit";
 		homeNavBarEditButton.style = UIBarButtonItemStylePlain;
 	}
-	else
+	else if(self.editing && [sender isEqual:awayNavBarEditButton])
 	{
-		[super setEditing:YES animated:YES];
+		//[super setEditing:NO animated:NO];
+		[awayPlayersTable setEditing:NO animated:NO];
+		[awayPlayersTable reloadData];
+		awayNavBarEditButton.title = @"Edit";
+		awayNavBarEditButton.style = UIBarButtonItemStylePlain;
+	}
+	else if([sender isEqual:homeNavBarEditButton])
+	{
+		//[super setEditing:YES animated:YES];
 		[homePlayersTable setEditing:YES animated:YES];
 		[homePlayersTable reloadData];
 		homeNavBarEditButton.title = @"Done";
 		homeNavBarEditButton.style = UIBarButtonItemStyleDone;
 	}
+	else if([sender isEqual:awayNavBarEditButton])
+	{
+		//[super setEditing:YES animated:YES];
+		[awayPlayersTable setEditing:YES animated:YES];
+		[awayPlayersTable reloadData];
+		awayNavBarEditButton.title = @"Done";
+		awayNavBarEditButton.style = UIBarButtonItemStyleDone;
+	}
 }
 
 - (IBAction)AddCell:(id)sender {
-	[homePlayersArray addObject:[NSString stringWithFormat:@"Player %d", homePlayersCount]];
-	[homePlayersTable reloadData];
-	homePlayersCount++;
+	if ([sender isEqual:homeNavBarAddButton]) {
+		[homePlayersArray addObject:[NSString stringWithFormat:@"Player %d", homePlayersCount]];
+		[homePlayersTable reloadData];
+		homePlayersCount++;
+	} else if ([sender isEqual:awayNavBarAddButton]) {
+		[awayPlayersArray addObject:[NSString stringWithFormat:@"Player %d", awayPlayersCount]];
+		[awayPlayersTable reloadData];
+		awayPlayersCount++;
+	}
 
 }
 
