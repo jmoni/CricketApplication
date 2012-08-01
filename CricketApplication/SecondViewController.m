@@ -163,17 +163,15 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
 
 - (IBAction)EditTable:(id)sender{
 	//NSLog(@"Sender of edit button is: %@\"", sender);
-	if(self.editing && [sender isEqual:homeNavBarEditButton])
+	if(homePlayersTable.editing && [sender isEqual:homeNavBarEditButton])
 	{
-		//[super setEditing:NO animated:NO];
 		[homePlayersTable setEditing:NO animated:NO];
 		[homePlayersTable reloadData];
 		homeNavBarEditButton.title = @"Edit";
 		homeNavBarEditButton.style = UIBarButtonItemStylePlain;
 	}
-	else if(self.editing && [sender isEqual:awayNavBarEditButton])
+	else if(awayPlayersTable.editing && [sender isEqual:awayNavBarEditButton])
 	{
-		//[super setEditing:NO animated:NO];
 		[awayPlayersTable setEditing:NO animated:NO];
 		[awayPlayersTable reloadData];
 		awayNavBarEditButton.title = @"Edit";
@@ -181,7 +179,6 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
 	}
 	else if([sender isEqual:homeNavBarEditButton])
 	{
-		//[super setEditing:YES animated:YES];
 		[homePlayersTable setEditing:YES animated:YES];
 		[homePlayersTable reloadData];
 		homeNavBarEditButton.title = @"Done";
@@ -189,7 +186,6 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
 	}
 	else if([sender isEqual:awayNavBarEditButton])
 	{
-		//[super setEditing:YES animated:YES];
 		[awayPlayersTable setEditing:YES animated:YES];
 		[awayPlayersTable reloadData];
 		awayNavBarEditButton.title = @"Done";
