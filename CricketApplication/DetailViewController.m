@@ -16,7 +16,7 @@
 int initialSliderValue;
 
 @implementation DetailViewController
-@synthesize PlayerEditTextBox;
+@synthesize playerEditTextBox;
 @synthesize battingOrderSlider;
 @synthesize sliderValueLabel;
 @synthesize NavBar;
@@ -27,17 +27,17 @@ int initialSliderValue;
 - (IBAction)textFieldReturn:(id)sender
 {
 	[self changeArrayValue];
-	[PlayerEditTextBox resignFirstResponder];
+	[playerEditTextBox resignFirstResponder];
 }
 
 - (IBAction)backgroundTouched:(id)sender
 {
 	[self changeArrayValue];
-	[PlayerEditTextBox resignFirstResponder];
+	[playerEditTextBox resignFirstResponder];
 }
 
 - (void)changeArrayValue{
-	[arrayForDetailView replaceObjectAtIndex:rowForDetaiView withObject:[PlayerEditTextBox text]];
+	[arrayForDetailView replaceObjectAtIndex:rowForDetaiView withObject:[playerEditTextBox text]];
 }
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil

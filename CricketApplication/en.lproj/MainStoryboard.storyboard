@@ -371,10 +371,10 @@
                     <connections>
                         <outlet property="CaptainSlider" destination="oeg-43-geI" id="HJ1-Hy-ypH"/>
                         <outlet property="NavBar" destination="6uV-Pg-Z2c" id="OkX-AJ-BaK"/>
-                        <outlet property="PlayerEditTextBox" destination="Zm8-sJ-V8u" id="9Ie-gp-nqU"/>
                         <outlet property="ViceCaptainSlider" destination="fxi-8S-mfb" id="Pf5-RZ-bTs"/>
                         <outlet property="WicketKeeperSlider" destination="KXx-n3-voW" id="a4A-2f-lcS"/>
                         <outlet property="battingOrderSlider" destination="EgM-S1-pSO" id="sTG-eT-ZXp"/>
+                        <outlet property="playerEditTextBox" destination="Zm8-sJ-V8u" id="0Iu-NJ-KNu"/>
                         <outlet property="sliderValueLabel" destination="6gN-8x-x1h" id="suV-Hu-Rj5"/>
                     </connections>
                 </viewController>
@@ -422,7 +422,7 @@
                                 <rect key="frame" x="140" y="45" width="160" height="29"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="boldSystem" size="button"/>
-                                <state key="normal" title="Batter 1">
+                                <state key="normal">
                                     <color key="titleColor" red="0.19607843137254902" green="0.30980392156862746" blue="0.52156862745098043" alpha="1" colorSpace="calibratedRGB"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
@@ -437,7 +437,7 @@
                                 <rect key="frame" x="140" y="75" width="160" height="29"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="boldSystem" size="button"/>
-                                <state key="normal" title="Batter 2">
+                                <state key="normal">
                                     <color key="titleColor" red="0.19607843137254902" green="0.30980392156862746" blue="0.52156862745098043" alpha="1" colorSpace="calibratedRGB"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
@@ -545,6 +545,7 @@
                 <relationship kind="outlet" name="ViceCaptainSlider" candidateClass="UISwitch"/>
                 <relationship kind="outlet" name="WicketKeeperSlider" candidateClass="UISwitch"/>
                 <relationship kind="outlet" name="battingOrderSlider" candidateClass="UISlider"/>
+                <relationship kind="outlet" name="playerEditTextBox" candidateClass="UITextField"/>
                 <relationship kind="outlet" name="sliderValueLabel" candidateClass="UILabel"/>
             </relationships>
         </class>

@@ -157,9 +157,9 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
 	[self.navigationController pushViewController:detail animated:YES];
 	
 	if ([tableView isEqual:homePlayersTable]) {
-		detail.PlayerEditTextBox.text = [homePlayersArray objectAtIndex:indexPath.row];
+		detail.playerEditTextBox.text = [homePlayersArray objectAtIndex:indexPath.row];
 	} else if ([tableView isEqual:awayPlayersTable]) {
-		detail.PlayerEditTextBox.text = [awayPlayersArray objectAtIndex:indexPath.row];
+		detail.playerEditTextBox.text = [awayPlayersArray objectAtIndex:indexPath.row];
 	}
 	detail.battingOrderSlider.value = indexPath.row+1.9;
 	detail.sliderValueLabel.text = [NSString  stringWithFormat:@"%d", indexPath.row+1];

@@ -10,7 +10,7 @@
 
 @interface DetailViewController : UIViewController <UITextFieldDelegate>
 
-@property (strong, nonatomic) IBOutlet UITextField *PlayerEditTextBox;
+@property (strong, nonatomic) IBOutlet UITextField *playerEditTextBox;
 @property (strong, nonatomic) IBOutlet UISlider *battingOrderSlider;
 @property (strong, nonatomic) IBOutlet UILabel *sliderValueLabel;
 @property (strong, nonatomic) IBOutlet UINavigationItem *NavBar;
