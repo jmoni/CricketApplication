@@ -35,6 +35,11 @@
 @synthesize awayNavBarAddButton;
 int homePlayersCount = 12;
 int awayPlayersCount = 12;
+UIImage *captainIcon;
+UIImage *viceCaptainIcon;
+UIImage *wicketKeeperIcon;
+UIImage *captainWicketKeeper;
+UIImage *viceCaptainWicketKeeper;
 
 - (void)viewDidLoad
 {
@@ -54,6 +59,14 @@ int awayPlayersCount = 12;
 		[homePlayersArray addObject:[NSString stringWithFormat:@"Player %d", i]];
 		[awayPlayersArray addObject:[NSString stringWithFormat:@"Player %d", i]];
 	}
+	homeViceCaptain = 1;
+	awayViceCaptain = 1;
+	
+	captainIcon = [UIImage imageNamed:@"CaptainIcon.png"];
+	viceCaptainIcon = [UIImage imageNamed:@"ViceCaptainIcon.png"];
+	wicketKeeperIcon = [UIImage imageNamed:@"WicketKeeperIcon.png"];
+	captainWicketKeeper = [UIImage imageNamed:@"captainWicketKeeper.png"];
+	viceCaptainWicketKeeper = [UIImage imageNamed:@"viceCaptainWicketKeeper.png"];
 }
 
 - (void)viewDidUnload
@@ -103,11 +116,52 @@ int awayPlayersCount = 12;
     // configure your cell here...
 	cell.textLabel.font = [UIFont systemFontOfSize:14.0];
 	
+	UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+	CGRect frame = CGRectMake(0.0, 0.0, 32.0, 32.0);
+	button.frame = frame;
+	
 	if ([tableView isEqual:homePlayersTable])
     {
 		cell.textLabel.text = [homePlayersArray objectAtIndex:indexPath.row];
+		if (homeCaptain == indexPath.row && homeWicketKeeper == indexPath.row) {
+			[button setBackgroundImage:captainWicketKeeper forState:UIControlStateNormal];
+			[cell setAccessoryView:button];
+		} else if (homeViceCaptain == indexPath.row && homeWicketKeeper == indexPath.row) {
+			[button setBackgroundImage:viceCaptainWicketKeeper forState:UIControlStateNormal];
+			[cell setAccessoryView:button];
+		} else if (homeCaptain == indexPath.row) {
+			[button setBackgroundImage:captainIcon forState:UIControlStateNormal];
+			[cell setAccessoryView:button];
+		} else if (homeViceCaptain == indexPath.row) {
+			[button setBackgroundImage:viceCaptainIcon forState:UIControlStateNormal];
+			[cell setAccessoryView:button];
+		} else if (homeWicketKeeper == indexPath.row) {
+			[button setBackgroundImage:wicketKeeperIcon forState:UIControlStateNormal];
+			[cell setAccessoryView:button];
+		} else {
+			[cell setAccessoryView:nil];
+			[cell setAccessoryType:UITableViewCellAccessoryDisclosureIndicator];
+		}
 	} else if ([tableView isEqual:awayPlayersTable]) {
 		cell.textLabel.text = [awayPlayersArray objectAtIndex:indexPath.row];
+		if (awayCaptain == indexPath.row && awayWicketKeeper == indexPath.row) {
+			[button setBackgroundImage:captainWicketKeeper forState:UIControlStateNormal];
+			[cell setAccessoryView:button];
+		} else if (awayViceCaptain == indexPath.row && awayWicketKeeper == indexPath.row) {
+			[button setBackgroundImage:viceCaptainWicketKeeper forState:UIControlStateNormal];
+			[cell setAccessoryView:button];
+		} else if (awayCaptain == indexPath.row) {
+			[button setBackgroundImage:captainIcon forState:UIControlStateNormal];
+			[cell setAccessoryView:button];
+		} else if (awayViceCaptain == indexPath.row) {
+			[button setBackgroundImage:viceCaptainIcon forState:UIControlStateNormal];
+			[cell setAccessoryView:button];
+		} else if (awayWicketKeeper == indexPath.row) {
+			[button setBackgroundImage:wicketKeeperIcon forState:UIControlStateNormal];
+			[cell setAccessoryView:button];
+		} else
+			[cell setAccessoryView:nil];
+			[cell setAccessoryType:UITableViewCellAccessoryDisclosureIndicator];
 	}
     return cell;
 }
@@ -149,17 +203,33 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
 	rowForDetaiView = indexPath.row;
 	DetailViewController *detail = [self.storyboard instantiateViewControllerWithIdentifier:@"Detail"];
 	
-	if ([tableView isEqual:homePlayersTable])
+	if ([tableView isEqual:homePlayersTable]) {
 		arrayForDetailView = homePlayersArray;
-	else if ([tableView isEqual:awayPlayersTable])
+		teamForDetailView = @"home";
+	} else if ([tableView isEqual:awayPlayersTable]) {
 		arrayForDetailView = awayPlayersArray;
+		teamForDetailView = @"away";
+	}
 
 	[self.navigationController pushViewController:detail animated:YES];
 	
+	NSLog(@"home captain is equal to %d", homeCaptain);
 	if ([tableView isEqual:homePlayersTable]) {
 		detail.playerEditTextBox.text = [homePlayersArray objectAtIndex:indexPath.row];
+		if (homeCaptain == indexPath.row)
+			[detail.CaptainSlider setOn:YES animated:YES];
+		else if (homeViceCaptain == indexPath.row)
+			[detail.ViceCaptainSlider setOn:YES animated:YES];
+		if (homeWicketKeeper == indexPath.row)
+			[detail.WicketKeeperSlider setOn:YES animated:YES];
 	} else if ([tableView isEqual:awayPlayersTable]) {
 		detail.playerEditTextBox.text = [awayPlayersArray objectAtIndex:indexPath.row];
+		if (awayCaptain == indexPath.row)
+			[detail.CaptainSlider setOn:YES animated:YES];
+		else if (awayViceCaptain == indexPath.row)
+			[detail.ViceCaptainSlider setOn:YES animated:YES];
+		if (awayWicketKeeper == indexPath.row)
+			[detail.WicketKeeperSlider setOn:YES animated:YES];
 	}
 	detail.battingOrderSlider.value = indexPath.row+1.9;
 	detail.sliderValueLabel.text = [NSString  stringWithFormat:@"%d", indexPath.row+1];
