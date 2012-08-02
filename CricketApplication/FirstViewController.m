@@ -18,8 +18,14 @@ UIView *newView;
 @implementation FirstViewController
 @synthesize homeTeamEntered = _homeTeamEntered;
 @synthesize awayTeamEntered = _awayTeamEntered;
+@synthesize timeSlide = _timeSlide;
 @synthesize dateButton = _dateButton;
 @synthesize dateText = _dateText;
+@synthesize overSlide = _overSlide;
+@synthesize overTimeLabel = _overTimeLabel;
+@synthesize umpire = _umpire;
+@synthesize switcher = _switcher;
+@synthesize timeLabel = _timeLabel;
 @synthesize infoButtonItem = _infoButtonItem;
 
 
@@ -127,6 +133,39 @@ UIView *newView;
     
     [_dateButton setTitle:strDate forState:UIControlStateNormal];
 }
+
+-(IBAction)sliderUpdate:(id)sender{
+    _overTimeLabel.text = [NSString stringWithFormat:@"%d",(int)_overSlide.value];
+}
+
+- (IBAction)flipSwitch: (id)sender{
+    if ([_switcher selectedSegmentIndex] == 1) {
+        _overSlide.hidden = TRUE;
+        _timeSlide.hidden = FALSE;
+        _overTimeLabel.hidden = TRUE;
+        _timeLabel.hidden = FALSE;
+    }
+    else {
+        _overSlide.hidden = FALSE;
+        _timeSlide.hidden = TRUE;
+        _overTimeLabel.hidden = FALSE;
+        _timeLabel.hidden = TRUE;
+    }
+}
+
+-(IBAction)timeSliderUpdate:(id)sender{
+    NSString *labelNum = [NSString stringWithFormat:@"%d",(int)_timeSlide.value];
+    NSString *temp;
+    if ((int)[_timeSlide value] == 1){
+        temp = [labelNum stringByAppendingFormat:@" Day"];
+        _timeLabel.text = temp;
+    }
+    else {
+         temp = [labelNum stringByAppendingFormat:@" Days"];
+        _timeLabel.text = temp;
+    }
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -146,6 +185,12 @@ UIView *newView;
     [self setAwayTeamEntered:nil];
     [self setDateButton:nil];
     [self setDateText:nil];
+    [self setOverTimeLabel:nil];
+    [self setOverSlide:nil];
+    [self setSwitcher:nil];
+    [self setTimeSlide:nil];
+    [self setTimeLabel:nil];
+    [self setUmpire:nil];
     [super viewDidUnload];
     // Release any retained subviews of the main view.
 }

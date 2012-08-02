@@ -37,7 +37,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" id="ZEb-Gx-S6m">
-                                <rect key="frame" x="79" y="37" width="221" height="31"/>
+                                <rect key="frame" x="88" y="37" width="212" height="31"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
@@ -46,7 +46,7 @@
                                 </connections>
                             </textField>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" id="Ndf-bB-5Cu">
-                                <rect key="frame" x="79" y="76" width="221" height="31"/>
+                                <rect key="frame" x="88" y="76" width="212" height="31"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
@@ -76,6 +76,73 @@
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Match Type:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" id="1B4-N7-W1H">
+                                <rect key="frame" x="18" y="173" width="101" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" id="pgH-oW-I60">
+                                <rect key="frame" x="146" y="162" width="154" height="44"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <segments>
+                                    <segment title="Overs"/>
+                                    <segment title="Timed"/>
+                                </segments>
+                                <connections>
+                                    <action selector="flipSwitch:" destination="2" eventType="valueChanged" id="aJy-GZ-yHO"/>
+                                </connections>
+                            </segmentedControl>
+                            <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="20" minValue="20" maxValue="50" id="bdN-ml-MgV">
+                                <rect key="frame" x="144" y="213" width="127" height="23"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <connections>
+                                    <action selector="sliderUpdate:" destination="2" eventType="valueChanged" id="Ynb-i1-yIt"/>
+                                </connections>
+                            </slider>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="20" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" id="d1O-vo-ils">
+                                <rect key="frame" x="277" y="213" width="23" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <slider hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="1" minValue="1" maxValue="5" id="GKa-39-q6P">
+                                <rect key="frame" x="144" y="213" width="91" height="23"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <connections>
+                                    <action selector="timeSliderUpdate:" destination="2" eventType="valueChanged" id="8yM-02-JwM"/>
+                                </connections>
+                            </slider>
+                            <label hidden="YES" opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="1 Day" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" id="Hez-8K-NCX">
+                                <rect key="frame" x="241" y="214" width="59" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Umpire:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" id="CxK-CA-14i">
+                                <rect key="frame" x="20" y="277" width="60" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" id="r4c-0C-Pss">
+                                <rect key="frame" x="88" y="273" width="212" height="31"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Optional" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" id="5cT-hy-r3q">
+                                <rect key="frame" x="20" y="242" width="89" height="27"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                                <color key="shadowColor" cocoaTouchSystemColor="darkTextColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <connections>
@@ -88,6 +155,12 @@
                         <outlet property="awayTeamEntered" destination="Ndf-bB-5Cu" id="QOb-aV-HXc"/>
                         <outlet property="dateButton" destination="54i-gY-iLM" id="kuY-qN-qVZ"/>
                         <outlet property="homeTeamEntered" destination="ZEb-Gx-S6m" id="zni-31-qyd"/>
+                        <outlet property="overSlide" destination="bdN-ml-MgV" id="KTQ-vQ-OnJ"/>
+                        <outlet property="overTimeLabel" destination="d1O-vo-ils" id="svt-II-nYQ"/>
+                        <outlet property="switcher" destination="pgH-oW-I60" id="59T-ab-T3K"/>
+                        <outlet property="timeLabel" destination="Hez-8K-NCX" id="G7C-i2-7bH"/>
+                        <outlet property="timeSlide" destination="GKa-39-q6P" id="u4Y-uF-CxQ"/>
+                        <outlet property="umpire" destination="r4c-0C-Pss" id="Ie1-3f-RMK"/>
                     </connections>
                 </viewController>
             </objects>
@@ -558,16 +631,26 @@
             <source key="sourceIdentifier" type="project" relativePath="./Classes/FirstViewController.h"/>
             <relationships>
                 <relationship kind="action" name="backgroundTouched:"/>
+                <relationship kind="action" name="changeDate:"/>
+                <relationship kind="action" name="flipSwitch:"/>
                 <relationship kind="action" name="hideActionSheet:" candidateClass="UIBarButtonItem"/>
                 <relationship kind="action" name="hideActionSheetB:"/>
                 <relationship kind="action" name="showActionSheet:"/>
+                <relationship kind="action" name="sliderUpdate:"/>
                 <relationship kind="action" name="textFieldReturn:"/>
+                <relationship kind="action" name="timeSliderUpdate:"/>
                 <relationship kind="outlet" name="awayTeamEntered" candidateClass="UITextField"/>
                 <relationship kind="outlet" name="dateButton" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="datePicker" candidateClass="UIDatePicker"/>
                 <relationship kind="outlet" name="dateText" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="homeTeamEntered" candidateClass="UITextField"/>
                 <relationship kind="outlet" name="infoButtonItem" candidateClass="UIBarButtonItem"/>
-                <relationship kind="outlet" name="myPicker" candidateClass="UIDatePicker"/>
+                <relationship kind="outlet" name="overSlide" candidateClass="UISlider"/>
+                <relationship kind="outlet" name="overTimeLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="switcher" candidateClass="UISegmentedControl"/>
+                <relationship kind="outlet" name="timeLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="timeSlide" candidateClass="UISlider"/>
+                <relationship kind="outlet" name="umpire" candidateClass="UITextField"/>
             </relationships>
         </class>
         <class className="SecondViewController" superclassName="UIViewController">
