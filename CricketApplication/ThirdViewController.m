@@ -9,6 +9,7 @@
 #import "ThirdViewController.h"
 #import "sqlite3.h"
 #include "SecondViewController.h"
+#include "FirstViewController.h"
 
 @interface ThirdViewController ()
 @property (strong, nonatomic) IBOutlet UIButton *batterName1;
@@ -153,25 +154,32 @@ UIButton *batterButton;
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
+	[teamName setText:homeTeam];
 	if ([battingTeam isEqualToString:@"home"]) {
+		[teamName setText:homeTeam];
 		[batterName1 setTitle:[homePlayersArray objectAtIndex:0] forState:UIControlStateNormal];
 		[batterName2 setTitle:[homePlayersArray objectAtIndex:1] forState:UIControlStateNormal];
 	} else if ([battingTeam isEqualToString:@"away"]) {
+		[teamName setText:awayTeam];
 		[batterName1 setTitle:[awayPlayersArray objectAtIndex:0] forState:UIControlStateNormal];
 		[batterName2 setTitle:[awayPlayersArray objectAtIndex:1] forState:UIControlStateNormal];
 	}
 }
 
-/*- (void)viewDidAppear:(BOOL)animated
+- (void)viewDidAppear:(BOOL)animated
 {
-	if ([battingTeam isEqualToString:@"home"]) {
+	/*if ([battingTeam isEqualToString:@"home"] && [homePlayersArray count] > 0) {
 		[batterName1 setTitle:[homePlayersArray objectAtIndex:0] forState:UIControlStateNormal];
 		[batterName2 setTitle:[homePlayersArray objectAtIndex:1] forState:UIControlStateNormal];
-	} else if ([battingTeam isEqualToString:@"away"]) {
+	} else if ([battingTeam isEqualToString:@"away"] && [homePlayersArray count] > 0) {
 		[batterName1 setTitle:[awayPlayersArray objectAtIndex:0] forState:UIControlStateNormal];
 		[batterName2 setTitle:[awayPlayersArray objectAtIndex:1] forState:UIControlStateNormal];
-	}
-}*/
+	}*/
+	if ([battingTeam isEqualToString:@"home"])
+		[teamName setText:homeTeam];
+	else if ([battingTeam isEqualToString:@"away"])
+		[teamName setText:awayTeam];
+}
 
 - (void)viewDidUnload
 {

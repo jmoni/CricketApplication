@@ -8,10 +8,11 @@
 
 #import <UIKit/UIKit.h>
 
+NSString *homeTeam;
+NSString *awayTeam;
+
 @interface FirstViewController : UIViewController <UIActionSheetDelegate, UITextFieldDelegate, UIScrollViewDelegate>{
-    UITextField *homeTeamEntered;
-    UITextField *awayTeamEntered;
-    IBOutlet UIDatePicker *datePicker;
+	IBOutlet UIDatePicker *datePicker;
 }
 
 @property (strong, nonatomic) IBOutlet UITextField *homeTeamEntered;

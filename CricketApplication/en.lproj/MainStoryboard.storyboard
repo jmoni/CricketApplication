@@ -178,9 +178,9 @@
                     </view>
                     <tabBarItem key="tabBarItem" title="First" image="first" id="7"/>
                     <connections>
-                        <outlet property="awayTeamEntered" destination="Ndf-bB-5Cu" id="QOb-aV-HXc"/>
+                        <outlet property="awayTeamEntered" destination="Ndf-bB-5Cu" id="xTr-KC-CWV"/>
                         <outlet property="dateButton" destination="54i-gY-iLM" id="kuY-qN-qVZ"/>
-                        <outlet property="homeTeamEntered" destination="ZEb-Gx-S6m" id="zni-31-qyd"/>
+                        <outlet property="homeTeamEntered" destination="ZEb-Gx-S6m" id="vgT-hy-q5u"/>
                         <outlet property="overSlide" destination="bdN-ml-MgV" id="KTQ-vQ-OnJ"/>
                         <outlet property="overTimeLabel" destination="d1O-vo-ils" id="svt-II-nYQ"/>
                         <outlet property="scrollView" destination="DhV-mD-UBH" id="ajq-PR-ZWp"/>

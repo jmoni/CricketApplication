@@ -87,7 +87,15 @@ UITextField *activeField;
 
 -(IBAction)textFieldReturn:(id)sender
 {
-    [sender resignFirstResponder];
+	if([[_homeTeamEntered text] length] > 0)
+		homeTeam = [_homeTeamEntered text];
+	else
+		homeTeam = @"Team 1";
+	if([[_awayTeamEntered text] length] > 0)
+		awayTeam = [_awayTeamEntered text];
+	else
+		awayTeam = @"Team 2";
+	[sender resignFirstResponder];
 }
 
 /*- (IBAction)backgroundTouched:(id)sender
@@ -210,6 +218,8 @@ UITextField *activeField;
     NSString *strDate = [dateFormat stringFromDate:date];
 	
     [_dateButton setTitle:strDate forState:UIControlStateNormal];
+	homeTeam = @"Team 1";
+	awayTeam = @"Team 2";
 }
 
 - (void)viewDidUnload
@@ -224,6 +234,7 @@ UITextField *activeField;
     [self setTimeSlide:nil];
     [self setTimeLabel:nil];
 	[self setScrollView:nil];
+	[self setHomeTeamEntered:nil];
     [super viewDidUnload];
     // Release any retained subviews of the main view.
 }
