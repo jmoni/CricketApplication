@@ -54,6 +54,51 @@ int initialSliderValue;
 	NSString *item = [arrayForDetailView objectAtIndex:(initialSliderValue-1)];
 	[arrayForDetailView removeObject:item];
 	[arrayForDetailView insertObject:item atIndex:(int)([battingOrderSlider value]-1)];
+	if ([teamForDetailView isEqualToString:@"home"]) {
+		if (homeCaptain == (initialSliderValue-1)) {
+			homeCaptain = (int)([battingOrderSlider value]-1);
+		} else if (homeCaptain > (initialSliderValue-1) && homeCaptain <= (int)([battingOrderSlider value]-1)) {
+			homeCaptain--;
+		} else if (homeCaptain < (initialSliderValue-1) && homeCaptain >= (int)([battingOrderSlider value]-1)) {
+			homeCaptain++;
+		}
+		if (homeViceCaptain == (initialSliderValue-1)) {
+			homeViceCaptain = (int)([battingOrderSlider value]-1);
+		} else if (homeViceCaptain > (initialSliderValue-1) && homeViceCaptain <= (int)([battingOrderSlider value]-1)) {
+			homeViceCaptain--;
+		} else if (homeViceCaptain < (initialSliderValue-1) && homeViceCaptain >= (int)([battingOrderSlider value]-1)) {
+			homeViceCaptain++;
+		}
+		if (homeWicketKeeper == (initialSliderValue-1)) {
+			homeWicketKeeper = (int)([battingOrderSlider value]-1);
+		}else if (homeWicketKeeper > (initialSliderValue-1) && homeWicketKeeper <= (int)([battingOrderSlider value]-1)) {
+			homeWicketKeeper--;
+		} else if (homeWicketKeeper < (initialSliderValue-1) && homeWicketKeeper >= (int)([battingOrderSlider value]-1)) {
+			homeWicketKeeper++;
+		}
+	} else {
+		if (awayCaptain == (initialSliderValue-1)) {
+			awayCaptain = (int)([battingOrderSlider value]-1);
+		} else if (awayCaptain > (initialSliderValue-1) && awayCaptain <= (int)([battingOrderSlider value]-1)) {
+			awayCaptain--;
+		} else if (awayCaptain < (initialSliderValue-1) && awayCaptain >= (int)([battingOrderSlider value]-1)) {
+			awayCaptain++;
+		}
+		if (awayViceCaptain == (initialSliderValue-1)) {
+			awayViceCaptain = (int)([battingOrderSlider value]-1);
+		} else if (awayViceCaptain > (initialSliderValue-1) && awayViceCaptain <= (int)([battingOrderSlider value]-1)) {
+			awayViceCaptain--;
+		} else if (awayViceCaptain < (initialSliderValue-1) && awayViceCaptain >= (int)([battingOrderSlider value]-1)) {
+			awayViceCaptain++;
+		}
+		if (awayWicketKeeper == (initialSliderValue-1)) {
+			awayWicketKeeper = (int)([battingOrderSlider value]-1);
+		}else if (awayWicketKeeper > (initialSliderValue-1) && awayWicketKeeper <= (int)([battingOrderSlider value]-1)) {
+			awayWicketKeeper--;
+		} else if (awayWicketKeeper < (initialSliderValue-1) && awayWicketKeeper >= (int)([battingOrderSlider value]-1)) {
+			awayWicketKeeper++;
+		}
+	}
 }
 
 - (IBAction)battingOrderSliderChanging:(id)sender {

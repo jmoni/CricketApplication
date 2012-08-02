@@ -19,9 +19,14 @@ int homeWicketKeeper;
 int awayCaptain;
 int awayViceCaptain;
 int awayWicketKeeper;
+NSString *battingTeam;
 @interface SecondViewController : UIViewController <UITableViewDelegate, UITableViewDataSource, UINavigationBarDelegate>
 
 @property (strong, nonatomic) IBOutlet UITableView *homePlayersTable;
 @property (strong, nonatomic) IBOutlet UITableView *awayPlayersTable;
+@property (strong, nonatomic) IBOutlet UIButton *homeWonToss;
+@property (strong, nonatomic) IBOutlet UIButton *awayWonToss;
+@property (strong, nonatomic) IBOutlet UIButton *battingButton;
+@property (strong, nonatomic) IBOutlet UIButton *fieldingButton;
 
 @end

@@ -117,32 +117,59 @@ UIButton *batterButton;
 	//[newView removeFromSuperview];
 }
 
-- (NSInteger) numberOfComponentsInPickerView:(UIPickerView *)_choosePlayer;
-{
+- (NSInteger) numberOfComponentsInPickerView:(UIPickerView *)_choosePlayer{
     return 1;
 }
 
 //number of rows in picker view
 - (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component{
-	return [homePlayersArray count];
+	if ([battingTeam isEqualToString:@"home"])
+		return [homePlayersArray count];
+	else if ([battingTeam isEqualToString:@"away"])
+		return [awayPlayersArray count];
+	else return 0;
 }
 
 //values in picker view (filled with homeTeam array for now)
 - (NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component {
-	return [homePlayersArray objectAtIndex:row];
+	if ([battingTeam isEqualToString:@"home"])
+		return [homePlayersArray objectAtIndex:row];
+	else if ([battingTeam isEqualToString:@"away"])
+		return [awayPlayersArray objectAtIndex:row];
+	else return 0;
 }
 
 - (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component
 {
-	//batterName1.titleLabel.text = [homePlayersArray objectAtIndex:row];
-	[batterButton setTitle:[homePlayersArray objectAtIndex:row] forState:UIControlStateNormal];
+	if ([battingTeam isEqualToString:@"home"])
+		[batterButton setTitle:[homePlayersArray objectAtIndex:row] forState:UIControlStateNormal];
+	else if ([battingTeam isEqualToString:@"away"])
+		[batterButton setTitle:[awayPlayersArray objectAtIndex:row] forState:UIControlStateNormal];
 }
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
+	if ([battingTeam isEqualToString:@"home"]) {
+		[batterName1 setTitle:[homePlayersArray objectAtIndex:0] forState:UIControlStateNormal];
+		[batterName2 setTitle:[homePlayersArray objectAtIndex:1] forState:UIControlStateNormal];
+	} else if ([battingTeam isEqualToString:@"away"]) {
+		[batterName1 setTitle:[awayPlayersArray objectAtIndex:0] forState:UIControlStateNormal];
+		[batterName2 setTitle:[awayPlayersArray objectAtIndex:1] forState:UIControlStateNormal];
+	}
 }
+
+/*- (void)viewDidAppear:(BOOL)animated
+{
+	if ([battingTeam isEqualToString:@"home"]) {
+		[batterName1 setTitle:[homePlayersArray objectAtIndex:0] forState:UIControlStateNormal];
+		[batterName2 setTitle:[homePlayersArray objectAtIndex:1] forState:UIControlStateNormal];
+	} else if ([battingTeam isEqualToString:@"away"]) {
+		[batterName1 setTitle:[awayPlayersArray objectAtIndex:0] forState:UIControlStateNormal];
+		[batterName2 setTitle:[awayPlayersArray objectAtIndex:1] forState:UIControlStateNormal];
+	}
+}*/
 
 - (void)viewDidUnload
 {

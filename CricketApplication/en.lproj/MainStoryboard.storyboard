@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="1.1" toolsVersion="2182" systemVersion="11D50" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" initialViewController="uFg-XV-yPu">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="1.1" toolsVersion="2549" systemVersion="12A269" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" initialViewController="uFg-XV-yPu">
     <dependencies>
         <deployment defaultVersion="1296" identifier="iOS"/>
         <development version="4200" identifier="xcode"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="1181"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="1498"/>
     </dependencies>
     <scenes>
         <!--First View Controller - First Tab-->
@@ -785,7 +785,6 @@
             <relationships>
                 <relationship kind="action" name="backgroundTouched:"/>
                 <relationship kind="action" name="changeDate:"/>
-                <relationship kind="action" name="flipSwitch:"/>
                 <relationship kind="action" name="hideActionSheet:" candidateClass="UIBarButtonItem"/>
                 <relationship kind="action" name="hideActionSheetB:"/>
                 <relationship kind="action" name="showActionSheet:"/>
@@ -798,12 +797,6 @@
                 <relationship kind="outlet" name="dateText" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="homeTeamEntered" candidateClass="UITextField"/>
                 <relationship kind="outlet" name="infoButtonItem" candidateClass="UIBarButtonItem"/>
-                <relationship kind="outlet" name="overSlide" candidateClass="UISlider"/>
-                <relationship kind="outlet" name="overTimeLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="switcher" candidateClass="UISegmentedControl"/>
-                <relationship kind="outlet" name="timeLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="timeSlide" candidateClass="UISlider"/>
-                <relationship kind="outlet" name="umpire" candidateClass="UITextField"/>
             </relationships>
         </class>
         <class className="SecondViewController" superclassName="UIViewController">
