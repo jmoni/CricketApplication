@@ -11,7 +11,7 @@
 @interface FirstViewController : UIViewController <UIActionSheetDelegate>{
     UITextField *homeTeamEntered;
     UITextField *awayTeamEntered;
-    IBOutlet UIDatePicker *myPicker;
+    IBOutlet UIDatePicker *datePicker;
 }
 
 @property (strong, nonatomic) IBOutlet UITextField *homeTeamEntered;
@@ -23,6 +23,9 @@
 
 
 - (IBAction) showActionSheet: (id) sender;
-- (IBAction) hideActionSheet: (id) sender;
-
+- (IBAction)hideActionSheet: (UIBarButtonItem *)_infoButtonItem;
+- (IBAction)hideActionSheetB:(id)sender;
+- (IBAction)textFieldReturn:(id)sender;
+- (IBAction)backgroundTouched:(id)sender;
+- (IBAction)changeDate: (id)sender;
 @end

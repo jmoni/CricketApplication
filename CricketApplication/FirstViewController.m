@@ -12,7 +12,9 @@
 @interface FirstViewController ()
 
 @end
-
+NSDate *date;
+//int height = 255;
+UIView *newView;
 @implementation FirstViewController
 @synthesize homeTeamEntered = _homeTeamEntered;
 @synthesize awayTeamEntered = _awayTeamEntered;
@@ -24,11 +26,12 @@
 
 
 -(IBAction)showActionSheet:(id)sender {
-
+    _homeTeamEntered.enabled = false;
+    _awayTeamEntered.enabled = false;
+    
     int height = 255;
-
     //create new view
-    UIView * newView = [[UIView alloc] initWithFrame:CGRectMake(0, 200, 320, height)];
+    newView = [[UIView alloc] initWithFrame:CGRectMake(0, 200, 320, height)];
     newView.backgroundColor = [UIColor colorWithWhite:1 alpha:1];
 
     //add toolbar
@@ -36,16 +39,16 @@
     toolbar.barStyle = UIBarStyleBlack;
 
     //add button
-    _infoButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Done" style:UIBarButtonItemStyleDone     target:self action:nil];
+    _infoButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Done" style:UIBarButtonItemStyleDone     target:self action:@selector(hideActionSheet:)];
     toolbar.items = [NSArray arrayWithObjects:_infoButtonItem, nil];
 
     //add date picker
-    UIDatePicker *datePicker = [[UIDatePicker alloc] init];
+    datePicker = [[UIDatePicker alloc] init];
     datePicker.datePickerMode = UIDatePickerModeDate;
     datePicker.hidden = NO;
-    datePicker.date = [NSDate date];
+    datePicker.date = date;
     datePicker.frame = CGRectMake(0, 40, 320, 250);
-    [datePicker addTarget:self action:nil/*@selector(changeDateInLabel:)*/ forControlEvents:UIControlEventValueChanged];
+    [datePicker addTarget:self action:@selector(changeDate:) forControlEvents:UIControlEventValueChanged];
     [newView addSubview:datePicker];
 
     //add popup view
@@ -61,16 +64,48 @@
     newView.frame = temp;
     [UIView commitAnimations];
 }
-
--(IBAction)hideActionSheet:(id)sender {
-    
+-(IBAction)hideActionSheet:(UIBarButtonItem *)_infoButtonItem{
+    _homeTeamEntered.enabled = true;
+    _awayTeamEntered.enabled = true;
+	int height = 255;
+	//animate onto screen
+	CGRect temp = newView.frame;
+    temp.origin.y = height;
+    newView.frame = temp;
+    [UIView beginAnimations:nil context:nil];
+    temp.origin.y += height;
+    newView.frame = temp;
+    [UIView commitAnimations];
+	
+	//remove view from page altogether
+	//[newView removeFromSuperview];
 }
 
-
+-(IBAction)hideActionSheetB:(id)sender{
+    _homeTeamEntered.enabled = true;
+    _awayTeamEntered.enabled = true;
+	int height = 255;
+	//animate onto screen
+	CGRect temp = newView.frame;
+    temp.origin.y =height; 
+    newView.frame = temp;
+    [UIView beginAnimations:nil context:nil];
+    temp.origin.y += height;
+    newView.frame = temp;
+    [UIView commitAnimations];
+	
+	//remove view from page altogether
+	//[newView removeFromSuperview];
+}
 
 -(IBAction)textFieldReturn:(id)sender
 {
     [sender resignFirstResponder];
+}
+
+- (IBAction)backgroundTouched:(id)sender
+{
+	[homeTeamEntered resignFirstResponder];
 }
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -83,10 +118,26 @@
     return self;
 }
 
+-(IBAction) changeDate:(id)sender{
+    date = datePicker.date;
+    NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
+    [dateFormat setDateFormat:@"dd/MM/yyyy"];
+    
+    NSString *strDate = [dateFormat stringFromDate:date];
+    
+    [_dateButton setTitle:strDate forState:UIControlStateNormal];
+}
 - (void)viewDidLoad
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view, typically from a nib.
+    date= [NSDate date];
+    NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
+    [dateFormat setDateFormat:@"dd/MM/yyyy"];
+
+    NSString *strDate = [dateFormat stringFromDate:date];
+
+    [_dateButton setTitle:strDate forState:UIControlStateNormal];
 }
 
 - (void)viewDidUnload
