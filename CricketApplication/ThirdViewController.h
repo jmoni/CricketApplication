@@ -14,4 +14,6 @@
 
 -(IBAction)showActionSheet: (id) sender;
 -(IBAction)hideActionSheet: (UIBarButtonItem *)_infoButtonItem;
+-(IBAction)hideActionSheetB:(id)sender;
+
 @end

@@ -97,7 +97,24 @@ UIButton *batterButton;
     [UIView commitAnimations];
 	
 	//remove view from page altogether
-	[newView removeFromSuperview];
+	//[newView removeFromSuperview];
+}
+
+-(IBAction)hideActionSheetB:(id)sender{
+    batterName1.enabled = true;
+    batterName2.enabled = true;
+	
+	//animate onto screen
+	CGRect temp = newView.frame;
+    temp.origin.y =height; 
+    newView.frame = temp;
+    [UIView beginAnimations:nil context:nil];
+    temp.origin.y += height;
+    newView.frame = temp;
+    [UIView commitAnimations];
+	
+	//remove view from page altogether
+	//[newView removeFromSuperview];
 }
 
 - (NSInteger) numberOfComponentsInPickerView:(UIPickerView *)_choosePlayer;
