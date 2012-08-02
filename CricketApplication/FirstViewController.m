@@ -12,9 +12,7 @@
 @interface FirstViewController ()
 
 @end
-NSDate *date;
-//int height = 255;
-UIView *newView;
+
 @implementation FirstViewController
 @synthesize homeTeamEntered = _homeTeamEntered;
 @synthesize awayTeamEntered = _awayTeamEntered;
@@ -23,19 +21,21 @@ UIView *newView;
 @synthesize dateText = _dateText;
 @synthesize overSlide = _overSlide;
 @synthesize overTimeLabel = _overTimeLabel;
-@synthesize umpire = _umpire;
 @synthesize switcher = _switcher;
 @synthesize timeLabel = _timeLabel;
 @synthesize infoButtonItem = _infoButtonItem;
+@synthesize scrollView = _scrollView;
 
-
-
+int height;
+NSDate *date;
+UIView *newView;
+UITextField *activeField;
 
 -(IBAction)showActionSheet:(id)sender {
     _homeTeamEntered.enabled = false;
     _awayTeamEntered.enabled = false;
-    
-    int height = 255;
+	height = 255;
+	
     //create new view
     newView = [[UIView alloc] initWithFrame:CGRectMake(0, 200, 320, height)];
     newView.backgroundColor = [UIColor colorWithWhite:1 alpha:1];
@@ -73,7 +73,7 @@ UIView *newView;
 -(IBAction)hideActionSheet:(UIBarButtonItem *)_infoButtonItem{
     _homeTeamEntered.enabled = true;
     _awayTeamEntered.enabled = true;
-	int height = 255;
+	
 	//animate onto screen
 	CGRect temp = newView.frame;
     temp.origin.y = height;
@@ -82,26 +82,7 @@ UIView *newView;
     temp.origin.y += height;
     newView.frame = temp;
     [UIView commitAnimations];
-	
-	//remove view from page altogether
-	//[newView removeFromSuperview];
-}
-
--(IBAction)hideActionSheetB:(id)sender{
-    _homeTeamEntered.enabled = true;
-    _awayTeamEntered.enabled = true;
-	int height = 255;
-	//animate onto screen
-	CGRect temp = newView.frame;
-    temp.origin.y =height; 
-    newView.frame = temp;
-    [UIView beginAnimations:nil context:nil];
-    temp.origin.y += height;
-    newView.frame = temp;
-    [UIView commitAnimations];
-	
-	//remove view from page altogether
-	//[newView removeFromSuperview];
+	height = CGRectGetMaxY(self.view.bounds);
 }
 
 -(IBAction)textFieldReturn:(id)sender
@@ -109,10 +90,10 @@ UIView *newView;
     [sender resignFirstResponder];
 }
 
-- (IBAction)backgroundTouched:(id)sender
+/*- (IBAction)backgroundTouched:(id)sender
 {
-	[homeTeamEntered resignFirstResponder];
-}
+	[sender resignFirstResponder];
+}*/
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -166,6 +147,58 @@ UIView *newView;
     }
 }
 
+- (IBAction)textFieldDidBeginEditing:(UITextField *)textField
+{
+    activeField = textField;
+	[self registerForKeyboardNotifications];
+}
+
+- (IBAction)textFieldDidEndEditing:(UITextField *)textField
+{
+	[self registerForKeyboardNotifications];
+    activeField = nil;
+}
+
+- (void)registerForKeyboardNotifications
+{
+    [[NSNotificationCenter defaultCenter] addObserver:self
+											 selector:@selector(keyboardWasShown:)
+												 name:UIKeyboardDidShowNotification object:nil];
+	
+	[[NSNotificationCenter defaultCenter] addObserver:self
+											 selector:@selector(keyboardWillBeHidden:)
+												 name:UIKeyboardWillHideNotification object:nil];
+	
+}
+
+// Called when the UIKeyboardDidShowNotification is sent.
+- (void)keyboardWasShown:(NSNotification*)aNotification
+{
+    NSDictionary* info = [aNotification userInfo];
+    CGSize kbSize = [[info objectForKey:UIKeyboardFrameBeginUserInfoKey] CGRectValue].size;
+	
+    UIEdgeInsets contentInsets = UIEdgeInsetsMake(0.0, 0.0, kbSize.height, 0.0);
+    _scrollView.contentInset = contentInsets;
+    _scrollView.scrollIndicatorInsets = contentInsets;
+	
+    // If active text field is hidden by keyboard, scroll it so it's visible
+    // Your application might not need or want this behavior.
+    CGRect aRect = self.view.frame;
+    aRect.size.height -= kbSize.height;
+    if (!CGRectContainsPoint(aRect, activeField.frame.origin) ) {
+        CGPoint scrollPoint = CGPointMake(0.0, activeField.frame.origin.y-160);
+        [_scrollView setContentOffset:scrollPoint animated:YES];
+    }
+}
+
+// Called when the UIKeyboardWillHideNotification is sent
+- (void)keyboardWillBeHidden:(NSNotification*)aNotification
+{
+    UIEdgeInsets contentInsets = UIEdgeInsetsZero;
+    _scrollView.contentInset = contentInsets;
+    _scrollView.scrollIndicatorInsets = contentInsets;
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -173,9 +206,9 @@ UIView *newView;
     date= [NSDate date];
     NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
     [dateFormat setDateFormat:@"dd/MM/yyyy"];
-
+	
     NSString *strDate = [dateFormat stringFromDate:date];
-
+	
     [_dateButton setTitle:strDate forState:UIControlStateNormal];
 }
 
@@ -190,7 +223,7 @@ UIView *newView;
     [self setSwitcher:nil];
     [self setTimeSlide:nil];
     [self setTimeLabel:nil];
-    [self setUmpire:nil];
+	[self setScrollView:nil];
     [super viewDidUnload];
     // Release any retained subviews of the main view.
 }

@@ -47,6 +47,7 @@ UIButton *batterButton;
     batterName1.enabled = false;
     batterName2.enabled = false;
 	batterButton = sender;
+	height = 255;
     
     //create new view
     newView = [[UIView alloc] initWithFrame:CGRectMake(0, 200, 320, height)];
@@ -95,7 +96,7 @@ UIButton *batterButton;
     temp.origin.y += height;
     newView.frame = temp;
     [UIView commitAnimations];
-	
+	height = CGRectGetMaxY(self.view.bounds);
 	//remove view from page altogether
 	//[newView removeFromSuperview];
 }
@@ -112,6 +113,7 @@ UIButton *batterButton;
     temp.origin.y += height;
     newView.frame = temp;
     [UIView commitAnimations];
+	height = CGRectGetMaxY(self.view.bounds);
 	
 	//remove view from page altogether
 	//[newView removeFromSuperview];
