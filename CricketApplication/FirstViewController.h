@@ -16,9 +16,16 @@
 
 @property (strong, nonatomic) IBOutlet UITextField *homeTeamEntered;
 @property (strong, nonatomic) IBOutlet UITextField *awayTeamEntered;
+@property (strong, nonatomic) IBOutlet UISlider *timeSlide;
 @property (strong, nonatomic) IBOutlet UIButton *dateButton;
 @property (strong, nonatomic) IBOutlet UILabel *dateText;
-@property (strong, nonatomic) IBOutlet UIBarButtonItem *infoButtonItem;
+@property (strong, nonatomic) IBOutlet UISlider *overSlide;
+@property (strong, nonatomic) IBOutlet UILabel *overTimeLabel;
+@property (strong, nonatomic) IBOutlet UITextField *umpire;
+@property (strong, nonatomic) IBOutlet UISegmentedControl *switcher;
+@property (strong, nonatomic) IBOutlet UILabel *timeLabel;
+@property (strong, nonatomic) IBOutlet UIBarButtonItem *infoButtonItem
+;
 
 
 
@@ -28,4 +35,7 @@
 - (IBAction)textFieldReturn:(id)sender;
 - (IBAction)backgroundTouched:(id)sender;
 - (IBAction)changeDate: (id)sender;
+- (IBAction)sliderUpdate: (id)sender;
+- (IBAction)timeSliderUpdate: (id)sender;
+- (IBAction)flipSwitch: (id)sender;
 @end
