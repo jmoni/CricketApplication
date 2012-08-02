@@ -42,7 +42,117 @@ UIButton *batterButton;
     }
     return self;
 }
+-(IBAction)showOutOptions:(id)sender {
+    batterName1.enabled = false;
+    batterName2.enabled = false;
+    
+    //create new view
+    newView = [[UIView alloc] initWithFrame:CGRectMake(0, 200, 320, height)];
+    newView.backgroundColor = [UIColor colorWithWhite:1 alpha:1];
+    
+    //add toolbar
+    UIToolbar * toolbar = [[UIToolbar alloc] initWithFrame: CGRectMake(0, 0, 320, 40)];
+    toolbar.barStyle = UIBarStyleBlack;
+    
+    //add button
+    _infoButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Save" style:UIBarButtonItemStyleDone target:self action:@selector(hideActionSheet:)];
 
+     toolbar.items = [NSArray arrayWithObjects:_infoButtonItem, nil];
+    
+    UIButton *caught = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+    [caught addTarget:self 
+               action:nil
+     forControlEvents:UIControlEventTouchDown];
+    [caught setTitle:@"Caught" forState:UIControlStateNormal];
+    caught.frame = CGRectMake(20.0, 50.0, 65.0, 40.0);
+    [newView addSubview:caught];
+                        
+    UIButton *bowled = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+    [bowled addTarget:self 
+               action:nil
+     forControlEvents:UIControlEventTouchDown];
+    [bowled setTitle:@"Bowled" forState:UIControlStateNormal];
+    bowled.frame = CGRectMake(95.0, 50.0, 65.0, 40.0);
+    [newView addSubview:bowled];
+    
+    UIButton *lbw = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+    [lbw addTarget:self 
+               action:nil
+     forControlEvents:UIControlEventTouchDown];
+    [lbw setTitle:@"LBW" forState:UIControlStateNormal];
+    lbw.frame = CGRectMake(170.0, 50.0, 45.0, 40.0);
+    [newView addSubview:lbw];
+    
+    UIButton *runOut = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+    [runOut addTarget:self 
+            action:nil
+     forControlEvents:UIControlEventTouchDown];
+    [runOut setTitle:@"Run Out" forState:UIControlStateNormal];
+    runOut.frame = CGRectMake(225.0, 50.0, 65.0, 40.0);
+    [newView addSubview:runOut];
+    
+    UIButton *stumped = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+    [runOut addTarget:self 
+               action:nil
+     forControlEvents:UIControlEventTouchDown];
+    [stumped setTitle:@"Stumped" forState:UIControlStateNormal];
+    stumped.frame = CGRectMake(20.0, 100.0, 65.0, 40.0);
+    [newView addSubview:stumped];
+    
+    UIButton *hitWicket = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+    [hitWicket addTarget:self 
+               action:nil
+     forControlEvents:UIControlEventTouchDown];
+    [hitWicket setTitle:@"Hit Wicket" forState:UIControlStateNormal];
+    hitWicket.frame = CGRectMake(95.0, 100.0, 75.0, 40.0);
+    [newView addSubview:hitWicket];
+
+    UIButton *handledBall = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+    [handledBall addTarget:self 
+                  action:nil
+        forControlEvents:UIControlEventTouchDown];
+    [handledBall setTitle:@"Handled the Ball" forState:UIControlStateNormal];
+    handledBall.frame = CGRectMake(180.0, 100.0, 120.0, 40.0);
+    [newView addSubview:handledBall];
+    
+    UIButton *hitBallTwice = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+    [hitBallTwice addTarget:self 
+                  action:nil
+        forControlEvents:UIControlEventTouchDown];
+    [hitBallTwice setTitle:@"Hit the Ball Twice" forState:UIControlStateNormal];
+    hitBallTwice.frame = CGRectMake(10.0, 150.0, 130.0, 40.0);
+    [newView addSubview:hitBallTwice];
+    
+    UIButton *obstructingField = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+    [obstructingField addTarget:self 
+                  action:nil
+        forControlEvents:UIControlEventTouchDown];
+    [obstructingField setTitle:@"Obstructing the Field" forState:UIControlStateNormal];
+    obstructingField.frame = CGRectMake(150.0, 150.0, 160.0, 40.0);
+    [newView addSubview:obstructingField];
+    
+    UIButton *timedOut = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+    [timedOut addTarget:self 
+                  action:nil
+        forControlEvents:UIControlEventTouchDown];
+    [timedOut setTitle:@"Timed Out" forState:UIControlStateNormal];
+    timedOut.frame = CGRectMake(20.0, 200.0, 75.0, 40.0);
+    [newView addSubview:timedOut];
+    
+    //add popup view
+    [newView addSubview:toolbar];
+    [newView addSubview:_choosePlayer];
+    [self.view addSubview:newView];
+    
+    //animate it onto the screen
+    CGRect temp = newView.frame;
+    temp.origin.y = CGRectGetMaxY(self.view.bounds);
+    newView.frame = temp;
+    [UIView beginAnimations:nil context:nil];
+    temp.origin.y -= height;
+    newView.frame = temp;
+    [UIView commitAnimations];
+}
 
 -(IBAction)showActionSheet:(id)sender {
     batterName1.enabled = false;
