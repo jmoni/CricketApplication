@@ -7,6 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		BD851B6315CA93C5000BA6F3 /* CaptainIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = BD851B6015CA93C5000BA6F3 /* CaptainIcon.png */; };
+		BD851B6415CA93C5000BA6F3 /* ViceCaptainIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = BD851B6115CA93C5000BA6F3 /* ViceCaptainIcon.png */; };
+		BD851B6515CA93C5000BA6F3 /* WicketKeeperIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = BD851B6215CA93C5000BA6F3 /* WicketKeeperIcon.png */; };
+		BD851B6815CA9CBA000BA6F3 /* captainWicketKeeper.png in Resources */ = {isa = PBXBuildFile; fileRef = BD851B6615CA9CBA000BA6F3 /* captainWicketKeeper.png */; };
+		BD851B6915CA9CBA000BA6F3 /* viceCaptainWicketKeeper.png in Resources */ = {isa = PBXBuildFile; fileRef = BD851B6715CA9CBA000BA6F3 /* viceCaptainWicketKeeper.png */; };
 		BDD69ED015C81772002FE1CA /* DetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BDD69ECF15C81772002FE1CA /* DetailViewController.m */; };
 		BDE2B14215C6AA63009E9F40 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BDE2B14115C6AA63009E9F40 /* UIKit.framework */; };
 		BDE2B14415C6AA63009E9F40 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BDE2B14315C6AA63009E9F40 /* Foundation.framework */; };
@@ -50,6 +55,11 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		BD851B6015CA93C5000BA6F3 /* CaptainIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = CaptainIcon.png; sourceTree = "<group>"; };
+		BD851B6115CA93C5000BA6F3 /* ViceCaptainIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ViceCaptainIcon.png; sourceTree = "<group>"; };
+		BD851B6215CA93C5000BA6F3 /* WicketKeeperIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = WicketKeeperIcon.png; sourceTree = "<group>"; };
+		BD851B6615CA9CBA000BA6F3 /* captainWicketKeeper.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = captainWicketKeeper.png; sourceTree = "<group>"; };
+		BD851B6715CA9CBA000BA6F3 /* viceCaptainWicketKeeper.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = viceCaptainWicketKeeper.png; sourceTree = "<group>"; };
 		BDD69ECE15C81772002FE1CA /* DetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DetailViewController.h; sourceTree = "<group>"; };
 		BDD69ECF15C81772002FE1CA /* DetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DetailViewController.m; sourceTree = "<group>"; };
 		BDE2B13D15C6AA63009E9F40 /* CricketApplication.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CricketApplication.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -196,6 +206,11 @@
 		BDE2B18115C6AD8C009E9F40 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				BD851B6615CA9CBA000BA6F3 /* captainWicketKeeper.png */,
+				BD851B6715CA9CBA000BA6F3 /* viceCaptainWicketKeeper.png */,
+				BD851B6015CA93C5000BA6F3 /* CaptainIcon.png */,
+				BD851B6115CA93C5000BA6F3 /* ViceCaptainIcon.png */,
+				BD851B6215CA93C5000BA6F3 /* WicketKeeperIcon.png */,
 				BDE2B15915C6AA64009E9F40 /* first.png */,
 				BDE2B15B15C6AA64009E9F40 /* first@2x.png */,
 				BDE2B16015C6AA64009E9F40 /* second.png */,
@@ -335,6 +350,11 @@
 				BDE2B18F15C6AD9C009E9F40 /* fieldingUnselected.png in Resources */,
 				BDE2B19015C6AD9C009E9F40 /* homeLoser.png in Resources */,
 				BDE2B19115C6AD9C009E9F40 /* homeWinner.png in Resources */,
+				BD851B6315CA93C5000BA6F3 /* CaptainIcon.png in Resources */,
+				BD851B6415CA93C5000BA6F3 /* ViceCaptainIcon.png in Resources */,
+				BD851B6515CA93C5000BA6F3 /* WicketKeeperIcon.png in Resources */,
+				BD851B6815CA9CBA000BA6F3 /* captainWicketKeeper.png in Resources */,
+				BD851B6915CA9CBA000BA6F3 /* viceCaptainWicketKeeper.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
