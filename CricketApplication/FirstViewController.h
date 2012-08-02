@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface FirstViewController : UIViewController <UIActionSheetDelegate>{
+@interface FirstViewController : UIViewController <UIActionSheetDelegate, UITextFieldDelegate, UIScrollViewDelegate>{
     UITextField *homeTeamEntered;
     UITextField *awayTeamEntered;
     IBOutlet UIDatePicker *datePicker;
@@ -21,19 +21,16 @@
 @property (strong, nonatomic) IBOutlet UILabel *dateText;
 @property (strong, nonatomic) IBOutlet UISlider *overSlide;
 @property (strong, nonatomic) IBOutlet UILabel *overTimeLabel;
-@property (strong, nonatomic) IBOutlet UITextField *umpire;
 @property (strong, nonatomic) IBOutlet UISegmentedControl *switcher;
 @property (strong, nonatomic) IBOutlet UILabel *timeLabel;
-@property (strong, nonatomic) IBOutlet UIBarButtonItem *infoButtonItem
-;
+@property (strong, nonatomic) IBOutlet UIBarButtonItem *infoButtonItem;
+@property (strong, nonatomic) IBOutlet UIScrollView *scrollView;
 
 
 
-- (IBAction) showActionSheet: (id) sender;
+- (IBAction)showActionSheet: (id) sender;
 - (IBAction)hideActionSheet: (UIBarButtonItem *)_infoButtonItem;
-- (IBAction)hideActionSheetB:(id)sender;
 - (IBAction)textFieldReturn:(id)sender;
-- (IBAction)backgroundTouched:(id)sender;
 - (IBAction)changeDate: (id)sender;
 - (IBAction)sliderUpdate: (id)sender;
 - (IBAction)timeSliderUpdate: (id)sender;
