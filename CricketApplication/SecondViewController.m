@@ -11,10 +11,6 @@
 #include "DetailViewController.h"
 
 @interface SecondViewController ()
-@property (strong, nonatomic) IBOutlet UIButton *homeWonToss;
-@property (strong, nonatomic) IBOutlet UIButton *awayWonToss;
-@property (strong, nonatomic) IBOutlet UIButton *battingButton;
-@property (strong, nonatomic) IBOutlet UIButton *fieldingButton;
 @property (strong, nonatomic) IBOutlet UIBarButtonItem *homeNavBarEditButton;
 @property (strong, nonatomic) IBOutlet UIBarButtonItem *awayNavBarEditButton;
 @property (strong, nonatomic) IBOutlet UIBarButtonItem *homeNavBarAddButton;
@@ -67,6 +63,7 @@ UIImage *viceCaptainWicketKeeper;
 	wicketKeeperIcon = [UIImage imageNamed:@"WicketKeeperIcon.png"];
 	captainWicketKeeper = [UIImage imageNamed:@"captainWicketKeeper.png"];
 	viceCaptainWicketKeeper = [UIImage imageNamed:@"viceCaptainWicketKeeper.png"];
+	battingTeam = @"home";
 }
 
 - (void)viewDidUnload
@@ -178,11 +175,54 @@ UIImage *viceCaptainWicketKeeper;
 		NSString *item = [homePlayersArray objectAtIndex:fromIndexPath.row];
 		[homePlayersArray removeObject:item];
 		[homePlayersArray insertObject:item atIndex:toIndexPath.row];
+		if (homeCaptain == fromIndexPath.row) {
+			homeCaptain = toIndexPath.row;
+		} else if (homeCaptain > fromIndexPath.row && homeCaptain <= toIndexPath.row) {
+			homeCaptain--;
+		} else if (homeCaptain < fromIndexPath.row && homeCaptain >= toIndexPath.row) {
+			homeCaptain++;
+		}
+		if (homeViceCaptain == fromIndexPath.row) {
+			homeViceCaptain = toIndexPath.row;
+		} else if (homeViceCaptain > fromIndexPath.row && homeViceCaptain <= toIndexPath.row) {
+			homeViceCaptain--;
+		} else if (homeViceCaptain < fromIndexPath.row && homeViceCaptain >= toIndexPath.row) {
+			homeViceCaptain++;
+		}
+		if (homeWicketKeeper == fromIndexPath.row) {
+			homeWicketKeeper = toIndexPath.row;
+		}else if (homeWicketKeeper > fromIndexPath.row && homeWicketKeeper <= toIndexPath.row) {
+			homeWicketKeeper--;
+		} else if (homeWicketKeeper < fromIndexPath.row && homeWicketKeeper >= toIndexPath.row) {
+			homeWicketKeeper++;
+		}
 	} else if ([tableView isEqual:awayPlayersTable]) {
 		NSString *item = [awayPlayersArray objectAtIndex:fromIndexPath.row];
 		[awayPlayersArray removeObject:item];
 		[awayPlayersArray insertObject:item atIndex:toIndexPath.row];
+		if (awayCaptain == fromIndexPath.row) {
+			awayCaptain = toIndexPath.row;
+		} else if (awayCaptain > fromIndexPath.row && awayCaptain <= toIndexPath.row) {
+			awayCaptain--;
+		} else if (awayCaptain < fromIndexPath.row && awayCaptain >= toIndexPath.row) {
+			awayCaptain++;
+		}
+		if (awayViceCaptain == fromIndexPath.row) {
+			awayViceCaptain = toIndexPath.row;
+		} else if (awayViceCaptain > fromIndexPath.row && awayViceCaptain <= toIndexPath.row) {
+			awayViceCaptain--;
+		} else if (awayViceCaptain < fromIndexPath.row && awayViceCaptain >= toIndexPath.row) {
+			awayViceCaptain++;
+		}
+		if (awayWicketKeeper == fromIndexPath.row) {
+			awayWicketKeeper = toIndexPath.row;
+		}else if (awayWicketKeeper > fromIndexPath.row && awayWicketKeeper <= toIndexPath.row) {
+			awayWicketKeeper--;
+		} else if (awayWicketKeeper < fromIndexPath.row && awayWicketKeeper >= toIndexPath.row) {
+			awayWicketKeeper++;
+		}
 	}
+	//NSLog(@"awayCaptain:%d\nawayViceCaptain:%d\nawayWicketKeeper%d\n", awayCaptain, awayViceCaptain, awayWicketKeeper);
 }
 
 // Update the data model according to edit actions delete or insert.
@@ -213,7 +253,6 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
 
 	[self.navigationController pushViewController:detail animated:YES];
 	
-	NSLog(@"home captain is equal to %d", homeCaptain);
 	if ([tableView isEqual:homePlayersTable]) {
 		detail.playerEditTextBox.text = [homePlayersArray objectAtIndex:indexPath.row];
 		if (homeCaptain == indexPath.row)
@@ -233,6 +272,14 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
 	}
 	detail.battingOrderSlider.value = indexPath.row+1.9;
 	detail.sliderValueLabel.text = [NSString  stringWithFormat:@"%d", indexPath.row+1];
+}
+
+- (void)tableView:(UITableView *)tableView accessoryButtonTappedForRowWithIndexPath:(NSIndexPath *)indexPath {
+	[self tableView:tableView didDeselectRowAtIndexPath:indexPath];
+}
+
+- (IBAction)accessoryButtonPressed:(id)sender tableView:(UITableView *)tableView withIndexPath:(NSIndexPath *)indexPath {
+	[self tableView:tableView accessoryButtonTappedForRowWithIndexPath:indexPath];
 }
 
 - (IBAction)EditTable:(id)sender{
@@ -286,11 +333,15 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
 	{
         [homeWonToss setSelected:NO];
 		[awayWonToss setSelected:YES];
+		if (battingButton.selected) battingTeam = @"away";
+		else battingTeam = @"home";
     }
     else
 	{
         [homeWonToss setSelected:YES];
 		[awayWonToss setSelected:NO];
+		if (battingButton.selected) battingTeam = @"home";
+		else battingTeam = @"away";
     }
 }
 
@@ -300,11 +351,15 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
 	{
         [battingButton setSelected:NO];
 		[fieldingButton setSelected:YES];
+		if (homeWonToss.selected) battingTeam = @"away";
+		else battingTeam = @"home";
     }
     else
 	{
         [battingButton setSelected:YES];
 		[fieldingButton setSelected:NO];
+		if (homeWonToss.selected) battingTeam = @"home";
+		else battingTeam = @"away";
     }
 	
 }
