@@ -51,7 +51,7 @@ int bowler;
 }
 
 -(IBAction)noRuns:(id)sender{
-    overTotal.text = @".";
+    overTotal.text = @"•";
 }
 -(IBAction)plusOne:(id)sender{
     overTotal.text = @"1";
