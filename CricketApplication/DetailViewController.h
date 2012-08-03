@@ -26,4 +26,5 @@
 - (IBAction)CSlider:(id)sender;
 - (IBAction)VCSlider:(id)sender;
 - (IBAction)WKSlider:(id)sender;
+- (IBAction)deletePlayer:(id)sender;
 @end

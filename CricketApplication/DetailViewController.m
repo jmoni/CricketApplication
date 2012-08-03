@@ -40,14 +40,34 @@ int initialSliderValue;
 	[arrayForDetailView replaceObjectAtIndex:rowForDetaiView withObject:[playerEditTextBox text]];
 }
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
+- (IBAction)deletePlayer:(id)sender {
+	UIAlertView* mes=[[UIAlertView alloc] initWithTitle:@""
+				message:[NSString stringWithFormat:@"Are you sure you want to delete %@", [playerEditTextBox text]] delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Yes", nil];
+	[mes show];
+}
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+	if (buttonIndex == 0)
+	{
+		[self resignFirstResponder];
+	}
+	else
+	{
+		[self resignFirstResponder];
+		[arrayForDetailView removeObjectAtIndex:rowForDetaiView];
+		[self.navigationController popViewControllerAnimated:YES];
+	}
+}
+
+/*- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         // Custom initialization
     }
     return self;
-}
+}*/
 
 - (IBAction)battingOrderSliderChanged:(id)sender {
 	//NSLog([NSString stringWithFormat:@"after function: %d", initialSliderValue]);

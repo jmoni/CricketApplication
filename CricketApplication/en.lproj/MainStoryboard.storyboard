@@ -471,7 +471,13 @@
                             <action selector="backgroundTouched:" destination="9Zc-2m-Uyv" eventType="touchDown" id="7Tz-pK-0BS"/>
                         </connections>
                     </view>
-                    <navigationItem key="navigationItem" id="6uV-Pg-Z2c"/>
+                    <navigationItem key="navigationItem" id="6uV-Pg-Z2c">
+                        <barButtonItem key="rightBarButtonItem" systemItem="trash" id="DnK-NN-wzD">
+                            <connections>
+                                <action selector="deletePlayer:" destination="9Zc-2m-Uyv" id="ppn-SQ-rDD"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="CaptainSlider" destination="oeg-43-geI" id="HJ1-Hy-ypH"/>
                         <outlet property="NavBar" destination="6uV-Pg-Z2c" id="OkX-AJ-BaK"/>
