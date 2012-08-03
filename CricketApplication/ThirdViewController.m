@@ -23,9 +23,12 @@
 
 UIView *newView;
 int height = 255;
+
 UIButton *batterButton;
 
 @implementation ThirdViewController
+@synthesize overTotal;
+@synthesize fallOfWickets;
 @synthesize batterName1;
 @synthesize batterName2;
 @synthesize teamName;
@@ -42,6 +45,110 @@ UIButton *batterButton;
     }
     return self;
 }
+
+-(IBAction)noRuns:(id)sender{
+    overTotal.text = @".";
+}
+-(IBAction)plusOne:(id)sender{
+    overTotal.text = @"1";
+}
+-(IBAction)four:(id)sender{
+    overTotal.text = @"4";
+}
+-(IBAction)six:(id)sender{
+    overTotal.text = @"6";
+}
+-(IBAction)confirm:(id)sender{
+    
+}
+
+-(IBAction)showExtrasOptions:(id)sender{
+    batterName1.enabled = false;
+    batterName2.enabled = false;
+    height = 255;
+    //create new view
+    newView = [[UIView alloc] initWithFrame:CGRectMake(0, 200, 320, height)];
+    newView.backgroundColor = [UIColor colorWithWhite:1 alpha:1];
+    
+    //add toolbar
+    UIToolbar * toolbar = [[UIToolbar alloc] initWithFrame: CGRectMake(0, 0, 320, 40)];
+    toolbar.barStyle = UIBarStyleBlack;
+    
+    //add button
+    _infoButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Save" style:UIBarButtonItemStyleDone target:self action:@selector(hideActionSheet:)];
+    
+    toolbar.items = [NSArray arrayWithObjects:_infoButtonItem, nil];
+    
+    UIButton *nB = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+    [nB addTarget:self 
+               action:nil
+     forControlEvents:UIControlEventTouchDown];
+    [nB setTitle:@"No Ball" forState:UIControlStateNormal];
+    nB.frame = CGRectMake(20.0, 50.0, 65.0, 40.0);
+    [newView addSubview:nB];
+    
+    UIButton *wide = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+    [wide addTarget:self 
+           action:nil
+ forControlEvents:UIControlEventTouchDown];
+    [wide setTitle:@"Wide" forState:UIControlStateNormal];
+    wide.frame = CGRectMake(95.0, 50.0, 65.0, 40.0);
+    [newView addSubview:wide];
+    
+    UIButton *bye = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+    [bye addTarget:self 
+           action:nil
+ forControlEvents:UIControlEventTouchDown];
+    [bye setTitle:@"Bye" forState:UIControlStateNormal];
+    bye.frame = CGRectMake(170.0, 50.0, 65.0, 40.0);
+    [newView addSubview:bye];
+    
+    UIButton *legBye = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+    [legBye addTarget:self 
+           action:nil
+ forControlEvents:UIControlEventTouchDown];
+    [legBye setTitle:@"Leg Bye" forState:UIControlStateNormal];
+    legBye.frame = CGRectMake(245.0, 50.0, 65.0, 40.0);
+    [newView addSubview:legBye];
+    
+    UIButton *penaltyRun = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+    [penaltyRun addTarget:self 
+           action:nil
+ forControlEvents:UIControlEventTouchDown];
+    [penaltyRun setTitle:@"Penalty Run" forState:UIControlStateNormal];
+    penaltyRun.frame = CGRectMake(110.0, 100.0, 100.0, 40.0);
+    [newView addSubview:penaltyRun];
+    
+    UILabel *total = [[UILabel alloc] initWithFrame:CGRectMake(20.0, 150.0, 50.0, 21.0)];
+    total.text = @"Total:";
+    [newView addSubview:total];
+    
+    UILabel *totalVal = [[UILabel alloc] initWithFrame:CGRectMake(75.0, 150.0, 150.0, 21.0)];
+    totalVal.text = @"----------------";
+    [newView addSubview:totalVal];
+    
+    UIButton *undo = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+    [undo addTarget:self 
+                   action:nil
+         forControlEvents:UIControlEventTouchDown];
+    [undo setTitle:@"Undo" forState:UIControlStateNormal];
+    undo.frame = CGRectMake(135.0, 200.0, 50.0, 40.0);
+    [newView addSubview:undo];
+
+    //add popup view
+    [newView addSubview:toolbar];
+    [self.view addSubview:newView];
+    
+    //animate it onto the screen
+    CGRect temp = newView.frame;
+    temp.origin.y = CGRectGetMaxY(self.view.bounds);
+    newView.frame = temp;
+    [UIView beginAnimations:nil context:nil];
+    temp.origin.y -= height;
+    newView.frame = temp;
+    [UIView commitAnimations];
+}
+
 -(IBAction)showOutOptions:(id)sender {
     batterName1.enabled = false;
     batterName2.enabled = false;
@@ -136,12 +243,11 @@ UIButton *batterButton;
                   action:nil
         forControlEvents:UIControlEventTouchDown];
     [timedOut setTitle:@"Timed Out" forState:UIControlStateNormal];
-    timedOut.frame = CGRectMake(20.0, 200.0, 75.0, 40.0);
+    timedOut.frame = CGRectMake(120.0, 200.0, 80.0, 40.0);
     [newView addSubview:timedOut];
     
     //add popup view
     [newView addSubview:toolbar];
-    [newView addSubview:_choosePlayer];
     [self.view addSubview:newView];
     
     //animate it onto the screen
@@ -198,7 +304,7 @@ UIButton *batterButton;
 -(IBAction)hideActionSheet:(UIBarButtonItem *)_infoButtonItem{
     batterName1.enabled = true;
     batterName2.enabled = true;
-	_choosePlayer.hidden = true;
+	//_choosePlayer.hidden = true;
 	//animate onto screen
 	CGRect temp = newView.frame;
     temp.origin.y = height;
@@ -298,6 +404,8 @@ UIButton *batterButton;
     [self setTeamName:nil];
     [self setOneActive:nil];
     [self setTwoActive:nil];
+    fallOfWickets = nil;
+    [self setOverTotal:nil];
     [super viewDidUnload];
     // Release any retained subviews of the main view.
 }
