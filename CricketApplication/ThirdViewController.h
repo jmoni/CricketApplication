@@ -14,6 +14,7 @@
 }
 @property (strong, nonatomic) IBOutlet UILabel *overTotal;
 @property (strong, nonatomic) IBOutlet UILabel *fallOfWickets;
+@property (strong, nonatomic) IBOutlet UIButton *bowlerButton;
 
 -(IBAction)showActionSheet: (id) sender;
 -(IBAction)hideActionSheet: (UIBarButtonItem *)_infoButtonItem;
