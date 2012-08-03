@@ -23,14 +23,20 @@
 
 UIView *newView;
 int height = 255;
-
+int value = 0;
+int ballNo = 1;
 UIButton *batterButton;
 int batter1;
 int batter2;
 int bowler;
 
 @implementation ThirdViewController
-@synthesize overTotal;
+@synthesize ball6;
+@synthesize ball5;
+@synthesize ball4;
+@synthesize ball3;
+@synthesize ball2;
+@synthesize ball1;
 @synthesize fallOfWickets;
 @synthesize bowlerButton;
 @synthesize batterName1;
@@ -51,19 +57,78 @@ int bowler;
 }
 
 -(IBAction)noRuns:(id)sender{
-    overTotal.text = @"•";
+    if (ballNo == 1)
+        ball1.text = @"•";
+    else if (ballNo == 2)
+        ball2.text = @"•";
+    else if (ballNo == 3)
+        ball3.text = @"•";
+    else if (ballNo == 4)
+        ball4.text = @"•";
+    else if (ballNo == 5)
+        ball5.text = @"•";
+    else if (ballNo == 6)
+        ball6.text = @"•";
 }
 -(IBAction)plusOne:(id)sender{
-    overTotal.text = @"1";
+    value ++;
+    if (ballNo == 1)
+        ball1.text = [NSString stringWithFormat:@"%d", value];
+    else if (ballNo == 2)
+        ball2.text = [NSString stringWithFormat:@"%d", value];
+    else if (ballNo == 3)
+        ball3.text = [NSString stringWithFormat:@"%d", value];
+    else if (ballNo == 4)
+        ball4.text = [NSString stringWithFormat:@"%d", value];
+    else if (ballNo == 5)
+        ball5.text = [NSString stringWithFormat:@"%d", value];
+    else if (ballNo == 6)
+        ball6.text = [NSString stringWithFormat:@"%d", value];
 }
 -(IBAction)four:(id)sender{
-    overTotal.text = @"4";
+    value = 4;
+    if (ballNo == 1)
+        ball1.text = [NSString stringWithFormat:@"%d", value];
+    else if (ballNo == 2)
+        ball2.text = [NSString stringWithFormat:@"%d", value];
+    else if (ballNo == 3)
+        ball3.text = [NSString stringWithFormat:@"%d", value];
+    else if (ballNo == 4)
+        ball4.text = [NSString stringWithFormat:@"%d", value];
+    else if (ballNo == 5)
+        ball5.text = [NSString stringWithFormat:@"%d", value];
+    else if (ballNo == 6)
+        ball6.text = [NSString stringWithFormat:@"%d", value];
 }
 -(IBAction)six:(id)sender{
-    overTotal.text = @"6";
+    value = 6;
+    if (ballNo == 1)
+        ball1.text = [NSString stringWithFormat:@"%d", value];
+    else if (ballNo == 2)
+        ball2.text = [NSString stringWithFormat:@"%d", value];
+    else if (ballNo == 3)
+        ball3.text = [NSString stringWithFormat:@"%d", value];
+    else if (ballNo == 4)
+        ball4.text = [NSString stringWithFormat:@"%d", value];
+    else if (ballNo == 5)
+        ball5.text = [NSString stringWithFormat:@"%d", value];
+    else if (ballNo == 6)
+        ball6.text = [NSString stringWithFormat:@"%d", value];
 }
 -(IBAction)confirm:(id)sender{
-    
+    value = 0;
+    if (ballNo<6)
+        ballNo ++;
+    else{
+      ballNo = 1;
+      ball1.text = @"-";
+      ball1.text = @"-";
+      ball2.text = @"-";
+      ball3.text = @"-";
+      ball4.text = @"-";
+      ball5.text = @"-";
+      ball6.text = @"-";
+    }
 }
 
 -(IBAction)showExtrasOptions:(id)sender{
@@ -501,8 +566,13 @@ int bowler;
     [self setOneActive:nil];
     [self setTwoActive:nil];
     fallOfWickets = nil;
-    [self setOverTotal:nil];
 	[self setBowlerButton:nil];
+    [self setBall1:nil];
+    [self setBall2:nil];
+    [self setBall3:nil];
+    [self setBall4:nil];
+    [self setBall5:nil];
+    [self setBall6:nil];
     [super viewDidUnload];
     // Release any retained subviews of the main view.
 }

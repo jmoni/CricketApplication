@@ -12,7 +12,13 @@
     
 
 }
-@property (strong, nonatomic) IBOutlet UILabel *overTotal;
+@property (strong, nonatomic) IBOutlet UILabel *ball6;
+@property (strong, nonatomic) IBOutlet UILabel *ball5;
+@property (strong, nonatomic) IBOutlet UILabel *ball4;
+@property (strong, nonatomic) IBOutlet UILabel *ball3;
+@property (strong, nonatomic) IBOutlet UILabel *ball2;
+@property (strong, nonatomic) IBOutlet UILabel *ball1;
+
 @property (strong, nonatomic) IBOutlet UILabel *fallOfWickets;
 @property (strong, nonatomic) IBOutlet UIButton *bowlerButton;
 
