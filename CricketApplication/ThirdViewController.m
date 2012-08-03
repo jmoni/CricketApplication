@@ -27,10 +27,12 @@ int height = 255;
 UIButton *batterButton;
 int batter1;
 int batter2;
+int bowler;
 
 @implementation ThirdViewController
 @synthesize overTotal;
 @synthesize fallOfWickets;
+@synthesize bowlerButton;
 @synthesize batterName1;
 @synthesize batterName2;
 @synthesize teamName;
@@ -309,30 +311,47 @@ int batter2;
 		[pickerView selectRow:batter1 inComponent:0 animated:YES];
 	else if ([batterButton isEqual:batterName2] && batter2 < [pickerView numberOfRowsInComponent:0])
 		[pickerView selectRow:batter2 inComponent:0 animated:YES];
+	else if ([batterButton isEqual:bowlerButton] && bowler < [pickerView numberOfRowsInComponent:0])
+		[pickerView selectRow:bowler inComponent:0 animated:YES];
 	if (batter1 >= [homePlayersArray count] && [battingTeam isEqualToString:@"home"]) {
 		batter1 = 0;
 		[pickerView selectRow:batter1 inComponent:0 animated:YES];
 		[batterButton setTitle:[homePlayersArray objectAtIndex:batter1] forState:UIControlStateNormal];
-	} else if (batter2 >= [homePlayersArray count] && [battingTeam isEqualToString:@"home"]) {
-		batter2 = 1;
-		[pickerView selectRow:batter2 inComponent:0 animated:YES];
-		[batterButton setTitle:[homePlayersArray objectAtIndex:batter2] forState:UIControlStateNormal];
 	} else if (batter1 >= [awayPlayersArray count] && [battingTeam isEqualToString:@"away"]) {
 		batter1 = 0;
 		[pickerView selectRow:batter1 inComponent:0 animated:YES];
 		[batterButton setTitle:[awayPlayersArray objectAtIndex:batter1] forState:UIControlStateNormal];
+	}
+
+	if (batter2 >= [homePlayersArray count] && [battingTeam isEqualToString:@"home"]) {
+		batter2 = 1;
+		[pickerView selectRow:batter2 inComponent:0 animated:YES];
+		[batterButton setTitle:[homePlayersArray objectAtIndex:batter2] forState:UIControlStateNormal];
 	} else if (batter2 >= [awayPlayersArray count] && [battingTeam isEqualToString:@"away"]) {
 		batter2 = 1;
 		[pickerView selectRow:batter2 inComponent:0 animated:YES];
 		[batterButton setTitle:[awayPlayersArray objectAtIndex:batter2] forState:UIControlStateNormal];
 	}
+	
+	if (bowler >= [homePlayersArray count] && [battingTeam isEqualToString:@"away"]) {
+		bowler = 0;
+		[pickerView selectRow:bowler inComponent:0 animated:YES];
+		[batterButton setTitle:[awayPlayersArray objectAtIndex:bowler] forState:UIControlStateNormal];
+	} else if (bowler >= [awayPlayersArray count] && [battingTeam isEqualToString:@"home"]) {
+		bowler = 0;
+		[pickerView selectRow:bowler inComponent:0 animated:YES];
+		[batterButton setTitle:[awayPlayersArray objectAtIndex:bowler] forState:UIControlStateNormal];
+	}
+	
 	//NSLog(@"Batter 1: %d\nBatter 2: %d", batter1, batter2);
 	if ([battingTeam isEqualToString:@"home"]) {
 		[batterName1 setTitle:[homePlayersArray objectAtIndex:batter1] forState:UIControlStateNormal];
 		[batterName2 setTitle:[homePlayersArray objectAtIndex:batter2] forState:UIControlStateNormal];
+		[bowlerButton setTitle:[awayPlayersArray objectAtIndex:bowler] forState:UIControlStateNormal];
 	} else if ([battingTeam isEqualToString:@"away"]) {
 		[batterName1 setTitle:[awayPlayersArray objectAtIndex:batter1] forState:UIControlStateNormal];
 		[batterName2 setTitle:[awayPlayersArray objectAtIndex:batter2] forState:UIControlStateNormal];
+		[bowlerButton setTitle:[homePlayersArray objectAtIndex:bowler] forState:UIControlStateNormal];
 	}
 }
 
@@ -374,34 +393,64 @@ int batter2;
 
 //number of rows in picker view
 - (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component{
-	if ([battingTeam isEqualToString:@"home"])
+	if ([battingTeam isEqualToString:@"home"]) {
+		if ([batterButton isEqual:bowlerButton])
+			return [awayPlayersArray count];
 		return [homePlayersArray count];
-	else if ([battingTeam isEqualToString:@"away"])
+	} else if ([battingTeam isEqualToString:@"away"]) {
+		if ([batterButton isEqual:bowlerButton])
+			return [homePlayersArray count];
 		return [awayPlayersArray count];
-	else return 0;
+	} else return 0;
 }
 
 //values in picker view
 - (NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component {
-	if ([battingTeam isEqualToString:@"home"])
+	if ([battingTeam isEqualToString:@"home"]) {
+		if ([batterButton isEqual:bowlerButton])
+			return [awayPlayersArray objectAtIndex:row];
 		return [homePlayersArray objectAtIndex:row];
-	else if ([battingTeam isEqualToString:@"away"])
+	} else if ([battingTeam isEqualToString:@"away"]) {
+		if ([batterButton isEqual:bowlerButton])
+			return [homePlayersArray objectAtIndex:row];
 		return [awayPlayersArray objectAtIndex:row];
-	else return 0;
+	} else return NULL;
 }
 
 - (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component
 {
-	if ([battingTeam isEqualToString:@"home"])
-		[batterButton setTitle:[homePlayersArray objectAtIndex:row] forState:UIControlStateNormal];
-	else if ([battingTeam isEqualToString:@"away"])
-		[batterButton setTitle:[awayPlayersArray objectAtIndex:row] forState:UIControlStateNormal];
+	if ([batterButton isEqual:batterName2] && batter1 == row && row < [pickerView numberOfRowsInComponent:0]-1){
+		[pickerView selectRow:row+1 inComponent:0 animated:YES];
+		row++;
+	} else if ([batterButton isEqual:batterName2] && batter1 == row && row == [pickerView numberOfRowsInComponent:0]-1){
+		[pickerView selectRow:row-1 inComponent:0 animated:YES];
+		row--;
+	} else if ([batterButton isEqual:batterName1] && batter2 == row && row < [pickerView numberOfRowsInComponent:0]-1){
+		[pickerView selectRow:row+1 inComponent:0 animated:YES];
+		row++;
+	} else if ([batterButton isEqual:batterName1] && batter2 == row && row == [pickerView numberOfRowsInComponent:0]-1){
+		[pickerView selectRow:row-1 inComponent:0 animated:YES];
+		row--;
+	}
+	if ([battingTeam isEqualToString:@"home"]){
+		if ([batterButton isEqual:bowlerButton])
+			[batterButton setTitle:[awayPlayersArray objectAtIndex:row] forState:UIControlStateNormal];
+		else
+			[batterButton setTitle:[homePlayersArray objectAtIndex:row] forState:UIControlStateNormal];
+	} else if ([battingTeam isEqualToString:@"away"]) {
+		if ([batterButton isEqual:bowlerButton])
+			[batterButton setTitle:[homePlayersArray objectAtIndex:row] forState:UIControlStateNormal];
+		else
+			[batterButton setTitle:[awayPlayersArray objectAtIndex:row] forState:UIControlStateNormal];
+	}
 	
 	//set batter integers
 	if ([batterButton isEqual:batterName1])
 		batter1 = row;
 	else if ([batterButton isEqual:batterName2])
 		batter2 = row;
+	else if ([batterButton isEqual:bowlerButton])
+		bowler = row;
 }
 
 - (void)viewDidLoad
@@ -410,26 +459,31 @@ int batter2;
 	// Do any additional setup after loading the view.
 	batter1 = 0;
 	batter2 = 1;
+	bowler = 0;
 	[teamName setText:homeTeam];
 	if ([battingTeam isEqualToString:@"home"]) {
 		[teamName setText:homeTeam];
 		[batterName1 setTitle:[homePlayersArray objectAtIndex:batter1] forState:UIControlStateNormal];
 		[batterName2 setTitle:[homePlayersArray objectAtIndex:batter2] forState:UIControlStateNormal];
+		[bowlerButton setTitle:[awayPlayersArray objectAtIndex:bowler] forState:UIControlStateNormal];
 	} else if ([battingTeam isEqualToString:@"away"]) {
 		[teamName setText:awayTeam];
 		[batterName1 setTitle:[awayPlayersArray objectAtIndex:batter1] forState:UIControlStateNormal];
 		[batterName2 setTitle:[awayPlayersArray objectAtIndex:batter2] forState:UIControlStateNormal];
+		[bowlerButton setTitle:[homePlayersArray objectAtIndex:bowler] forState:UIControlStateNormal];
 	}
 }
 
 - (void)viewDidAppear:(BOOL)animated
 {
-	if ([battingTeam isEqualToString:@"home"] && [homePlayersArray count] > batter1 && [homePlayersArray count] > batter2) {
+	if ([battingTeam isEqualToString:@"home"] && [homePlayersArray count] > batter1 && [homePlayersArray count] > batter2 && [awayPlayersArray count] > bowler) {
 		[batterName1 setTitle:[homePlayersArray objectAtIndex:batter1] forState:UIControlStateNormal];
 		[batterName2 setTitle:[homePlayersArray objectAtIndex:batter2] forState:UIControlStateNormal];
-	} else if ([battingTeam isEqualToString:@"away"] && [awayPlayersArray count] > batter1 && [awayPlayersArray count] > batter2) {
+		[bowlerButton setTitle:[awayPlayersArray objectAtIndex:bowler] forState:UIControlStateNormal];
+	} else if ([battingTeam isEqualToString:@"away"] && [awayPlayersArray count] > batter1 && [awayPlayersArray count] > batter2 && [homePlayersArray count] > bowler) {
 		[batterName1 setTitle:[awayPlayersArray objectAtIndex:batter1] forState:UIControlStateNormal];
 		[batterName2 setTitle:[awayPlayersArray objectAtIndex:batter2] forState:UIControlStateNormal];
+		[bowlerButton setTitle:[homePlayersArray objectAtIndex:bowler] forState:UIControlStateNormal];
 	} else {
 		[self selectRowForSelection:_choosePlayer];
 	}
@@ -448,6 +502,7 @@ int batter2;
     [self setTwoActive:nil];
     fallOfWickets = nil;
     [self setOverTotal:nil];
+	[self setBowlerButton:nil];
     [super viewDidUnload];
     // Release any retained subviews of the main view.
 }

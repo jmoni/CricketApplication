@@ -798,7 +798,7 @@
                     <connections>
                         <outlet property="batterName1" destination="lG5-nI-ijH" id="Oe9-ow-fqk"/>
                         <outlet property="batterName2" destination="XXX-cD-XUH" id="wC2-Rp-Fqu"/>
-                        <outlet property="bowlerButton" destination="C0C-9H-10D" id="brK-0R-GPA"/>
+                        <outlet property="bowlerButton" destination="C0C-9H-10D" id="oth-jc-iK1"/>
                         <outlet property="fallOfWickets" destination="6Sh-uF-sxr" id="jSD-LP-iyG"/>
                         <outlet property="oneActive" destination="o2u-bq-g0c" id="RK8-3z-kfq"/>
                         <outlet property="overTotal" destination="tiK-LQ-rCO" id="IxW-n4-TMT"/>
