@@ -23,11 +23,12 @@
 
 UIView *newView;
 int height = 255;
+
 UIButton *batterButton;
-int batter1;
-int batter2;
 
 @implementation ThirdViewController
+@synthesize overTotal;
+@synthesize fallOfWickets;
 @synthesize batterName1;
 @synthesize batterName2;
 @synthesize teamName;
@@ -44,6 +45,110 @@ int batter2;
     }
     return self;
 }
+
+-(IBAction)noRuns:(id)sender{
+    overTotal.text = @".";
+}
+-(IBAction)plusOne:(id)sender{
+    overTotal.text = @"1";
+}
+-(IBAction)four:(id)sender{
+    overTotal.text = @"4";
+}
+-(IBAction)six:(id)sender{
+    overTotal.text = @"6";
+}
+-(IBAction)confirm:(id)sender{
+    
+}
+
+-(IBAction)showExtrasOptions:(id)sender{
+    batterName1.enabled = false;
+    batterName2.enabled = false;
+    height = 255;
+    //create new view
+    newView = [[UIView alloc] initWithFrame:CGRectMake(0, 200, 320, height)];
+    newView.backgroundColor = [UIColor colorWithWhite:1 alpha:1];
+    
+    //add toolbar
+    UIToolbar * toolbar = [[UIToolbar alloc] initWithFrame: CGRectMake(0, 0, 320, 40)];
+    toolbar.barStyle = UIBarStyleBlack;
+    
+    //add button
+    _infoButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Save" style:UIBarButtonItemStyleDone target:self action:@selector(hideActionSheet:)];
+    
+    toolbar.items = [NSArray arrayWithObjects:_infoButtonItem, nil];
+    
+    UIButton *nB = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+    [nB addTarget:self 
+               action:nil
+     forControlEvents:UIControlEventTouchDown];
+    [nB setTitle:@"No Ball" forState:UIControlStateNormal];
+    nB.frame = CGRectMake(20.0, 50.0, 65.0, 40.0);
+    [newView addSubview:nB];
+    
+    UIButton *wide = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+    [wide addTarget:self 
+           action:nil
+ forControlEvents:UIControlEventTouchDown];
+    [wide setTitle:@"Wide" forState:UIControlStateNormal];
+    wide.frame = CGRectMake(95.0, 50.0, 65.0, 40.0);
+    [newView addSubview:wide];
+    
+    UIButton *bye = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+    [bye addTarget:self 
+           action:nil
+ forControlEvents:UIControlEventTouchDown];
+    [bye setTitle:@"Bye" forState:UIControlStateNormal];
+    bye.frame = CGRectMake(170.0, 50.0, 65.0, 40.0);
+    [newView addSubview:bye];
+    
+    UIButton *legBye = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+    [legBye addTarget:self 
+           action:nil
+ forControlEvents:UIControlEventTouchDown];
+    [legBye setTitle:@"Leg Bye" forState:UIControlStateNormal];
+    legBye.frame = CGRectMake(245.0, 50.0, 65.0, 40.0);
+    [newView addSubview:legBye];
+    
+    UIButton *penaltyRun = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+    [penaltyRun addTarget:self 
+           action:nil
+ forControlEvents:UIControlEventTouchDown];
+    [penaltyRun setTitle:@"Penalty Run" forState:UIControlStateNormal];
+    penaltyRun.frame = CGRectMake(110.0, 100.0, 100.0, 40.0);
+    [newView addSubview:penaltyRun];
+    
+    UILabel *total = [[UILabel alloc] initWithFrame:CGRectMake(20.0, 150.0, 50.0, 21.0)];
+    total.text = @"Total:";
+    [newView addSubview:total];
+    
+    UILabel *totalVal = [[UILabel alloc] initWithFrame:CGRectMake(75.0, 150.0, 150.0, 21.0)];
+    totalVal.text = @"----------------";
+    [newView addSubview:totalVal];
+    
+    UIButton *undo = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+    [undo addTarget:self 
+                   action:nil
+         forControlEvents:UIControlEventTouchDown];
+    [undo setTitle:@"Undo" forState:UIControlStateNormal];
+    undo.frame = CGRectMake(135.0, 200.0, 50.0, 40.0);
+    [newView addSubview:undo];
+
+    //add popup view
+    [newView addSubview:toolbar];
+    [self.view addSubview:newView];
+    
+    //animate it onto the screen
+    CGRect temp = newView.frame;
+    temp.origin.y = CGRectGetMaxY(self.view.bounds);
+    newView.frame = temp;
+    [UIView beginAnimations:nil context:nil];
+    temp.origin.y -= height;
+    newView.frame = temp;
+    [UIView commitAnimations];
+}
+
 -(IBAction)showOutOptions:(id)sender {
     batterName1.enabled = false;
     batterName2.enabled = false;
@@ -138,12 +243,11 @@ int batter2;
                   action:nil
         forControlEvents:UIControlEventTouchDown];
     [timedOut setTitle:@"Timed Out" forState:UIControlStateNormal];
-    timedOut.frame = CGRectMake(20.0, 200.0, 75.0, 40.0);
+    timedOut.frame = CGRectMake(120.0, 200.0, 80.0, 40.0);
     [newView addSubview:timedOut];
     
     //add popup view
     [newView addSubview:toolbar];
-    [newView addSubview:_choosePlayer];
     [self.view addSubview:newView];
     
     //animate it onto the screen
@@ -181,7 +285,6 @@ int batter2;
     _choosePlayer.delegate = self;
     _choosePlayer.dataSource = self;
     _choosePlayer.showsSelectionIndicator = YES;
-	[self selectRowForSelection:_choosePlayer];
 
     //add popup view
     [newView addSubview:toolbar];
@@ -198,43 +301,10 @@ int batter2;
     [UIView commitAnimations];
 }
 
-- (void) selectRowForSelection:(UIPickerView *)pickerView {
-	if ([batterButton isEqual:batterName1] && batter1 < [pickerView numberOfRowsInComponent:0])
-		[pickerView selectRow:batter1 inComponent:0 animated:YES];
-	else if ([batterButton isEqual:batterName2] && batter2 < [pickerView numberOfRowsInComponent:0])
-		[pickerView selectRow:batter2 inComponent:0 animated:YES];
-	if (batter1 >= [homePlayersArray count] && [battingTeam isEqualToString:@"home"]) {
-		batter1 = 0;
-		[pickerView selectRow:batter1 inComponent:0 animated:YES];
-		[batterButton setTitle:[homePlayersArray objectAtIndex:batter1] forState:UIControlStateNormal];
-	} else if (batter2 >= [homePlayersArray count] && [battingTeam isEqualToString:@"home"]) {
-		batter2 = 1;
-		[pickerView selectRow:batter2 inComponent:0 animated:YES];
-		[batterButton setTitle:[homePlayersArray objectAtIndex:batter2] forState:UIControlStateNormal];
-	} else if (batter1 >= [awayPlayersArray count] && [battingTeam isEqualToString:@"away"]) {
-		batter1 = 0;
-		[pickerView selectRow:batter1 inComponent:0 animated:YES];
-		[batterButton setTitle:[awayPlayersArray objectAtIndex:batter1] forState:UIControlStateNormal];
-	} else if (batter2 >= [awayPlayersArray count] && [battingTeam isEqualToString:@"away"]) {
-		batter2 = 1;
-		[pickerView selectRow:batter2 inComponent:0 animated:YES];
-		[batterButton setTitle:[awayPlayersArray objectAtIndex:batter2] forState:UIControlStateNormal];
-	}
-	//NSLog(@"Batter 1: %d\nBatter 2: %d", batter1, batter2);
-	if ([battingTeam isEqualToString:@"home"]) {
-		[batterName1 setTitle:[homePlayersArray objectAtIndex:batter1] forState:UIControlStateNormal];
-		[batterName2 setTitle:[homePlayersArray objectAtIndex:batter2] forState:UIControlStateNormal];
-	} else if ([battingTeam isEqualToString:@"away"]) {
-		[batterName1 setTitle:[awayPlayersArray objectAtIndex:batter1] forState:UIControlStateNormal];
-		[batterName2 setTitle:[awayPlayersArray objectAtIndex:batter2] forState:UIControlStateNormal];
-	}
-}
-
-//Used when clicking the done button
-- (IBAction)hideActionSheet:(UIBarButtonItem *)_infoButtonItem{
+-(IBAction)hideActionSheet:(UIBarButtonItem *)_infoButtonItem{
     batterName1.enabled = true;
     batterName2.enabled = true;
-
+	//_choosePlayer.hidden = true;
 	//animate onto screen
 	CGRect temp = newView.frame;
     temp.origin.y = height;
@@ -244,9 +314,10 @@ int batter2;
     newView.frame = temp;
     [UIView commitAnimations];
 	height = CGRectGetMaxY(self.view.bounds);
+	//remove view from page altogether
+	//[newView removeFromSuperview];
 }
 
-//Used for clicked on the background
 -(IBAction)hideActionSheetB:(id)sender{
     batterName1.enabled = true;
     batterName2.enabled = true;
@@ -260,6 +331,9 @@ int batter2;
     newView.frame = temp;
     [UIView commitAnimations];
 	height = CGRectGetMaxY(self.view.bounds);
+	
+	//remove view from page altogether
+	//[newView removeFromSuperview];
 }
 
 - (NSInteger) numberOfComponentsInPickerView:(UIPickerView *)_choosePlayer{
@@ -275,7 +349,7 @@ int batter2;
 	else return 0;
 }
 
-//values in picker view
+//values in picker view (filled with homeTeam array for now)
 - (NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component {
 	if ([battingTeam isEqualToString:@"home"])
 		return [homePlayersArray objectAtIndex:row];
@@ -290,43 +364,33 @@ int batter2;
 		[batterButton setTitle:[homePlayersArray objectAtIndex:row] forState:UIControlStateNormal];
 	else if ([battingTeam isEqualToString:@"away"])
 		[batterButton setTitle:[awayPlayersArray objectAtIndex:row] forState:UIControlStateNormal];
-	
-	//set batter integers
-	if ([batterButton isEqual:batterName1])
-		batter1 = row;
-	else if ([batterButton isEqual:batterName2])
-		batter2 = row;
 }
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
-	batter1 = 0;
-	batter2 = 1;
 	[teamName setText:homeTeam];
 	if ([battingTeam isEqualToString:@"home"]) {
 		[teamName setText:homeTeam];
-		[batterName1 setTitle:[homePlayersArray objectAtIndex:batter1] forState:UIControlStateNormal];
-		[batterName2 setTitle:[homePlayersArray objectAtIndex:batter2] forState:UIControlStateNormal];
+		[batterName1 setTitle:[homePlayersArray objectAtIndex:0] forState:UIControlStateNormal];
+		[batterName2 setTitle:[homePlayersArray objectAtIndex:1] forState:UIControlStateNormal];
 	} else if ([battingTeam isEqualToString:@"away"]) {
 		[teamName setText:awayTeam];
-		[batterName1 setTitle:[awayPlayersArray objectAtIndex:batter1] forState:UIControlStateNormal];
-		[batterName2 setTitle:[awayPlayersArray objectAtIndex:batter2] forState:UIControlStateNormal];
+		[batterName1 setTitle:[awayPlayersArray objectAtIndex:0] forState:UIControlStateNormal];
+		[batterName2 setTitle:[awayPlayersArray objectAtIndex:1] forState:UIControlStateNormal];
 	}
 }
 
 - (void)viewDidAppear:(BOOL)animated
 {
-	if ([battingTeam isEqualToString:@"home"] && [homePlayersArray count] > batter1 && [homePlayersArray count] > batter2) {
-		[batterName1 setTitle:[homePlayersArray objectAtIndex:batter1] forState:UIControlStateNormal];
-		[batterName2 setTitle:[homePlayersArray objectAtIndex:batter2] forState:UIControlStateNormal];
-	} else if ([battingTeam isEqualToString:@"away"] && [awayPlayersArray count] > batter1 && [awayPlayersArray count] > batter2) {
-		[batterName1 setTitle:[awayPlayersArray objectAtIndex:batter1] forState:UIControlStateNormal];
-		[batterName2 setTitle:[awayPlayersArray objectAtIndex:batter2] forState:UIControlStateNormal];
-	} else {
-		[self selectRowForSelection:_choosePlayer];
-	}
+	/*if ([battingTeam isEqualToString:@"home"] && [homePlayersArray count] > 0) {
+		[batterName1 setTitle:[homePlayersArray objectAtIndex:0] forState:UIControlStateNormal];
+		[batterName2 setTitle:[homePlayersArray objectAtIndex:1] forState:UIControlStateNormal];
+	} else if ([battingTeam isEqualToString:@"away"] && [homePlayersArray count] > 0) {
+		[batterName1 setTitle:[awayPlayersArray objectAtIndex:0] forState:UIControlStateNormal];
+		[batterName2 setTitle:[awayPlayersArray objectAtIndex:1] forState:UIControlStateNormal];
+	}*/
 	if ([battingTeam isEqualToString:@"home"])
 		[teamName setText:homeTeam];
 	else if ([battingTeam isEqualToString:@"away"])
@@ -340,6 +404,8 @@ int batter2;
     [self setTeamName:nil];
     [self setOneActive:nil];
     [self setTwoActive:nil];
+    fallOfWickets = nil;
+    [self setOverTotal:nil];
     [super viewDidUnload];
     // Release any retained subviews of the main view.
 }

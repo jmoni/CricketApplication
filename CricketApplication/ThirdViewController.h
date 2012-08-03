@@ -9,12 +9,20 @@
 #import <UIKit/UIKit.h>
 
 @interface ThirdViewController : UIViewController <UIPickerViewDelegate, UIPickerViewDataSource, UIActionSheetDelegate>{
+    
 
 }
+@property (strong, nonatomic) IBOutlet UILabel *overTotal;
+@property (strong, nonatomic) IBOutlet UILabel *fallOfWickets;
 
 -(IBAction)showActionSheet: (id) sender;
 -(IBAction)hideActionSheet: (UIBarButtonItem *)_infoButtonItem;
 -(IBAction)hideActionSheetB:(id)sender;
 -(IBAction)showOutOptions:(id)sender;
-
+-(IBAction)showExtrasOptions:(id)sender;
+-(IBAction)noRuns:(id)sender;
+-(IBAction)plusOne:(id)sender;
+-(IBAction)four:(id)sender;
+-(IBAction)six:(id)sender;
+-(IBAction)confirm:(id)sender;
 @end
