@@ -340,7 +340,7 @@ int batter2;
 - (IBAction)hideActionSheet:(UIBarButtonItem *)_infoButtonItem{
     batterName1.enabled = true;
     batterName2.enabled = true;
-	//_choosePlayer.hidden = true;
+    [obstructingField setTitle:@"Obstructing the Field" forState:UIControlStateNormal];
 	//animate onto screen
 	CGRect temp = newView.frame;
     temp.origin.y = height;
