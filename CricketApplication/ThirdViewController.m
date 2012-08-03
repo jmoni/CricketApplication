@@ -47,7 +47,7 @@ int batter2;
 -(IBAction)showOutOptions:(id)sender {
     batterName1.enabled = false;
     batterName2.enabled = false;
-    
+    height = 255;
     //create new view
     newView = [[UIView alloc] initWithFrame:CGRectMake(0, 200, 320, height)];
     newView.backgroundColor = [UIColor colorWithWhite:1 alpha:1];
