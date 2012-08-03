@@ -98,11 +98,6 @@ UITextField *activeField;
 	[sender resignFirstResponder];
 }
 
-/*- (IBAction)backgroundTouched:(id)sender
-{
-	[sender resignFirstResponder];
-}*/
-
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
