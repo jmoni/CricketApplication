@@ -708,6 +708,9 @@
                                 <state key="highlighted">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <connections>
+                                    <action selector="undo:" destination="QzP-vb-Ig0" eventType="touchUpInside" id="LQ6-rc-Pwz"/>
+                                </connections>
                             </button>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="-" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" id="tiK-LQ-rCO">
                                 <rect key="frame" x="88" y="253" width="22" height="21"/>
@@ -898,13 +901,24 @@
                         <outlet property="ball4" destination="bnQ-dP-8bS" id="PPn-hh-YLB"/>
                         <outlet property="ball5" destination="2jl-VC-JP5" id="r9s-AX-H9l"/>
                         <outlet property="ball6" destination="Q6Q-xl-rFk" id="svC-ZP-EvY"/>
+                        <outlet property="batter1Active" destination="o2u-bq-g0c" id="iwB-K7-eaW"/>
+                        <outlet property="batter1BallsLabel" destination="ROO-6O-Si0" id="DDG-0P-SIm"/>
+                        <outlet property="batter1RunsLabel" destination="in6-aM-Njo" id="HYy-xU-Djh"/>
+                        <outlet property="batter2Active" destination="ZI0-Gp-pd2" id="juh-2b-mAs"/>
+                        <outlet property="batter2BallsLabel" destination="REQ-dF-xgJ" id="lao-9g-Jen"/>
+                        <outlet property="batter2RunsLabel" destination="J2u-M3-434" id="WGH-1A-IlL"/>
                         <outlet property="batterName1" destination="lG5-nI-ijH" id="Oe9-ow-fqk"/>
                         <outlet property="batterName2" destination="XXX-cD-XUH" id="wC2-Rp-Fqu"/>
                         <outlet property="bowlerButton" destination="C0C-9H-10D" id="oth-jc-iK1"/>
+                        <outlet property="economyLabel" destination="0ex-4u-Uhb" id="n8q-h0-gZu"/>
                         <outlet property="fallOfWickets" destination="6Sh-uF-sxr" id="jSD-LP-iyG"/>
+                        <outlet property="maidensLabel" destination="JE1-BR-FmZ" id="IdK-ne-GXx"/>
                         <outlet property="oneActive" destination="o2u-bq-g0c" id="RK8-3z-kfq"/>
+                        <outlet property="oversLabel" destination="f18-U3-mUs" id="4rx-24-DIp"/>
+                        <outlet property="runsLabel" destination="Afb-gF-cV2" id="ApJ-3z-ZIb"/>
                         <outlet property="teamName" destination="ip8-1S-QY5" id="zto-F0-LQ6"/>
                         <outlet property="twoActive" destination="ZI0-Gp-pd2" id="kak-Ew-g8V"/>
+                        <outlet property="wicketsLabel" destination="e1W-Oe-X0P" id="wga-7i-6iO"/>
                     </connections>
                 </viewController>
             </objects>
@@ -971,98 +985,6 @@
         <image name="second.png" width="30" height="30"/>
         <image name="second@2x.png" width="60" height="60"/>
     </resources>
-    <classes>
-        <class className="DetailViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/DetailViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="CSlider:"/>
-                <relationship kind="action" name="VCSlider:"/>
-                <relationship kind="action" name="WKSlider:"/>
-                <relationship kind="action" name="backgroundTouched:"/>
-                <relationship kind="action" name="battingOrderSliderChanged:"/>
-                <relationship kind="action" name="battingOrderSliderChanging:"/>
-                <relationship kind="action" name="deletePlayer:"/>
-                <relationship kind="action" name="getInitialSlideValue:"/>
-                <relationship kind="action" name="textFieldReturn:"/>
-                <relationship kind="outlet" name="CaptainSlider" candidateClass="UISwitch"/>
-                <relationship kind="outlet" name="NavBar" candidateClass="UINavigationItem"/>
-                <relationship kind="outlet" name="ViceCaptainSlider" candidateClass="UISwitch"/>
-                <relationship kind="outlet" name="WicketKeeperSlider" candidateClass="UISwitch"/>
-                <relationship kind="outlet" name="battingOrderSlider" candidateClass="UISlider"/>
-                <relationship kind="outlet" name="playerEditTextBox" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="sliderValueLabel" candidateClass="UILabel"/>
-            </relationships>
-        </class>
-        <class className="FirstViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/FirstViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="changeDate:"/>
-                <relationship kind="action" name="flipSwitch:"/>
-                <relationship kind="action" name="hideActionSheet:" candidateClass="UIBarButtonItem"/>
-                <relationship kind="action" name="showActionSheet:"/>
-                <relationship kind="action" name="sliderUpdate:"/>
-                <relationship kind="action" name="textFieldReturn:"/>
-                <relationship kind="action" name="timeSliderUpdate:"/>
-                <relationship kind="outlet" name="awayTeamEntered" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="dateButton" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="datePicker" candidateClass="UIDatePicker"/>
-                <relationship kind="outlet" name="dateText" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="homeTeamEntered" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="infoButtonItem" candidateClass="UIBarButtonItem"/>
-                <relationship kind="outlet" name="overSlide" candidateClass="UISlider"/>
-                <relationship kind="outlet" name="overTimeLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="scrollView" candidateClass="UIScrollView"/>
-                <relationship kind="outlet" name="switcher" candidateClass="UISegmentedControl"/>
-                <relationship kind="outlet" name="timeLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="timeSlide" candidateClass="UISlider"/>
-            </relationships>
-        </class>
-        <class className="SecondViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/SecondViewController.h"/>
-            <relationships>
-                <relationship kind="outlet" name="awayNavBarAddButton" candidateClass="UIBarButtonItem"/>
-                <relationship kind="outlet" name="awayNavBarEditButton" candidateClass="UIBarButtonItem"/>
-                <relationship kind="outlet" name="awayPlayersTable" candidateClass="UITableView"/>
-                <relationship kind="outlet" name="awayWonToss" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="battingButton" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="fieldingButton" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="homeNavBarAddButton" candidateClass="UIBarButtonItem"/>
-                <relationship kind="outlet" name="homeNavBarEditButton" candidateClass="UIBarButtonItem"/>
-                <relationship kind="outlet" name="homePlayersTable" candidateClass="UITableView"/>
-                <relationship kind="outlet" name="homeWonToss" candidateClass="UIButton"/>
-            </relationships>
-        </class>
-        <class className="ThirdViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/ThirdViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="confirm:"/>
-                <relationship kind="action" name="four:"/>
-                <relationship kind="action" name="hideActionSheet:" candidateClass="UIBarButtonItem"/>
-                <relationship kind="action" name="hideActionSheetB:"/>
-                <relationship kind="action" name="noRuns:"/>
-                <relationship kind="action" name="plusOne:"/>
-                <relationship kind="action" name="showActionSheet:"/>
-                <relationship kind="action" name="showExtrasOptions:"/>
-                <relationship kind="action" name="showOutOptions:"/>
-                <relationship kind="action" name="six:"/>
-                <relationship kind="outlet" name="ball1" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="ball2" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="ball3" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="ball4" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="ball5" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="ball6" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="batterName1" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="batterName2" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="bowlerButton" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="choosePlayer" candidateClass="UIPickerView"/>
-                <relationship kind="outlet" name="fallOfWickets" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="infoButtonItem" candidateClass="UIBarButtonItem"/>
-                <relationship kind="outlet" name="oneActive" candidateClass="UIImageView"/>
-                <relationship kind="outlet" name="teamName" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="twoActive" candidateClass="UIImageView"/>
-            </relationships>
-        </class>
-    </classes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
         <simulatedOrientationMetrics key="orientation"/>

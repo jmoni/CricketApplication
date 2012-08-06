@@ -29,6 +29,16 @@ UIButton *batterButton;
 int batter1;
 int batter2;
 int bowler;
+BOOL even;
+int batter1Balls = 0;
+int batter2Balls = 0;
+int batter1Runs = 0;
+int batter2Runs = 0;
+float overs = 0;
+int maidens = 0;
+float runs = 0;
+int wickets = 0;
+float economy = 0.00;
 
 @implementation ThirdViewController
 @synthesize ball6;
@@ -37,8 +47,19 @@ int bowler;
 @synthesize ball3;
 @synthesize ball2;
 @synthesize ball1;
+@synthesize batter1Active;
+@synthesize batter2Active;
+@synthesize batter1BallsLabel;
+@synthesize batter2BallsLabel;
+@synthesize batter1RunsLabel;
+@synthesize batter2RunsLabel;
 @synthesize fallOfWickets;
 @synthesize bowlerButton;
+@synthesize oversLabel;
+@synthesize maidensLabel;
+@synthesize runsLabel;
+@synthesize wicketsLabel;
+@synthesize economyLabel;
 @synthesize batterName1;
 @synthesize batterName2;
 @synthesize teamName;
@@ -57,78 +78,154 @@ int bowler;
 }
 
 -(IBAction)noRuns:(id)sender{
-    if (ballNo == 1)
-        ball1.text = @"•";
-    else if (ballNo == 2)
-        ball2.text = @"•";
-    else if (ballNo == 3)
-        ball3.text = @"•";
-    else if (ballNo == 4)
-        ball4.text = @"•";
-    else if (ballNo == 5)
-        ball5.text = @"•";
-    else if (ballNo == 6)
-        ball6.text = @"•";
+	value = 0;
+    [self resetBallValueToString:@"•"];
+	even = YES;
+	maidens++;
 }
 -(IBAction)plusOne:(id)sender{
-    value ++;
-    if (ballNo == 1)
-        ball1.text = [NSString stringWithFormat:@"%d", value];
-    else if (ballNo == 2)
-        ball2.text = [NSString stringWithFormat:@"%d", value];
-    else if (ballNo == 3)
-        ball3.text = [NSString stringWithFormat:@"%d", value];
-    else if (ballNo == 4)
-        ball4.text = [NSString stringWithFormat:@"%d", value];
-    else if (ballNo == 5)
-        ball5.text = [NSString stringWithFormat:@"%d", value];
-    else if (ballNo == 6)
-        ball6.text = [NSString stringWithFormat:@"%d", value];
+    if (value == -1)
+		value += 2;
+	else
+		value ++;
+    [self resetBallValueToString:[NSString stringWithFormat:@"%d", value]];
+	if (value%2 == 1)
+		even = NO;
+	else
+		even = YES;
 }
 -(IBAction)four:(id)sender{
     value = 4;
-    if (ballNo == 1)
-        ball1.text = [NSString stringWithFormat:@"%d", value];
-    else if (ballNo == 2)
-        ball2.text = [NSString stringWithFormat:@"%d", value];
-    else if (ballNo == 3)
-        ball3.text = [NSString stringWithFormat:@"%d", value];
-    else if (ballNo == 4)
-        ball4.text = [NSString stringWithFormat:@"%d", value];
-    else if (ballNo == 5)
-        ball5.text = [NSString stringWithFormat:@"%d", value];
-    else if (ballNo == 6)
-        ball6.text = [NSString stringWithFormat:@"%d", value];
+    [self resetBallValueToString:[NSString stringWithFormat:@"%d", value]];
+	even = YES;
 }
 -(IBAction)six:(id)sender{
     value = 6;
-    if (ballNo == 1)
-        ball1.text = [NSString stringWithFormat:@"%d", value];
-    else if (ballNo == 2)
-        ball2.text = [NSString stringWithFormat:@"%d", value];
-    else if (ballNo == 3)
-        ball3.text = [NSString stringWithFormat:@"%d", value];
-    else if (ballNo == 4)
-        ball4.text = [NSString stringWithFormat:@"%d", value];
-    else if (ballNo == 5)
-        ball5.text = [NSString stringWithFormat:@"%d", value];
-    else if (ballNo == 6)
-        ball6.text = [NSString stringWithFormat:@"%d", value];
+    [self resetBallValueToString:[NSString stringWithFormat:@"%d", value]];
+	even = YES;
 }
 -(IBAction)confirm:(id)sender{
-    value = 0;
-    if (ballNo<6)
-        ballNo ++;
-    else{
-      ballNo = 1;
-      ball1.text = @"-";
-      ball1.text = @"-";
-      ball2.text = @"-";
-      ball3.text = @"-";
-      ball4.text = @"-";
-      ball5.text = @"-";
-      ball6.text = @"-";
-    }
+	if (value > -1) {
+		if ([batter1Active isHidden]) {
+			batter2Runs += value;
+			batter2Balls++;
+		} else {
+			batter1Runs += value;
+			batter1Balls++;
+		}
+		runs += value;
+		value = -1;
+
+		if (ballNo<6)
+			ballNo ++;
+		else{
+			ballNo = 1;
+			ball1.text = @"-";
+			ball1.text = @"-";
+			ball2.text = @"-";
+			ball3.text = @"-";
+			ball4.text = @"-";
+			ball5.text = @"-";
+			ball6.text = @"-";
+			overs++;
+			maidens -= maidens%6;
+		}
+				
+		[batter1RunsLabel setText:[NSString stringWithFormat:@"%d", batter1Runs]];
+		[batter2RunsLabel setText:[NSString stringWithFormat:@"%d", batter2Runs]];
+		[batter1BallsLabel setText:[NSString stringWithFormat:@"%d", batter1Balls]];
+		[batter2BallsLabel setText:[NSString stringWithFormat:@"%d", batter2Balls]];
+		[oversLabel setText:[NSString stringWithFormat:@"%.0f", overs]];
+		[runsLabel setText:[NSString stringWithFormat:@"%.0f", runs]];
+		[maidensLabel setText:[NSString stringWithFormat:@"%d", maidens/6]];
+		if(overs > 0)
+			economy = runs/overs;
+		[economyLabel setText:[NSString stringWithFormat:@"%.2f", economy]];
+		
+		//[sender setHighlightedTextColor:[UIColor colorWithRed:255 green:0 blue:0 alpha:1.0f]];
+		
+		[self changeBatterFacingBowler];
+	}
+}
+
+- (IBAction)undo:(id)sender {
+	if (overs >= 0 && ballNo > 1) {
+		if (value > -1) {
+			
+		} else {
+			if (ballNo == 1)
+				overs--;
+			ballNo--;
+			value = [self getBallValue];
+			if (value%2 == 0) even = YES; else even = NO;
+			[self changeBatterFacingBowler];
+			if ([batter1Active isHidden]) {
+				batter2Runs -= value;
+				batter2Balls--;
+			} else {
+				batter1Runs -= value;
+				batter1Balls--;
+			}
+			runs -= value;
+		}
+		[self resetBallValueToString:@"-"];
+		value = -1;
+		
+		[batter1RunsLabel setText:[NSString stringWithFormat:@"%d", batter1Runs]];
+		[batter2RunsLabel setText:[NSString stringWithFormat:@"%d", batter2Runs]];
+		[batter1BallsLabel setText:[NSString stringWithFormat:@"%d", batter1Balls]];
+		[batter2BallsLabel setText:[NSString stringWithFormat:@"%d", batter2Balls]];
+		[oversLabel setText:[NSString stringWithFormat:@"%.0f", overs]];
+		[runsLabel setText:[NSString stringWithFormat:@"%.0f", runs]];
+		//[maidensLabel setText:[NSString stringWithFormat:@"%d", maidens/6]];
+		if(overs > 0)
+			economy = runs/overs;
+		[economyLabel setText:[NSString stringWithFormat:@"%.2f", economy]];
+	}
+}
+
+- (void)resetBallValueToString:(NSString *)string {
+	if (ballNo == 1)
+		ball1.text = string;
+	else if (ballNo == 2)
+		ball2.text = string;
+	else if (ballNo == 3)
+		ball3.text = string;
+	else if (ballNo == 4)
+		ball4.text = string;
+	else if (ballNo == 5)
+		ball5.text = string;
+	else if (ballNo == 6)
+		ball6.text = string;
+}
+
+- (int)getBallValue {
+	int ballValue = -1;
+	if (ballNo == 1)
+		ballValue = [[ball1 text] intValue];
+	else if (ballNo == 2)
+		ballValue = [[ball2 text] intValue];
+	else if (ballNo == 3)
+		ballValue = [[ball3 text] intValue];
+	else if (ballNo == 4)
+		ballValue = [[ball4 text] intValue];
+	else if (ballNo == 5)
+		ballValue = [[ball5 text] intValue];
+	else if (ballNo == 6)
+		ballValue = [[ball6 text] intValue];
+	return ballValue;
+}
+
+- (void)changeBatterFacingBowler {
+	if (!even){
+		if ([batter1Active isHidden]){
+			[batter1Active setHidden:NO];
+			[batter2Active setHidden:YES];
+		} else if ([batter2Active isHidden]){
+			[batter1Active setHidden:YES];
+			[batter2Active setHidden:NO];
+		}
+	}
 }
 
 -(IBAction)showExtrasOptions:(id)sender{
@@ -573,6 +670,17 @@ int bowler;
     [self setBall4:nil];
     [self setBall5:nil];
     [self setBall6:nil];
+	[self setBatter1Active:nil];
+	[self setBatter2Active:nil];
+	[self setBatter1BallsLabel:nil];
+	[self setBatter2BallsLabel:nil];
+	[self setBatter1RunsLabel:nil];
+	[self setBatter2RunsLabel:nil];
+	[self setOversLabel:nil];
+	[self setMaidensLabel:nil];
+	[self setRunsLabel:nil];
+	[self setWicketsLabel:nil];
+	[self setEconomyLabel:nil];
     [super viewDidUnload];
     // Release any retained subviews of the main view.
 }

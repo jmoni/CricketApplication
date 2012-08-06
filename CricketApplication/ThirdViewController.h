@@ -18,9 +18,19 @@
 @property (strong, nonatomic) IBOutlet UILabel *ball3;
 @property (strong, nonatomic) IBOutlet UILabel *ball2;
 @property (strong, nonatomic) IBOutlet UILabel *ball1;
-
+@property (strong, nonatomic) IBOutlet UIImageView *batter1Active;
+@property (strong, nonatomic) IBOutlet UIImageView *batter2Active;
+@property (strong, nonatomic) IBOutlet UILabel *batter1BallsLabel;
+@property (strong, nonatomic) IBOutlet UILabel *batter2BallsLabel;
+@property (strong, nonatomic) IBOutlet UILabel *batter1RunsLabel;
+@property (strong, nonatomic) IBOutlet UILabel *batter2RunsLabel;
 @property (strong, nonatomic) IBOutlet UILabel *fallOfWickets;
 @property (strong, nonatomic) IBOutlet UIButton *bowlerButton;
+@property (strong, nonatomic) IBOutlet UILabel *oversLabel;
+@property (strong, nonatomic) IBOutlet UILabel *maidensLabel;
+@property (strong, nonatomic) IBOutlet UILabel *runsLabel;
+@property (strong, nonatomic) IBOutlet UILabel *wicketsLabel;
+@property (strong, nonatomic) IBOutlet UILabel *economyLabel;
 
 -(IBAction)showActionSheet: (id) sender;
 -(IBAction)hideActionSheet: (UIBarButtonItem *)_infoButtonItem;
@@ -32,4 +42,5 @@
 -(IBAction)four:(id)sender;
 -(IBAction)six:(id)sender;
 -(IBAction)confirm:(id)sender;
+-(IBAction)undo:(id)sender;
 @end
