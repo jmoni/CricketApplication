@@ -119,6 +119,7 @@ int initialSliderValue;
 			awayWicketKeeper++;
 		}
 	}
+	rowForDetaiView = (int)([battingOrderSlider value]-1);
 }
 
 - (IBAction)battingOrderSliderChanging:(id)sender {
