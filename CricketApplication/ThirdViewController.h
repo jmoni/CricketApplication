@@ -31,6 +31,9 @@
 @property (strong, nonatomic) IBOutlet UILabel *runsLabel;
 @property (strong, nonatomic) IBOutlet UILabel *wicketsLabel;
 @property (strong, nonatomic) IBOutlet UILabel *economyLabel;
+@property (strong, nonatomic) IBOutletCollection(UIButton) NSArray *calculatorView;
+@property (strong, nonatomic) IBOutletCollection(UILabel) NSArray *ballLabels;
+@property (strong, nonatomic) IBOutlet UIButton *startGameButton;
 
 -(IBAction)showActionSheet: (id) sender;
 -(IBAction)hideActionSheet: (UIBarButtonItem *)_infoButtonItem;
@@ -43,4 +46,5 @@
 -(IBAction)six:(id)sender;
 -(IBAction)confirm:(id)sender;
 -(IBAction)undo:(id)sender;
+-(IBAction)startGame:(id)sender;
 @end
