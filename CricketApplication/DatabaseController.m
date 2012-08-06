@@ -16,6 +16,13 @@
 @implementation DatabaseController
 @synthesize saveButton = _saveButton;
 
+
+- (void)saveData:(id)sender
+{
+    
+}
+
+
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
