@@ -593,7 +593,7 @@
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="TaF-iz-UWi">
+                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="TaF-iz-UWi">
                                 <rect key="frame" x="79" y="128" width="61" height="33"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
@@ -608,7 +608,7 @@
                                     <action selector="noRuns:" destination="QzP-vb-Ig0" eventType="touchDown" id="AiZ-C5-2Dm"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="0We-Dn-MMf">
+                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="0We-Dn-MMf">
                                 <rect key="frame" x="153" y="128" width="61" height="33"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
@@ -623,7 +623,7 @@
                                     <action selector="plusOne:" destination="QzP-vb-Ig0" eventType="touchDown" id="aqo-or-vBf"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="geV-B2-qlI">
+                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="geV-B2-qlI">
                                 <rect key="frame" x="225" y="128" width="55" height="116"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
@@ -637,7 +637,7 @@
                                     <action selector="confirm:" destination="QzP-vb-Ig0" eventType="touchDown" id="ONd-LU-qEp"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="a1W-x0-r8h">
+                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="a1W-x0-r8h">
                                 <rect key="frame" x="79" y="169" width="61" height="33"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
@@ -652,7 +652,7 @@
                                     <action selector="four:" destination="QzP-vb-Ig0" eventType="touchDown" id="ET5-OJ-h6g"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="fv5-MT-9kc">
+                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="fv5-MT-9kc">
                                 <rect key="frame" x="153" y="169" width="61" height="33"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
@@ -667,7 +667,7 @@
                                     <action selector="six:" destination="QzP-vb-Ig0" eventType="touchDown" id="3AV-fi-jHM"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="hN4-yG-TAg">
+                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="hN4-yG-TAg">
                                 <rect key="frame" x="79" y="210" width="61" height="33"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
@@ -682,7 +682,7 @@
                                     <action selector="showOutOptions:" destination="QzP-vb-Ig0" eventType="touchDown" id="Zll-A4-6KE"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="3KY-ZU-n1I">
+                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="3KY-ZU-n1I">
                                 <rect key="frame" x="153" y="210" width="61" height="33"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
@@ -697,7 +697,7 @@
                                     <action selector="showExtrasOptions:" destination="QzP-vb-Ig0" eventType="touchDown" id="cPN-5r-y1o"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="GkB-Mk-4xw">
+                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="GkB-Mk-4xw">
                                 <rect key="frame" x="19" y="244" width="56" height="40"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
@@ -712,10 +712,50 @@
                                     <action selector="undo:" destination="QzP-vb-Ig0" eventType="touchUpInside" id="LQ6-rc-Pwz"/>
                                 </connections>
                             </button>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="-" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" id="tiK-LQ-rCO">
+                            <label hidden="YES" opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="-" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" id="tiK-LQ-rCO">
                                 <rect key="frame" x="88" y="253" width="22" height="21"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <accessibility key="accessibilityConfiguration" label="ball1"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label hidden="YES" opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="-" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" id="eYa-Jk-86j">
+                                <rect key="frame" x="118" y="253" width="22" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <accessibility key="accessibilityConfiguration" label="ball2"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label hidden="YES" opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="-" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" id="sjh-Sq-5On">
+                                <rect key="frame" x="148" y="253" width="22" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <accessibility key="accessibilityConfiguration" label="ball3"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label hidden="YES" opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="-" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" id="bnQ-dP-8bS">
+                                <rect key="frame" x="178" y="253" width="22" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <accessibility key="accessibilityConfiguration" label="ball4"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label hidden="YES" opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="-" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" id="2jl-VC-JP5">
+                                <rect key="frame" x="208" y="253" width="22" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <accessibility key="accessibilityConfiguration" label="ball5"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label hidden="YES" opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="-" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" id="Q6Q-xl-rFk">
+                                <rect key="frame" x="238" y="253" width="21" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <accessibility key="accessibilityConfiguration" label="ball6"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
@@ -812,46 +852,6 @@
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="-" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" id="eYa-Jk-86j">
-                                <rect key="frame" x="118" y="253" width="22" height="21"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <accessibility key="accessibilityConfiguration" label="ball2"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="-" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" id="sjh-Sq-5On">
-                                <rect key="frame" x="148" y="253" width="22" height="21"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <accessibility key="accessibilityConfiguration" label="ball3"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="-" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" id="bnQ-dP-8bS">
-                                <rect key="frame" x="178" y="253" width="22" height="21"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <accessibility key="accessibilityConfiguration" label="ball4"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="-" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" id="2jl-VC-JP5">
-                                <rect key="frame" x="208" y="253" width="22" height="21"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <accessibility key="accessibilityConfiguration" label="ball5"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="-" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" id="Q6Q-xl-rFk">
-                                <rect key="frame" x="238" y="253" width="21" height="21"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <accessibility key="accessibilityConfiguration" label="ball6"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Balls" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" id="3ak-9a-FPm">
                                 <rect key="frame" x="225" y="7" width="42" height="21"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -887,6 +887,21 @@
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="d2z-Fe-3Q2">
+                                <rect key="frame" x="20" y="120" width="280" height="164"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="35"/>
+                                <state key="normal" title="Start Game">
+                                    <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <state key="highlighted">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="startGame:" destination="QzP-vb-Ig0" eventType="touchUpInside" id="Xpr-6r-DVF"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <connections>
@@ -916,9 +931,25 @@
                         <outlet property="oneActive" destination="o2u-bq-g0c" id="RK8-3z-kfq"/>
                         <outlet property="oversLabel" destination="f18-U3-mUs" id="4rx-24-DIp"/>
                         <outlet property="runsLabel" destination="Afb-gF-cV2" id="ApJ-3z-ZIb"/>
+                        <outlet property="startGameButton" destination="d2z-Fe-3Q2" id="Eq1-m4-gJs"/>
                         <outlet property="teamName" destination="ip8-1S-QY5" id="zto-F0-LQ6"/>
                         <outlet property="twoActive" destination="ZI0-Gp-pd2" id="kak-Ew-g8V"/>
                         <outlet property="wicketsLabel" destination="e1W-Oe-X0P" id="wga-7i-6iO"/>
+                        <outletCollection property="calculatorView" destination="fv5-MT-9kc" id="C9A-TF-L7S"/>
+                        <outletCollection property="calculatorView" destination="TaF-iz-UWi" id="AS8-iV-O34"/>
+                        <outletCollection property="calculatorView" destination="0We-Dn-MMf" id="BR6-9D-rDd"/>
+                        <outletCollection property="calculatorView" destination="geV-B2-qlI" id="Dm8-q1-bmV"/>
+                        <outletCollection property="calculatorView" destination="a1W-x0-r8h" id="zmm-lQ-jDm"/>
+                        <outletCollection property="calculatorView" destination="fv5-MT-9kc" id="d9i-47-RGc"/>
+                        <outletCollection property="calculatorView" destination="hN4-yG-TAg" id="cc7-KJ-NdF"/>
+                        <outletCollection property="calculatorView" destination="3KY-ZU-n1I" id="vgK-qG-NDT"/>
+                        <outletCollection property="calculatorView" destination="GkB-Mk-4xw" id="tcD-mW-vMi"/>
+                        <outletCollection property="ballLabels" destination="sjh-Sq-5On" id="p4i-Tc-Oi0"/>
+                        <outletCollection property="ballLabels" destination="tiK-LQ-rCO" id="M8U-aT-uLd"/>
+                        <outletCollection property="ballLabels" destination="eYa-Jk-86j" id="bUo-Qa-UE4"/>
+                        <outletCollection property="ballLabels" destination="bnQ-dP-8bS" id="g85-8M-1Ty"/>
+                        <outletCollection property="ballLabels" destination="2jl-VC-JP5" id="sxV-ic-QMm"/>
+                        <outletCollection property="ballLabels" destination="Q6Q-xl-rFk" id="Sjb-ob-Ect"/>
                     </connections>
                 </viewController>
             </objects>
@@ -950,7 +981,8 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="14" sceneMemberID="firstResponder"/>
                 <tabBarController id="4" sceneMemberID="viewController">
                     <navigationItem key="navigationItem" title="Cricket Application" id="f7R-kv-gRN">
-                        <barButtonItem key="rightBarButtonItem" systemItem="save" id="EIC-aa-9kP"/>
+                        <barButtonItem key="leftBarButtonItem" systemItem="save" id="EEC-lO-9Na"/>
+                        <barButtonItem key="rightBarButtonItem" systemItem="action" id="EIC-aa-9kP"/>
                     </navigationItem>
                     <nil key="simulatedBottomBarMetrics"/>
                     <tabBar key="tabBar" contentMode="scaleToFill" id="5">
@@ -985,6 +1017,114 @@
         <image name="second.png" width="30" height="30"/>
         <image name="second@2x.png" width="60" height="60"/>
     </resources>
+    <classes>
+        <class className="DetailViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/DetailViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="CSlider:"/>
+                <relationship kind="action" name="VCSlider:"/>
+                <relationship kind="action" name="WKSlider:"/>
+                <relationship kind="action" name="backgroundTouched:"/>
+                <relationship kind="action" name="battingOrderSliderChanged:"/>
+                <relationship kind="action" name="battingOrderSliderChanging:"/>
+                <relationship kind="action" name="deletePlayer:"/>
+                <relationship kind="action" name="getInitialSlideValue:"/>
+                <relationship kind="action" name="textFieldReturn:"/>
+                <relationship kind="outlet" name="CaptainSlider" candidateClass="UISwitch"/>
+                <relationship kind="outlet" name="NavBar" candidateClass="UINavigationItem"/>
+                <relationship kind="outlet" name="ViceCaptainSlider" candidateClass="UISwitch"/>
+                <relationship kind="outlet" name="WicketKeeperSlider" candidateClass="UISwitch"/>
+                <relationship kind="outlet" name="battingOrderSlider" candidateClass="UISlider"/>
+                <relationship kind="outlet" name="playerEditTextBox" candidateClass="UITextField"/>
+                <relationship kind="outlet" name="sliderValueLabel" candidateClass="UILabel"/>
+            </relationships>
+        </class>
+        <class className="FirstViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/FirstViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="changeDate:"/>
+                <relationship kind="action" name="flipSwitch:"/>
+                <relationship kind="action" name="hideActionSheet:" candidateClass="UIBarButtonItem"/>
+                <relationship kind="action" name="showActionSheet:"/>
+                <relationship kind="action" name="sliderUpdate:"/>
+                <relationship kind="action" name="textFieldReturn:"/>
+                <relationship kind="action" name="timeSliderUpdate:"/>
+                <relationship kind="outlet" name="awayTeamEntered" candidateClass="UITextField"/>
+                <relationship kind="outlet" name="dateButton" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="datePicker" candidateClass="UIDatePicker"/>
+                <relationship kind="outlet" name="dateText" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="homeTeamEntered" candidateClass="UITextField"/>
+                <relationship kind="outlet" name="infoButtonItem" candidateClass="UIBarButtonItem"/>
+                <relationship kind="outlet" name="overSlide" candidateClass="UISlider"/>
+                <relationship kind="outlet" name="overTimeLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="scrollView" candidateClass="UIScrollView"/>
+                <relationship kind="outlet" name="switcher" candidateClass="UISegmentedControl"/>
+                <relationship kind="outlet" name="timeLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="timeSlide" candidateClass="UISlider"/>
+            </relationships>
+        </class>
+        <class className="SecondViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/SecondViewController.h"/>
+            <relationships>
+                <relationship kind="outlet" name="awayNavBarAddButton" candidateClass="UIBarButtonItem"/>
+                <relationship kind="outlet" name="awayNavBarEditButton" candidateClass="UIBarButtonItem"/>
+                <relationship kind="outlet" name="awayPlayersTable" candidateClass="UITableView"/>
+                <relationship kind="outlet" name="awayWonToss" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="battingButton" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="fieldingButton" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="homeNavBarAddButton" candidateClass="UIBarButtonItem"/>
+                <relationship kind="outlet" name="homeNavBarEditButton" candidateClass="UIBarButtonItem"/>
+                <relationship kind="outlet" name="homePlayersTable" candidateClass="UITableView"/>
+                <relationship kind="outlet" name="homeWonToss" candidateClass="UIButton"/>
+            </relationships>
+        </class>
+        <class className="ThirdViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/ThirdViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="confirm:"/>
+                <relationship kind="action" name="four:"/>
+                <relationship kind="action" name="hideActionSheet:" candidateClass="UIBarButtonItem"/>
+                <relationship kind="action" name="hideActionSheetB:"/>
+                <relationship kind="action" name="noRuns:"/>
+                <relationship kind="action" name="plusOne:"/>
+                <relationship kind="action" name="showActionSheet:"/>
+                <relationship kind="action" name="showExtrasOptions:"/>
+                <relationship kind="action" name="showOutOptions:"/>
+                <relationship kind="action" name="six:"/>
+                <relationship kind="action" name="startGame:"/>
+                <relationship kind="action" name="undo:"/>
+                <relationship kind="outlet" name="ball1" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="ball2" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="ball3" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="ball4" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="ball5" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="ball6" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="batter1Active" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="batter1BallsLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="batter1RunsLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="batter2Active" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="batter2BallsLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="batter2RunsLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="batterName1" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="batterName2" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="bowlerButton" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="choosePlayer" candidateClass="UIPickerView"/>
+                <relationship kind="outlet" name="economyLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="fallOfWickets" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="infoButtonItem" candidateClass="UIBarButtonItem"/>
+                <relationship kind="outlet" name="maidensLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="oneActive" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="oversLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="runsLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="startGameButton" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="teamName" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="twoActive" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="wicketsLabel" candidateClass="UILabel"/>
+                <relationship kind="outletCollection" name="ballLabels" candidateClass="UILabel"/>
+                <relationship kind="outletCollection" name="calculatorView" candidateClass="UIButton"/>
+            </relationships>
+        </class>
+    </classes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
         <simulatedOrientationMetrics key="orientation"/>

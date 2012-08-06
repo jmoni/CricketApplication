@@ -23,7 +23,7 @@
 
 UIView *newView;
 int height = 255;
-int value = 0;
+int value = -1;
 int ballNo = 1;
 UIButton *batterButton;
 int batter1;
@@ -60,6 +60,9 @@ float economy = 0.00;
 @synthesize runsLabel;
 @synthesize wicketsLabel;
 @synthesize economyLabel;
+@synthesize calculatorView;
+@synthesize ballLabels;
+@synthesize startGameButton;
 @synthesize batterName1;
 @synthesize batterName2;
 @synthesize teamName;
@@ -75,6 +78,34 @@ float economy = 0.00;
         // Custom initialization
     }
     return self;
+}
+
+- (void)startGame:(id)sender {
+	UIAlertView* mes=[[UIAlertView alloc] initWithTitle:@"Are you ready to start game?"
+				message:[NSString stringWithFormat:@"Ensure the starting batsmen are correct as you will not be able to change these once the game starts."] delegate:self cancelButtonTitle:@"No" otherButtonTitles:@"Yes", nil];
+	[mes show];
+}
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+	if (buttonIndex == 0)
+	{
+		[self resignFirstResponder];
+	}
+	else
+	{
+		[self resignFirstResponder];
+		[startGameButton setHidden:YES];
+		for(int i = 0; i < [calculatorView count]; i++){
+			[[calculatorView objectAtIndex:i] setHidden:NO];
+		}
+		for(int i = 0; i < [ballLabels count]; i++){
+			[[ballLabels objectAtIndex:i] setHidden:NO];
+		}
+		[batterName1 setEnabled:NO];
+		[batterName2 setEnabled:NO];
+		//[bowlerButton setEnabled:NO];
+	}
 }
 
 -(IBAction)noRuns:(id)sender{
@@ -248,15 +279,15 @@ float economy = 0.00;
     UIButton *nB = [UIButton buttonWithType:UIButtonTypeRoundedRect];
     [nB addTarget:self
 		   action:nil
- forControlEvents:UIControlEventTouchDown];
+			forControlEvents:UIControlEventTouchDown];
     [nB setTitle:@"No Ball" forState:UIControlStateNormal];
     nB.frame = CGRectMake(20.0, 50.0, 65.0, 40.0);
     [newView addSubview:nB];
     
     UIButton *wide = [UIButton buttonWithType:UIButtonTypeRoundedRect];
     [wide addTarget:self
-			 action:nil
-   forControlEvents:UIControlEventTouchDown];
+			action:nil
+			forControlEvents:UIControlEventTouchDown];
     [wide setTitle:@"Wide" forState:UIControlStateNormal];
     wide.frame = CGRectMake(95.0, 50.0, 65.0, 40.0);
     [newView addSubview:wide];
@@ -264,7 +295,7 @@ float economy = 0.00;
     UIButton *bye = [UIButton buttonWithType:UIButtonTypeRoundedRect];
     [bye addTarget:self
 			action:nil
-  forControlEvents:UIControlEventTouchDown];
+			forControlEvents:UIControlEventTouchDown];
     [bye setTitle:@"Bye" forState:UIControlStateNormal];
     bye.frame = CGRectMake(170.0, 50.0, 65.0, 40.0);
     [newView addSubview:bye];
@@ -272,15 +303,15 @@ float economy = 0.00;
     UIButton *legBye = [UIButton buttonWithType:UIButtonTypeRoundedRect];
     [legBye addTarget:self
 			   action:nil
-	 forControlEvents:UIControlEventTouchDown];
+				forControlEvents:UIControlEventTouchDown];
     [legBye setTitle:@"Leg Bye" forState:UIControlStateNormal];
     legBye.frame = CGRectMake(245.0, 50.0, 65.0, 40.0);
     [newView addSubview:legBye];
     
     UIButton *penaltyRun = [UIButton buttonWithType:UIButtonTypeRoundedRect];
     [penaltyRun addTarget:self
-				   action:nil
-		 forControlEvents:UIControlEventTouchDown];
+				action:nil
+				forControlEvents:UIControlEventTouchDown];
     [penaltyRun setTitle:@"Penalty Run" forState:UIControlStateNormal];
     penaltyRun.frame = CGRectMake(110.0, 100.0, 100.0, 40.0);
     [newView addSubview:penaltyRun];
@@ -296,7 +327,7 @@ float economy = 0.00;
     UIButton *undo = [UIButton buttonWithType:UIButtonTypeRoundedRect];
     [undo addTarget:self
 			 action:nil
-   forControlEvents:UIControlEventTouchDown];
+			forControlEvents:UIControlEventTouchDown];
     [undo setTitle:@"Undo" forState:UIControlStateNormal];
     undo.frame = CGRectMake(135.0, 200.0, 50.0, 40.0);
     [newView addSubview:undo];
@@ -316,8 +347,8 @@ float economy = 0.00;
 }
 
 -(IBAction)showOutOptions:(id)sender {
-    batterName1.enabled = false;
-    batterName2.enabled = false;
+    //batterName1.enabled = false;
+    //batterName2.enabled = false;
     height = 255;
     //create new view
     newView = [[UIView alloc] initWithFrame:CGRectMake(0, 200, 320, height)];
@@ -351,7 +382,7 @@ float economy = 0.00;
     UIButton *lbw = [UIButton buttonWithType:UIButtonTypeRoundedRect];
     [lbw addTarget:self
 			action:nil
-  forControlEvents:UIControlEventTouchDown];
+	forControlEvents:UIControlEventTouchDown];
     [lbw setTitle:@"LBW" forState:UIControlStateNormal];
     lbw.frame = CGRectMake(170.0, 50.0, 45.0, 40.0);
     [newView addSubview:lbw];
@@ -535,8 +566,10 @@ float economy = 0.00;
 
 //Used for clicked on the background
 -(IBAction)hideActionSheetB:(id)sender{
-    batterName1.enabled = true;
-    batterName2.enabled = true;
+	if (![startGameButton isHidden]) {
+		batterName1.enabled = true;
+		batterName2.enabled = true;
+	}
 	
 	//animate onto screen
 	CGRect temp = newView.frame;
@@ -681,6 +714,9 @@ float economy = 0.00;
 	[self setRunsLabel:nil];
 	[self setWicketsLabel:nil];
 	[self setEconomyLabel:nil];
+	[self setCalculatorView:nil];
+	[self setStartGameButton:nil];
+	[self setBallLabels:nil];
     [super viewDidUnload];
     // Release any retained subviews of the main view.
 }
