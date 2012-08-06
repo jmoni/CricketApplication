@@ -57,8 +57,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		9F134C0F15D00E1D0056EE03 /* DatabaseController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DatabaseController.h; sourceTree = "<group>"; };
-		9F134C1015D00E1D0056EE03 /* DatabaseController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DatabaseController.m; sourceTree = "<group>"; };
+		9F134C0F15D00E1D0056EE03 /* DatabaseController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DatabaseController.h; path = CricketApplication/DatabaseController.h; sourceTree = "<group>"; };
+		9F134C1015D00E1D0056EE03 /* DatabaseController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DatabaseController.m; path = CricketApplication/DatabaseController.m; sourceTree = "<group>"; };
 		BD851B6015CA93C5000BA6F3 /* CaptainIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = CaptainIcon.png; sourceTree = "<group>"; };
 		BD851B6115CA93C5000BA6F3 /* ViceCaptainIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ViceCaptainIcon.png; sourceTree = "<group>"; };
 		BD851B6215CA93C5000BA6F3 /* WicketKeeperIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = WicketKeeperIcon.png; sourceTree = "<group>"; };
@@ -135,6 +135,8 @@
 		BDA16D9F15D00A1600DD9301 /* Database */ = {
 			isa = PBXGroup;
 			children = (
+				9F134C0F15D00E1D0056EE03 /* DatabaseController.h */,
+				9F134C1015D00E1D0056EE03 /* DatabaseController.m */,
 				BDA16DA115D00A2F00DD9301 /* cricket.db */,
 			);
 			name = Database;
@@ -184,8 +186,6 @@
 				BDE2B19415C6ADDF009E9F40 /* Delegate */,
 				BDE2B18115C6AD8C009E9F40 /* Images */,
 				BDE2B14815C6AA63009E9F40 /* Supporting Files */,
-				9F134C0F15D00E1D0056EE03 /* DatabaseController.h */,
-				9F134C1015D00E1D0056EE03 /* DatabaseController.m */,
 			);
 			path = CricketApplication;
 			sourceTree = "<group>";
