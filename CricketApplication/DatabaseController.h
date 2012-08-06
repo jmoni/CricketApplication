@@ -11,6 +11,7 @@
 
 @interface DatabaseController : UITabBarController{
     UIBarButtonItem *saveButton;
+    sqlite3 *cricketDB;
 }
 @property (strong, nonatomic) IBOutlet UIBarButtonItem *saveButton;
 
