@@ -14,8 +14,6 @@
 
 @interface DatabaseController ()
 @end
-int homeTeamID;
-int awayTeamID;
 
 @implementation DatabaseController
 @synthesize saveButton = _saveButton;
@@ -46,9 +44,12 @@ int awayTeamID;
 	if ([self selectedIndex] == 0) {
 		[self firstTabSave];
 	} else if ([self selectedIndex] == 1) {
+		[self firstTabSave];
 		[self secondTabSave];
 	} else if ([self selectedIndex] == 2) {
-		[self thirdTabSave];
+		//[self thirdTabSave];
+		[self firstTabSave];
+		[self secondTabSave];
 	}
 }
 
@@ -85,10 +86,10 @@ int awayTeamID;
 }
 
 - (void) thirdTabSave {
-	NSLog(@"%@", strDate);
 	[self insertStringIntoDatabase:[NSString stringWithFormat:
-									@"INSERT INTO GAMES (HomeID, AwayID, GameDate, TossResult, Decision, MatchType, OversOrDays, UmpireOne, UmpireTwo) VALUES (%d, %d, to_date('08/08/2012', 'dd/mm/yyyy'), @\"%@\", @\"%@\", @\"%@\", %d, @\"%@\", @\"%@\")",
-									homeTeamID, awayTeamID, tossWonBy, decision, matchType, numberOversOrDays, umpireOne, umpireTwo]];
+									@"INSERT INTO GAMES (HomeID, AwayID, GameDate, TossResult, Decision, MatchType, OversOrDays, UmpireOne, UmpireTwo) VALUES (%d, %d, '%@', \"%@\", \"%@\", \"%@\", %d, \"%@\", \"%@\")",
+									homeTeamID, awayTeamID, strDate, tossWonBy, decision, matchType, numberOversOrDays, umpireOne, umpireTwo]];
+	disableElements = YES;
 }
 
 - (int)returnIntFromDatabase:(NSString *)string {

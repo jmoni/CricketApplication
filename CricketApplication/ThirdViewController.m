@@ -10,6 +10,7 @@
 #import "sqlite3.h"
 #include "SecondViewController.h"
 #include "FirstViewController.h"
+#include "DatabaseController.h"
 
 @interface ThirdViewController ()
 @property (strong, nonatomic) IBOutlet UIButton *batterName1;
@@ -82,7 +83,7 @@ float economy = 0.00;
 
 - (void)startGame:(id)sender {
 	UIAlertView* mes=[[UIAlertView alloc] initWithTitle:@"Are you ready to start game?"
-				message:[NSString stringWithFormat:@"Ensure the starting batsmen are correct as you will not be able to change these once the game starts."] delegate:self cancelButtonTitle:@"No" otherButtonTitles:@"Yes", nil];
+				message:[NSString stringWithFormat:@"Ensure all game details are correct as you will not be able to edit these once the game starts."] delegate:self cancelButtonTitle:@"No" otherButtonTitles:@"Yes", nil];
 	[mes show];
 }
 
@@ -102,6 +103,8 @@ float economy = 0.00;
 		for(int i = 0; i < [ballLabels count]; i++){
 			[[ballLabels objectAtIndex:i] setHidden:NO];
 		}
+		DatabaseController *instance = [[DatabaseController alloc] init];
+		[instance thirdTabSave];
 		[batterName1 setEnabled:NO];
 		[batterName2 setEnabled:NO];
 		//[bowlerButton setEnabled:NO];

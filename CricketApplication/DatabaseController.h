@@ -9,13 +9,18 @@
 #import <UIKit/UIKit.h>
 #import "sqlite3.h"
 
+int homeTeamID;
+int awayTeamID;
+NSString *writableDBPath;
+sqlite3 *cricketDB;
+bool disableElements;
+
 @interface DatabaseController : UITabBarController{
     UIBarButtonItem *saveButton;
-    NSString		*writableDBPath;
-    sqlite3         *cricketDB;
 }
 @property (strong, nonatomic) IBOutlet UIBarButtonItem *saveButton;
 
 - (IBAction)saveData:(id)sender;
+- (void)thirdTabSave;
 
 @end

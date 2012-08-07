@@ -9,6 +9,7 @@
 #import "SecondViewController.h"
 #import "sqlite3.h"
 #include "DetailViewController.h"
+#include "DatabaseController.h"
 
 @interface SecondViewController ()
 @property (strong, nonatomic) IBOutlet UIBarButtonItem *homeNavBarEditButton;
@@ -65,6 +66,7 @@ UIImage *viceCaptainWicketKeeper;
 	viceCaptainWicketKeeper = [UIImage imageNamed:@"viceCaptainWicketKeeper.png"];
 	battingTeam = @"home";
 	tossWonBy = @"home";
+	decision = @"bat";
 }
 
 - (void)viewDidUnload
@@ -86,6 +88,12 @@ UIImage *viceCaptainWicketKeeper;
 - (void)viewDidAppear:(BOOL)animated {
 	[homePlayersTable reloadData];
 	[awayPlayersTable reloadData];
+	if(disableElements){
+		[homeWonToss setEnabled:NO];
+		[awayWonToss setEnabled:NO];
+		[battingButton setEnabled:NO];
+		[fieldingButton setEnabled:NO];
+	}
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
@@ -362,11 +370,10 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
 	{
         [battingButton setSelected:YES];
 		[fieldingButton setSelected:NO];
-		decision = @"batt";
+		decision = @"bat";
 		if (homeWonToss.selected) battingTeam = @"home";
 		else battingTeam = @"away";
     }
-	
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation

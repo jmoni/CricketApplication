@@ -8,6 +8,7 @@
 
 #import "FirstViewController.h"
 #import "sqlite3.h"
+#import "DatabaseController.h"
 
 @interface FirstViewController ()
 
@@ -29,7 +30,6 @@
 @synthesize umpireTwoEntered = _umpireTwoEntered;
 
 int height;
-
 UIView *newView;
 UITextField *activeField;
 
@@ -254,6 +254,19 @@ UITextField *activeField;
     [self setUmpireTwoEntered:nil];
     [super viewDidUnload];
     // Release any retained subviews of the main view.
+}
+
+-(void)viewDidAppear:(BOOL)animated {
+	if(disableElements){
+		[_homeTeamEntered setEnabled:NO];
+		[_awayTeamEntered setEnabled:NO];
+		[_dateButton setEnabled:NO];
+		[_umpireOneEntered setEnabled:NO];
+		[_umpireTwoEntered setEnabled:NO];
+		[_switcher setEnabled:NO];
+		[_overSlide setEnabled:NO];
+		[_timeSlide setEnabled:NO];
+	}
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
