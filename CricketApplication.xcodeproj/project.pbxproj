@@ -13,7 +13,8 @@
 		BD851B6515CA93C5000BA6F3 /* WicketKeeperIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = BD851B6215CA93C5000BA6F3 /* WicketKeeperIcon.png */; };
 		BD851B6815CA9CBA000BA6F3 /* captainWicketKeeper.png in Resources */ = {isa = PBXBuildFile; fileRef = BD851B6615CA9CBA000BA6F3 /* captainWicketKeeper.png */; };
 		BD851B6915CA9CBA000BA6F3 /* viceCaptainWicketKeeper.png in Resources */ = {isa = PBXBuildFile; fileRef = BD851B6715CA9CBA000BA6F3 /* viceCaptainWicketKeeper.png */; };
-		BDA16DA215D00A2F00DD9301 /* cricket.db in Resources */ = {isa = PBXBuildFile; fileRef = BDA16DA115D00A2F00DD9301 /* cricket.db */; };
+		BDA16DB415D02C4000DD9301 /* cricket.db in Resources */ = {isa = PBXBuildFile; fileRef = BDA16DB315D02C4000DD9301 /* cricket.db */; };
+		BDA16DB615D030D700DD9301 /* CricketDatabase.sql in Resources */ = {isa = PBXBuildFile; fileRef = BDA16DB515D030D700DD9301 /* CricketDatabase.sql */; };
 		BDD69ED015C81772002FE1CA /* DetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BDD69ECF15C81772002FE1CA /* DetailViewController.m */; };
 		BDE2B14215C6AA63009E9F40 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BDE2B14115C6AA63009E9F40 /* UIKit.framework */; };
 		BDE2B14415C6AA63009E9F40 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BDE2B14315C6AA63009E9F40 /* Foundation.framework */; };
@@ -64,7 +65,8 @@
 		BD851B6215CA93C5000BA6F3 /* WicketKeeperIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = WicketKeeperIcon.png; sourceTree = "<group>"; };
 		BD851B6615CA9CBA000BA6F3 /* captainWicketKeeper.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = captainWicketKeeper.png; sourceTree = "<group>"; };
 		BD851B6715CA9CBA000BA6F3 /* viceCaptainWicketKeeper.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = viceCaptainWicketKeeper.png; sourceTree = "<group>"; };
-		BDA16DA115D00A2F00DD9301 /* cricket.db */ = {isa = PBXFileReference; lastKnownFileType = file; name = cricket.db; path = CricketApplication/cricket.db; sourceTree = "<group>"; };
+		BDA16DB315D02C4000DD9301 /* cricket.db */ = {isa = PBXFileReference; lastKnownFileType = file; name = cricket.db; path = CricketApplication/cricket.db; sourceTree = "<group>"; };
+		BDA16DB515D030D700DD9301 /* CricketDatabase.sql */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = CricketDatabase.sql; path = CricketApplication/CricketDatabase.sql; sourceTree = "<group>"; };
 		BDD69ECE15C81772002FE1CA /* DetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DetailViewController.h; sourceTree = "<group>"; };
 		BDD69ECF15C81772002FE1CA /* DetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DetailViewController.m; sourceTree = "<group>"; };
 		BDE2B13D15C6AA63009E9F40 /* CricketApplication.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CricketApplication.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -135,9 +137,10 @@
 		BDA16D9F15D00A1600DD9301 /* Database */ = {
 			isa = PBXGroup;
 			children = (
+				BDA16DB515D030D700DD9301 /* CricketDatabase.sql */,
+				BDA16DB315D02C4000DD9301 /* cricket.db */,
 				9F134C0F15D00E1D0056EE03 /* DatabaseController.h */,
 				9F134C1015D00E1D0056EE03 /* DatabaseController.m */,
-				BDA16DA115D00A2F00DD9301 /* cricket.db */,
 			);
 			name = Database;
 			path = ..;
@@ -372,7 +375,8 @@
 				BD851B6515CA93C5000BA6F3 /* WicketKeeperIcon.png in Resources */,
 				BD851B6815CA9CBA000BA6F3 /* captainWicketKeeper.png in Resources */,
 				BD851B6915CA9CBA000BA6F3 /* viceCaptainWicketKeeper.png in Resources */,
-				BDA16DA215D00A2F00DD9301 /* cricket.db in Resources */,
+				BDA16DB415D02C4000DD9301 /* cricket.db in Resources */,
+				BDA16DB615D030D700DD9301 /* CricketDatabase.sql in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
