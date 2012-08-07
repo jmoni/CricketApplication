@@ -25,6 +25,8 @@
 @synthesize timeLabel = _timeLabel;
 @synthesize infoButtonItem = _infoButtonItem;
 @synthesize scrollView = _scrollView;
+@synthesize umpireOneEntered = _umpireOneEntered;
+@synthesize umpireTwoEntered = _umpireTwoEntered;
 
 int height;
 
@@ -95,6 +97,14 @@ UITextField *activeField;
 		awayTeam = [_awayTeamEntered text];
 	else
 		awayTeam = @"Team 2";
+    if([[_umpireOneEntered text] length] > 0)
+		umpireOne = [_umpireOneEntered text];
+	else
+		umpireOne = @"Umpire 1";
+    if([[_umpireTwoEntered text] length] > 0)
+		umpireTwo = [_umpireTwoEntered text];
+	else
+		umpireTwo = @"Umpire 2";
 	[sender resignFirstResponder];
 }
 
@@ -120,6 +130,7 @@ UITextField *activeField;
 
 -(IBAction)sliderUpdate:(id)sender{
     _overTimeLabel.text = [NSString stringWithFormat:@"%d",(int)_overSlide.value];
+    numberOversOrDays = (int)_overSlide.value;
 }
 
 - (IBAction)flipSwitch: (id)sender{
@@ -129,6 +140,7 @@ UITextField *activeField;
         _timeSlide.hidden = FALSE;
         _overTimeLabel.hidden = TRUE;
         _timeLabel.hidden = FALSE;
+        numberOversOrDays = (int)_timeSlide.value;
     }
     else {
 		matchType = @"overs";
@@ -136,6 +148,7 @@ UITextField *activeField;
         _timeSlide.hidden = TRUE;
         _overTimeLabel.hidden = FALSE;
         _timeLabel.hidden = TRUE;
+        numberOversOrDays = (int)_overSlide.value;
     }
 }
 
@@ -150,6 +163,7 @@ UITextField *activeField;
          temp = [labelNum stringByAppendingFormat:@" Days"];
         _timeLabel.text = temp;
     }
+    numberOversOrDays = (int)_timeSlide.value;
 }
 
 - (IBAction)textFieldDidBeginEditing:(UITextField *)textField
@@ -233,6 +247,8 @@ UITextField *activeField;
     [self setTimeLabel:nil];
 	[self setScrollView:nil];
 	[self setHomeTeamEntered:nil];
+    [self setUmpireOneEntered:nil];
+    [self setUmpireTwoEntered:nil];
     [super viewDidUnload];
     // Release any retained subviews of the main view.
 }

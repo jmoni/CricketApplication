@@ -189,6 +189,8 @@
                         <outlet property="switcher" destination="pgH-oW-I60" id="59T-ab-T3K"/>
                         <outlet property="timeLabel" destination="Hez-8K-NCX" id="G7C-i2-7bH"/>
                         <outlet property="timeSlide" destination="GKa-39-q6P" id="u4Y-uF-CxQ"/>
+                        <outlet property="umpireOneEntered" destination="r4c-0C-Pss" id="gkP-52-c4e"/>
+                        <outlet property="umpireTwoEntered" destination="BXS-oT-Tmu" id="YaB-8L-KsA"/>
                     </connections>
                 </viewController>
             </objects>
