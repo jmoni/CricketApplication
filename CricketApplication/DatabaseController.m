@@ -14,6 +14,8 @@
 
 @interface DatabaseController ()
 @end
+int homeTeamID;
+int awayTeamID;
 
 @implementation DatabaseController
 @synthesize saveButton = _saveButton;
@@ -63,27 +65,29 @@
 
 - (void) secondTabSave {
 	//HOME TEAM
-	int teamID = [self returnIntFromDatabase:[NSString stringWithFormat:
+	homeTeamID = [self returnIntFromDatabase:[NSString stringWithFormat:
 								 @"SELECT TeamID FROM TEAMS WHERE TeamName == '%@'", homeTeam]];
 	for (int i = 0; i < [homePlayersArray count]; i++){
 		[self insertStringIntoDatabase:[NSString stringWithFormat:
 										@"INSERT INTO PLAYERS (TeamID, PlayerName) SELECT %d, \"%@\" WHERE NOT EXISTS (SELECT * FROM Players WHERE (PlayerName = \"%@\") AND (TeamID = %d))",
-										teamID, [homePlayersArray objectAtIndex:i], [homePlayersArray objectAtIndex:i], teamID]];
+										homeTeamID, [homePlayersArray objectAtIndex:i], [homePlayersArray objectAtIndex:i], homeTeamID]];
 	}
 	
 	//AWAY TEAM
-	teamID = [self returnIntFromDatabase:[NSString stringWithFormat:
+	awayTeamID = [self returnIntFromDatabase:[NSString stringWithFormat:
 											  @"SELECT TeamID FROM TEAMS WHERE TeamName == '%@'", awayTeam]];
-	NSLog(@"%d", teamID);
 	for (int i = 0; i < [awayPlayersArray count]; i++){
 		[self insertStringIntoDatabase:[NSString stringWithFormat:
 										@"INSERT INTO PLAYERS (TeamID, PlayerName) SELECT %d, \"%@\" WHERE NOT EXISTS (SELECT * FROM Players WHERE (PlayerName = \"%@\") AND (TeamID = %d))",
-										teamID, [awayPlayersArray objectAtIndex:i], [awayPlayersArray objectAtIndex:i], teamID]];
+										awayTeamID, [awayPlayersArray objectAtIndex:i], [awayPlayersArray objectAtIndex:i], awayTeamID]];
 	}
+	
 }
 
 - (void) thirdTabSave {
-	//[self insertStringIntoDatabase:[NSString stringWithFormat: @"INSERT INTO TEAMS (TeamName) VALUES (\"HELLOWORLD\")"]];
+	[self insertStringIntoDatabase:[NSString stringWithFormat:
+									@"INSERT INTO GAMES (HomeID, AwayID, GameDate, TossResult, Decision, MatchType, OversOrDays, UmpireOne, UmpireTwo) VALUES (%d, %d, to_date('%@', 'dd/mm/yyyy), @\"%@\", @\"%@\", @\"%@\", %d, @\"%@\", @\"%@\")",
+									homeTeamID, awayTeamID, strDate, tossWonBy, decision, matchType, 1, @"", @""]];
 }
 
 - (int)returnIntFromDatabase:(NSString *)string {

@@ -20,6 +20,8 @@ int awayCaptain;
 int awayViceCaptain;
 int awayWicketKeeper;
 NSString *battingTeam;
+NSString *tossWonBy;
+NSString *decision;
 @interface SecondViewController : UIViewController <UITableViewDelegate, UITableViewDataSource, UINavigationBarDelegate>
 
 @property (strong, nonatomic) IBOutlet UITableView *homePlayersTable;

@@ -27,7 +27,7 @@
 @synthesize scrollView = _scrollView;
 
 int height;
-NSDate *date;
+
 UIView *newView;
 UITextField *activeField;
 
@@ -113,7 +113,7 @@ UITextField *activeField;
     NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
     [dateFormat setDateFormat:@"dd/MM/yyyy"];
     
-    NSString *strDate = [dateFormat stringFromDate:date];
+    strDate = [dateFormat stringFromDate:date];
     
     [_dateButton setTitle:strDate forState:UIControlStateNormal];
 }
@@ -124,12 +124,14 @@ UITextField *activeField;
 
 - (IBAction)flipSwitch: (id)sender{
     if ([_switcher selectedSegmentIndex] == 1) {
+		matchType = @"timed";
         _overSlide.hidden = TRUE;
         _timeSlide.hidden = FALSE;
         _overTimeLabel.hidden = TRUE;
         _timeLabel.hidden = FALSE;
     }
     else {
+		matchType = @"overs";
         _overSlide.hidden = FALSE;
         _timeSlide.hidden = TRUE;
         _overTimeLabel.hidden = FALSE;
@@ -210,11 +212,12 @@ UITextField *activeField;
     NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
     [dateFormat setDateFormat:@"dd/MM/yyyy"];
 	
-    NSString *strDate = [dateFormat stringFromDate:date];
+    strDate = [dateFormat stringFromDate:date];
 	
     [_dateButton setTitle:strDate forState:UIControlStateNormal];
 	homeTeam = @"Team 1";
 	awayTeam = @"Team 2";
+	matchType = @"overs";
 }
 
 - (void)viewDidUnload

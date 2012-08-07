@@ -64,6 +64,7 @@ UIImage *viceCaptainWicketKeeper;
 	captainWicketKeeper = [UIImage imageNamed:@"captainWicketKeeper.png"];
 	viceCaptainWicketKeeper = [UIImage imageNamed:@"viceCaptainWicketKeeper.png"];
 	battingTeam = @"home";
+	tossWonBy = @"home";
 }
 
 - (void)viewDidUnload
@@ -333,6 +334,7 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
 	{
         [homeWonToss setSelected:NO];
 		[awayWonToss setSelected:YES];
+		tossWonBy = @"away";
 		if (battingButton.selected) battingTeam = @"away";
 		else battingTeam = @"home";
     }
@@ -340,6 +342,7 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
 	{
         [homeWonToss setSelected:YES];
 		[awayWonToss setSelected:NO];
+		tossWonBy = @"home";
 		if (battingButton.selected) battingTeam = @"home";
 		else battingTeam = @"away";
     }
@@ -351,6 +354,7 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
 	{
         [battingButton setSelected:NO];
 		[fieldingButton setSelected:YES];
+		decision = @"field";
 		if (homeWonToss.selected) battingTeam = @"away";
 		else battingTeam = @"home";
     }
@@ -358,6 +362,7 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
 	{
         [battingButton setSelected:YES];
 		[fieldingButton setSelected:NO];
+		decision = @"batt";
 		if (homeWonToss.selected) battingTeam = @"home";
 		else battingTeam = @"away";
     }
