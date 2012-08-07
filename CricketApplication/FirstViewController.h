@@ -10,6 +10,8 @@
 
 NSString *homeTeam;
 NSString *awayTeam;
+NSString *umpireOne;
+NSString *umpireTwo;
 
 @interface FirstViewController : UIViewController <UIActionSheetDelegate, UITextFieldDelegate, UIScrollViewDelegate>{
 	IBOutlet UIDatePicker *datePicker;
@@ -26,6 +28,8 @@ NSString *awayTeam;
 @property (strong, nonatomic) IBOutlet UILabel *timeLabel;
 @property (strong, nonatomic) IBOutlet UIBarButtonItem *infoButtonItem;
 @property (strong, nonatomic) IBOutlet UIScrollView *scrollView;
+@property (strong, nonatomic) IBOutlet UITextField *umpireOneEntered;
+@property (strong, nonatomic) IBOutlet UITextField *umpireTwoEntered;
 
 
 

@@ -25,6 +25,8 @@
 @synthesize timeLabel = _timeLabel;
 @synthesize infoButtonItem = _infoButtonItem;
 @synthesize scrollView = _scrollView;
+@synthesize umpireOneEntered = _umpireOneEntered;
+@synthesize umpireTwoEntered = _umpireTwoEntered;
 
 int height;
 NSDate *date;
@@ -95,6 +97,14 @@ UITextField *activeField;
 		awayTeam = [_awayTeamEntered text];
 	else
 		awayTeam = @"Team 2";
+    if([[_umpireOneEntered text] length] > 0)
+		umpireOne = [_umpireOneEntered text];
+	else
+		umpireOne = @"Umpire 1";
+    if([[_umpireTwoEntered text] length] > 0)
+		umpireTwo = [_umpireTwoEntered text];
+	else
+		umpireTwo = @"Umpire 2";
 	[sender resignFirstResponder];
 }
 
@@ -215,6 +225,8 @@ UITextField *activeField;
     [_dateButton setTitle:strDate forState:UIControlStateNormal];
 	homeTeam = @"Team 1";
 	awayTeam = @"Team 2";
+    umpireOne = @"Umpire 1";
+	umpireTwo = @"Umpire 2";
 }
 
 - (void)viewDidUnload
@@ -230,6 +242,8 @@ UITextField *activeField;
     [self setTimeLabel:nil];
 	[self setScrollView:nil];
 	[self setHomeTeamEntered:nil];
+    [self setUmpireOne:nil];
+    [self setUmpireTwo:nil];
     [super viewDidUnload];
     // Release any retained subviews of the main view.
 }
