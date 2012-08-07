@@ -15,8 +15,6 @@
 @interface DatabaseController ()
 @end
 
-const char *dbpath;
-
 @implementation DatabaseController
 @synthesize saveButton = _saveButton;
 
@@ -28,44 +26,49 @@ const char *dbpath;
     NSError *error;
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
     NSString *documentsDirectory = [paths objectAtIndex:0];
-    NSString *writableDBPath = [documentsDirectory stringByAppendingPathComponent:@"cricket.db"];
+	//NSLog(@"%@", documentsDirectory);
+    writableDBPath = [documentsDirectory stringByAppendingPathComponent:@"cricket.db"];
+	//const char *dbpath = [writableDBPath UTF8String];
 	//NSLog(@"Accessed DB at %@", writableDBPath);
-	dbpath = [writableDBPath UTF8String];
     success = [fileManager fileExistsAtPath:writableDBPath];
     if (success){
+		//NSLog(@"\nDatabase exists already at %s", dbpath);
         return;
 	}
 	//NSLog(@"Accessed DB at %@", writableDBPath);
     // The writable database does not exist, so copy the default to the appropriate location.
     NSString *defaultDBPath = [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"cricket.db"];
     success = [fileManager copyItemAtPath:defaultDBPath toPath:writableDBPath error:&error];
-    if (!success) {
+	NSLog(@"\nDatabase didn't exist");
+	if (!success) {
         NSAssert1(0, @"Failed to create writable database file with message '%@'.", [error localizedDescription]);
     }
 }
 
 - (void) saveData:(id)sender{
-    //[self insertStringIntoDatabase:[NSString stringWithFormat: @"INSERT INTO TEAMS VALUES (null, \"HELLOWORLD\")"]];
+    [self insertStringIntoDatabase:[NSString stringWithFormat: @"INSERT INTO TEAMS (TeamName) VALUES (\"HELLOWORLD\")"]];
 }
 
 - (void)insertStringIntoDatabase:(NSString *)string {
-	/*sqlite3_stmt *statement;
+	const char *dbpath = [writableDBPath UTF8String];
+	sqlite3_stmt *statement;
+	//NSLog(@"\n%s", dbpath);
     if (sqlite3_open(dbpath, &cricketDB) == SQLITE_OK)
     {
-		NSLog(@"Accessed DB");
-		NSString *insertSQL = string;
-		const char *insert_stmt = [insertSQL UTF8String];
-		sqlite3_prepare_v2(cricketDB, insert_stmt,-1, &statement, NULL);
+		//NSLog(@"\nAccessed DB");
+		const char *insert_stmt = [string UTF8String];
+		sqlite3_prepare_v2(cricketDB, insert_stmt, -1, &statement, NULL);
+		//sqlite3_prepare(cricketDB, insert_stmt, 1, &statement, NULL);
 		if (sqlite3_step(statement) == SQLITE_DONE) {
-			NSLog(@"Access worked");
+			NSLog(@"\nAccess worked");
 		} else {
-			NSLog(@"Access failed");
+			NSLog(@"\nAccess failed");
 		}
 		sqlite3_finalize(statement);
 		sqlite3_close(cricketDB);
 	} else {
-		NSLog(@"Could not access DB");
-	}*/
+		NSLog(@"\nCould not access DB");
+	}
 }
 
 
@@ -79,8 +82,8 @@ const char *dbpath;
 }
 
 - (void)viewDidLoad {
-    [self createEditableCopyOfDatabaseIfNeeded];
     [super viewDidLoad];
+	[self createEditableCopyOfDatabaseIfNeeded];
 }
 
 - (void)viewDidUnload
