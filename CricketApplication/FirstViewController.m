@@ -242,8 +242,8 @@ UITextField *activeField;
     [self setTimeLabel:nil];
 	[self setScrollView:nil];
 	[self setHomeTeamEntered:nil];
-    [self setUmpireOne:nil];
-    [self setUmpireTwo:nil];
+    [self setUmpireOneEntered:nil];
+    [self setUmpireTwoEntered:nil];
     [super viewDidUnload];
     // Release any retained subviews of the main view.
 }
