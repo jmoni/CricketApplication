@@ -51,7 +51,8 @@
 }
 
 - (void) firstTabSave {
-	//[self insertStringIntoDatabase:[NSString stringWithFormat: @"INSERT INTO TEAMS (TeamName) VALUES (\"HELLOWORLD\")"]];
+	[self insertStringIntoDatabase:[NSString stringWithFormat: @"INSERT INTO TEAMS (TeamName) VALUES (\"%@\")", homeTeam]];
+    [self insertStringIntoDatabase:[NSString stringWithFormat: @"INSERT INTO TEAMS (TeamName) VALUES (\"%@\")", awayTeam]];
 }
 
 - (void) secondTabSave {
