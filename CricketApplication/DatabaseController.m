@@ -50,6 +50,10 @@
 	}
 }
 
+
+//@"IF EXISTS (SELECT * FROM TEAMS WHERE TeamName = \"%@\") BEGIN END ELSE BEGIN INSERT INTO TEAMS (TeamName) VALUES (\"%@\") END"
+
+
 - (void) firstTabSave {
 	[self insertStringIntoDatabase:[NSString stringWithFormat: @"INSERT INTO TEAMS (TeamName) VALUES (\"%@\")", homeTeam]];
 }
