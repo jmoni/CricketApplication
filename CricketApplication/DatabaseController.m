@@ -85,9 +85,10 @@ int awayTeamID;
 }
 
 - (void) thirdTabSave {
+	NSLog(@"%@", strDate);
 	[self insertStringIntoDatabase:[NSString stringWithFormat:
-									@"INSERT INTO GAMES (HomeID, AwayID, GameDate, TossResult, Decision, MatchType, OversOrDays, UmpireOne, UmpireTwo) VALUES (%d, %d, to_date('%@', 'dd/mm/yyyy), @\"%@\", @\"%@\", @\"%@\", %d, @\"%@\", @\"%@\")",
-									homeTeamID, awayTeamID, strDate, tossWonBy, decision, matchType, 1, @"", @""]];
+									@"INSERT INTO GAMES (HomeID, AwayID, GameDate, TossResult, Decision, MatchType, OversOrDays, UmpireOne, UmpireTwo) VALUES (%d, %d, to_date('08/08/2012', 'dd/mm/yyyy'), @\"%@\", @\"%@\", @\"%@\", %d, @\"%@\", @\"%@\")",
+									homeTeamID, awayTeamID, tossWonBy, decision, matchType, numberOversOrDays, umpireOne, umpireTwo]];
 }
 
 - (int)returnIntFromDatabase:(NSString *)string {

@@ -10,9 +10,13 @@
 
 NSString *homeTeam;
 NSString *awayTeam;
+NSString *umpireOne;
+NSString *umpireTwo;
+int numberOversOrDays;
 NSString *matchType;
 NSDate *date;
 NSString *strDate;
+
 
 @interface FirstViewController : UIViewController <UIActionSheetDelegate, UITextFieldDelegate, UIScrollViewDelegate>{
 	IBOutlet UIDatePicker *datePicker;

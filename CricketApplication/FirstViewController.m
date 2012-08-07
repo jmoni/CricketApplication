@@ -231,6 +231,9 @@ UITextField *activeField;
     [_dateButton setTitle:strDate forState:UIControlStateNormal];
 	homeTeam = @"Team 1";
 	awayTeam = @"Team 2";
+    umpireOne = @"Umpire 1";
+	umpireTwo = @"Umpire 2";
+    numberOversOrDays = 20;
 	matchType = @"overs";
 }
 
