@@ -26,16 +26,11 @@
     NSError *error;
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
     NSString *documentsDirectory = [paths objectAtIndex:0];
-	//NSLog(@"%@", documentsDirectory);
     writableDBPath = [documentsDirectory stringByAppendingPathComponent:@"cricket.db"];
-	//const char *dbpath = [writableDBPath UTF8String];
-	//NSLog(@"Accessed DB at %@", writableDBPath);
     success = [fileManager fileExistsAtPath:writableDBPath];
     if (success){
-		//NSLog(@"\nDatabase exists already at %s", dbpath);
         return;
 	}
-	//NSLog(@"Accessed DB at %@", writableDBPath);
     // The writable database does not exist, so copy the default to the appropriate location.
     NSString *defaultDBPath = [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"cricket.db"];
     success = [fileManager copyItemAtPath:defaultDBPath toPath:writableDBPath error:&error];
@@ -46,7 +41,25 @@
 }
 
 - (void) saveData:(id)sender{
-    [self insertStringIntoDatabase:[NSString stringWithFormat: @"INSERT INTO TEAMS (TeamName) VALUES (\"HELLOWORLD\")"]];
+	if ([self selectedIndex] == 0) {
+		[self firstTabSave];
+	} else if ([self selectedIndex] == 1) {
+		[self secondTabSave];
+	} else if ([self selectedIndex] == 2) {
+		[self thirdTabSave];
+	}
+}
+
+- (void) firstTabSave {
+	//[self insertStringIntoDatabase:[NSString stringWithFormat: @"INSERT INTO TEAMS (TeamName) VALUES (\"HELLOWORLD\")"]];
+}
+
+- (void) secondTabSave {
+	//[self insertStringIntoDatabase:[NSString stringWithFormat: @"INSERT INTO TEAMS (TeamName) VALUES (\"HELLOWORLD\")"]];
+}
+
+- (void) thirdTabSave {
+	//[self insertStringIntoDatabase:[NSString stringWithFormat: @"INSERT INTO TEAMS (TeamName) VALUES (\"HELLOWORLD\")"]];
 }
 
 - (void)insertStringIntoDatabase:(NSString *)string {
