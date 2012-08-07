@@ -130,6 +130,7 @@ UITextField *activeField;
 
 -(IBAction)sliderUpdate:(id)sender{
     _overTimeLabel.text = [NSString stringWithFormat:@"%d",(int)_overSlide.value];
+    numberOversOrDays = (int)_overSlide.value;
 }
 
 - (IBAction)flipSwitch: (id)sender{
@@ -138,12 +139,14 @@ UITextField *activeField;
         _timeSlide.hidden = FALSE;
         _overTimeLabel.hidden = TRUE;
         _timeLabel.hidden = FALSE;
+        numberOversOrDays = (int)_timeSlide.value;
     }
     else {
         _overSlide.hidden = FALSE;
         _timeSlide.hidden = TRUE;
         _overTimeLabel.hidden = FALSE;
         _timeLabel.hidden = TRUE;
+        numberOversOrDays = (int)_overSlide.value;
     }
 }
 
@@ -158,6 +161,7 @@ UITextField *activeField;
          temp = [labelNum stringByAppendingFormat:@" Days"];
         _timeLabel.text = temp;
     }
+    numberOversOrDays = (int)_timeSlide.value;
 }
 
 - (IBAction)textFieldDidBeginEditing:(UITextField *)textField
@@ -227,6 +231,7 @@ UITextField *activeField;
 	awayTeam = @"Team 2";
     umpireOne = @"Umpire 1";
 	umpireTwo = @"Umpire 2";
+    numberOversOrDays = 20;
 }
 
 - (void)viewDidUnload
