@@ -50,9 +50,15 @@
 	}
 }
 
+
+//@"IF EXISTS (SELECT * FROM TEAMS WHERE TeamName = \"%@\") BEGIN END ELSE BEGIN INSERT INTO TEAMS (TeamName) VALUES (\"%@\") END"
+
+
 - (void) firstTabSave {
-	[self insertStringIntoDatabase:[NSString stringWithFormat: @"INSERT INTO TEAMS (TeamName) VALUES (\"%@\")", homeTeam]];
-    [self insertStringIntoDatabase:[NSString stringWithFormat: @"INSERT INTO TEAMS (TeamName) VALUES (\"%@\")", awayTeam]];
+    //Adds hometeam name to the database, if the name already exists it doesn't add it again
+	[self insertStringIntoDatabase:[NSString stringWithFormat: @"INSERT INTO TEAMS (TeamName) SELECT \"%@\" WHERE NOT EXISTS (SELECT 1 FROM TEAMS WHERE TeamName = \"%@\")", homeTeam, homeTeam]];
+    //Adds awayteam name to the database, if the name already exists it doesn't add it again
+	[self insertStringIntoDatabase:[NSString stringWithFormat: @"INSERT INTO TEAMS (TeamName) SELECT \"%@\" WHERE NOT EXISTS (SELECT 1 FROM TEAMS WHERE TeamName = \"%@\")", awayTeam, awayTeam]];
 }
 
 - (void) secondTabSave {
@@ -62,6 +68,7 @@
 - (void) thirdTabSave {
 	//[self insertStringIntoDatabase:[NSString stringWithFormat: @"INSERT INTO TEAMS (TeamName) VALUES (\"HELLOWORLD\")"]];
 }
+
 
 - (void)insertStringIntoDatabase:(NSString *)string {
 	const char *dbpath = [writableDBPath UTF8String];
