@@ -55,16 +55,30 @@
 
 
 - (void) firstTabSave {
-	[self insertStringIntoDatabase:[NSString stringWithFormat: @"INSERT INTO TEAMS (TeamName) VALUES (\"%@\")", homeTeam]];
+    //Adds hometeam name to the database, if the name already exists it doesn't add it again
+	[self insertStringIntoDatabase:[NSString stringWithFormat: @"INSERT INTO TEAMS (TeamName) SELECT \"%@\" WHERE NOT EXISTS (SELECT 1 FROM TEAMS WHERE TeamName = \"%@\")", homeTeam, homeTeam]];
+    //Adds awayteam name to the database, if the name already exists it doesn't add it again
+	[self insertStringIntoDatabase:[NSString stringWithFormat: @"INSERT INTO TEAMS (TeamName) SELECT \"%@\" WHERE NOT EXISTS (SELECT 1 FROM TEAMS WHERE TeamName = \"%@\")", awayTeam, awayTeam]];
 }
 
 - (void) secondTabSave {
+	//HOME TEAM
 	int teamID = [self returnIntFromDatabase:[NSString stringWithFormat:
 								 @"SELECT TeamID FROM TEAMS WHERE TeamName == '%@'", homeTeam]];
-	NSLog(@"%d", teamID);
 	for (int i = 0; i < [homePlayersArray count]; i++){
 		[self insertStringIntoDatabase:[NSString stringWithFormat:
-										@"INSERT INTO PLAYERS (TeamID, PlayerName) VALUES (%d, \"%@\")", teamID, [homePlayersArray objectAtIndex:i]]];
+										@"INSERT INTO PLAYERS (TeamID, PlayerName) SELECT %d, \"%@\" WHERE NOT EXISTS (SELECT * FROM Players WHERE (PlayerName = \"%@\") AND (TeamID = %d))",
+										teamID, [homePlayersArray objectAtIndex:i], [homePlayersArray objectAtIndex:i], teamID]];
+	}
+	
+	//AWAY TEAM
+	teamID = [self returnIntFromDatabase:[NSString stringWithFormat:
+											  @"SELECT TeamID FROM TEAMS WHERE TeamName == '%@'", awayTeam]];
+	NSLog(@"%d", teamID);
+	for (int i = 0; i < [awayPlayersArray count]; i++){
+		[self insertStringIntoDatabase:[NSString stringWithFormat:
+										@"INSERT INTO PLAYERS (TeamID, PlayerName) SELECT %d, \"%@\" WHERE NOT EXISTS (SELECT * FROM Players WHERE (PlayerName = \"%@\") AND (TeamID = %d))",
+										teamID, [awayPlayersArray objectAtIndex:i], [awayPlayersArray objectAtIndex:i], teamID]];
 	}
 }
 
