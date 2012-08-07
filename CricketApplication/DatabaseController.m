@@ -52,13 +52,10 @@
 - (void)insertStringIntoDatabase:(NSString *)string {
 	const char *dbpath = [writableDBPath UTF8String];
 	sqlite3_stmt *statement;
-	//NSLog(@"\n%s", dbpath);
     if (sqlite3_open(dbpath, &cricketDB) == SQLITE_OK)
     {
-		//NSLog(@"\nAccessed DB");
-		const char *insert_stmt = [string UTF8String];
-		sqlite3_prepare_v2(cricketDB, insert_stmt, -1, &statement, NULL);
-		//sqlite3_prepare(cricketDB, insert_stmt, 1, &statement, NULL);
+		const char *stmt = [string UTF8String];
+		sqlite3_prepare_v2(cricketDB, stmt, -1, &statement, NULL);
 		if (sqlite3_step(statement) == SQLITE_DONE) {
 			NSLog(@"\nAccess worked");
 		} else {
