@@ -39,6 +39,7 @@ NSString *scoreString;
 @property (strong, nonatomic) IBOutletCollection(UIButton) NSArray *calculatorView;
 @property (strong, nonatomic) IBOutletCollection(UILabel) NSArray *ballLabels;
 @property (strong, nonatomic) IBOutlet UIButton *startGameButton;
+@property (strong, nonatomic) IBOutlet UILabel *scoreLabel;
 
 -(IBAction)showActionSheet: (id) sender;
 -(IBAction)hideActionSheet: (UIBarButtonItem *)_infoButtonItem;

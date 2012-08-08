@@ -76,6 +76,7 @@ int lastBowler;
 @synthesize calculatorView;
 @synthesize ballLabels;
 @synthesize startGameButton;
+@synthesize scoreLabel;
 @synthesize batterName1;
 @synthesize batterName2;
 @synthesize teamName;
@@ -310,9 +311,10 @@ int lastBowler;
 }
 
 -(IBAction)showExtrasOptions:(id)sender{
+    [self hideActionSheetB:sender];
     batterName1.enabled = false;
     batterName2.enabled = false;
-    height = 235;
+    height = 200;
     //create new view
     newView = [[UIView alloc] initWithFrame:CGRectMake(0, 200, 320, height)];
     newView.backgroundColor = [UIColor colorWithWhite:1 alpha:1];
@@ -322,10 +324,11 @@ int lastBowler;
     toolbar.barStyle = UIBarStyleBlack;
     
     //add button
-    _infoButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Save" style:UIBarButtonItemStyleDone target:self action:@selector(hideActionSheet:)];
-    
-    toolbar.items = [NSArray arrayWithObjects:_infoButtonItem, nil];
-    
+    _infoButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Cancel" style:UIBarButtonItemStyleDone target:self action:@selector(hideActionSheet:)];
+
+	
+	toolbar.items = [NSArray arrayWithObjects:_infoButtonItem, nil];
+        
     UIButton *nB = [UIButton buttonWithType:UIButtonTypeRoundedRect];
     [nB addTarget:self
 		   action:@selector(extraNoBall:)
@@ -366,7 +369,7 @@ int lastBowler;
     penaltyRun.frame = CGRectMake(110.0, 100.0, 100.0, 40.0);
     [newView addSubview:penaltyRun];
     
-    UILabel *total = [[UILabel alloc] initWithFrame:CGRectMake(20.0, 150.0, 50.0, 21.0)];
+    /*UILabel *total = [[UILabel alloc] initWithFrame:CGRectMake(20.0, 150.0, 50.0, 21.0)];
     total.text = @"Total:";
     [newView addSubview:total];
     
@@ -380,7 +383,7 @@ int lastBowler;
 			forControlEvents:UIControlEventTouchDown];
     [undo setTitle:@"Undo" forState:UIControlStateNormal];
     undo.frame = CGRectMake(135.0, 180.0, 50.0, 40.0);
-    [newView addSubview:undo];
+    [newView addSubview:undo];*/
 	
     //add popup view
     [newView addSubview:toolbar];
@@ -409,12 +412,10 @@ int lastBowler;
     toolbar.barStyle = UIBarStyleBlack;
     
     //add button
-    _infoButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Save" style:UIBarButtonItemStyleDone target:self action:@selector(hideActionSheet:)];
+    _infoButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Cancel" style:UIBarButtonItemStyleDone target:self action:@selector (hideActionSheet:)];
     
-    
-    UIBarButtonItem *cancel = [[UIBarButtonItem alloc] initWithTitle:@"Cancel" style:UIBarButtonItemStyleDone target:self action: nil];
 	
-	toolbar.items = [NSArray arrayWithObjects:_infoButtonItem,cancel, nil];
+	toolbar.items = [NSArray arrayWithObjects:_infoButtonItem, nil];
     
     
     
@@ -523,22 +524,152 @@ int lastBowler;
 -(IBAction)extraNoBall:(id)sender{
     noBalls++;
 [noBallLabel setText:[NSString stringWithFormat:@"%d", noBalls]];
+    [totLabel setText:[NSString stringWithFormat:@"%d", (noBalls + wides + byes + legByes + penalties)]];
+    [self hideActionSheetB:sender];
+    
 }
 -(IBAction)extraWide:(id)sender{
     wides++;
     [wideLabel setText:[NSString stringWithFormat:@"%d", wides]];
+    [totLabel setText:[NSString stringWithFormat:@"%d", (noBalls + wides + byes + legByes + penalties)]];
+    [self hideActionSheetB:sender];
 }
 -(IBAction)extraBye:(id)sender{
-    byes++;
-    [byeLabel setText:[NSString stringWithFormat:@"%d", byes]];
+    [self hideActionSheetB:sender];
+    [self byeCalc:sender string:@"Bye"];
 }
+
 -(IBAction)extraLegBye:(id)sender{
-    legByes++;
-    [legByeLabel setText:[NSString stringWithFormat:@"%d", legByes]];
+    [self hideActionSheetB:sender];
+    [self byeCalc:sender string:@"Leg Bye"];
 }
 -(IBAction)extraPen:(id)sender{
-    penalties++;
-    [penLabel setText:[NSString stringWithFormat:@"%d", penalties]];
+    [self hideActionSheetB:sender];
+    [self byeCalc:sender string:@"Pen"];
+}
+
+-(IBAction)byeCalc:(id)sender string:(NSString *)identifier{
+    height = 200;
+    newView = [[UIView alloc] initWithFrame:CGRectMake(0, 200, 320, height)];
+    newView.backgroundColor = [UIColor colorWithWhite:1 alpha:1];
+    
+    //add toolbar
+    UIToolbar * toolbar = [[UIToolbar alloc] initWithFrame: CGRectMake(0, 0, 320, 40)];
+    toolbar.barStyle = UIBarStyleBlack;
+    
+    //add button
+    _infoButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Back" style:UIBarButtonItemStyleDone target:self action:@selector (showExtrasOptions:)];
+    
+	
+	toolbar.items = [NSArray arrayWithObjects:_infoButtonItem, nil];
+    //add popup view
+    [newView addSubview:toolbar];
+    [self.view addSubview:newView];
+    NSString *title = [@"+1 " stringByAppendingString: identifier];
+    UIButton *plusOne = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+    [plusOne addTarget:self
+                action:@selector(byePlusOne:)
+      forControlEvents:UIControlEventTouchDown];
+    [plusOne setTitle:title forState:UIControlStateNormal];
+    plusOne.frame = CGRectMake(30.0, 50.0, 80.0, 40.0);
+    [newView addSubview:plusOne];
+    
+    title = [@"4 " stringByAppendingString: identifier];
+    UIButton *four = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+    [four addTarget:self
+                action:@selector(fourBye:)
+      forControlEvents:UIControlEventTouchDown];
+    [four setTitle:title forState:UIControlStateNormal];
+    four.frame = CGRectMake(120.0, 50.0, 80.0, 40.0);
+    [newView addSubview:four];
+    
+    
+    title = [@"6 " stringByAppendingString: identifier];
+    UIButton *six = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+    [six addTarget:self
+            action:@selector(sixBye:)
+      forControlEvents:UIControlEventTouchDown];
+    [six setTitle:title forState:UIControlStateNormal];
+    six.frame = CGRectMake(210.0, 50.0, 80.0, 40.0);
+    [newView addSubview:six];
+    if ([identifier isEqualToString:@"Bye"])
+    {
+        [plusOne setTag:1];
+        [four setTag:1];
+        [six setTag:1];
+    }
+    else if ([identifier isEqualToString:@"Leg Bye"])
+    {
+        
+        [plusOne setTag:2];
+        [four setTag:2];
+        [six setTag:2];
+    }
+    else if ([identifier isEqualToString:@"Pen"])
+    {
+        [plusOne setTag:3];
+        [four setTag:3];
+        [six setTag:3];
+    }
+    UIButton *back = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+    [back addTarget:self
+            action:@selector(showExtrasOptions:)
+  forControlEvents:UIControlEventTouchDown];
+    [back setTitle:@"Back" forState:UIControlStateNormal];
+    back.frame = CGRectMake(85.0, 100.0, 70.0, 40.0);
+    [newView addSubview:back];
+
+    
+    UIButton *confirm = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+    [confirm addTarget:self
+                action:nil
+  forControlEvents:UIControlEventTouchDown];
+    [confirm setTitle:@"Confirm" forState:UIControlStateNormal];
+    confirm.frame = CGRectMake(165.0, 100.0, 70.0, 40.0);
+    [newView addSubview:confirm];
+
+    //animate it onto the screen
+    CGRect temp = newView.frame;
+    temp.origin.y = CGRectGetMaxY(self.view.bounds);
+    newView.frame = temp;
+    [UIView beginAnimations:nil context:nil];
+    temp.origin.y -= height;
+    newView.frame = temp;
+    [UIView commitAnimations];
+    
+}
+
+-(IBAction)byePlusOne:(id)sender{
+    if ([sender tag] == 1)
+    {
+    byes++;
+    [byeLabel setText:[NSString stringWithFormat:@"%d", byes]];
+    }
+    else if ([sender tag] ==2){
+    legByes++;
+    [legByeLabel setText:[NSString stringWithFormat:@"%d", legByes]];
+    }
+    else if ([sender tag] ==3){
+        penalties++;
+        [penLabel setText:[NSString stringWithFormat:@"%d", penalties]];
+    }
+    [totLabel setText:[NSString stringWithFormat:@"%d", (noBalls + wides + byes + legByes + penalties)]];
+}
+-(IBAction)fourBye:(id)sender{
+    if ([sender tag] == 1)
+    {
+        byes+=4;
+        [byeLabel setText:[NSString stringWithFormat:@"%d", byes]];
+    }
+    else if ([sender tag] ==2){
+        legByes+=4;
+        [legByeLabel setText:[NSString stringWithFormat:@"%d", legByes]];
+    }
+    else if ([sender tag] ==3){
+        penalties+=4;
+        [penLabel setText:[NSString stringWithFormat:@"%d", penalties]];
+    }
+    [totLabel setText:[NSString stringWithFormat:@"%d", (noBalls + wides + byes + legByes + penalties)]];
 }
 
 -(IBAction)caught:(id)sender{
@@ -953,6 +1084,7 @@ int lastBowler;
     [self setLegByeLabel:nil];
     [self setPenLabel:nil];
     [self setTotLabel:nil];
+    [self setScoreLabel:nil];
     [super viewDidUnload];
     // Release any retained subviews of the main view.
 }

@@ -988,6 +988,13 @@
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" id="lKI-NP-l5t">
+                                <rect key="frame" x="91" y="20" width="128" height="17"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <connections>
@@ -1020,6 +1027,7 @@
                         <outlet property="oversLabel" destination="f18-U3-mUs" id="4rx-24-DIp"/>
                         <outlet property="penLabel" destination="o8D-bB-7Mq" id="Yg6-DB-zxS"/>
                         <outlet property="runsLabel" destination="Afb-gF-cV2" id="ApJ-3z-ZIb"/>
+                        <outlet property="scoreLabel" destination="lKI-NP-l5t" id="v8j-MI-t6H"/>
                         <outlet property="startGameButton" destination="d2z-Fe-3Q2" id="Eq1-m4-gJs"/>
                         <outlet property="teamName" destination="ip8-1S-QY5" id="zto-F0-LQ6"/>
                         <outlet property="totLabel" destination="mxM-SO-rjv" id="i7h-Ay-aIH"/>
