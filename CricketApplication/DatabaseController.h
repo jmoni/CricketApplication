@@ -21,6 +21,8 @@ bool disableElements;
 @property (strong, nonatomic) IBOutlet UIBarButtonItem *saveButton;
 
 - (IBAction)saveData:(id)sender;
+- (void)firstTabSave;
+- (void)secondTabSave;
 - (void)thirdTabSave;
 
 @end

@@ -144,6 +144,14 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
 	[self createEditableCopyOfDatabaseIfNeeded];
+	NSUInteger indexToRemove = 1;
+	NSMutableArray *controllersToKeep = [NSMutableArray arrayWithArray:self.viewControllers];
+	UIViewController *removedViewController;
+	for (int i = 0; i < 2; i++){
+		removedViewController = [controllersToKeep objectAtIndex:indexToRemove];
+		[controllersToKeep removeObjectAtIndex:indexToRemove];
+		[self setViewControllers:controllersToKeep animated:YES];
+	}
 }
 
 - (void)viewDidUnload

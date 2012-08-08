@@ -104,6 +104,8 @@ float economy = 0.00;
 			[[ballLabels objectAtIndex:i] setHidden:NO];
 		}
 		DatabaseController *instance = [[DatabaseController alloc] init];
+		[instance firstTabSave];
+		[instance secondTabSave];
 		[instance thirdTabSave];
 		[batterName1 setEnabled:NO];
 		[batterName2 setEnabled:NO];
