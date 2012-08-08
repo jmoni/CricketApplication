@@ -24,5 +24,5 @@ bool disableElements;
 - (void)firstTabSave;
 - (void)secondTabSave;
 - (void)thirdTabSave;
-
+- (IBAction)next: (id) sender;
 @end
