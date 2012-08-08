@@ -17,6 +17,8 @@
 @property (strong, nonatomic) IBOutlet UISwitch *CaptainSlider;
 @property (strong, nonatomic) IBOutlet UISwitch *ViceCaptainSlider;
 @property (strong, nonatomic) IBOutlet UISwitch *WicketKeeperSlider;
+@property (strong, nonatomic) IBOutlet UIBarButtonItem *nextPlayerButton;
+@property (strong, nonatomic) IBOutlet UIBarButtonItem *previousPlayerButton;
 
 - (IBAction)textFieldReturn:(id)sender;
 - (IBAction)backgroundTouched:(id)sender;
@@ -27,4 +29,6 @@
 - (IBAction)VCSlider:(id)sender;
 - (IBAction)WKSlider:(id)sender;
 - (IBAction)deletePlayer:(id)sender;
+- (IBAction)nextPlayer:(id)sender;
+- (IBAction)previousPlayer:(id)sender;
 @end
