@@ -17,6 +17,7 @@
 
 @implementation DatabaseController
 @synthesize saveButton = _saveButton;
+@synthesize nextButton;
 
 // Creates a writable copy of the bundled default database in the application Documents directory.
 - (void)createEditableCopyOfDatabaseIfNeeded {
@@ -66,19 +67,25 @@
 
 - (IBAction)next: (id) sender
 {
-    [self setSelectedIndex: [self selectedIndex]+1];
 	if ([self selectedIndex] == 0) {
+        [self setSelectedIndex: [self selectedIndex]+1];
 		[self firstTabSave];
 	} else if ([self selectedIndex] == 1) {
+        [self setSelectedIndex: [self selectedIndex]+1];
 		[self firstTabSave];
 		[self secondTabSave];
 	} else if ([self selectedIndex] == 2) {
 		//[self thirdTabSave];
+        [nextButton setAction: @selector(share:)];
+
+        nextButton.title = @"Share";
 		[self firstTabSave];
 		[self secondTabSave];
 	}
 }
-
+-(IBAction)share:(id) sender{
+    NSLog(@"changed");
+}
 - (void) secondTabSave {
 	//HOME TEAM
 	homeTeamID = [self returnIntFromDatabase:[NSString stringWithFormat:
@@ -172,6 +179,7 @@
 - (void)viewDidUnload
 {
     [self setSaveButton:nil];
+    [self setNextButton:nil];
     [super viewDidUnload];
     // Release any retained subviews of the main view.
 }
