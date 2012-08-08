@@ -35,8 +35,6 @@ int batter1Balls = 0;
 int batter2Balls = 0;
 int batter1Runs = 0;
 int batter2Runs = 0;
-float overs = 0.0;
-int maidens = 0;
 float runs = 0;
 int wickets = 0;
 float economy = 0.00;
@@ -46,6 +44,9 @@ int byes = 0;
 int legByes = 0;
 int penalties = 0;
 int total = 0;
+int fieldingTeamSize;
+float fieldStats[5][20];
+int lastBowler;
 
 @implementation ThirdViewController
 @synthesize ball6;
@@ -60,7 +61,6 @@ int total = 0;
 @synthesize batter2BallsLabel;
 @synthesize batter1RunsLabel;
 @synthesize batter2RunsLabel;
-@synthesize fallOfWickets;
 @synthesize bowlerButton;
 @synthesize oversLabel;
 @synthesize maidensLabel;
@@ -129,7 +129,8 @@ int total = 0;
 	value = 0;
     [self resetBallValueToString:@"•"];
 	even = YES;
-	maidens++;
+	fieldStats[2][bowler] ++;
+	//maidens++;
 }
 -(IBAction)plusOne:(id)sender{
     if (value == -1)
@@ -161,8 +162,12 @@ int total = 0;
 			batter1Runs += value;
 			batter1Balls++;
 		}
+		
+		//overs += 0.1;
+		fieldStats[1][bowler] += 0.1;
 		runs += value;
-		overs += 0.1;
+		fieldStats[3][bowler] += value;
+		fieldStats[0][bowler] = 2;
 		value = -1;
 
 		if (ballNo<6)
@@ -176,20 +181,30 @@ int total = 0;
 			ball4.text = @"-";
 			ball5.text = @"-";
 			ball6.text = @"-";
-			overs++;
-			maidens -= maidens%6;
+			fieldStats[2][bowler] -= (int)(fieldStats[2][bowler])%6;
+			//maidens -= maidens%6;
+			for (int i = 0; i < fieldingTeamSize; i++){
+				if(fieldStats[0][i] != 0)
+					fieldStats[0][i]--;
+			}
+			[self changeBatterFacingBowler];
+			[self changeBowler];
+		}
+		if ((fieldStats[1][bowler]-(int)(fieldStats[1][bowler]))*10 == 6) {
+			fieldStats[1][bowler] -= 0.6;
+			fieldStats[1][bowler]++;
 		}
 		
-		scoreString = [NSString stringWithFormat:@"%.0f/%d	%.0f Overs", runs, wickets, overs];
+		scoreString = [NSString stringWithFormat:@"%.0f/%d	%.0f Overs", runs, wickets, fieldStats[1][bowler]];
 		[batter1RunsLabel setText:[NSString stringWithFormat:@"%d", batter1Runs]];
 		[batter2RunsLabel setText:[NSString stringWithFormat:@"%d", batter2Runs]];
 		[batter1BallsLabel setText:[NSString stringWithFormat:@"%d", batter1Balls]];
 		[batter2BallsLabel setText:[NSString stringWithFormat:@"%d", batter2Balls]];
-		[oversLabel setText:[NSString stringWithFormat:@"%.1f", overs]];
-		[runsLabel setText:[NSString stringWithFormat:@"%.0f", runs]];
-		[maidensLabel setText:[NSString stringWithFormat:@"%d", maidens/6]];
-		if(overs > 0)
-			economy = runs/overs;
+		[oversLabel setText:[NSString stringWithFormat:@"%.1f", fieldStats[1][bowler]]];
+		[runsLabel setText:[NSString stringWithFormat:@"%.0f", fieldStats[3][bowler]]];
+		[maidensLabel setText:[NSString stringWithFormat:@"%.0f", fieldStats[2][bowler]/6]];
+		if(fieldStats[1][bowler] > 0)
+			economy = fieldStats[3][bowler]/fieldStats[1][bowler];
 		[economyLabel setText:[NSString stringWithFormat:@"%.2f", economy]];
 
 		[self changeBatterFacingBowler];
@@ -197,12 +212,12 @@ int total = 0;
 }
 
 - (IBAction)undo:(id)sender {
-	if (overs >= 0 && ballNo > 1) {
+	if (fieldStats[1][bowler] >= 0 && ballNo > 1) {
 		if (value > -1) {
 			
 		} else {
 			if (ballNo == 1)
-				overs--;
+				fieldStats[1][bowler]--;
 			ballNo--;
 			value = [self getBallValue];
 			if (value%2 == 0) even = YES; else even = NO;
@@ -215,21 +230,25 @@ int total = 0;
 				batter1Balls--;
 			}
 			runs -= value;
-			overs -= 0.1;
+			if (fieldStats[1][bowler]-(int)(fieldStats[1][bowler]) == 0)
+				fieldStats[1][bowler] -= 0.5;
+			else 
+				fieldStats[1][bowler] -= 0.1;
+			fieldStats[3][bowler] -= value;
 		}
 		[self resetBallValueToString:@"-"];
 		value = -1;
 		
-		scoreString = [NSString stringWithFormat:@"%.0f/%d	%.0f Overs", runs, wickets, overs];
+		scoreString = [NSString stringWithFormat:@"%.0f/%d	%.0f Overs", runs, wickets, fieldStats[1][bowler]];
 		[batter1RunsLabel setText:[NSString stringWithFormat:@"%d", batter1Runs]];
 		[batter2RunsLabel setText:[NSString stringWithFormat:@"%d", batter2Runs]];
 		[batter1BallsLabel setText:[NSString stringWithFormat:@"%d", batter1Balls]];
 		[batter2BallsLabel setText:[NSString stringWithFormat:@"%d", batter2Balls]];
-		[oversLabel setText:[NSString stringWithFormat:@"%.1f", overs]];
-		[runsLabel setText:[NSString stringWithFormat:@"%.0f", runs]];
+		[oversLabel setText:[NSString stringWithFormat:@"%.1f", fieldStats[1][bowler]]];
+		[runsLabel setText:[NSString stringWithFormat:@"%.0f", fieldStats[3][bowler]]];
 		//[maidensLabel setText:[NSString stringWithFormat:@"%d", maidens/6]];
-		if(overs > 0)
-			economy = runs/overs;
+		if(fieldStats[1][bowler] > 0)
+			economy = fieldStats[3][bowler]/fieldStats[1][bowler];
 		[economyLabel setText:[NSString stringWithFormat:@"%.2f", economy]];
 	} else {
 		[ball1 setText:@"-"];
@@ -279,6 +298,15 @@ int total = 0;
 			[batter2Active setHidden:NO];
 		}
 	}
+}
+
+- (void)changeBowler {
+	int temp;
+	temp = bowler;
+	bowler = lastBowler;
+	lastBowler = temp;
+	[self showActionSheet:bowlerButton];
+	
 }
 
 -(IBAction)showExtrasOptions:(id)sender{
@@ -392,88 +420,88 @@ int total = 0;
     
     UIButton *caught = [UIButton buttonWithType:UIButtonTypeRoundedRect];
     [caught addTarget:self
-               action:nil
-     forControlEvents:UIControlEventTouchDown];
+			action:@selector(caught:)
+			forControlEvents:UIControlEventTouchDown];
     [caught setTitle:@"Caught" forState:UIControlStateNormal];
     caught.frame = CGRectMake(20.0, 50.0, 65.0, 40.0);
     [newView addSubview:caught];
 	
     UIButton *bowled = [UIButton buttonWithType:UIButtonTypeRoundedRect];
     [bowled addTarget:self
-               action:nil
-     forControlEvents:UIControlEventTouchDown];
+			action:@selector(bowled:)
+			forControlEvents:UIControlEventTouchDown];
     [bowled setTitle:@"Bowled" forState:UIControlStateNormal];
     bowled.frame = CGRectMake(95.0, 50.0, 65.0, 40.0);
     [newView addSubview:bowled];
     
     UIButton *lbw = [UIButton buttonWithType:UIButtonTypeRoundedRect];
     [lbw addTarget:self
-			action:nil
-	forControlEvents:UIControlEventTouchDown];
+			action:@selector(lbw:)
+			forControlEvents:UIControlEventTouchDown];
     [lbw setTitle:@"LBW" forState:UIControlStateNormal];
     lbw.frame = CGRectMake(170.0, 50.0, 45.0, 40.0);
     [newView addSubview:lbw];
     
     UIButton *runOut = [UIButton buttonWithType:UIButtonTypeRoundedRect];
     [runOut addTarget:self
-			   action:nil
-     forControlEvents:UIControlEventTouchDown];
+			action:@selector(runOut:)
+			forControlEvents:UIControlEventTouchDown];
     [runOut setTitle:@"Run Out" forState:UIControlStateNormal];
     runOut.frame = CGRectMake(225.0, 50.0, 65.0, 40.0);
     [newView addSubview:runOut];
     
     UIButton *stumped = [UIButton buttonWithType:UIButtonTypeRoundedRect];
     [runOut addTarget:self
-               action:nil
-     forControlEvents:UIControlEventTouchDown];
+			action:@selector(stumped:)
+			forControlEvents:UIControlEventTouchDown];
     [stumped setTitle:@"Stumped" forState:UIControlStateNormal];
     stumped.frame = CGRectMake(20.0, 100.0, 65.0, 40.0);
     [newView addSubview:stumped];
     
     UIButton *hitWicket = [UIButton buttonWithType:UIButtonTypeRoundedRect];
     [hitWicket addTarget:self
-				  action:nil
-		forControlEvents:UIControlEventTouchDown];
+			action:@selector(hitWicket:)
+			forControlEvents:UIControlEventTouchDown];
     [hitWicket setTitle:@"Hit Wicket" forState:UIControlStateNormal];
     hitWicket.frame = CGRectMake(95.0, 100.0, 75.0, 40.0);
     [newView addSubview:hitWicket];
 	
     UIButton *handledBall = [UIButton buttonWithType:UIButtonTypeRoundedRect];
     [handledBall addTarget:self
-					action:nil
-		  forControlEvents:UIControlEventTouchDown];
+			action:@selector(handledBall:)
+			forControlEvents:UIControlEventTouchDown];
     [handledBall setTitle:@"Handled the Ball" forState:UIControlStateNormal];
     handledBall.frame = CGRectMake(180.0, 100.0, 120.0, 40.0);
     [newView addSubview:handledBall];
     
     UIButton *hitBallTwice = [UIButton buttonWithType:UIButtonTypeRoundedRect];
     [hitBallTwice addTarget:self
-					 action:nil
-		   forControlEvents:UIControlEventTouchDown];
+			action:@selector(hitBallTwice:)
+			forControlEvents:UIControlEventTouchDown];
     [hitBallTwice setTitle:@"Hit the Ball Twice" forState:UIControlStateNormal];
     hitBallTwice.frame = CGRectMake(10.0, 150.0, 130.0, 40.0);
     [newView addSubview:hitBallTwice];
     
     UIButton *obstructingField = [UIButton buttonWithType:UIButtonTypeRoundedRect];
     [obstructingField addTarget:self
-						 action:nil
-			   forControlEvents:UIControlEventTouchDown];
+			action:@selector(obstructingField:)
+			forControlEvents:UIControlEventTouchDown];
     [obstructingField setTitle:@"Obstructing the Field" forState:UIControlStateNormal];
     obstructingField.frame = CGRectMake(150.0, 150.0, 160.0, 40.0);
     [newView addSubview:obstructingField];
     
     UIButton *timedOut = [UIButton buttonWithType:UIButtonTypeRoundedRect];
     [timedOut addTarget:self
-				 action:nil
-	   forControlEvents:UIControlEventTouchDown];
+			action:@selector(timedOut:)
+			forControlEvents:UIControlEventTouchDown];
     [timedOut setTitle:@"Timed Out" forState:UIControlStateNormal];
     timedOut.frame = CGRectMake(70.0, 200.0, 80.0, 40.0);
     [newView addSubview:timedOut];
     
     UIButton *retired = [UIButton buttonWithType:UIButtonTypeRoundedRect];
     [retired addTarget:self
-				 action:nil
-	   forControlEvents:UIControlEventTouchDown];
+			action:@selector(retired:)
+			forControlEvents:UIControlEventTouchDown];
     [retired setTitle:@"Retired" forState:UIControlStateNormal];
     retired.frame = CGRectMake(170.0, 200.0, 80.0, 40.0);
     [newView addSubview:retired];
@@ -512,6 +540,106 @@ int total = 0;
     penalties++;
     [penLabel setText:[NSString stringWithFormat:@"%d", penalties]];
 }
+
+-(IBAction)caught:(id)sender{
+	[self hideActionSheetB:sender];
+	[self showSecondaryOutOptions:sender label:@"Caught By:"];
+}
+
+-(IBAction)bowled:(id)sender{
+	[self hideActionSheetB:sender];
+}
+
+-(IBAction)lbw:(id)sender{
+	[self hideActionSheetB:sender];
+}
+
+-(IBAction)runOut:(id)sender{
+	[self hideActionSheetB:sender];
+}
+
+-(IBAction)stumped:(id)sender{
+	[self hideActionSheetB:sender];
+}
+
+-(IBAction)hitWicket:(id)sender{
+	[self hideActionSheetB:sender];
+}
+
+-(IBAction)handledBall:(id)sender{
+	[self hideActionSheetB:sender];
+}
+
+-(IBAction)hitBallTwice:(id)sender{
+	[self hideActionSheetB:sender];
+}
+
+-(IBAction)obstructingField:(id)sender{
+	[self hideActionSheetB:sender];
+}
+
+-(IBAction)timedOut:(id)sender{
+	[self hideActionSheetB:sender];
+}
+
+-(IBAction)retired:(id)sender{
+	[self hideActionSheetB:sender];
+}
+
+-(IBAction)showSecondaryOutOptions:(id)sender label:(NSString *)string {
+    height = 255;
+    //create new view
+    newView = [[UIView alloc] initWithFrame:CGRectMake(0, 200, 320, height)];
+    newView.backgroundColor = [UIColor colorWithWhite:1 alpha:1];
+    
+    //add toolbar
+    UIToolbar * toolbar = [[UIToolbar alloc] initWithFrame: CGRectMake(0, 0, 320, 40)];
+    toolbar.barStyle = UIBarStyleBlack;
+    
+    //add button
+    _infoButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Save" style:UIBarButtonItemStyleDone target:self action:@selector(hideActionSheet:)];
+    
+    
+    //UIBarButtonItem *cancel = [[UIBarButtonItem alloc] initWithTitle:@"Cancel" style:UIBarButtonItemStyleDone target:self action: nil];
+	
+	toolbar.items = [NSArray arrayWithObjects:_infoButtonItem, nil];
+    
+    
+    UILabel *label1 = [[UILabel alloc] initWithFrame:CGRectMake
+					   (20.0, 50.0, 100, 21)];
+	[label1 setText:string];
+	[newView addSubview:label1];
+	
+	UIButton *button1 = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+    [button1 addTarget:self
+			   action:@selector(showActionSheet:)
+				forControlEvents:UIControlEventTouchDown];
+    //[button1 setTitle:@"Caught" forState:UIControlStateNormal];
+    button1.frame = CGRectMake(120.0, 50.0, 130.0, 22.0);
+    [newView addSubview:button1];
+	
+    /*UIButton *caught = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+    [caught addTarget:self
+			   action:@selector(caught:)
+	 forControlEvents:UIControlEventTouchDown];
+    [caught setTitle:@"Caught" forState:UIControlStateNormal];
+    caught.frame = CGRectMake(20.0, 50.0, 65.0, 40.0);
+    [newView addSubview:caught];*/
+    
+    //add popup view
+    [newView addSubview:toolbar];
+    [self.view addSubview:newView];
+    
+    //animate it onto the screen
+    CGRect temp = newView.frame;
+    temp.origin.y = CGRectGetMaxY(self.view.bounds);
+    newView.frame = temp;
+    [UIView beginAnimations:nil context:nil];
+    temp.origin.y -= height;
+    newView.frame = temp;
+    [UIView commitAnimations];
+}
+
 -(IBAction)showActionSheet:(id)sender {
     batterName1.enabled = false;
     batterName2.enabled = false;
@@ -559,8 +687,9 @@ int total = 0;
 		[pickerView selectRow:batter1 inComponent:0 animated:YES];
 	else if ([batterButton isEqual:batterName2] && batter2 < [pickerView numberOfRowsInComponent:0])
 		[pickerView selectRow:batter2 inComponent:0 animated:YES];
-	else if ([batterButton isEqual:bowlerButton] && bowler < [pickerView numberOfRowsInComponent:0])
+	else if ([batterButton isEqual:bowlerButton] && bowler < [pickerView numberOfRowsInComponent:0]){
 		[pickerView selectRow:bowler inComponent:0 animated:YES];
+	}
 	if (batter1 >= [homePlayersArray count] && [battingTeam isEqualToString:@"home"]) {
 		batter1 = 0;
 		[pickerView selectRow:batter1 inComponent:0 animated:YES];
@@ -605,8 +734,10 @@ int total = 0;
 
 //Used when clicking the done button
 - (IBAction)hideActionSheet:(UIBarButtonItem *)_infoButtonItem{
-    batterName1.enabled = true;
-    batterName2.enabled = true;
+	if (![startGameButton isHidden]) {
+		batterName1.enabled = true;
+		batterName2.enabled = true;
+	}
     //[obstructingField setTitle:@"Obstructing the Field" forState:UIControlStateNormal];
 	//animate onto screen
 	CGRect temp = newView.frame;
@@ -625,7 +756,6 @@ int total = 0;
 		batterName1.enabled = true;
 		batterName2.enabled = true;
 	}
-	
 	//animate onto screen
 	CGRect temp = newView.frame;
     temp.origin.y =height;
@@ -671,16 +801,34 @@ int total = 0;
 {
 	if ([batterButton isEqual:batterName2] && batter1 == row && row < [pickerView numberOfRowsInComponent:0]-1){
 		[pickerView selectRow:row+1 inComponent:0 animated:YES];
-		row++;
+		[UIView commitAnimations];
+		[self pickerView:pickerView didSelectRow:row+1 inComponent:0];
+		return;
 	} else if ([batterButton isEqual:batterName2] && batter1 == row && row == [pickerView numberOfRowsInComponent:0]-1){
 		[pickerView selectRow:row-1 inComponent:0 animated:YES];
-		row--;
+		[UIView commitAnimations];
+		[self pickerView:pickerView didSelectRow:row-1 inComponent:0];
+		return;
 	} else if ([batterButton isEqual:batterName1] && batter2 == row && row < [pickerView numberOfRowsInComponent:0]-1){
 		[pickerView selectRow:row+1 inComponent:0 animated:YES];
-		row++;
+		[UIView commitAnimations];
+		[self pickerView:pickerView didSelectRow:row+1 inComponent:0];
+		return;
 	} else if ([batterButton isEqual:batterName1] && batter2 == row && row == [pickerView numberOfRowsInComponent:0]-1){
 		[pickerView selectRow:row-1 inComponent:0 animated:YES];
-		row--;
+		[UIView commitAnimations];
+		[self pickerView:pickerView didSelectRow:row-1 inComponent:0];
+		return;
+	} else if ([batterButton isEqual:bowlerButton] && fieldStats[0][row] > 0 && row < [pickerView numberOfRowsInComponent:0]-1){
+		[pickerView selectRow:row+1 inComponent:0 animated:YES];
+		[UIView commitAnimations];
+		[self pickerView:pickerView didSelectRow:row+1 inComponent:0];
+		return;
+	} else if ([batterButton isEqual:bowlerButton] && fieldStats[0][row] > 0 && row == [pickerView numberOfRowsInComponent:0]-1){
+		[pickerView selectRow:row-1 inComponent:0 animated:YES];
+		[UIView commitAnimations];
+		[self pickerView:pickerView didSelectRow:row-1 inComponent:0];
+		return;
 	}
 	if ([battingTeam isEqualToString:@"home"]){
 		if ([batterButton isEqual:bowlerButton])
@@ -699,9 +847,24 @@ int total = 0;
 		batter1 = row;
 	else if ([batterButton isEqual:batterName2])
 		batter2 = row;
-	else if ([batterButton isEqual:bowlerButton])
+	else if ([batterButton isEqual:bowlerButton]){
 		bowler = row;
+		[oversLabel setText:[NSString stringWithFormat:@"%.1f", fieldStats[1][bowler]]];
+		[runsLabel setText:[NSString stringWithFormat:@"%.0f", fieldStats[3][bowler]]];
+		[maidensLabel setText:[NSString stringWithFormat:@"%.0f", fieldStats[2][bowler]/6]];
+		if(fieldStats[1][bowler] > 0)
+			economy = fieldStats[3][bowler]/fieldStats[1][bowler];
+		[economyLabel setText:[NSString stringWithFormat:@"%.2f", economy]];
+	}
 }
+
+/*- (int)returnLastBowler {
+	for (int i = 0; i < fieldingTeamSize; i++){
+		if (fieldStats[0][i] == 1)
+			return i;
+	}
+	return -1;
+}*/
 
 - (void)viewDidLoad
 {
@@ -716,12 +879,25 @@ int total = 0;
 		[batterName1 setTitle:[homePlayersArray objectAtIndex:batter1] forState:UIControlStateNormal];
 		[batterName2 setTitle:[homePlayersArray objectAtIndex:batter2] forState:UIControlStateNormal];
 		[bowlerButton setTitle:[awayPlayersArray objectAtIndex:bowler] forState:UIControlStateNormal];
+		fieldingTeamSize = [awayPlayersArray count];
+		for (int i = 0; i < 5;i++){
+			for (int j = 0; j < fieldingTeamSize; j++) {
+				fieldStats[i][j] = 0;
+			}
+		}
 	} else if ([battingTeam isEqualToString:@"away"]) {
 		[teamName setText:awayTeam];
 		[batterName1 setTitle:[awayPlayersArray objectAtIndex:batter1] forState:UIControlStateNormal];
 		[batterName2 setTitle:[awayPlayersArray objectAtIndex:batter2] forState:UIControlStateNormal];
 		[bowlerButton setTitle:[homePlayersArray objectAtIndex:bowler] forState:UIControlStateNormal];
+		fieldingTeamSize = [homePlayersArray count];
+		for (int i = 0; i < 5;i++){
+			for (int j = 0; j < fieldingTeamSize; j++) {
+				fieldStats[i][j] = 0;
+			}
+		}
 	}
+	lastBowler = 1;
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -750,7 +926,6 @@ int total = 0;
     [self setTeamName:nil];
     [self setOneActive:nil];
     [self setTwoActive:nil];
-    fallOfWickets = nil;
 	[self setBowlerButton:nil];
     [self setBall1:nil];
     [self setBall2:nil];
