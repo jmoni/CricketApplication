@@ -64,6 +64,11 @@
 	[self insertStringIntoDatabase:[NSString stringWithFormat: @"INSERT INTO TEAMS (TeamName) SELECT \"%@\" WHERE NOT EXISTS (SELECT 1 FROM TEAMS WHERE TeamName = \"%@\")", awayTeam, awayTeam]];
 }
 
+- (IBAction)next: (id) sender
+{
+    [self setSelectedIndex: [self selectedIndex]+1];
+}
+
 - (void) secondTabSave {
 	//HOME TEAM
 	homeTeamID = [self returnIntFromDatabase:[NSString stringWithFormat:
