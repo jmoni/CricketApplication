@@ -15,11 +15,12 @@ NSString *writableDBPath;
 sqlite3 *cricketDB;
 bool disableElements;
 
-@interface DatabaseController : UITabBarController <UITabBarControllerDelegate>{
+@interface DatabaseController : UITabBarController <UITabBarControllerDelegate, UINavigationControllerDelegate>{
 }
 @property (strong, nonatomic) IBOutlet UIBarButtonItem *saveButton;
 @property (strong, nonatomic) IBOutlet UIBarButtonItem *nextButton;
 @property (strong, nonatomic) IBOutlet UITabBar *tabBar;
+@property (strong, nonatomic) IBOutlet UINavigationItem *navBar;
 
 - (void)firstTabSave;
 - (void)secondTabSave;

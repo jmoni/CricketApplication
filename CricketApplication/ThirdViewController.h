@@ -8,10 +8,10 @@
 
 #import <UIKit/UIKit.h>
 
-@interface ThirdViewController : UIViewController <UIPickerViewDelegate, UIPickerViewDataSource, UIActionSheetDelegate>{
-    
+NSString *scoreString;
 
-}
+@interface ThirdViewController : UIViewController <UIPickerViewDelegate, UIPickerViewDataSource, UIActionSheetDelegate>
+
 @property (strong, nonatomic) IBOutlet UILabel *ball6;
 @property (strong, nonatomic) IBOutlet UILabel *ball5;
 @property (strong, nonatomic) IBOutlet UILabel *ball4;
