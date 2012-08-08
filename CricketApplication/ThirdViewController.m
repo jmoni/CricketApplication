@@ -47,6 +47,7 @@ int total = 0;
 int fieldingTeamSize;
 float fieldStats[5][20];
 int lastBowler;
+char *fallOfWickets; 
 
 @implementation ThirdViewController
 @synthesize ball6;
@@ -196,7 +197,7 @@ int lastBowler;
 			fieldStats[1][bowler]++;
 		}
 		
-		scoreString = [NSString stringWithFormat:@"%.0f/%d	%.0f Overs", runs, wickets, fieldStats[1][bowler]];
+		scoreLabel.text = [NSString stringWithFormat:@"%.0f/%d (%.0f Overs)", fieldStats[3][bowler], wickets, fieldStats[1][bowler]];
 		[batter1RunsLabel setText:[NSString stringWithFormat:@"%d", batter1Runs]];
 		[batter2RunsLabel setText:[NSString stringWithFormat:@"%d", batter2Runs]];
 		[batter1BallsLabel setText:[NSString stringWithFormat:@"%d", batter1Balls]];
@@ -667,6 +668,23 @@ int lastBowler;
     }
     else if ([sender tag] ==3){
         penalties+=4;
+        [penLabel setText:[NSString stringWithFormat:@"%d", penalties]];
+    }
+    [totLabel setText:[NSString stringWithFormat:@"%d", (noBalls + wides + byes + legByes + penalties)]];
+}
+
+-(IBAction)sixBye:(id)sender{
+    if ([sender tag] == 1)
+    {
+        byes+=6;
+        [byeLabel setText:[NSString stringWithFormat:@"%d", byes]];
+    }
+    else if ([sender tag] ==2){
+        legByes+=6;
+        [legByeLabel setText:[NSString stringWithFormat:@"%d", legByes]];
+    }
+    else if ([sender tag] ==3){
+        penalties+=6;
         [penLabel setText:[NSString stringWithFormat:@"%d", penalties]];
     }
     [totLabel setText:[NSString stringWithFormat:@"%d", (noBalls + wides + byes + legByes + penalties)]];
