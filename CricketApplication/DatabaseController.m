@@ -58,12 +58,17 @@
 		[self secondTabSave];
 	} else if ([self selectedIndex] == 2) {
 		//[self thirdTabSave];
+        [nextButton setAction: @selector(share:)];
+
+        nextButton.title = @"Share";
 		[self firstTabSave];
 		[self secondTabSave];
 	}
 	[self setSelectedIndex: [self selectedIndex]+1];
 }
-
+-(IBAction)share:(id) sender{
+    NSLog(@"changed");
+}
 - (void) secondTabSave {
 	//HOME TEAM
 	homeTeamID = [self returnIntFromDatabase:[NSString stringWithFormat:
