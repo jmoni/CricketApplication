@@ -37,6 +37,7 @@ int batter1Runs = 0;
 int batter2Runs = 0;
 float runs = 0;
 int wickets = 0;
+int overs;
 float economy = 0.00;
 int noBalls = 0;
 int wides = 0;
@@ -184,12 +185,16 @@ char *fallOfWickets;
 			ball5.text = @"-";
 			ball6.text = @"-";
 			fieldStats[2][bowler] -= (int)(fieldStats[2][bowler])%6;
+			overs++;
 			//maidens -= maidens%6;
 			for (int i = 0; i < fieldingTeamSize; i++){
 				if(fieldStats[0][i] != 0)
 					fieldStats[0][i]--;
 			}
-			[self changeBatterFacingBowler];
+			if (even)
+				even = NO;
+			else
+				even = YES;
 			[self changeBowler];
 		}
 		if ((fieldStats[1][bowler]-(int)(fieldStats[1][bowler]))*10 == 6) {
@@ -197,7 +202,7 @@ char *fallOfWickets;
 			fieldStats[1][bowler]++;
 		}
 		
-		scoreLabel.text = [NSString stringWithFormat:@"%.0f/%d (%.0f Overs)", fieldStats[3][bowler], wickets, fieldStats[1][bowler]];
+		[scoreLabel setText:[NSString stringWithFormat:@"%.0f/%d (%d Overs)", runs, wickets, overs]];
 		[batter1RunsLabel setText:[NSString stringWithFormat:@"%d", batter1Runs]];
 		[batter2RunsLabel setText:[NSString stringWithFormat:@"%d", batter2Runs]];
 		[batter1BallsLabel setText:[NSString stringWithFormat:@"%d", batter1Balls]];
@@ -241,7 +246,7 @@ char *fallOfWickets;
 		[self resetBallValueToString:@"-"];
 		value = -1;
 		
-		scoreString = [NSString stringWithFormat:@"%.0f/%d	%.0f Overs", runs, wickets, fieldStats[1][bowler]];
+		[scoreLabel setText:[NSString stringWithFormat:@"%.0f/%d (%d Overs)", runs, wickets, overs]];
 		[batter1RunsLabel setText:[NSString stringWithFormat:@"%d", batter1Runs]];
 		[batter2RunsLabel setText:[NSString stringWithFormat:@"%d", batter2Runs]];
 		[batter1BallsLabel setText:[NSString stringWithFormat:@"%d", batter1Balls]];
