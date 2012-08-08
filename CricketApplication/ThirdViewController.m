@@ -40,6 +40,12 @@ int maidens = 0;
 float runs = 0;
 int wickets = 0;
 float economy = 0.00;
+int noBalls = 0;
+int wides = 0;
+int byes = 0;
+int legByes = 0;
+int penalties = 0;
+int total = 0;
 
 @implementation ThirdViewController
 @synthesize ball6;
@@ -61,6 +67,12 @@ float economy = 0.00;
 @synthesize runsLabel;
 @synthesize wicketsLabel;
 @synthesize economyLabel;
+@synthesize noBallLabel;
+@synthesize wideLabel;
+@synthesize byeLabel;
+@synthesize legByeLabel;
+@synthesize penLabel;
+@synthesize totLabel;
 @synthesize calculatorView;
 @synthesize ballLabels;
 @synthesize startGameButton;
@@ -267,7 +279,7 @@ float economy = 0.00;
 -(IBAction)showExtrasOptions:(id)sender{
     batterName1.enabled = false;
     batterName2.enabled = false;
-    height = 255;
+    height = 235;
     //create new view
     newView = [[UIView alloc] initWithFrame:CGRectMake(0, 200, 320, height)];
     newView.backgroundColor = [UIColor colorWithWhite:1 alpha:1];
@@ -283,7 +295,7 @@ float economy = 0.00;
     
     UIButton *nB = [UIButton buttonWithType:UIButtonTypeRoundedRect];
     [nB addTarget:self
-		   action:nil
+		   action:@selector(extraNoBall:)
 			forControlEvents:UIControlEventTouchDown];
     [nB setTitle:@"No Ball" forState:UIControlStateNormal];
     nB.frame = CGRectMake(20.0, 50.0, 65.0, 40.0);
@@ -291,7 +303,7 @@ float economy = 0.00;
     
     UIButton *wide = [UIButton buttonWithType:UIButtonTypeRoundedRect];
     [wide addTarget:self
-			action:nil
+             action:@selector(extraWide:)
 			forControlEvents:UIControlEventTouchDown];
     [wide setTitle:@"Wide" forState:UIControlStateNormal];
     wide.frame = CGRectMake(95.0, 50.0, 65.0, 40.0);
@@ -299,7 +311,7 @@ float economy = 0.00;
     
     UIButton *bye = [UIButton buttonWithType:UIButtonTypeRoundedRect];
     [bye addTarget:self
-			action:nil
+			action:@selector(extraBye:)
 			forControlEvents:UIControlEventTouchDown];
     [bye setTitle:@"Bye" forState:UIControlStateNormal];
     bye.frame = CGRectMake(170.0, 50.0, 65.0, 40.0);
@@ -307,7 +319,7 @@ float economy = 0.00;
     
     UIButton *legBye = [UIButton buttonWithType:UIButtonTypeRoundedRect];
     [legBye addTarget:self
-			   action:nil
+			   action:@selector(extraLegBye:)
 				forControlEvents:UIControlEventTouchDown];
     [legBye setTitle:@"Leg Bye" forState:UIControlStateNormal];
     legBye.frame = CGRectMake(245.0, 50.0, 65.0, 40.0);
@@ -315,7 +327,7 @@ float economy = 0.00;
     
     UIButton *penaltyRun = [UIButton buttonWithType:UIButtonTypeRoundedRect];
     [penaltyRun addTarget:self
-				action:nil
+				action:@selector(extraPen:)
 				forControlEvents:UIControlEventTouchDown];
     [penaltyRun setTitle:@"Penalty Run" forState:UIControlStateNormal];
     penaltyRun.frame = CGRectMake(110.0, 100.0, 100.0, 40.0);
@@ -334,7 +346,7 @@ float economy = 0.00;
 			 action:nil
 			forControlEvents:UIControlEventTouchDown];
     [undo setTitle:@"Undo" forState:UIControlStateNormal];
-    undo.frame = CGRectMake(135.0, 200.0, 50.0, 40.0);
+    undo.frame = CGRectMake(135.0, 180.0, 50.0, 40.0);
     [newView addSubview:undo];
 	
     //add popup view
@@ -365,8 +377,13 @@ float economy = 0.00;
     
     //add button
     _infoButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Save" style:UIBarButtonItemStyleDone target:self action:@selector(hideActionSheet:)];
+    
+    
+    UIBarButtonItem *cancel = [[UIBarButtonItem alloc] initWithTitle:@"Cancel" style:UIBarButtonItemStyleDone target:self action: nil];
 	
-	toolbar.items = [NSArray arrayWithObjects:_infoButtonItem, nil];
+	toolbar.items = [NSArray arrayWithObjects:_infoButtonItem,cancel, nil];
+    
+    
     
     UIButton *caught = [UIButton buttonWithType:UIButtonTypeRoundedRect];
     [caught addTarget:self
@@ -445,8 +462,16 @@ float economy = 0.00;
 				 action:nil
 	   forControlEvents:UIControlEventTouchDown];
     [timedOut setTitle:@"Timed Out" forState:UIControlStateNormal];
-    timedOut.frame = CGRectMake(120.0, 200.0, 80.0, 40.0);
+    timedOut.frame = CGRectMake(70.0, 200.0, 80.0, 40.0);
     [newView addSubview:timedOut];
+    
+    UIButton *retired = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+    [retired addTarget:self
+				 action:nil
+	   forControlEvents:UIControlEventTouchDown];
+    [retired setTitle:@"Retired" forState:UIControlStateNormal];
+    retired.frame = CGRectMake(170.0, 200.0, 80.0, 40.0);
+    [newView addSubview:retired];
     
     //add popup view
     [newView addSubview:toolbar];
@@ -462,6 +487,26 @@ float economy = 0.00;
     [UIView commitAnimations];
 }
 
+-(IBAction)extraNoBall:(id)sender{
+    noBalls++;
+[noBallLabel setText:[NSString stringWithFormat:@"%d", noBalls]];
+}
+-(IBAction)extraWide:(id)sender{
+    wides++;
+    [wideLabel setText:[NSString stringWithFormat:@"%d", wides]];
+}
+-(IBAction)extraBye:(id)sender{
+    byes++;
+    [byeLabel setText:[NSString stringWithFormat:@"%d", byes]];
+}
+-(IBAction)extraLegBye:(id)sender{
+    legByes++;
+    [legByeLabel setText:[NSString stringWithFormat:@"%d", legByes]];
+}
+-(IBAction)extraPen:(id)sender{
+    penalties++;
+    [penLabel setText:[NSString stringWithFormat:@"%d", penalties]];
+}
 -(IBAction)showActionSheet:(id)sender {
     batterName1.enabled = false;
     batterName2.enabled = false;
@@ -722,6 +767,12 @@ float economy = 0.00;
 	[self setCalculatorView:nil];
 	[self setStartGameButton:nil];
 	[self setBallLabels:nil];
+    [self setNoBallLabel:nil];
+    [self setWideLabel:nil];
+    [self setByeLabel:nil];
+    [self setLegByeLabel:nil];
+    [self setPenLabel:nil];
+    [self setTotLabel:nil];
     [super viewDidUnload];
     // Release any retained subviews of the main view.
 }

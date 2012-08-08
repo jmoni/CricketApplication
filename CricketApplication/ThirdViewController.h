@@ -31,6 +31,12 @@
 @property (strong, nonatomic) IBOutlet UILabel *runsLabel;
 @property (strong, nonatomic) IBOutlet UILabel *wicketsLabel;
 @property (strong, nonatomic) IBOutlet UILabel *economyLabel;
+@property (strong, nonatomic) IBOutlet UILabel *noBallLabel;
+@property (strong, nonatomic) IBOutlet UILabel *wideLabel;
+@property (strong, nonatomic) IBOutlet UILabel *byeLabel;
+@property (strong, nonatomic) IBOutlet UILabel *legByeLabel;
+@property (strong, nonatomic) IBOutlet UILabel *penLabel;
+@property (strong, nonatomic) IBOutlet UILabel *totLabel;
 @property (strong, nonatomic) IBOutletCollection(UIButton) NSArray *calculatorView;
 @property (strong, nonatomic) IBOutletCollection(UILabel) NSArray *ballLabels;
 @property (strong, nonatomic) IBOutlet UIButton *startGameButton;
@@ -47,4 +53,9 @@
 -(IBAction)confirm:(id)sender;
 -(IBAction)undo:(id)sender;
 -(IBAction)startGame:(id)sender;
+-(IBAction)extraNoBall:(id)sender;
+-(IBAction)extraWide:(id)sender;
+-(IBAction)extraBye:(id)sender;
+-(IBAction)extraLegBye:(id)sender;
+-(IBAction)extraPen:(id)sender;
 @end
