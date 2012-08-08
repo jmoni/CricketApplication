@@ -19,6 +19,7 @@
 @synthesize saveButton = _saveButton;
 @synthesize nextButton;
 @synthesize tabBar;
+@synthesize navBar;
 
 // Creates a writable copy of the bundled default database in the application Documents directory.
 - (void)createEditableCopyOfDatabaseIfNeeded {
@@ -136,26 +137,6 @@
 	}
 }
 
-/*- (BOOL)tabBarController:(UITabBarController *)aTabBarController shouldSelectViewController:(UIViewController *)viewController
-{
-	NSLog(@"HELLO");
-	if (
-		([aTabBarController.viewControllers objectAtIndex:1] == viewController) ||
-		([aTabBarController.viewControllers objectAtIndex:2] == viewController)
-		)
-	{
-		// Disable switch to tab 1 and 2
-		// Check: otherViewController to enable
-		// Check: SomeViewObject to disable
-		return NO;
-	}
-	else
-	{
-		// Tab ok at index 0
-		return YES;
-	}
-}*/
-
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -171,6 +152,7 @@
 	for (int i = 1; i < 3; i++){
 		[[[tabBar items] objectAtIndex:i] setEnabled:FALSE];
 	}
+	[navBar setTitle:@"Cricket Application"];
 }
 
 - (void)viewDidUnload
@@ -178,6 +160,7 @@
     [self setSaveButton:nil];
     [self setNextButton:nil];
 	[self setTabBar:nil];
+	[self setNavBar:nil];
     [super viewDidUnload];
     // Release any retained subviews of the main view.
 }

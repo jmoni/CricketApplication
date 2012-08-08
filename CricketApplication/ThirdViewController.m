@@ -35,7 +35,7 @@ int batter1Balls = 0;
 int batter2Balls = 0;
 int batter1Runs = 0;
 int batter2Runs = 0;
-float overs = 0;
+float overs = 0.0;
 int maidens = 0;
 float runs = 0;
 int wickets = 0;
@@ -150,6 +150,7 @@ float economy = 0.00;
 			batter1Balls++;
 		}
 		runs += value;
+		overs += 0.1;
 		value = -1;
 
 		if (ballNo<6)
@@ -166,20 +167,19 @@ float economy = 0.00;
 			overs++;
 			maidens -= maidens%6;
 		}
-				
+		
+		scoreString = [NSString stringWithFormat:@"%.0f/%d	%.0f Overs", runs, wickets, overs];
 		[batter1RunsLabel setText:[NSString stringWithFormat:@"%d", batter1Runs]];
 		[batter2RunsLabel setText:[NSString stringWithFormat:@"%d", batter2Runs]];
 		[batter1BallsLabel setText:[NSString stringWithFormat:@"%d", batter1Balls]];
 		[batter2BallsLabel setText:[NSString stringWithFormat:@"%d", batter2Balls]];
-		[oversLabel setText:[NSString stringWithFormat:@"%.0f", overs]];
+		[oversLabel setText:[NSString stringWithFormat:@"%.1f", overs]];
 		[runsLabel setText:[NSString stringWithFormat:@"%.0f", runs]];
 		[maidensLabel setText:[NSString stringWithFormat:@"%d", maidens/6]];
 		if(overs > 0)
 			economy = runs/overs;
 		[economyLabel setText:[NSString stringWithFormat:@"%.2f", economy]];
-		
-		//[sender setHighlightedTextColor:[UIColor colorWithRed:255 green:0 blue:0 alpha:1.0f]];
-		
+
 		[self changeBatterFacingBowler];
 	}
 }
@@ -203,20 +203,25 @@ float economy = 0.00;
 				batter1Balls--;
 			}
 			runs -= value;
+			overs -= 0.1;
 		}
 		[self resetBallValueToString:@"-"];
 		value = -1;
 		
+		scoreString = [NSString stringWithFormat:@"%.0f/%d	%.0f Overs", runs, wickets, overs];
 		[batter1RunsLabel setText:[NSString stringWithFormat:@"%d", batter1Runs]];
 		[batter2RunsLabel setText:[NSString stringWithFormat:@"%d", batter2Runs]];
 		[batter1BallsLabel setText:[NSString stringWithFormat:@"%d", batter1Balls]];
 		[batter2BallsLabel setText:[NSString stringWithFormat:@"%d", batter2Balls]];
-		[oversLabel setText:[NSString stringWithFormat:@"%.0f", overs]];
+		[oversLabel setText:[NSString stringWithFormat:@"%.1f", overs]];
 		[runsLabel setText:[NSString stringWithFormat:@"%.0f", runs]];
 		//[maidensLabel setText:[NSString stringWithFormat:@"%d", maidens/6]];
 		if(overs > 0)
 			economy = runs/overs;
 		[economyLabel setText:[NSString stringWithFormat:@"%.2f", economy]];
+	} else {
+		[ball1 setText:@"-"];
+		value = -1;
 	}
 }
 

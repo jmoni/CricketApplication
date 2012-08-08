@@ -977,12 +977,12 @@
             </objects>
             <point key="canvasLocation" x="-557" y="168"/>
         </scene>
-        <!--Database Controller - Cricket Application-->
+        <!--Database Controller-->
         <scene sceneID="15">
             <objects>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="14" sceneMemberID="firstResponder"/>
                 <tabBarController id="4" customClass="DatabaseController" sceneMemberID="viewController">
-                    <navigationItem key="navigationItem" title="Cricket Application" id="f7R-kv-gRN">
+                    <navigationItem key="navigationItem" id="f7R-kv-gRN">
                         <barButtonItem key="rightBarButtonItem" title="Next" id="EIC-aa-9kP">
                             <connections>
                                 <action selector="next:" destination="4" id="4nE-CV-yJM"/>
@@ -996,6 +996,7 @@
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     </tabBar>
                     <connections>
+                        <outlet property="navBar" destination="f7R-kv-gRN" id="YGN-kL-oeg"/>
                         <outlet property="nextButton" destination="EIC-aa-9kP" id="FVj-yV-xys"/>
                         <outlet property="tabBar" destination="5" id="Kf3-HV-w4Q"/>
                         <segue destination="2" kind="relationship" relationship="viewControllers" id="26"/>
@@ -1029,6 +1030,9 @@
             <source key="sourceIdentifier" type="project" relativePath="./Classes/DatabaseController.h"/>
             <relationships>
                 <relationship kind="action" name="next:"/>
+                <relationship kind="action" name="share:"/>
+                <relationship kind="outlet" name="navBar" candidateClass="UINavigationItem"/>
+                <relationship kind="outlet" name="nextButton" candidateClass="UIBarButtonItem"/>
                 <relationship kind="outlet" name="saveButton" candidateClass="UIBarButtonItem"/>
                 <relationship kind="outlet" name="tabBar" candidateClass="UITabBar"/>
             </relationships>
