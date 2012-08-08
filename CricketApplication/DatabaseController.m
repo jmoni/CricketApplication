@@ -17,6 +17,7 @@
 
 @implementation DatabaseController
 @synthesize saveButton = _saveButton;
+@synthesize tabBar;
 
 // Creates a writable copy of the bundled default database in the application Documents directory.
 - (void)createEditableCopyOfDatabaseIfNeeded {
@@ -40,23 +41,6 @@
     }
 }
 
-- (void) saveData:(id)sender{
-	if ([self selectedIndex] == 0) {
-		[self firstTabSave];
-	} else if ([self selectedIndex] == 1) {
-		[self firstTabSave];
-		[self secondTabSave];
-	} else if ([self selectedIndex] == 2) {
-		//[self thirdTabSave];
-		[self firstTabSave];
-		[self secondTabSave];
-	}
-}
-
-
-//@"IF EXISTS (SELECT * FROM TEAMS WHERE TeamName = \"%@\") BEGIN END ELSE BEGIN INSERT INTO TEAMS (TeamName) VALUES (\"%@\") END"
-
-
 - (void) firstTabSave {
     //Adds hometeam name to the database, if the name already exists it doesn't add it again
 	[self insertStringIntoDatabase:[NSString stringWithFormat: @"INSERT INTO TEAMS (TeamName) SELECT \"%@\" WHERE NOT EXISTS (SELECT 1 FROM TEAMS WHERE TeamName = \"%@\")", homeTeam, homeTeam]];
@@ -64,12 +48,12 @@
 	[self insertStringIntoDatabase:[NSString stringWithFormat: @"INSERT INTO TEAMS (TeamName) SELECT \"%@\" WHERE NOT EXISTS (SELECT 1 FROM TEAMS WHERE TeamName = \"%@\")", awayTeam, awayTeam]];
 }
 
-- (IBAction)next: (id) sender
-{
-    [self setSelectedIndex: [self selectedIndex]+1];
+- (IBAction)next:(id)sender {
 	if ([self selectedIndex] == 0) {
+		[[[tabBar items] objectAtIndex:1] setEnabled:YES];
 		[self firstTabSave];
 	} else if ([self selectedIndex] == 1) {
+		[[[tabBar items] objectAtIndex:2] setEnabled:YES];
 		[self firstTabSave];
 		[self secondTabSave];
 	} else if ([self selectedIndex] == 2) {
@@ -77,6 +61,7 @@
 		[self firstTabSave];
 		[self secondTabSave];
 	}
+	[self setSelectedIndex: [self selectedIndex]+1];
 }
 
 - (void) secondTabSave {
@@ -97,7 +82,6 @@
 										@"INSERT INTO PLAYERS (TeamID, PlayerName) SELECT %d, \"%@\" WHERE NOT EXISTS (SELECT * FROM Players WHERE (PlayerName = \"%@\") AND (TeamID = %d))",
 										awayTeamID, [awayPlayersArray objectAtIndex:i], [awayPlayersArray objectAtIndex:i], awayTeamID]];
 	}
-	
 }
 
 - (void) thirdTabSave {
@@ -146,6 +130,25 @@
 	}
 }
 
+/*- (BOOL)tabBarController:(UITabBarController *)aTabBarController shouldSelectViewController:(UIViewController *)viewController
+{
+	NSLog(@"HELLO");
+	if (
+		([aTabBarController.viewControllers objectAtIndex:1] == viewController) ||
+		([aTabBarController.viewControllers objectAtIndex:2] == viewController)
+		)
+	{
+		// Disable switch to tab 1 and 2
+		// Check: otherViewController to enable
+		// Check: SomeViewObject to disable
+		return NO;
+	}
+	else
+	{
+		// Tab ok at index 0
+		return YES;
+	}
+}*/
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -159,19 +162,15 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
 	[self createEditableCopyOfDatabaseIfNeeded];
-	NSUInteger indexToRemove = 1;
-	NSMutableArray *controllersToKeep = [NSMutableArray arrayWithArray:self.viewControllers];
-	UIViewController *removedViewController;
-	for (int i = 0; i < 2; i++){
-		removedViewController = [controllersToKeep objectAtIndex:indexToRemove];
-		[controllersToKeep removeObjectAtIndex:indexToRemove];
-		[self setViewControllers:controllersToKeep animated:YES];
+	for (int i = 1; i < 3; i++){
+		[[[tabBar items] objectAtIndex:i] setEnabled:FALSE];
 	}
 }
 
 - (void)viewDidUnload
 {
     [self setSaveButton:nil];
+	[self setTabBar:nil];
     [super viewDidUnload];
     // Release any retained subviews of the main view.
 }
