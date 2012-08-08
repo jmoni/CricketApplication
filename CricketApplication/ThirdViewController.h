@@ -73,5 +73,5 @@ NSString *scoreString;
 -(IBAction)obstructingField:(id)sender;
 -(IBAction)timedOut:(id)sender;
 -(IBAction)retired:(id)sender;
--(IBAction)showSecondaryOutOptions:(id)sender;
+-(IBAction)showSecondaryOutOptions:(id)sender label:(NSString *)string;
 @end
