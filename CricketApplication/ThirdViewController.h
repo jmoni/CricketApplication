@@ -40,6 +40,7 @@ NSString *scoreString;
 @property (strong, nonatomic) IBOutletCollection(UIButton) NSArray *calculatorView;
 @property (strong, nonatomic) IBOutletCollection(UILabel) NSArray *ballLabels;
 @property (strong, nonatomic) IBOutlet UIButton *startGameButton;
+@property (strong, nonatomic) IBOutlet UILabel *scoreLabel;
 
 -(IBAction)showActionSheet: (id) sender;
 -(IBAction)hideActionSheet: (UIBarButtonItem *)_infoButtonItem;
@@ -56,6 +57,12 @@ NSString *scoreString;
 -(IBAction)extraNoBall:(id)sender;
 -(IBAction)extraWide:(id)sender;
 -(IBAction)extraBye:(id)sender;
+-(IBAction)extraLegBye:(id)sender;
+-(IBAction)extraPen:(id)sender;
+-(IBAction)byeCalc:(id)sender string:(NSString *)identifier;
+-(IBAction)byePlusOne:(id)sender;
+-(IBAction)fourBye:(id)sender;
+-(IBAction)sixBye:(id)sender;
 -(IBAction)extraLegBye:(id)sender;
 -(IBAction)extraPen:(id)sender;
 @end
