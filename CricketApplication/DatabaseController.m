@@ -67,6 +67,16 @@
 - (IBAction)next: (id) sender
 {
     [self setSelectedIndex: [self selectedIndex]+1];
+	if ([self selectedIndex] == 0) {
+		[self firstTabSave];
+	} else if ([self selectedIndex] == 1) {
+		[self firstTabSave];
+		[self secondTabSave];
+	} else if ([self selectedIndex] == 2) {
+		//[self thirdTabSave];
+		[self firstTabSave];
+		[self secondTabSave];
+	}
 }
 
 - (void) secondTabSave {
