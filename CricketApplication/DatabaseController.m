@@ -17,6 +17,7 @@
 
 @implementation DatabaseController
 @synthesize saveButton = _saveButton;
+@synthesize nextButton;
 @synthesize tabBar;
 
 // Creates a writable copy of the bundled default database in the application Documents directory.
@@ -50,21 +51,21 @@
 
 - (IBAction)next:(id)sender {
 	if ([self selectedIndex] == 0) {
+		[self firstTabSave];
 		[[[tabBar items] objectAtIndex:1] setEnabled:YES];
-		[self firstTabSave];
+        [self setSelectedIndex: [self selectedIndex]+1];
 	} else if ([self selectedIndex] == 1) {
-		[[[tabBar items] objectAtIndex:2] setEnabled:YES];
-		[self firstTabSave];
 		[self secondTabSave];
+		[[[tabBar items] objectAtIndex:2] setEnabled:YES];
+		[[[tabBar items] objectAtIndex:2] setEnabled:YES];
+        [self setSelectedIndex: [self selectedIndex]+1];
+		[nextButton setStyle:UIBarButtonItemStyleDone];
+		[nextButton setTitle:@"Share"];
+		[nextButton setAction: @selector(share:)];
 	} else if ([self selectedIndex] == 2) {
-		//[self thirdTabSave];
-        [nextButton setAction: @selector(share:)];
-
-        nextButton.title = @"Share";
 		[self firstTabSave];
 		[self secondTabSave];
 	}
-	[self setSelectedIndex: [self selectedIndex]+1];
 }
 -(IBAction)share:(id) sender{
     NSLog(@"changed");
@@ -175,6 +176,7 @@
 - (void)viewDidUnload
 {
     [self setSaveButton:nil];
+    [self setNextButton:nil];
 	[self setTabBar:nil];
     [super viewDidUnload];
     // Release any retained subviews of the main view.

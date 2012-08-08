@@ -996,7 +996,8 @@
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     </tabBar>
                     <connections>
-                        <outlet property="tabBar" destination="5" id="QF9-dq-XDu"/>
+                        <outlet property="nextButton" destination="EIC-aa-9kP" id="FVj-yV-xys"/>
+                        <outlet property="tabBar" destination="5" id="Kf3-HV-w4Q"/>
                         <segue destination="2" kind="relationship" relationship="viewControllers" id="26"/>
                         <segue destination="3" kind="relationship" relationship="viewControllers" id="XkG-Iy-GHV"/>
                         <segue destination="QzP-vb-Ig0" kind="relationship" relationship="viewControllers" id="XJp-dg-7Zf"/>

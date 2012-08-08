@@ -18,6 +18,7 @@ bool disableElements;
 @interface DatabaseController : UITabBarController <UITabBarControllerDelegate>{
 }
 @property (strong, nonatomic) IBOutlet UIBarButtonItem *saveButton;
+@property (strong, nonatomic) IBOutlet UIBarButtonItem *nextButton;
 @property (strong, nonatomic) IBOutlet UITabBar *tabBar;
 
 - (void)firstTabSave;
