@@ -80,4 +80,5 @@ NSString *scoreString;
 -(IBAction)turnLabelsRed:(id)sender;
 -(IBAction)turnLabelsGreen:(id)sender;
 -(IBAction)turnLabelsBlack:(id)sender;
+-(IBAction)updateExtrasLabels:(id)sender;
 @end

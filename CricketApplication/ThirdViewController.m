@@ -41,16 +41,21 @@ int wickets = 0;
 int overs;
 float economy = 0.00;
 int noBalls = 0;
+int noBallAdditions = 0;
 int wides = 0;
+int wideAdditions = 0;
 int byes = 0;
+int byeAdditions = 0;
 int legByes = 0;
+int legByeAdditions = 0;
 int penalties = 0;
-int total = 0;
+int penaltiesAdditions = 0;
+//int total = 0;
 int fieldingTeamSize;
 float fieldStats[5][20];
 int lastBowler;
 int bonusRuns = 0;
-char *fallOfWickets;
+NSString *fallOfWickets =@"";
 NSArray *waysToBeOut;
 
 @implementation ThirdViewController
@@ -136,7 +141,6 @@ NSArray *waysToBeOut;
     [self resetBallValueToString:@"•"];
 	even = YES;
 	fieldStats[2][bowler] ++;
-    
     [self turnLabelsOrange:sender];
 	//maidens++;
 }
@@ -175,6 +179,26 @@ NSArray *waysToBeOut;
 			batter1Runs += value;
 			batter1Balls++;
 		}
+        
+        if (ballNo == 1){
+           fallOfWickets = [fallOfWickets stringByAppendingString:[NSString stringWithFormat:@"%@%@",ball1.text,@"$"]]; 
+        }
+        else if (ballNo == 2){
+            fallOfWickets = [fallOfWickets stringByAppendingString:[NSString stringWithFormat:@"%@%@",ball2.text,@"$"]];
+        }
+        if (ballNo == 3){
+            fallOfWickets = [fallOfWickets stringByAppendingString:[NSString stringWithFormat:@"%@%@",ball3.text,@"$"]];
+        }
+        if (ballNo == 4){
+            fallOfWickets = [fallOfWickets stringByAppendingString:[NSString stringWithFormat:@"%@%@",ball4.text,@"$"]]; 
+        }
+        if (ballNo == 5){
+            fallOfWickets = [fallOfWickets stringByAppendingString:[NSString stringWithFormat:@"%@%@",ball5.text,@"$"]];
+        }
+        if (ballNo == 6){
+            fallOfWickets = [fallOfWickets stringByAppendingString:[NSString stringWithFormat:@"%@%@",ball6.text,@"$"]];
+        }
+        
 		
 		//overs += 0.1;
 		fieldStats[1][bowler] += 0.1;
@@ -334,7 +358,7 @@ NSArray *waysToBeOut;
     [self hideActionSheetB:sender];
     batterName1.enabled = false;
     batterName2.enabled = false;
-    height = 200;
+    height = 255;
     //create new view
     newView = [[UIView alloc] initWithFrame:CGRectMake(0, 200, 320, height)];
     newView.backgroundColor = [UIColor colorWithWhite:1 alpha:1];
@@ -388,22 +412,6 @@ NSArray *waysToBeOut;
     [penaltyRun setTitle:@"Penalty Run" forState:UIControlStateNormal];
     penaltyRun.frame = CGRectMake(110.0, 100.0, 100.0, 40.0);
     [newView addSubview:penaltyRun];
-    
-    /*UILabel *total = [[UILabel alloc] initWithFrame:CGRectMake(20.0, 150.0, 50.0, 21.0)];
-    total.text = @"Total:";
-    [newView addSubview:total];
-    
-    UILabel *totalVal = [[UILabel alloc] initWithFrame:CGRectMake(75.0, 150.0, 150.0, 21.0)];
-    totalVal.text = @"----------------";
-    [newView addSubview:totalVal];
-    
-    UIButton *undo = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-    [undo addTarget:self
-			 action:nil
-			forControlEvents:UIControlEventTouchDown];
-    [undo setTitle:@"Undo" forState:UIControlStateNormal];
-    undo.frame = CGRectMake(135.0, 180.0, 50.0, 40.0);
-    [newView addSubview:undo];*/
 	
     //add popup view
     [newView addSubview:toolbar];
@@ -471,19 +479,40 @@ NSArray *waysToBeOut;
 }
 
 -(IBAction)extraNoBall:(id)sender{
-    noBalls++;
-[noBallLabel setText:[NSString stringWithFormat:@"%d", noBalls]];
-    [totLabel setText:[NSString stringWithFormat:@"%d", (noBalls + wides + byes + legByes + penalties)]];
+    noBallAdditions++;
+
+    totLabel.text = [NSString stringWithFormat:@"%d%@%d", (noBalls+wides+byes+legByes+penalties),@"+",(noBallAdditions+wideAdditions+byeAdditions+legByeAdditions+penaltiesAdditions)];   
+    wideAdditions = 0;
+    byeAdditions =0;
+    legByeAdditions = 0;
+    penaltiesAdditions = 0;
+    wideLabel.textColor = [UIColor  blackColor];
+    byeLabel.textColor = [UIColor  blackColor];
+    legByeLabel.textColor = [UIColor  blackColor];
+    penLabel.textColor = [UIColor  blackColor];
+    value = 4000;
+    [noBallLabel setTextColor:[UIColor orangeColor]];
     [self hideActionSheetB:sender];
+    [self updateExtrasLabels:sender];
     [self turnLabelsOrange:sender];
     [self resetBallValueToString:@"NB"];
 
 }
 -(IBAction)extraWide:(id)sender{
-    wides++;
-    [wideLabel setText:[NSString stringWithFormat:@"%d", wides]];
-    [totLabel setText:[NSString stringWithFormat:@"%d", (noBalls + wides + byes + legByes + penalties)]];
+    wideAdditions++;
+    totLabel.text = [NSString stringWithFormat:@"%d%@%d", (noBalls+wides+byes+legByes+penalties),@"+",(noBallAdditions+wideAdditions+byeAdditions+legByeAdditions+penaltiesAdditions)];
+    noBallAdditions = 0;
+    byeAdditions =0;
+    legByeAdditions = 0;
+    penaltiesAdditions = 0;
+    noBallLabel.textColor = [UIColor blackColor];
+    byeLabel.textColor = [UIColor  blackColor];
+    legByeLabel.textColor = [UIColor  blackColor];
+    penLabel.textColor = [UIColor  blackColor];
+    value = 4000;
+    [wideLabel setTextColor:[UIColor orangeColor]];
     [self turnLabelsOrange:sender];
+    [self updateExtrasLabels:sender];
     [self resetBallValueToString:@"W"];
     [self hideActionSheetB:sender];
 }
@@ -502,7 +531,7 @@ NSArray *waysToBeOut;
 }
 
 -(IBAction)byeCalc:(id)sender string:(NSString *)identifier{
-    height = 200;
+    height = 255;
     newView = [[UIView alloc] initWithFrame:CGRectMake(0, 200, 320, height)];
     newView.backgroundColor = [UIColor colorWithWhite:1 alpha:1];
     
@@ -512,9 +541,11 @@ NSArray *waysToBeOut;
     
     //add button
     _infoButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Back" style:UIBarButtonItemStyleDone target:self action:@selector (showExtrasOptions:)];
-    
+    UIBarButtonItem *spacer = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:self action:nil];
+    UIBarButtonItem *enter = [[UIBarButtonItem alloc]
+                              initWithTitle:@"Done" style:UIBarButtonItemStyleDone target:self action:@selector(addExtras:)];
 	
-	toolbar.items = [NSArray arrayWithObjects:_infoButtonItem, nil];
+	toolbar.items = [NSArray arrayWithObjects:_infoButtonItem,spacer,enter, nil];
     //add popup view
     [newView addSubview:toolbar];
     [self.view addSubview:newView];
@@ -553,7 +584,6 @@ NSArray *waysToBeOut;
     [back setTitle:@"Back" forState:UIControlStateNormal];
     back.frame = CGRectMake(85.0, 100.0, 70.0, 40.0);
     [newView addSubview:back];
-
     
     UIButton *confirm = [UIButton buttonWithType:UIButtonTypeRoundedRect];
     [confirm addTarget:self
@@ -565,14 +595,17 @@ NSArray *waysToBeOut;
     if ([identifier isEqualToString:@"Bye"])
     {
         [confirm setTag:1];
+        [enter setTag:1];
     }
     else if ([identifier isEqualToString:@"Leg Bye"])
     {
         [confirm setTag:2];
+        [enter setTag:2];
     }
     else if ([identifier isEqualToString:@"Pen"])
     {
         [confirm setTag:3];
+        [enter setTag:3];
     }
 
     UILabel *extras = [[UILabel alloc] initWithFrame:CGRectMake(100.0, 150.0, 90.0,20.0)];
@@ -593,35 +626,61 @@ NSArray *waysToBeOut;
 
 }
 -(IBAction)addExtras:(id)sender{
+    if (bonusRuns!=0)
+    {
     if ([sender tag] == 1)
     {
-        byes+=bonusRuns;
-        byeLabel.text = [NSString stringWithFormat: @"%d",byes];
+        byeAdditions=bonusRuns;
         byeLabel.textColor = [UIColor orangeColor];
-        
+        noBallAdditions = 0;
+        wideAdditions =0;
+        legByeAdditions = 0;
+        penaltiesAdditions = 0;
+        noBallLabel.textColor = [UIColor blackColor];
+        wideLabel.textColor = [UIColor  blackColor];
+        legByeLabel.textColor = [UIColor  blackColor];
+        penLabel.textColor = [UIColor  blackColor];
         [self resetBallValueToString:[NSString stringWithFormat:@"%@%d",@"B",bonusRuns]];
     }
     else if ([sender tag] == 2)
     {
-        legByes+=bonusRuns;
-        legByeLabel.text = [NSString stringWithFormat: @"%d",bonusRuns];
+        legByeAdditions=bonusRuns;
         legByeLabel.textColor = [UIColor orangeColor];
-        
+        noBallAdditions = 0;
+        byeAdditions =0;
+        wideAdditions = 0;
+        penaltiesAdditions = 0;
+        noBallLabel.textColor = [UIColor blackColor];
+        wideLabel.textColor = [UIColor  blackColor];
+        byeLabel.textColor = [UIColor  blackColor];
+        penLabel.textColor = [UIColor  blackColor];
         [self resetBallValueToString:[NSString stringWithFormat:@"%@%d",@"LB",bonusRuns]];
 
     }
     else if ([sender tag] == 3)
     {
-        penalties+=bonusRuns;
-        penLabel.text = [NSString stringWithFormat: @"%d",bonusRuns];
+        penaltiesAdditions=bonusRuns;
         penLabel.textColor = [UIColor orangeColor];
+        noBallAdditions = 0;
+        byeAdditions =0;
+        legByeAdditions = 0;
+        wideAdditions = 0;
+        noBallLabel.textColor = [UIColor blackColor];
+        wideLabel.textColor = [UIColor  blackColor];
+        byeLabel.textColor = [UIColor  blackColor];
+        legByeLabel.textColor = [UIColor  blackColor];
         [self resetBallValueToString:[NSString stringWithFormat:@"%@%d",@"P",bonusRuns]];
     }
+        value = 4000;
+        [self updateExtrasLabels:sender];
     bonusRuns = 0;
+        [self turnLabelsOrange:sender];
+        totLabel.text = [NSString stringWithFormat:@"%d%@%d", (noBalls+wides+byes+legByes+penalties),@"+",(noBallAdditions+wideAdditions+byeAdditions+legByeAdditions+penaltiesAdditions)];
+        totLabel.textColor = [UIColor orangeColor];
+        
+    }
     [self hideActionSheetB:sender];
-    [self turnLabelsOrange:sender];
-    totLabel.text = [NSString stringWithFormat:@"%d", (noBalls+wides+byes+legByes+penalties)];
-    totLabel.textColor = [UIColor orangeColor];
+    
 }
 -(IBAction)byePlusOne:(id)sender{
     bonusRuns++;
@@ -1152,6 +1211,20 @@ NSArray *waysToBeOut;
     ball4.textColor =[UIColor blackColor];
     ball5.textColor =[UIColor blackColor];
     ball6.textColor =[UIColor blackColor];
+    noBallLabel.textColor = [UIColor blackColor];
+    wideLabel.textColor = [UIColor  blackColor];
+    byeLabel.textColor = [UIColor  blackColor];
+    legByeLabel.textColor = [UIColor  blackColor];
+    penLabel.textColor = [UIColor  blackColor];
+}
+
+-(IBAction)updateExtrasLabels:(id)sender
+{
+    [penLabel setText:[NSString stringWithFormat: @"%d%@%d",penalties,@"+",penaltiesAdditions]];
+    [noBallLabel setText:[NSString stringWithFormat:@"%d%@%d", noBalls,@"+",noBallAdditions]];
+    [legByeLabel setText:[NSString stringWithFormat: @"%d%@%d",legByes,@"+",legByeAdditions]];
+    [byeLabel setText: [NSString stringWithFormat: @"%d%@%d",byes,@"+",byeAdditions]];
+    [wideLabel setText:[NSString stringWithFormat:@"%d%@%d", wides,@"+", wideAdditions]];
 }
 
 - (void)viewDidUnload
