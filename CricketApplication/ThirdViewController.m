@@ -126,6 +126,7 @@ char *fallOfWickets;
 		[instance thirdTabSave];
 		[batterName1 setEnabled:NO];
 		[batterName2 setEnabled:NO];
+        ball1.textColor = [UIColor redColor];
 		//[bowlerButton setEnabled:NO];
 	}
 }
@@ -135,6 +136,8 @@ char *fallOfWickets;
     [self resetBallValueToString:@"•"];
 	even = YES;
 	fieldStats[2][bowler] ++;
+    
+    [self turnLabelsOrange:sender];
 	//maidens++;
 }
 -(IBAction)plusOne:(id)sender{
@@ -143,6 +146,8 @@ char *fallOfWickets;
 	else
 		value ++;
     [self resetBallValueToString:[NSString stringWithFormat:@"%d", value]];
+    [self turnLabelsOrange:sender];
+    
 	if (value%2 == 1)
 		even = NO;
 	else
@@ -151,11 +156,14 @@ char *fallOfWickets;
 -(IBAction)four:(id)sender{
     value = 4;
     [self resetBallValueToString:[NSString stringWithFormat:@"%d", value]];
+    
+    [self turnLabelsOrange:sender];
 	even = YES;
 }
 -(IBAction)six:(id)sender{
     value = 6;
     [self resetBallValueToString:[NSString stringWithFormat:@"%d", value]];
+    [self turnLabelsOrange:sender];
 	even = YES;
 }
 -(IBAction)confirm:(id)sender{
@@ -174,18 +182,20 @@ char *fallOfWickets;
 		fieldStats[3][bowler] += value;
 		fieldStats[0][bowler] = 2;
 		value = -1;
-
+        
+        [self turnLabelsGreen:sender];
+        
 		if (ballNo<6)
 			ballNo ++;
 		else{
 			ballNo = 1;
-			ball1.text = @"-";
 			ball1.text = @"-";
 			ball2.text = @"-";
 			ball3.text = @"-";
 			ball4.text = @"-";
 			ball5.text = @"-";
 			ball6.text = @"-";
+            [self turnLabelsBlack:sender];
 			fieldStats[2][bowler] -= (int)(fieldStats[2][bowler])%6;
 			overs++;
 			//maidens -= maidens%6;
@@ -198,12 +208,13 @@ char *fallOfWickets;
 			else
 				even = YES;
 			[self changeBowler];
+            
 		}
 		if ((fieldStats[1][bowler]-(int)(fieldStats[1][bowler]))*10 == 6) {
 			fieldStats[1][bowler] -= 0.6;
 			fieldStats[1][bowler]++;
 		}
-		
+		[self turnLabelsRed:sender];
 		[scoreLabel setText:[NSString stringWithFormat:@"%.0f/%d (%d Overs)", runs, wickets, overs]];
 		[batter1RunsLabel setText:[NSString stringWithFormat:@"%d", batter1Runs]];
 		[batter2RunsLabel setText:[NSString stringWithFormat:@"%d", batter2Runs]];
@@ -247,7 +258,7 @@ char *fallOfWickets;
 		}
 		[self resetBallValueToString:@"-"];
 		value = -1;
-		
+		[self turnLabelsRed:sender];
 		[scoreLabel setText:[NSString stringWithFormat:@"%.0f/%d (%d Overs)", runs, wickets, overs]];
 		[batter1RunsLabel setText:[NSString stringWithFormat:@"%d", batter1Runs]];
 		[batter2RunsLabel setText:[NSString stringWithFormat:@"%d", batter2Runs]];
@@ -535,12 +546,61 @@ char *fallOfWickets;
 [noBallLabel setText:[NSString stringWithFormat:@"%d", noBalls]];
     [totLabel setText:[NSString stringWithFormat:@"%d", (noBalls + wides + byes + legByes + penalties)]];
     [self hideActionSheetB:sender];
-    
+    if (ballNo == 1)
+    {
+        ball1.text =@"NB";
+    }
+    else if (ballNo == 2)
+    {
+        ball2.text =@"NB";
+    }
+    else if (ballNo == 3)
+    {
+        ball3.text =@"NB";
+    }
+    else if (ballNo == 4)
+    {
+        ball4.text =@"NB";
+    }
+    else if (ballNo == 5)
+    {
+        ball5.text =@"NB";
+    }
+    else if (ballNo == 6)
+    {
+        ball6.text =@"NB";
+    }
+
 }
 -(IBAction)extraWide:(id)sender{
     wides++;
     [wideLabel setText:[NSString stringWithFormat:@"%d", wides]];
     [totLabel setText:[NSString stringWithFormat:@"%d", (noBalls + wides + byes + legByes + penalties)]];
+    if (ballNo == 1)
+    {
+        ball1.text =@"W";
+    }
+    else if (ballNo == 2)
+    {
+        ball2.text =@"W";
+    }
+    else if (ballNo == 3)
+    {
+        ball3.text =@"W";
+    }
+    else if (ballNo == 4)
+    {
+        ball4.text =@"W";
+    }
+    else if (ballNo == 5)
+    {
+        ball5.text =@"W";
+    }
+    else if (ballNo == 6)
+    {
+        ball6.text =@"W";
+    }
+
     [self hideActionSheetB:sender];
 }
 -(IBAction)extraBye:(id)sender{
@@ -646,27 +706,105 @@ char *fallOfWickets;
     temp.origin.y -= height;
     newView.frame = temp;
     [UIView commitAnimations];
-    
+
 }
 -(IBAction)addExtras:(id)sender{
     if ([sender tag] == 1)
     {
         byes+=bonusRuns;
         byeLabel.text = [NSString stringWithFormat: @"%d",byes];
+        byeLabel.textColor = [UIColor orangeColor];
+        if (ballNo == 1)
+        {
+            ball1.text =[NSString stringWithFormat:@"%@%d",@"B",bonusRuns];
+        }
+        else if (ballNo == 2)
+        {
+            ball2.text =[NSString stringWithFormat:@"%@%d",@"B",bonusRuns];
+        }
+        else if (ballNo == 3)
+        {
+            ball3.text =[NSString stringWithFormat:@"%@%d",@"B",bonusRuns];
+        }
+        else if (ballNo == 4)
+        {
+            ball4.text =[NSString stringWithFormat:@"%@%d",@"B",bonusRuns];
+        }
+        else if (ballNo == 5)
+        {
+            ball5.text =[NSString stringWithFormat:@"%@%d",@"B",bonusRuns];
+        }
+        else if (ballNo == 6)
+        {
+            ball6.text =[NSString stringWithFormat:@"%@%d",@"B",bonusRuns];
+        }
     }
     else if ([sender tag] == 2)
     {
         legByes+=bonusRuns;
         legByeLabel.text = [NSString stringWithFormat: @"%d",bonusRuns];
+        legByeLabel.textColor = [UIColor orangeColor];
+        if (ballNo == 1)
+        {
+            ball1.text =[NSString stringWithFormat:@"%@%d",@"LB",bonusRuns];
+        }
+        else if (ballNo == 2)
+        {
+            ball2.text =[NSString stringWithFormat:@"%@%d",@"LB",bonusRuns];
+        }
+        else if (ballNo == 3)
+        {
+            ball3.text =[NSString stringWithFormat:@"%@%d",@"LB",bonusRuns];
+        }
+        else if (ballNo == 4)
+        {
+            ball4.text =[NSString stringWithFormat:@"%@%d",@"LB",bonusRuns];
+        }
+        else if (ballNo == 5)
+        {
+            ball5.text =[NSString stringWithFormat:@"%@%d",@"LB",bonusRuns];
+        }
+        else if (ballNo == 6)
+        {
+            ball6.text =[NSString stringWithFormat:@"%@%d",@"LB",bonusRuns];
+        }
+
     }
     else if ([sender tag] == 3)
     {
         penalties+=bonusRuns;
         penLabel.text = [NSString stringWithFormat: @"%d",bonusRuns];
+        penLabel.textColor = [UIColor orangeColor];
+        if (ballNo == 1)
+        {
+            ball1.text =[NSString stringWithFormat:@"%@%d",@"P",bonusRuns];
+        }
+        if (ballNo == 2)
+        {
+            ball2.text =[NSString stringWithFormat:@"%@%d",@"P",bonusRuns];
+        }
+        if (ballNo == 3)
+        {
+            ball3.text =[NSString stringWithFormat:@"%@%d",@"P",bonusRuns];
+        }
+        if (ballNo == 4)
+        {
+            ball4.text =[NSString stringWithFormat:@"%@%d",@"P",bonusRuns];
+        }
+        if (ballNo == 5)
+        {
+            ball5.text =[NSString stringWithFormat:@"%@%d",@"P",bonusRuns];
+        }
+        if (ballNo == 6)
+        {
+            ball6.text =[NSString stringWithFormat:@"%@%d",@"P",bonusRuns];
+        }
+
     }
     bonusRuns = 0;
     [self hideActionSheetB:sender];
     totLabel.text = [NSString stringWithFormat:@"%d", (noBalls+wides+byes+legByes+penalties)];
+    totLabel.textColor = [UIColor orangeColor];
 }
 -(IBAction)byePlusOne:(id)sender{
     bonusRuns++;
@@ -1069,6 +1207,102 @@ char *fallOfWickets;
 		[teamName setText:homeTeam];
 	else if ([battingTeam isEqualToString:@"away"])
 		[teamName setText:awayTeam];
+}
+
+-(IBAction)turnLabelsOrange:(id)sender
+{
+    if (ballNo == 1)
+    {
+        ball1.textColor =[UIColor orangeColor];
+    }
+    else if (ballNo == 2)
+    {
+        ball2.textColor =[UIColor orangeColor];
+    }
+    else if (ballNo == 3)
+    {
+        ball3.textColor =[UIColor orangeColor];
+    }
+    else if (ballNo == 4)
+    {
+        ball4.textColor =[UIColor orangeColor];
+    }
+    else if (ballNo == 5)
+    {
+        ball5.textColor =[UIColor orangeColor];
+    }
+    else if (ballNo == 6)
+    {
+        ball6.textColor =[UIColor orangeColor];
+    }
+    
+}
+
+-(IBAction)turnLabelsRed:(id)sender
+{
+    if (ballNo == 1)
+    {
+        ball1.textColor =[UIColor redColor];
+    }
+    else if (ballNo == 2)
+    {
+        ball2.textColor =[UIColor redColor];
+    }
+    else if (ballNo == 3)
+    {
+        ball3.textColor =[UIColor redColor];
+    }
+    else if (ballNo == 4)
+    {
+        ball4.textColor =[UIColor redColor];
+    }
+    else if (ballNo == 5)
+    {
+        ball5.textColor =[UIColor redColor];
+    }
+    else if (ballNo == 6)
+    {
+        ball6.textColor =[UIColor redColor];
+    }
+    
+}
+
+-(IBAction)turnLabelsGreen:(id)sender
+{
+    if (ballNo == 1)
+    {
+        ball1.textColor =[UIColor greenColor];
+    }
+    else if (ballNo == 2)
+    {
+        ball2.textColor =[UIColor greenColor];
+    }
+    else if (ballNo == 3)
+    {
+        ball3.textColor =[UIColor greenColor];
+    }
+    else if (ballNo == 4)
+    {
+        ball4.textColor =[UIColor greenColor];
+    }
+    else if (ballNo == 5)
+    {
+        ball5.textColor =[UIColor greenColor];
+    }
+    else if (ballNo == 6)
+    {
+        ball6.textColor =[UIColor greenColor];
+    }
+}
+
+-(IBAction)turnLabelsBlack:(id)sender
+{
+    ball1.textColor =[UIColor blackColor];
+    ball2.textColor =[UIColor blackColor];
+    ball3.textColor =[UIColor blackColor];
+    ball4.textColor =[UIColor blackColor];
+    ball5.textColor =[UIColor blackColor];
+    ball6.textColor =[UIColor blackColor];
 }
 
 - (void)viewDidUnload
