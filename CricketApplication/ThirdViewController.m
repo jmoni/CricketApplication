@@ -475,61 +475,16 @@ NSArray *waysToBeOut;
 [noBallLabel setText:[NSString stringWithFormat:@"%d", noBalls]];
     [totLabel setText:[NSString stringWithFormat:@"%d", (noBalls + wides + byes + legByes + penalties)]];
     [self hideActionSheetB:sender];
-    if (ballNo == 1)
-    {
-        ball1.text =@"NB";
-    }
-    else if (ballNo == 2)
-    {
-        ball2.text =@"NB";
-    }
-    else if (ballNo == 3)
-    {
-        ball3.text =@"NB";
-    }
-    else if (ballNo == 4)
-    {
-        ball4.text =@"NB";
-    }
-    else if (ballNo == 5)
-    {
-        ball5.text =@"NB";
-    }
-    else if (ballNo == 6)
-    {
-        ball6.text =@"NB";
-    }
+    [self turnLabelsOrange:sender];
+    [self resetBallValueToString:@"NB"];
 
 }
 -(IBAction)extraWide:(id)sender{
     wides++;
     [wideLabel setText:[NSString stringWithFormat:@"%d", wides]];
     [totLabel setText:[NSString stringWithFormat:@"%d", (noBalls + wides + byes + legByes + penalties)]];
-    if (ballNo == 1)
-    {
-        ball1.text =@"W";
-    }
-    else if (ballNo == 2)
-    {
-        ball2.text =@"W";
-    }
-    else if (ballNo == 3)
-    {
-        ball3.text =@"W";
-    }
-    else if (ballNo == 4)
-    {
-        ball4.text =@"W";
-    }
-    else if (ballNo == 5)
-    {
-        ball5.text =@"W";
-    }
-    else if (ballNo == 6)
-    {
-        ball6.text =@"W";
-    }
-
+    [self turnLabelsOrange:sender];
+    [self resetBallValueToString:@"W"];
     [self hideActionSheetB:sender];
 }
 -(IBAction)extraBye:(id)sender{
@@ -643,60 +598,16 @@ NSArray *waysToBeOut;
         byes+=bonusRuns;
         byeLabel.text = [NSString stringWithFormat: @"%d",byes];
         byeLabel.textColor = [UIColor orangeColor];
-        if (ballNo == 1)
-        {
-            ball1.text =[NSString stringWithFormat:@"%@%d",@"B",bonusRuns];
-        }
-        else if (ballNo == 2)
-        {
-            ball2.text =[NSString stringWithFormat:@"%@%d",@"B",bonusRuns];
-        }
-        else if (ballNo == 3)
-        {
-            ball3.text =[NSString stringWithFormat:@"%@%d",@"B",bonusRuns];
-        }
-        else if (ballNo == 4)
-        {
-            ball4.text =[NSString stringWithFormat:@"%@%d",@"B",bonusRuns];
-        }
-        else if (ballNo == 5)
-        {
-            ball5.text =[NSString stringWithFormat:@"%@%d",@"B",bonusRuns];
-        }
-        else if (ballNo == 6)
-        {
-            ball6.text =[NSString stringWithFormat:@"%@%d",@"B",bonusRuns];
-        }
+        
+        [self resetBallValueToString:[NSString stringWithFormat:@"%@%d",@"B",bonusRuns]];
     }
     else if ([sender tag] == 2)
     {
         legByes+=bonusRuns;
         legByeLabel.text = [NSString stringWithFormat: @"%d",bonusRuns];
         legByeLabel.textColor = [UIColor orangeColor];
-        if (ballNo == 1)
-        {
-            ball1.text =[NSString stringWithFormat:@"%@%d",@"LB",bonusRuns];
-        }
-        else if (ballNo == 2)
-        {
-            ball2.text =[NSString stringWithFormat:@"%@%d",@"LB",bonusRuns];
-        }
-        else if (ballNo == 3)
-        {
-            ball3.text =[NSString stringWithFormat:@"%@%d",@"LB",bonusRuns];
-        }
-        else if (ballNo == 4)
-        {
-            ball4.text =[NSString stringWithFormat:@"%@%d",@"LB",bonusRuns];
-        }
-        else if (ballNo == 5)
-        {
-            ball5.text =[NSString stringWithFormat:@"%@%d",@"LB",bonusRuns];
-        }
-        else if (ballNo == 6)
-        {
-            ball6.text =[NSString stringWithFormat:@"%@%d",@"LB",bonusRuns];
-        }
+        
+        [self resetBallValueToString:[NSString stringWithFormat:@"%@%d",@"LB",bonusRuns]];
 
     }
     else if ([sender tag] == 3)
@@ -704,34 +615,11 @@ NSArray *waysToBeOut;
         penalties+=bonusRuns;
         penLabel.text = [NSString stringWithFormat: @"%d",bonusRuns];
         penLabel.textColor = [UIColor orangeColor];
-        if (ballNo == 1)
-        {
-            ball1.text =[NSString stringWithFormat:@"%@%d",@"P",bonusRuns];
-        }
-        if (ballNo == 2)
-        {
-            ball2.text =[NSString stringWithFormat:@"%@%d",@"P",bonusRuns];
-        }
-        if (ballNo == 3)
-        {
-            ball3.text =[NSString stringWithFormat:@"%@%d",@"P",bonusRuns];
-        }
-        if (ballNo == 4)
-        {
-            ball4.text =[NSString stringWithFormat:@"%@%d",@"P",bonusRuns];
-        }
-        if (ballNo == 5)
-        {
-            ball5.text =[NSString stringWithFormat:@"%@%d",@"P",bonusRuns];
-        }
-        if (ballNo == 6)
-        {
-            ball6.text =[NSString stringWithFormat:@"%@%d",@"P",bonusRuns];
-        }
-
+        [self resetBallValueToString:[NSString stringWithFormat:@"%@%d",@"P",bonusRuns]];
     }
     bonusRuns = 0;
     [self hideActionSheetB:sender];
+    [self turnLabelsOrange:sender];
     totLabel.text = [NSString stringWithFormat:@"%d", (noBalls+wides+byes+legByes+penalties)];
     totLabel.textColor = [UIColor orangeColor];
 }
@@ -1228,27 +1116,31 @@ NSArray *waysToBeOut;
 {
     if (ballNo == 1)
     {
-        ball1.textColor =[UIColor greenColor];
+        ball1.textColor =[UIColor colorWithRed:.1 green:.5 blue:0 alpha:1.0];
     }
     else if (ballNo == 2)
     {
-        ball2.textColor =[UIColor greenColor];
+        ball2.textColor =[UIColor colorWithRed:.1 green:.5 blue:0 alpha:1.0];
+
     }
     else if (ballNo == 3)
     {
-        ball3.textColor =[UIColor greenColor];
+        ball3.textColor =[UIColor colorWithRed:.1 green:.5 blue:0 alpha:1.0];
+
     }
     else if (ballNo == 4)
     {
-        ball4.textColor =[UIColor greenColor];
+        ball4.textColor =[UIColor colorWithRed:.1 green:.5 blue:0 alpha:1.0];
+
     }
     else if (ballNo == 5)
     {
-        ball5.textColor =[UIColor greenColor];
+        ball5.textColor =[UIColor colorWithRed:.1 green:.5 blue:0 alpha:1.0];
+
     }
     else if (ballNo == 6)
     {
-        ball6.textColor =[UIColor greenColor];
+        ball6.textColor =[UIColor colorWithRed:.1 green:.5 blue:0 alpha:1.0];
     }
 }
 

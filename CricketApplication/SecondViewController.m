@@ -43,9 +43,8 @@ UIImage *viceCaptainWicketKeeper;
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view, typically from a nib.
-	
 	//Button listener allocation
-	[homeWonToss addTarget:self action:@selector(tossButtonManage) forControlEvents:UIControlEventTouchUpInside];
+    [homeWonToss addTarget:self action:@selector(tossButtonManage) forControlEvents:UIControlEventTouchUpInside];
 	[awayWonToss addTarget:self action:@selector(tossButtonManage) forControlEvents:UIControlEventTouchUpInside];
 	[battingButton addTarget:self action:@selector(decisionButtonManage) forControlEvents:UIControlEventTouchUpInside];
 	[fieldingButton addTarget:self action:@selector(decisionButtonManage) forControlEvents:UIControlEventTouchUpInside];
@@ -53,10 +52,38 @@ UIImage *viceCaptainWicketKeeper;
 	//Setting initial players table values
 	homePlayersArray = [[NSMutableArray alloc] init];
 	awayPlayersArray = [[NSMutableArray alloc] init];
-	for (int i = 1; i < 12; i++){
-		[homePlayersArray addObject:[NSString stringWithFormat:@"Player %d", i]];
-		[awayPlayersArray addObject:[NSString stringWithFormat:@"Player %d", i]];
-	}
+    
+    NSLog(@"%d",homeTeamID);
+    NSLog(@"%d",awayTeamID);
+   
+    int c;
+    
+    c = [self returnIntFromDatabase:[NSString stringWithFormat:
+									@"SELECT TeamID FROM PLAYERS WHERE TeamID = '%d'",
+                                     homeTeamID]];
+    if (c == -1){
+        for (int i = 1; i < 12; i++){
+            [homePlayersArray addObject:[NSString stringWithFormat:@"Player %d", i]];
+        }
+    }
+    else{
+        [self returnPlayersHome:[NSString stringWithFormat:@"SELECT PlayerName FROM Players WHERE TEAMID = '%d'",
+                             homeTeamID]];
+    }
+    c = [self returnIntFromDatabase:[NSString stringWithFormat:
+                                     @"SELECT TeamID FROM PLAYERS WHERE TeamID = '%d'",
+                                     awayTeamID]];
+    if (c == -1){
+        for (int i = 1; i < 12; i++){
+            [awayPlayersArray addObject:[NSString stringWithFormat:@"Player %d", i]];
+        }
+    }
+    else{
+        [self returnPlayersAway:[NSString stringWithFormat:@"SELECT PlayerName FROM Players WHERE TEAMID = '%d'",
+                             awayTeamID]];
+    }
+    
+    
 	homeViceCaptain = 1;
 	awayViceCaptain = 1;
 	
@@ -68,6 +95,62 @@ UIImage *viceCaptainWicketKeeper;
 	battingTeam = @"home";
 	tossWonBy = @"home";
 	decision = @"bat";
+}
+
+- (void)returnPlayersHome:(NSString *)string {
+	const char *dbpath = [writableDBPath UTF8String];
+	sqlite3_stmt *statement;
+    if (sqlite3_open(dbpath, &cricketDB) == SQLITE_OK)
+    {
+		const char *stmt = [string UTF8String];
+		sqlite3_prepare_v2(cricketDB, stmt, -1, &statement, NULL);
+		while (sqlite3_step(statement) == SQLITE_ROW) {
+			NSLog(@"\nAccess worked");
+            [homePlayersArray addObject:[NSString stringWithUTF8String:(char *)sqlite3_column_text(statement, 0)]];
+		}
+		sqlite3_finalize(statement);
+		sqlite3_close(cricketDB);
+	} else {
+		NSLog(@"\nCould not access DB");
+	}
+}
+
+- (void)returnPlayersAway:(NSString *)string {
+	const char *dbpath = [writableDBPath UTF8String];
+	sqlite3_stmt *statement;
+    if (sqlite3_open(dbpath, &cricketDB) == SQLITE_OK)
+    {
+		const char *stmt = [string UTF8String];
+		sqlite3_prepare_v2(cricketDB, stmt, -1, &statement, NULL);
+		while (sqlite3_step(statement) == SQLITE_ROW) {
+			NSLog(@"\nAccess worked");
+            [awayPlayersArray addObject:[NSString stringWithUTF8String:(char *)sqlite3_column_text(statement, 0)]];
+		}
+		sqlite3_finalize(statement);
+		sqlite3_close(cricketDB);
+	} else {
+		NSLog(@"\nCould not access DB");
+	}
+}
+
+- (int)returnIntFromDatabase:(NSString *)string {
+	int returnThis = -1;
+	const char *dbpath = [writableDBPath UTF8String];
+	sqlite3_stmt *statement;
+    if (sqlite3_open(dbpath, &cricketDB) == SQLITE_OK)
+    {
+		const char *stmt = [string UTF8String];
+		sqlite3_prepare_v2(cricketDB, stmt, -1, &statement, NULL);
+		while (sqlite3_step(statement) == SQLITE_ROW) {
+			NSLog(@"\nAccess worked");
+			returnThis = sqlite3_column_int(statement, 0);
+		}
+		sqlite3_finalize(statement);
+		sqlite3_close(cricketDB);
+	} else {
+		NSLog(@"\nCould not access DB");
+	}
+	return returnThis;
 }
 
 - (void)viewDidUnload
@@ -387,5 +470,6 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
 {
 	return (interfaceOrientation != UIInterfaceOrientationPortraitUpsideDown);
 }
+
 
 @end
