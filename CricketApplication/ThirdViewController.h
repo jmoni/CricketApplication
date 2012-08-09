@@ -40,6 +40,7 @@ NSString *scoreString;
 @property (strong, nonatomic) IBOutletCollection(UILabel) NSArray *ballLabels;
 @property (strong, nonatomic) IBOutlet UIButton *startGameButton;
 @property (strong, nonatomic) IBOutlet UILabel *scoreLabel;
+@property (strong, nonatomic) IBOutlet UIScrollView *ballsScrollView;
 
 -(IBAction)showActionSheet: (id) sender;
 -(IBAction)hideActionSheet: (UIBarButtonItem *)_infoButtonItem;
@@ -74,4 +75,9 @@ NSString *scoreString;
 -(IBAction)timedOut:(id)sender;
 -(IBAction)retired:(id)sender;
 -(IBAction)showSecondaryOutOptions:(id)sender label:(NSString *)string;
+-(IBAction)addExtras:(id)sender;
+-(IBAction)turnLabelsOrange:(id)sender;
+-(IBAction)turnLabelsRed:(id)sender;
+-(IBAction)turnLabelsGreen:(id)sender;
+-(IBAction)turnLabelsBlack:(id)sender;
 @end
