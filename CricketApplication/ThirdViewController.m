@@ -23,6 +23,7 @@
 @end
 
 UIView *newView;
+UILabel *runningTotal;
 int height = 255;
 int value = -1;
 int ballNo = 1;
@@ -47,6 +48,7 @@ int total = 0;
 int fieldingTeamSize;
 float fieldStats[5][20];
 int lastBowler;
+int bonusRuns = 0;
 char *fallOfWickets; 
 
 @implementation ThirdViewController
@@ -312,6 +314,7 @@ char *fallOfWickets;
 }
 
 -(IBAction)showExtrasOptions:(id)sender{
+    bonusRuns = 0;
     [self hideActionSheetB:sender];
     batterName1.enabled = false;
     batterName2.enabled = false;
@@ -593,25 +596,7 @@ char *fallOfWickets;
     [six setTitle:title forState:UIControlStateNormal];
     six.frame = CGRectMake(210.0, 50.0, 80.0, 40.0);
     [newView addSubview:six];
-    if ([identifier isEqualToString:@"Bye"])
-    {
-        [plusOne setTag:1];
-        [four setTag:1];
-        [six setTag:1];
-    }
-    else if ([identifier isEqualToString:@"Leg Bye"])
-    {
-        
-        [plusOne setTag:2];
-        [four setTag:2];
-        [six setTag:2];
-    }
-    else if ([identifier isEqualToString:@"Pen"])
-    {
-        [plusOne setTag:3];
-        [four setTag:3];
-        [six setTag:3];
-    }
+    
     UIButton *back = [UIButton buttonWithType:UIButtonTypeRoundedRect];
     [back addTarget:self
             action:@selector(showExtrasOptions:)
@@ -623,12 +608,31 @@ char *fallOfWickets;
     
     UIButton *confirm = [UIButton buttonWithType:UIButtonTypeRoundedRect];
     [confirm addTarget:self
-                action:nil
+                action:@selector(addExtras:)
   forControlEvents:UIControlEventTouchDown];
     [confirm setTitle:@"Confirm" forState:UIControlStateNormal];
     confirm.frame = CGRectMake(165.0, 100.0, 70.0, 40.0);
     [newView addSubview:confirm];
+    if ([identifier isEqualToString:@"Bye"])
+    {
+        [confirm setTag:1];
+    }
+    else if ([identifier isEqualToString:@"Leg Bye"])
+    {
+        [confirm setTag:2];
+    }
+    else if ([identifier isEqualToString:@"Pen"])
+    {
+        [confirm setTag:3];
+    }
 
+    UILabel *extras = [[UILabel alloc] initWithFrame:CGRectMake(100.0, 150.0, 90.0,20.0)];
+    extras.text = @"Extras:";
+    [newView addSubview: extras];
+    
+    runningTotal = [[UILabel alloc] initWithFrame:CGRectMake(160.0, 150.0, 40.0,20.0)];
+    [newView addSubview: runningTotal];
+    
     //animate it onto the screen
     CGRect temp = newView.frame;
     temp.origin.y = CGRectGetMaxY(self.view.bounds);
@@ -639,55 +643,38 @@ char *fallOfWickets;
     [UIView commitAnimations];
     
 }
-
--(IBAction)byePlusOne:(id)sender{
+-(IBAction)addExtras:(id)sender{
     if ([sender tag] == 1)
     {
-    byes++;
-    [byeLabel setText:[NSString stringWithFormat:@"%d", byes]];
+        byes+=bonusRuns;
+        byeLabel.text = [NSString stringWithFormat: @"%d",byes];
     }
-    else if ([sender tag] ==2){
-    legByes++;
-    [legByeLabel setText:[NSString stringWithFormat:@"%d", legByes]];
+    else if ([sender tag] == 2)
+    {
+        legByes+=bonusRuns;
+        legByeLabel.text = [NSString stringWithFormat: @"%d",bonusRuns];
     }
-    else if ([sender tag] ==3){
-        penalties++;
-        [penLabel setText:[NSString stringWithFormat:@"%d", penalties]];
+    else if ([sender tag] == 3)
+    {
+        penalties+=bonusRuns;
+        penLabel.text = [NSString stringWithFormat: @"%d",bonusRuns];
     }
-    [totLabel setText:[NSString stringWithFormat:@"%d", (noBalls + wides + byes + legByes + penalties)]];
+    bonusRuns = 0;
+    [self hideActionSheetB:sender];
+    totLabel.text = [NSString stringWithFormat:@"%d", (noBalls+wides+byes+legByes+penalties)];
+}
+-(IBAction)byePlusOne:(id)sender{
+    bonusRuns++;
+    [runningTotal setText:[NSString stringWithFormat:@"%d", bonusRuns]];
 }
 -(IBAction)fourBye:(id)sender{
-    if ([sender tag] == 1)
-    {
-        byes+=4;
-        [byeLabel setText:[NSString stringWithFormat:@"%d", byes]];
-    }
-    else if ([sender tag] ==2){
-        legByes+=4;
-        [legByeLabel setText:[NSString stringWithFormat:@"%d", legByes]];
-    }
-    else if ([sender tag] ==3){
-        penalties+=4;
-        [penLabel setText:[NSString stringWithFormat:@"%d", penalties]];
-    }
-    [totLabel setText:[NSString stringWithFormat:@"%d", (noBalls + wides + byes + legByes + penalties)]];
+    bonusRuns = 4;
+    [runningTotal setText:[NSString stringWithFormat:@"%d", bonusRuns]];
 }
 
 -(IBAction)sixBye:(id)sender{
-    if ([sender tag] == 1)
-    {
-        byes+=6;
-        [byeLabel setText:[NSString stringWithFormat:@"%d", byes]];
-    }
-    else if ([sender tag] ==2){
-        legByes+=6;
-        [legByeLabel setText:[NSString stringWithFormat:@"%d", legByes]];
-    }
-    else if ([sender tag] ==3){
-        penalties+=6;
-        [penLabel setText:[NSString stringWithFormat:@"%d", penalties]];
-    }
-    [totLabel setText:[NSString stringWithFormat:@"%d", (noBalls + wides + byes + legByes + penalties)]];
+    bonusRuns = 6;
+    [runningTotal setText:[NSString stringWithFormat:@"%d", bonusRuns]];
 }
 
 -(IBAction)caught:(id)sender{
