@@ -81,6 +81,7 @@ char *fallOfWickets;
 @synthesize ballLabels;
 @synthesize startGameButton;
 @synthesize scoreLabel;
+@synthesize ballsScrollView;
 @synthesize batterName1;
 @synthesize batterName2;
 @synthesize teamName;
@@ -117,9 +118,7 @@ char *fallOfWickets;
 		for(int i = 0; i < [calculatorView count]; i++){
 			[[calculatorView objectAtIndex:i] setHidden:NO];
 		}
-		for(int i = 0; i < [ballLabels count]; i++){
-			[[ballLabels objectAtIndex:i] setHidden:NO];
-		}
+		[ballsScrollView setHidden:NO];
 		DatabaseController *instance = [[DatabaseController alloc] init];
 		[instance firstTabSave];
 		[instance secondTabSave];
@@ -1232,6 +1231,7 @@ char *fallOfWickets;
     [self setPenLabel:nil];
     [self setTotLabel:nil];
     [self setScoreLabel:nil];
+    [self setBallsScrollView:nil];
     [super viewDidUnload];
     // Release any retained subviews of the main view.
 }
