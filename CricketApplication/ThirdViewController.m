@@ -55,7 +55,7 @@ int fieldingTeamSize;
 float fieldStats[5][20];
 int lastBowler;
 int bonusRuns = 0;
-NSString *fallOfWickets =@"";
+NSMutableArray *fallOfWickets;
 NSArray *waysToBeOut;
 NSString *wayBatterOut;
 int batterOutInt;
@@ -197,6 +197,39 @@ int batterOutInt;
 				batter2Balls++;
 				[self showActionSheet:batterName2];
 			}
+        } else if (value == 4000){
+            value = 0;
+            noBalls += noBallAdditions;
+            wides += wideAdditions;
+            byes += byeAdditions;
+            legByes += legByeAdditions;
+            penalties += penaltiesAdditions;
+            runs += noBallAdditions;
+            runs += wideAdditions;
+            runs += byeAdditions;
+            runs += legByeAdditions;
+            runs += penaltiesAdditions;
+            
+            noBallAdditions = 0;
+            wideAdditions=0;
+            byeAdditions=0;
+            legByeAdditions=0;
+            penaltiesAdditions=0;
+            
+            [totLabel setText: [NSString stringWithFormat:@"%d",(noBalls+wides+byes+legByes+penalties)]];
+            [noBallLabel setText: [NSString stringWithFormat:@"%d",noBalls]];
+            [wideLabel setText: [NSString stringWithFormat:@"%d",wides]];
+            [byeLabel setText: [NSString stringWithFormat:@"%d",byes]];
+            [legByeLabel setText: [NSString stringWithFormat:@"%d",legByes]];
+            [penLabel setText: [NSString stringWithFormat:@"%d",penalties]];
+            
+            noBallLabel.textColor = [UIColor blackColor];
+            wideLabel.textColor = [UIColor blackColor];
+            byeLabel.textColor = [UIColor blackColor];
+            legByeLabel.textColor = [UIColor blackColor];
+            penLabel.textColor = [UIColor blackColor];
+            totLabel.textColor = [UIColor blackColor];
+            
 		} else if ([batter1Active isHidden]) {
 			batter2Runs += value;
 			batter2Balls++;
@@ -206,25 +239,24 @@ int batterOutInt;
 		}
         
         if (ballNo == 1){
-           fallOfWickets = [fallOfWickets stringByAppendingString:[NSString stringWithFormat:@"%@%@",ball1.text,@"$"]]; 
+            [fallOfWickets addObject: ball1.text];
         }
         else if (ballNo == 2){
-            fallOfWickets = [fallOfWickets stringByAppendingString:[NSString stringWithFormat:@"%@%@",ball2.text,@"$"]];
+            [fallOfWickets addObject:ball2.text];
         }
         if (ballNo == 3){
-            fallOfWickets = [fallOfWickets stringByAppendingString:[NSString stringWithFormat:@"%@%@",ball3.text,@"$"]];
+            [fallOfWickets addObject:ball3.text];
         }
         if (ballNo == 4){
-            fallOfWickets = [fallOfWickets stringByAppendingString:[NSString stringWithFormat:@"%@%@",ball4.text,@"$"]]; 
+            [fallOfWickets addObject:ball4.text];
         }
         if (ballNo == 5){
-            fallOfWickets = [fallOfWickets stringByAppendingString:[NSString stringWithFormat:@"%@%@",ball5.text,@"$"]];
+            [fallOfWickets addObject:ball5.text];
         }
         if (ballNo == 6){
-            fallOfWickets = [fallOfWickets stringByAppendingString:[NSString stringWithFormat:@"%@%@",ball6.text,@"$"]];
+            [fallOfWickets addObject:ball6.text];
         }
-        
-		
+
 		//overs += 0.1;
 		fieldStats[1][bowler] += 0.1;
 		runs += value;
@@ -313,9 +345,12 @@ int batterOutInt;
 			else 
 				fieldStats[1][bowler] -= 0.1;
 			fieldStats[3][bowler] -= value;
+            
+            [fallOfWickets removeObjectAtIndex:[fallOfWickets count]-1];
 		}
 		[self resetBallValueToString:@"-"];
 		value = -1;
+        [self turnLabelsBlack:sender];
 		[self turnLabelsRed:sender];
 		[scoreLabel setText:[NSString stringWithFormat:@"%.0f/%d (%d Overs)", runs, wickets, overs]];
 		[batter1RunsLabel setText:[NSString stringWithFormat:@"%d", batter1Runs]];
@@ -516,7 +551,7 @@ int batterOutInt;
 }
 
 -(IBAction)extraNoBall:(id)sender{
-    noBallAdditions++;
+    noBallAdditions=1;
 
     totLabel.text = [NSString stringWithFormat:@"%d%@%d", (noBalls+wides+byes+legByes+penalties),@"+",(noBallAdditions+wideAdditions+byeAdditions+legByeAdditions+penaltiesAdditions)];   
     wideAdditions = 0;
@@ -536,7 +571,7 @@ int batterOutInt;
 
 }
 -(IBAction)extraWide:(id)sender{
-    wideAdditions++;
+    wideAdditions=1;
     totLabel.text = [NSString stringWithFormat:@"%d%@%d", (noBalls+wides+byes+legByes+penalties),@"+",(noBallAdditions+wideAdditions+byeAdditions+legByeAdditions+penaltiesAdditions)];
     noBallAdditions = 0;
     byeAdditions =0;
@@ -1041,6 +1076,7 @@ int batterOutInt;
 	batter1 = 0;
 	batter2 = 1;
 	bowler = 0;
+    fallOfWickets= [[NSMutableArray alloc] init];
 	[teamName setText:homeTeam];
 	if ([battingTeam isEqualToString:@"home"]) {
 		[teamName setText:homeTeam];
