@@ -186,6 +186,7 @@ int initialSliderValue;
 		}
 	}
 	rowForDetaiView = (int)([battingOrderSlider value]-1);
+	[self viewDidLoad];
 }
 
 - (IBAction)battingOrderSliderChanging:(id)sender {
@@ -200,10 +201,15 @@ int initialSliderValue;
 - (IBAction)CSlider:(id)sender {
 	if (CaptainSlider.on) {
 		[ViceCaptainSlider setOn:NO animated:YES];
-		if ([teamForDetailView isEqualToString:@"home"])
+		if ([teamForDetailView isEqualToString:@"home"]) {
 			homeCaptain = (int)[battingOrderSlider value]-1;
-		else
+			if (homeViceCaptain == (int)[battingOrderSlider value]-1)
+				homeViceCaptain = -1;
+		} else {
 			awayCaptain = (int)[battingOrderSlider value]-1;
+			if (awayViceCaptain == (int)[battingOrderSlider value]-1)
+				awayViceCaptain = -1;
+		}
 	} else {
 		if ([teamForDetailView isEqualToString:@"home"]) {
 			if (homeCaptain == (int)[battingOrderSlider value]-1)
@@ -217,10 +223,15 @@ int initialSliderValue;
 - (IBAction)VCSlider:(id)sender {
 	if (ViceCaptainSlider.on) {
 		[CaptainSlider setOn:NO animated:YES];
-		if ([teamForDetailView isEqualToString:@"home"])
+		if ([teamForDetailView isEqualToString:@"home"]) {
 			homeViceCaptain = (int)[battingOrderSlider value]-1;
-		else
+			if (homeCaptain == (int)[battingOrderSlider value]-1)
+				homeCaptain = -1;
+		} else {
 			awayViceCaptain = (int)[battingOrderSlider value]-1;
+			if (awayCaptain == (int)[battingOrderSlider value]-1)
+				awayCaptain = -1;
+		}
 	} else {
 		if ([teamForDetailView isEqualToString:@"home"]) {
 			if (homeViceCaptain == (int)[battingOrderSlider value]-1)
