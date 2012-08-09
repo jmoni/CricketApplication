@@ -23,6 +23,8 @@ int initialSliderValue;
 @synthesize CaptainSlider;
 @synthesize ViceCaptainSlider;
 @synthesize WicketKeeperSlider;
+@synthesize previousPlayerButton;
+@synthesize nextPlayerButton;
 
 - (IBAction)textFieldReturn:(id)sender
 {
@@ -60,14 +62,78 @@ int initialSliderValue;
 	}
 }
 
-/*- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
-{
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-        // Custom initialization
-    }
-    return self;
-}*/
+- (IBAction)nextPlayer:(id)sender {
+	rowForDetaiView += 1;
+	
+	if ([teamForDetailView isEqualToString:@"home"]) {
+		self.playerEditTextBox.text = [homePlayersArray objectAtIndex:rowForDetaiView];
+		if (homeCaptain == rowForDetaiView)
+			[self.CaptainSlider setOn:YES animated:YES];
+		else
+			[self.CaptainSlider setOn:NO animated:YES];
+		if (homeViceCaptain == rowForDetaiView)
+			[self.ViceCaptainSlider setOn:YES animated:YES];
+		else
+			[self.ViceCaptainSlider setOn:NO animated:YES];
+		if (homeWicketKeeper == rowForDetaiView)
+			[self.WicketKeeperSlider setOn:YES animated:YES];
+		else
+			[self.WicketKeeperSlider setOn:NO animated:YES];
+	} else if ([teamForDetailView isEqualToString:@"away"]) {
+		self.playerEditTextBox.text = [awayPlayersArray objectAtIndex:rowForDetaiView];
+		if (awayCaptain == rowForDetaiView)
+			[self.CaptainSlider setOn:YES animated:YES];
+		else
+			[self.CaptainSlider setOn:NO animated:YES];
+		if (awayViceCaptain == rowForDetaiView)
+			[self.ViceCaptainSlider setOn:YES animated:YES];
+		else
+			[self.ViceCaptainSlider setOn:NO animated:YES];
+		if (awayWicketKeeper == rowForDetaiView)
+			[self.WicketKeeperSlider setOn:YES animated:YES];
+		else
+			[self.WicketKeeperSlider setOn:NO animated:YES];
+	}
+	self.battingOrderSlider.value = rowForDetaiView+1.9;
+	self.sliderValueLabel.text = [NSString stringWithFormat:@"%d", rowForDetaiView+1];
+	[self viewDidLoad];
+}
+
+- (IBAction)previousPlayer:(id)sender {
+	rowForDetaiView -= 1;
+	if ([teamForDetailView isEqualToString:@"home"]) {
+		self.playerEditTextBox.text = [homePlayersArray objectAtIndex:rowForDetaiView];
+		if (homeCaptain == rowForDetaiView)
+			[self.CaptainSlider setOn:YES animated:YES];
+		else
+			[self.CaptainSlider setOn:NO animated:YES];
+		if (homeViceCaptain == rowForDetaiView)
+			[self.ViceCaptainSlider setOn:YES animated:YES];
+		else
+			[self.ViceCaptainSlider setOn:NO animated:YES];
+		if (homeWicketKeeper == rowForDetaiView)
+			[self.WicketKeeperSlider setOn:YES animated:YES];
+		else
+			[self.WicketKeeperSlider setOn:NO animated:YES];
+	} else if ([teamForDetailView isEqualToString:@"away"]) {
+		self.playerEditTextBox.text = [awayPlayersArray objectAtIndex:rowForDetaiView];
+		if (awayCaptain == rowForDetaiView)
+			[self.CaptainSlider setOn:YES animated:YES];
+		else
+			[self.CaptainSlider setOn:NO animated:YES];
+		if (awayViceCaptain == rowForDetaiView)
+			[self.ViceCaptainSlider setOn:YES animated:YES];
+		else
+			[self.ViceCaptainSlider setOn:NO animated:YES];
+		if (awayWicketKeeper == rowForDetaiView)
+			[self.WicketKeeperSlider setOn:YES animated:YES];
+		else
+			[self.WicketKeeperSlider setOn:NO animated:YES];
+	}
+	self.battingOrderSlider.value = rowForDetaiView+1.9;
+	self.sliderValueLabel.text = [NSString stringWithFormat:@"%d", rowForDetaiView+1];
+	[self viewDidLoad];
+}
 
 - (IBAction)battingOrderSliderChanged:(id)sender {
 	//NSLog([NSString stringWithFormat:@"after function: %d", initialSliderValue]);
@@ -188,6 +254,16 @@ int initialSliderValue;
 	// Do any additional setup after loading the view.
 	NavBar.title = [arrayForDetailView objectAtIndex:rowForDetaiView];
 	[battingOrderSlider setMaximumValue:([arrayForDetailView count]+0.9)];
+	if (rowForDetaiView == 0){
+		[previousPlayerButton setEnabled:NO];
+	} else {
+		[previousPlayerButton setEnabled:YES];
+	}
+	if (rowForDetaiView == [arrayForDetailView count]-1){
+		[nextPlayerButton setEnabled:NO];
+	} else {
+		[nextPlayerButton setEnabled:YES];
+	}
 }
 
 - (void)viewDidUnload
@@ -199,6 +275,8 @@ int initialSliderValue;
 	[self setWicketKeeperSlider:nil];
 	[self setBattingOrderSlider:nil];
 	[self setSliderValueLabel:nil];
+	[self setNextPlayerButton:nil];
+	[self setPreviousPlayerButton:nil];
     [super viewDidUnload];
     // Release any retained subviews of the main view.
 }

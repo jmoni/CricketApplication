@@ -38,6 +38,7 @@ int batter1Runs = 0;
 int batter2Runs = 0;
 float runs = 0;
 int wickets = 0;
+int overs;
 float economy = 0.00;
 int noBalls = 0;
 int wides = 0;
@@ -186,12 +187,16 @@ char *fallOfWickets;
 			ball5.text = @"-";
 			ball6.text = @"-";
 			fieldStats[2][bowler] -= (int)(fieldStats[2][bowler])%6;
+			overs++;
 			//maidens -= maidens%6;
 			for (int i = 0; i < fieldingTeamSize; i++){
 				if(fieldStats[0][i] != 0)
 					fieldStats[0][i]--;
 			}
-			[self changeBatterFacingBowler];
+			if (even)
+				even = NO;
+			else
+				even = YES;
 			[self changeBowler];
 		}
 		if ((fieldStats[1][bowler]-(int)(fieldStats[1][bowler]))*10 == 6) {
@@ -199,7 +204,7 @@ char *fallOfWickets;
 			fieldStats[1][bowler]++;
 		}
 		
-		scoreLabel.text = [NSString stringWithFormat:@"%.0f/%d (%.0f Overs)", fieldStats[3][bowler], wickets, fieldStats[1][bowler]];
+		[scoreLabel setText:[NSString stringWithFormat:@"%.0f/%d (%d Overs)", runs, wickets, overs]];
 		[batter1RunsLabel setText:[NSString stringWithFormat:@"%d", batter1Runs]];
 		[batter2RunsLabel setText:[NSString stringWithFormat:@"%d", batter2Runs]];
 		[batter1BallsLabel setText:[NSString stringWithFormat:@"%d", batter1Balls]];
@@ -243,7 +248,7 @@ char *fallOfWickets;
 		[self resetBallValueToString:@"-"];
 		value = -1;
 		
-		scoreString = [NSString stringWithFormat:@"%.0f/%d	%.0f Overs", runs, wickets, fieldStats[1][bowler]];
+		[scoreLabel setText:[NSString stringWithFormat:@"%.0f/%d (%d Overs)", runs, wickets, overs]];
 		[batter1RunsLabel setText:[NSString stringWithFormat:@"%d", batter1Runs]];
 		[batter2RunsLabel setText:[NSString stringWithFormat:@"%d", batter2Runs]];
 		[batter1BallsLabel setText:[NSString stringWithFormat:@"%d", batter1Balls]];
@@ -781,7 +786,8 @@ char *fallOfWickets;
     batterName2.enabled = false;
 	batterButton = sender;
 	height = 255;
-    
+    NSString *titleString;
+	
     //create new view
     newView = [[UIView alloc] initWithFrame:CGRectMake(0, 200, 320, height)];
     newView.backgroundColor = [UIColor colorWithWhite:1 alpha:1];
@@ -793,7 +799,16 @@ char *fallOfWickets;
     //add button
     _infoButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Done" style:UIBarButtonItemStyleDone target:self action:@selector(hideActionSheet:)];
 	
-    toolbar.items = [NSArray arrayWithObjects:_infoButtonItem, nil];
+	UIBarButtonItem *spacer = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:self action:nil];
+	
+	if ([batterButton isEqual:bowlerButton])
+		titleString = @"Select Bowler";
+	else
+		titleString = @"Select Batter";
+		
+	UIBarButtonItem *titleButton = [[UIBarButtonItem alloc] initWithTitle:titleString style:UIBarButtonItemStylePlain target:nil action:nil];
+	
+    toolbar.items = [NSArray arrayWithObjects:_infoButtonItem, spacer, titleButton, spacer, nil];
     
     //add a picker
     _choosePlayer = [[UIPickerView alloc] initWithFrame: CGRectMake(0,40,320,250)];
@@ -825,6 +840,7 @@ char *fallOfWickets;
 		[pickerView selectRow:batter2 inComponent:0 animated:YES];
 	else if ([batterButton isEqual:bowlerButton] && bowler < [pickerView numberOfRowsInComponent:0]){
 		[pickerView selectRow:bowler inComponent:0 animated:YES];
+		[self pickerView:pickerView didSelectRow:bowler inComponent:0];
 	}
 	if (batter1 >= [homePlayersArray count] && [battingTeam isEqualToString:@"home"]) {
 		batter1 = 0;
@@ -1033,7 +1049,7 @@ char *fallOfWickets;
 			}
 		}
 	}
-	lastBowler = 1;
+	lastBowler = 0;
 }
 
 - (void)viewDidAppear:(BOOL)animated

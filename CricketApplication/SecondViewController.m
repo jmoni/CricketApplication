@@ -280,7 +280,7 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
 			[detail.WicketKeeperSlider setOn:YES animated:YES];
 	}
 	detail.battingOrderSlider.value = indexPath.row+1.9;
-	detail.sliderValueLabel.text = [NSString  stringWithFormat:@"%d", indexPath.row+1];
+	detail.sliderValueLabel.text = [NSString stringWithFormat:@"%d", indexPath.row+1];
 }
 
 - (void)tableView:(UITableView *)tableView accessoryButtonTappedForRowWithIndexPath:(NSIndexPath *)indexPath {

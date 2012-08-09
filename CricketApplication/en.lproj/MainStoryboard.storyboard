@@ -383,7 +383,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Hif-Xx-Kpn" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <viewController storyboardIdentifier="Detail" id="9Zc-2m-Uyv" customClass="DetailViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="pyE-jh-Zah" customClass="UIControl">
-                        <rect key="frame" x="0.0" y="64" width="320" height="367"/>
+                        <rect key="frame" x="0.0" y="64" width="320" height="416"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Name:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" id="AOt-SA-iDa">
@@ -479,12 +479,33 @@
                                 <rect key="frame" x="179" y="182" width="34" height="34"/>
                                 <autoresizingMask key="autoresizingMask"/>
                             </imageView>
+                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="0G9-Fe-cg2">
+                                <rect key="frame" x="0.0" y="372" width="320" height="44"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
+                                <items>
+                                    <barButtonItem title="Previous Player" id="NzY-mq-4Al">
+                                        <connections>
+                                            <action selector="previousPlayer:" destination="9Zc-2m-Uyv" id="oU6-yi-NI6"/>
+                                        </connections>
+                                    </barButtonItem>
+                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="cBR-P7-Bjl"/>
+                                    <barButtonItem title="Next Player" id="OKk-Py-Uma">
+                                        <connections>
+                                            <action selector="nextPlayer:" destination="9Zc-2m-Uyv" id="yBe-NB-hRx"/>
+                                        </connections>
+                                    </barButtonItem>
+                                </items>
+                            </toolbar>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <connections>
                             <action selector="backgroundTouched:" destination="9Zc-2m-Uyv" eventType="touchDown" id="7Tz-pK-0BS"/>
                         </connections>
                     </view>
+                    <toolbarItems>
+                        <barButtonItem style="plain" systemItem="flexibleSpace" id="4aq-Yh-obj"/>
+                        <barButtonItem title="Next Player" id="xcc-se-l6M"/>
+                    </toolbarItems>
                     <navigationItem key="navigationItem" id="6uV-Pg-Z2c">
                         <barButtonItem key="rightBarButtonItem" systemItem="trash" id="DnK-NN-wzD">
                             <connections>
@@ -492,13 +513,16 @@
                             </connections>
                         </barButtonItem>
                     </navigationItem>
+                    <nil key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="CaptainSlider" destination="oeg-43-geI" id="HJ1-Hy-ypH"/>
                         <outlet property="NavBar" destination="6uV-Pg-Z2c" id="OkX-AJ-BaK"/>
                         <outlet property="ViceCaptainSlider" destination="fxi-8S-mfb" id="Pf5-RZ-bTs"/>
                         <outlet property="WicketKeeperSlider" destination="KXx-n3-voW" id="a4A-2f-lcS"/>
                         <outlet property="battingOrderSlider" destination="EgM-S1-pSO" id="sTG-eT-ZXp"/>
+                        <outlet property="nextPlayerButton" destination="OKk-Py-Uma" id="4lm-Cr-Jtr"/>
                         <outlet property="playerEditTextBox" destination="Zm8-sJ-V8u" id="0Iu-NJ-KNu"/>
+                        <outlet property="previousPlayerButton" destination="NzY-mq-4Al" id="ozQ-XI-Ejq"/>
                         <outlet property="sliderValueLabel" destination="6gN-8x-x1h" id="suV-Hu-Rj5"/>
                     </connections>
                 </viewController>
