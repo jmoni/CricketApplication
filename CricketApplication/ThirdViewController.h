@@ -75,4 +75,9 @@ NSString *scoreString;
 -(IBAction)timedOut:(id)sender;
 -(IBAction)retired:(id)sender;
 -(IBAction)showSecondaryOutOptions:(id)sender label:(NSString *)string;
+-(IBAction)addExtras:(id)sender;
+-(IBAction)turnLabelsOrange:(id)sender;
+-(IBAction)turnLabelsRed:(id)sender;
+-(IBAction)turnLabelsGreen:(id)sender;
+-(IBAction)turnLabelsBlack:(id)sender;
 @end
