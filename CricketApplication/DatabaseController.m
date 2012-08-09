@@ -56,18 +56,29 @@
 		[[[tabBar items] objectAtIndex:1] setEnabled:YES];
         [self setSelectedIndex: [self selectedIndex]+1];
 	} else if ([self selectedIndex] == 1) {
-		[self secondTabSave];
-		[[[tabBar items] objectAtIndex:2] setEnabled:YES];
-		[[[tabBar items] objectAtIndex:2] setEnabled:YES];
-        [self setSelectedIndex: [self selectedIndex]+1];
-		[nextButton setStyle:UIBarButtonItemStyleDone];
-		[nextButton setTitle:@"Share"];
-		[nextButton setAction: @selector(share:)];
+		if([homePlayersArray count] < 2 || [awayPlayersArray count] < 2){
+			UIAlertView* mes=[[UIAlertView alloc] initWithTitle:@""
+														message:@"Each team must have at least two players" delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil];
+			[mes show];
+		} else {
+			[self secondTabSave];
+			[[[tabBar items] objectAtIndex:2] setEnabled:YES];
+			[[[tabBar items] objectAtIndex:2] setEnabled:YES];
+			[self setSelectedIndex: [self selectedIndex]+1];
+			[nextButton setStyle:UIBarButtonItemStyleDone];
+			[nextButton setTitle:@"Share"];
+			[nextButton setAction: @selector(share:)];
+		}
 	} else if ([self selectedIndex] == 2) {
 		[self firstTabSave];
 		[self secondTabSave];
 	}
 }
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
+	[self resignFirstResponder];
+}
+
 -(IBAction)share:(id) sender{
     NSLog(@"changed");
 }

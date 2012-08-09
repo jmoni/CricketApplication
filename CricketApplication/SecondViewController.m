@@ -10,6 +10,7 @@
 #import "sqlite3.h"
 #include "DetailViewController.h"
 #include "DatabaseController.h"
+#include "FirstViewController.h"
 
 @interface SecondViewController ()
 @property (strong, nonatomic) IBOutlet UIBarButtonItem *homeNavBarEditButton;
@@ -99,6 +100,12 @@ UIImage *viceCaptainWicketKeeper;
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
     return 1;
+}
+
+- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section{
+	if ([tableView isEqual:homePlayersTable]) return homeTeam;
+	else if ([tableView isEqual:awayPlayersTable]) return awayTeam;
+	else return nil;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section

@@ -15,8 +15,7 @@ NSString *writableDBPath;
 sqlite3 *cricketDB;
 bool disableElements;
 
-@interface DatabaseController : UITabBarController <UITabBarControllerDelegate, UINavigationControllerDelegate>{
-}
+@interface DatabaseController : UITabBarController <UITabBarControllerDelegate, UINavigationControllerDelegate>
 @property (strong, nonatomic) IBOutlet UIBarButtonItem *saveButton;
 @property (strong, nonatomic) IBOutlet UIBarButtonItem *nextButton;
 @property (strong, nonatomic) IBOutlet UITabBar *tabBar;
