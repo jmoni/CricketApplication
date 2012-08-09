@@ -42,9 +42,8 @@ UIImage *viceCaptainWicketKeeper;
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view, typically from a nib.
-	
 	//Button listener allocation
-	[homeWonToss addTarget:self action:@selector(tossButtonManage) forControlEvents:UIControlEventTouchUpInside];
+    [homeWonToss addTarget:self action:@selector(tossButtonManage) forControlEvents:UIControlEventTouchUpInside];
 	[awayWonToss addTarget:self action:@selector(tossButtonManage) forControlEvents:UIControlEventTouchUpInside];
 	[battingButton addTarget:self action:@selector(decisionButtonManage) forControlEvents:UIControlEventTouchUpInside];
 	[fieldingButton addTarget:self action:@selector(decisionButtonManage) forControlEvents:UIControlEventTouchUpInside];
@@ -100,6 +99,8 @@ UIImage *viceCaptainWicketKeeper;
 {
     return 1;
 }
+
+
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
@@ -380,5 +381,6 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
 {
 	return (interfaceOrientation != UIInterfaceOrientationPortraitUpsideDown);
 }
+
 
 @end
