@@ -63,7 +63,6 @@
 		} else {
 			[self secondTabSave];
 			[[[tabBar items] objectAtIndex:2] setEnabled:YES];
-			[[[tabBar items] objectAtIndex:2] setEnabled:YES];
 			[self setSelectedIndex: [self selectedIndex]+1];
 			[nextButton setStyle:UIBarButtonItemStyleDone];
 			[nextButton setTitle:@"Share"];
