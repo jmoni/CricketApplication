@@ -67,6 +67,11 @@
 		[self secondTabSave];
 	}
 }
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
+	[self resignFirstResponder];
+}
+
 -(IBAction)share:(id) sender{
     NSLog(@"changed");
 }

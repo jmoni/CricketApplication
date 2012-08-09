@@ -50,7 +50,8 @@ int fieldingTeamSize;
 float fieldStats[5][20];
 int lastBowler;
 int bonusRuns = 0;
-char *fallOfWickets; 
+char *fallOfWickets;
+NSArray *waysToBeOut;
 
 @implementation ThirdViewController
 @synthesize ball6;
@@ -437,97 +438,26 @@ char *fallOfWickets;
 	toolbar.items = [NSArray arrayWithObjects:_infoButtonItem, nil];
     
     
-    
-    UIButton *caught = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-    [caught addTarget:self
-			action:@selector(caught:)
-			forControlEvents:UIControlEventTouchDown];
-    [caught setTitle:@"Caught" forState:UIControlStateNormal];
-    caught.frame = CGRectMake(20.0, 50.0, 65.0, 40.0);
-    [newView addSubview:caught];
+	UIPickerView *batterOut= [[UIPickerView alloc] initWithFrame:CGRectMake(0, 40, 140, 250)];
+	[batterOut setTag:30];
+	batterOut.hidden = false;
+    batterOut.delegate = self;
+    batterOut.dataSource = self;
+    batterOut.showsSelectionIndicator = YES;
+	[self selectRowForSelection:batterOut];
 	
-    UIButton *bowled = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-    [bowled addTarget:self
-			action:@selector(bowled:)
-			forControlEvents:UIControlEventTouchDown];
-    [bowled setTitle:@"Bowled" forState:UIControlStateNormal];
-    bowled.frame = CGRectMake(95.0, 50.0, 65.0, 40.0);
-    [newView addSubview:bowled];
-    
-    UIButton *lbw = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-    [lbw addTarget:self
-			action:@selector(lbw:)
-			forControlEvents:UIControlEventTouchDown];
-    [lbw setTitle:@"LBW" forState:UIControlStateNormal];
-    lbw.frame = CGRectMake(170.0, 50.0, 45.0, 40.0);
-    [newView addSubview:lbw];
-    
-    UIButton *runOut = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-    [runOut addTarget:self
-			action:@selector(runOut:)
-			forControlEvents:UIControlEventTouchDown];
-    [runOut setTitle:@"Run Out" forState:UIControlStateNormal];
-    runOut.frame = CGRectMake(225.0, 50.0, 65.0, 40.0);
-    [newView addSubview:runOut];
-    
-    UIButton *stumped = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-    [runOut addTarget:self
-			action:@selector(stumped:)
-			forControlEvents:UIControlEventTouchDown];
-    [stumped setTitle:@"Stumped" forState:UIControlStateNormal];
-    stumped.frame = CGRectMake(20.0, 100.0, 65.0, 40.0);
-    [newView addSubview:stumped];
-    
-    UIButton *hitWicket = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-    [hitWicket addTarget:self
-			action:@selector(hitWicket:)
-			forControlEvents:UIControlEventTouchDown];
-    [hitWicket setTitle:@"Hit Wicket" forState:UIControlStateNormal];
-    hitWicket.frame = CGRectMake(95.0, 100.0, 75.0, 40.0);
-    [newView addSubview:hitWicket];
+	UIPickerView *wayOut= [[UIPickerView alloc] initWithFrame:CGRectMake(140, 40, 180, 250)];
+	[wayOut setTag:31];
+	wayOut.hidden = false;
+    wayOut.delegate = self;
+    wayOut.dataSource = self;
+    wayOut.showsSelectionIndicator = YES;
+	[self selectRowForSelection:wayOut];
 	
-    UIButton *handledBall = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-    [handledBall addTarget:self
-			action:@selector(handledBall:)
-			forControlEvents:UIControlEventTouchDown];
-    [handledBall setTitle:@"Handled the Ball" forState:UIControlStateNormal];
-    handledBall.frame = CGRectMake(180.0, 100.0, 120.0, 40.0);
-    [newView addSubview:handledBall];
-    
-    UIButton *hitBallTwice = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-    [hitBallTwice addTarget:self
-			action:@selector(hitBallTwice:)
-			forControlEvents:UIControlEventTouchDown];
-    [hitBallTwice setTitle:@"Hit the Ball Twice" forState:UIControlStateNormal];
-    hitBallTwice.frame = CGRectMake(10.0, 150.0, 130.0, 40.0);
-    [newView addSubview:hitBallTwice];
-    
-    UIButton *obstructingField = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-    [obstructingField addTarget:self
-			action:@selector(obstructingField:)
-			forControlEvents:UIControlEventTouchDown];
-    [obstructingField setTitle:@"Obstructing the Field" forState:UIControlStateNormal];
-    obstructingField.frame = CGRectMake(150.0, 150.0, 160.0, 40.0);
-    [newView addSubview:obstructingField];
-    
-    UIButton *timedOut = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-    [timedOut addTarget:self
-			action:@selector(timedOut:)
-			forControlEvents:UIControlEventTouchDown];
-    [timedOut setTitle:@"Timed Out" forState:UIControlStateNormal];
-    timedOut.frame = CGRectMake(70.0, 200.0, 80.0, 40.0);
-    [newView addSubview:timedOut];
-    
-    UIButton *retired = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-    [retired addTarget:self
-			action:@selector(retired:)
-			forControlEvents:UIControlEventTouchDown];
-    [retired setTitle:@"Retired" forState:UIControlStateNormal];
-    retired.frame = CGRectMake(170.0, 200.0, 80.0, 40.0);
-    [newView addSubview:retired];
-    
     //add popup view
     [newView addSubview:toolbar];
+    [newView addSubview:batterOut];
+	[newView addSubview:wayOut];
     [self.view addSubview:newView];
     
     //animate it onto the screen
@@ -545,61 +475,16 @@ char *fallOfWickets;
 [noBallLabel setText:[NSString stringWithFormat:@"%d", noBalls]];
     [totLabel setText:[NSString stringWithFormat:@"%d", (noBalls + wides + byes + legByes + penalties)]];
     [self hideActionSheetB:sender];
-    if (ballNo == 1)
-    {
-        ball1.text =@"NB";
-    }
-    else if (ballNo == 2)
-    {
-        ball2.text =@"NB";
-    }
-    else if (ballNo == 3)
-    {
-        ball3.text =@"NB";
-    }
-    else if (ballNo == 4)
-    {
-        ball4.text =@"NB";
-    }
-    else if (ballNo == 5)
-    {
-        ball5.text =@"NB";
-    }
-    else if (ballNo == 6)
-    {
-        ball6.text =@"NB";
-    }
+    [self turnLabelsOrange:sender];
+    [self resetBallValueToString:@"NB"];
 
 }
 -(IBAction)extraWide:(id)sender{
     wides++;
     [wideLabel setText:[NSString stringWithFormat:@"%d", wides]];
     [totLabel setText:[NSString stringWithFormat:@"%d", (noBalls + wides + byes + legByes + penalties)]];
-    if (ballNo == 1)
-    {
-        ball1.text =@"W";
-    }
-    else if (ballNo == 2)
-    {
-        ball2.text =@"W";
-    }
-    else if (ballNo == 3)
-    {
-        ball3.text =@"W";
-    }
-    else if (ballNo == 4)
-    {
-        ball4.text =@"W";
-    }
-    else if (ballNo == 5)
-    {
-        ball5.text =@"W";
-    }
-    else if (ballNo == 6)
-    {
-        ball6.text =@"W";
-    }
-
+    [self turnLabelsOrange:sender];
+    [self resetBallValueToString:@"W"];
     [self hideActionSheetB:sender];
 }
 -(IBAction)extraBye:(id)sender{
@@ -713,60 +598,16 @@ char *fallOfWickets;
         byes+=bonusRuns;
         byeLabel.text = [NSString stringWithFormat: @"%d",byes];
         byeLabel.textColor = [UIColor orangeColor];
-        if (ballNo == 1)
-        {
-            ball1.text =[NSString stringWithFormat:@"%@%d",@"B",bonusRuns];
-        }
-        else if (ballNo == 2)
-        {
-            ball2.text =[NSString stringWithFormat:@"%@%d",@"B",bonusRuns];
-        }
-        else if (ballNo == 3)
-        {
-            ball3.text =[NSString stringWithFormat:@"%@%d",@"B",bonusRuns];
-        }
-        else if (ballNo == 4)
-        {
-            ball4.text =[NSString stringWithFormat:@"%@%d",@"B",bonusRuns];
-        }
-        else if (ballNo == 5)
-        {
-            ball5.text =[NSString stringWithFormat:@"%@%d",@"B",bonusRuns];
-        }
-        else if (ballNo == 6)
-        {
-            ball6.text =[NSString stringWithFormat:@"%@%d",@"B",bonusRuns];
-        }
+        
+        [self resetBallValueToString:[NSString stringWithFormat:@"%@%d",@"B",bonusRuns]];
     }
     else if ([sender tag] == 2)
     {
         legByes+=bonusRuns;
         legByeLabel.text = [NSString stringWithFormat: @"%d",bonusRuns];
         legByeLabel.textColor = [UIColor orangeColor];
-        if (ballNo == 1)
-        {
-            ball1.text =[NSString stringWithFormat:@"%@%d",@"LB",bonusRuns];
-        }
-        else if (ballNo == 2)
-        {
-            ball2.text =[NSString stringWithFormat:@"%@%d",@"LB",bonusRuns];
-        }
-        else if (ballNo == 3)
-        {
-            ball3.text =[NSString stringWithFormat:@"%@%d",@"LB",bonusRuns];
-        }
-        else if (ballNo == 4)
-        {
-            ball4.text =[NSString stringWithFormat:@"%@%d",@"LB",bonusRuns];
-        }
-        else if (ballNo == 5)
-        {
-            ball5.text =[NSString stringWithFormat:@"%@%d",@"LB",bonusRuns];
-        }
-        else if (ballNo == 6)
-        {
-            ball6.text =[NSString stringWithFormat:@"%@%d",@"LB",bonusRuns];
-        }
+        
+        [self resetBallValueToString:[NSString stringWithFormat:@"%@%d",@"LB",bonusRuns]];
 
     }
     else if ([sender tag] == 3)
@@ -774,34 +615,11 @@ char *fallOfWickets;
         penalties+=bonusRuns;
         penLabel.text = [NSString stringWithFormat: @"%d",bonusRuns];
         penLabel.textColor = [UIColor orangeColor];
-        if (ballNo == 1)
-        {
-            ball1.text =[NSString stringWithFormat:@"%@%d",@"P",bonusRuns];
-        }
-        if (ballNo == 2)
-        {
-            ball2.text =[NSString stringWithFormat:@"%@%d",@"P",bonusRuns];
-        }
-        if (ballNo == 3)
-        {
-            ball3.text =[NSString stringWithFormat:@"%@%d",@"P",bonusRuns];
-        }
-        if (ballNo == 4)
-        {
-            ball4.text =[NSString stringWithFormat:@"%@%d",@"P",bonusRuns];
-        }
-        if (ballNo == 5)
-        {
-            ball5.text =[NSString stringWithFormat:@"%@%d",@"P",bonusRuns];
-        }
-        if (ballNo == 6)
-        {
-            ball6.text =[NSString stringWithFormat:@"%@%d",@"P",bonusRuns];
-        }
-
+        [self resetBallValueToString:[NSString stringWithFormat:@"%@%d",@"P",bonusRuns]];
     }
     bonusRuns = 0;
     [self hideActionSheetB:sender];
+    [self turnLabelsOrange:sender];
     totLabel.text = [NSString stringWithFormat:@"%d", (noBalls+wides+byes+legByes+penalties)];
     totLabel.textColor = [UIColor orangeColor];
 }
@@ -971,6 +789,17 @@ char *fallOfWickets;
 }
 
 - (void) selectRowForSelection:(UIPickerView *)pickerView {
+	if ([pickerView tag] == 30){
+		if ([batter1Active isHidden])
+			[pickerView selectRow:1 inComponent:0 animated:YES];
+		else if ([batter2Active isHidden])
+			[pickerView selectRow:0 inComponent:0 animated:YES];
+		return;
+	}
+	if ([pickerView tag] == 31){
+		[pickerView selectRow:0 inComponent:0 animated:YES];
+		return;
+	}
 	if ([batterButton isEqual:batterName1] && batter1 < [pickerView numberOfRowsInComponent:0])
 		[pickerView selectRow:batter1 inComponent:0 animated:YES];
 	else if ([batterButton isEqual:batterName2] && batter2 < [pickerView numberOfRowsInComponent:0])
@@ -1062,7 +891,11 @@ char *fallOfWickets;
 
 //number of rows in picker view
 - (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component{
-	if ([battingTeam isEqualToString:@"home"]) {
+	if ([pickerView tag] == 30){
+		return 2;
+	} else if ([pickerView tag] == 31){
+		return 11;
+	} else if ([battingTeam isEqualToString:@"home"]) {
 		if ([batterButton isEqual:bowlerButton])
 			return [awayPlayersArray count];
 		return [homePlayersArray count];
@@ -1075,7 +908,14 @@ char *fallOfWickets;
 
 //values in picker view
 - (NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component {
-	if ([battingTeam isEqualToString:@"home"]) {
+	if ([pickerView tag] == 30){
+		if (row == 0)
+			return [[batterName1 titleLabel] text];
+		else
+			return [[batterName2 titleLabel] text];
+	} else if ([pickerView tag] == 31){
+		return [waysToBeOut objectAtIndex:row];
+	} else if ([battingTeam isEqualToString:@"home"]) {
 		if ([batterButton isEqual:bowlerButton])
 			return [awayPlayersArray objectAtIndex:row];
 		return [homePlayersArray objectAtIndex:row];
@@ -1155,6 +995,11 @@ char *fallOfWickets;
 	return -1;
 }*/
 
+- (void)fillWayOutArray{
+	waysToBeOut = [[NSArray alloc] initWithObjects:
+				   @"Bowled", @"Caught", @"LBW", @"Run Out", @"Stumped By", @"Hit Wicket", @"Handled Ball", @"Hit Ball Twice", @"Obstructing Field", @"Timed Out", @"Retired", nil];
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -1187,6 +1032,7 @@ char *fallOfWickets;
 		}
 	}
 	lastBowler = 0;
+	[self fillWayOutArray];
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -1270,27 +1116,31 @@ char *fallOfWickets;
 {
     if (ballNo == 1)
     {
-        ball1.textColor =[UIColor greenColor];
+        ball1.textColor =[UIColor colorWithRed:.1 green:.5 blue:0 alpha:1.0];
     }
     else if (ballNo == 2)
     {
-        ball2.textColor =[UIColor greenColor];
+        ball2.textColor =[UIColor colorWithRed:.1 green:.5 blue:0 alpha:1.0];
+
     }
     else if (ballNo == 3)
     {
-        ball3.textColor =[UIColor greenColor];
+        ball3.textColor =[UIColor colorWithRed:.1 green:.5 blue:0 alpha:1.0];
+
     }
     else if (ballNo == 4)
     {
-        ball4.textColor =[UIColor greenColor];
+        ball4.textColor =[UIColor colorWithRed:.1 green:.5 blue:0 alpha:1.0];
+
     }
     else if (ballNo == 5)
     {
-        ball5.textColor =[UIColor greenColor];
+        ball5.textColor =[UIColor colorWithRed:.1 green:.5 blue:0 alpha:1.0];
+
     }
     else if (ballNo == 6)
     {
-        ball6.textColor =[UIColor greenColor];
+        ball6.textColor =[UIColor colorWithRed:.1 green:.5 blue:0 alpha:1.0];
     }
 }
 
