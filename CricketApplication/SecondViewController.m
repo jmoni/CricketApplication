@@ -118,7 +118,7 @@ int aID;
     if (aID != awayTeamID){
         [awayPlayersArray removeAllObjects];
         [self addAwayPlayers];
-          NSLog(@"Reload away");
+        NSLog(@"Reload away");
     }
     hID = homeTeamID;
     aID = awayTeamID;
@@ -432,9 +432,7 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
 //Add Home Players
 -(void) addHomePlayers{
     //Get the TeamID home team (greater than 0) from the database if there are already players on the team and if not set to -1
-    
     NSLog(@"%d", homeTeamID);
-    
     int c = [self returnIntFromDatabase:[NSString stringWithFormat:
                                          @"SELECT TeamID FROM PLAYERS WHERE TeamID = '%d'",
                                          homeTeamID]];
@@ -446,7 +444,7 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
     }
     //Players are in database - hometeam
     else{
-        [self returnPlayersHome:[NSString stringWithFormat:@"SELECT PlayerName FROM Players WHERE TEAMID = '%d'",
+        [self returnPlayersHome:[NSString stringWithFormat:@"SELECT PlayerName FROM Players WHERE TEAMID = '%d' AND PreviouslyPlayed = 1",
                                  homeTeamID]];
     }
 }
@@ -466,7 +464,7 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
     }
     //Players are in database - hometeam
     else{
-        [self returnPlayersAway:[NSString stringWithFormat:@"SELECT PlayerName FROM Players WHERE TEAMID = '%d'",
+        [self returnPlayersAway:[NSString stringWithFormat:@"SELECT PlayerName FROM Players WHERE TEAMID = '%d' AND PreviouslyPlayed = 1",
                                  awayTeamID]];
     }
 }
