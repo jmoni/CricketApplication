@@ -441,7 +441,7 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
     //Players aren't in database - hometeam
     if (c == -1){
         for (int i = 1; i < 12; i++){
-            [homePlayersArray addObject:[NSString stringWithFormat:@"Player %d", i]];
+            [homePlayersArray addObject:[NSString stringWithFormat:@"Player %2d", i]];
         }
     }
     //Players are in database - hometeam
@@ -461,7 +461,7 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
     //Players aren't in database - awayteam
     if (c == -1){
         for (int i = 1; i < 12; i++){
-            [awayPlayersArray addObject:[NSString stringWithFormat:@"Player %d", i]];
+            [awayPlayersArray addObject:[NSString stringWithFormat:@"Player %2d", i]];
         }
     }
     //Players are in database - hometeam

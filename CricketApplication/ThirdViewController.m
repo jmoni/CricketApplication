@@ -32,10 +32,10 @@ int batter1;
 int batter2;
 int bowler;
 BOOL even;
-int batter1Balls = 0;
-int batter2Balls = 0;
-int batter1Runs = 0;
-int batter2Runs = 0;
+//int batter1Balls = 0;
+//int batter2Balls = 0;
+//int batter1Runs = 0;
+//int batter2Runs = 0;
 float runs = 0;
 int wickets = 0;
 int overs;
@@ -47,7 +47,9 @@ int legByes = 0;
 int penalties = 0;
 int total = 0;
 int fieldingTeamSize;
+int battingTeamSize;
 float fieldStats[5][20];
+float batStats[4][20];
 int lastBowler;
 int bonusRuns = 0;
 char *fallOfWickets;
@@ -177,28 +179,44 @@ int batterOutInt;
 			wickets++;
 			value = 0;
 			if(batterOutInt == 0) {
-				batter1Balls++;
+				//batter1Balls++;
+				batStats[1][batter1]++;
+				batStats[0][batter1] = 1;
+				[self removePlayerWhenOut:batter1];
 				[self showActionSheet:batterName1];
 			} else {
-				batter2Balls++;
+				//batter2Balls++;
+				batStats[1][batter2]++;
+				batStats[0][batter2] = 1;
+				[self removePlayerWhenOut:batter2];
 				[self showActionSheet:batterName2];
 			}
 		} else if (value == 3000){
 			wickets++;
 			value = 0;
 			if(batterOutInt == 0) {
-				batter1Balls++;
+				//batter1Balls++;
+				batStats[1][batter1]++;
+				batStats[0][batter1] = 1;
+				[self removePlayerWhenOut:batter1];
 				[self showActionSheet:batterName1];
 			} else {
-				batter2Balls++;
+				//batter2Balls++;
+				batStats[1][batter2]++;
+				batStats[0][batter2] = 1;
+				[self removePlayerWhenOut:batter2];
 				[self showActionSheet:batterName2];
 			}
 		} else if ([batter1Active isHidden]) {
-			batter2Runs += value;
-			batter2Balls++;
+			//batter2Runs += value;
+			//batter2Balls++;
+			batStats[1][batter2]++;
+			batStats[2][batter2] += value;
 		} else {
-			batter1Runs += value;
-			batter1Balls++;
+			//batter1Runs += value;
+			//batter1Balls++;
+			batStats[1][batter1]++;
+			batStats[2][batter1] += value;
 		}
 		
 		//overs += 0.1;
@@ -241,10 +259,10 @@ int batterOutInt;
 		}
 		[self turnLabelsRed:sender];
 		[scoreLabel setText:[NSString stringWithFormat:@"%.0f/%d (%d Overs)", runs, wickets, overs]];
-		[batter1RunsLabel setText:[NSString stringWithFormat:@"%d", batter1Runs]];
-		[batter2RunsLabel setText:[NSString stringWithFormat:@"%d", batter2Runs]];
-		[batter1BallsLabel setText:[NSString stringWithFormat:@"%d", batter1Balls]];
-		[batter2BallsLabel setText:[NSString stringWithFormat:@"%d", batter2Balls]];
+		[batter1RunsLabel setText:[NSString stringWithFormat:@"%.0f", batStats[2][batter1]]];
+		[batter2RunsLabel setText:[NSString stringWithFormat:@"%.0f", batStats[2][batter2]]];
+		[batter1BallsLabel setText:[NSString stringWithFormat:@"%.0f", batStats[1][batter1]]];
+		[batter2BallsLabel setText:[NSString stringWithFormat:@"%.0f", batStats[1][batter2]]];
 		[oversLabel setText:[NSString stringWithFormat:@"%.1f", fieldStats[1][bowler]]];
 		[runsLabel setText:[NSString stringWithFormat:@"%.0f", fieldStats[3][bowler]]];
 		[maidensLabel setText:[NSString stringWithFormat:@"%.0f", fieldStats[2][bowler]/6]];
@@ -277,11 +295,15 @@ int batterOutInt;
 			if (value%2 == 0) even = YES; else even = NO;
 			[self changeBatterFacingBowler];
 			if ([batter1Active isHidden]) {
-				batter2Runs -= value;
-				batter2Balls--;
+				//batter2Runs -= value;
+				//batter2Balls--;
+				batStats[2][batter2] -= value;
+				batStats[1][batter2]--;
 			} else {
-				batter1Runs -= value;
-				batter1Balls--;
+				//batter1Runs -= value;
+				//batter1Balls--;
+				batStats[2][batter1] -= value;
+				batStats[1][batter1]--;
 			}
 			runs -= value;
 			if (fieldStats[1][bowler]-(int)(fieldStats[1][bowler]) == 0)
@@ -294,10 +316,10 @@ int batterOutInt;
 		value = -1;
 		[self turnLabelsRed:sender];
 		[scoreLabel setText:[NSString stringWithFormat:@"%.0f/%d (%d Overs)", runs, wickets, overs]];
-		[batter1RunsLabel setText:[NSString stringWithFormat:@"%d", batter1Runs]];
-		[batter2RunsLabel setText:[NSString stringWithFormat:@"%d", batter2Runs]];
-		[batter1BallsLabel setText:[NSString stringWithFormat:@"%d", batter1Balls]];
-		[batter2BallsLabel setText:[NSString stringWithFormat:@"%d", batter2Balls]];
+		[batter1RunsLabel setText:[NSString stringWithFormat:@"%.0f", batStats[2][batter1]]];
+		[batter2RunsLabel setText:[NSString stringWithFormat:@"%.0f", batStats[2][batter2]]];
+		[batter1BallsLabel setText:[NSString stringWithFormat:@"%.0f", batStats[1][batter1]]];
+		[batter2BallsLabel setText:[NSString stringWithFormat:@"%.0f", batStats[1][batter2]]];
 		[oversLabel setText:[NSString stringWithFormat:@"%.1f", fieldStats[1][bowler]]];
 		[runsLabel setText:[NSString stringWithFormat:@"%.0f", fieldStats[3][bowler]]];
 		//[maidensLabel setText:[NSString stringWithFormat:@"%d", maidens/6]];
@@ -340,6 +362,14 @@ int batterOutInt;
 	else if (ballNo == 6)
 		ballValue = [[ball6 text] intValue];
 	return ballValue;
+}
+
+- (void)removePlayerWhenOut:(int)player{
+	if ([battingTeam isEqualToString:@"home"]){
+		[homePlayersArray removeObjectAtIndex:player];
+	} else {
+		[awayPlayersArray removeObjectAtIndex:player];
+	}
 }
 
 - (void)changeBatterFacingBowler {
@@ -683,7 +713,7 @@ int batterOutInt;
 	} else if([string isEqualToString:@"Hit Ball Twice"]){
 		value = 3000;
 		[self resetBallValueToString:@"W"];
-	} else if([string isEqualToString:@"Obstructing Field"]){
+	} else if([string isEqualToString:@"Obstr. Field"]){
 		value = 3000;
 		[self resetBallValueToString:@"W"];
 	} else if([string isEqualToString:@"Timed Out"]){
@@ -939,24 +969,30 @@ int batterOutInt;
 	}
 	
 	//set batter integers
-	if ([batterButton isEqual:batterName1])
+	if ([batterButton isEqual:batterName1]){
 		batter1 = row;
-	else if ([batterButton isEqual:batterName2])
+		[batter1RunsLabel setText:[NSString stringWithFormat:@"%.0f", batStats[2][batter1]]];
+		[batter1BallsLabel setText:[NSString stringWithFormat:@"%.0f", batStats[1][batter1]]];
+	} else if ([batterButton isEqual:batterName2]){
 		batter2 = row;
-	else if ([batterButton isEqual:bowlerButton]){
+		[batter2RunsLabel setText:[NSString stringWithFormat:@"%.0f", batStats[2][batter2]]];
+		[batter2BallsLabel setText:[NSString stringWithFormat:@"%.0f", batStats[1][batter2]]];
+	} else if ([batterButton isEqual:bowlerButton]){
 		bowler = row;
 		[oversLabel setText:[NSString stringWithFormat:@"%.1f", fieldStats[1][bowler]]];
 		[runsLabel setText:[NSString stringWithFormat:@"%.0f", fieldStats[3][bowler]]];
 		[maidensLabel setText:[NSString stringWithFormat:@"%.0f", fieldStats[2][bowler]/6]];
 		if(fieldStats[1][bowler] > 0)
 			economy = fieldStats[3][bowler]/fieldStats[1][bowler];
+		else
+			economy = 0;
 		[economyLabel setText:[NSString stringWithFormat:@"%.2f", economy]];
 	}
 }
 
 - (void)fillWayOutArray{
 	waysToBeOut = [[NSArray alloc] initWithObjects:
-				   @"Bowled", @"Caught", @"LBW", @"Run Out", @"Stumped By", @"Hit Wicket", @"Handled Ball", @"Hit Ball Twice", @"Obstructing Field", @"Timed Out", @"Retired", nil];
+				   @"Bowled", @"Caught", @"LBW", @"Run Out", @"Stumped By", @"Hit Wicket", @"Handled Ball", @"Hit Ball Twice", @"Obstr. Field", @"Timed Out", @"Retired", nil];
 }
 
 - (void)viewDidLoad
@@ -973,9 +1009,15 @@ int batterOutInt;
 		[batterName2 setTitle:[homePlayersArray objectAtIndex:batter2] forState:UIControlStateNormal];
 		[bowlerButton setTitle:[awayPlayersArray objectAtIndex:bowler] forState:UIControlStateNormal];
 		fieldingTeamSize = [awayPlayersArray count];
+		battingTeamSize = [homePlayersArray count];
 		for (int i = 0; i < 5;i++){
 			for (int j = 0; j < fieldingTeamSize; j++) {
 				fieldStats[i][j] = 0;
+			}
+		}
+		for (int i = 0; i < 4;i++){
+			for (int j = 0; j < battingTeamSize; j++) {
+				batStats[i][j] = 0;
 			}
 		}
 	} else if ([battingTeam isEqualToString:@"away"]) {
@@ -984,9 +1026,15 @@ int batterOutInt;
 		[batterName2 setTitle:[awayPlayersArray objectAtIndex:batter2] forState:UIControlStateNormal];
 		[bowlerButton setTitle:[homePlayersArray objectAtIndex:bowler] forState:UIControlStateNormal];
 		fieldingTeamSize = [homePlayersArray count];
+		battingTeamSize = [awayPlayersArray count];
 		for (int i = 0; i < 5;i++){
 			for (int j = 0; j < fieldingTeamSize; j++) {
 				fieldStats[i][j] = 0;
+			}
+		}
+		for (int i = 0; i < 4;i++){
+			for (int j = 0; j < battingTeamSize; j++) {
+				batStats[i][j] = 0;
 			}
 		}
 	}
