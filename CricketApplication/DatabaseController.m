@@ -100,6 +100,7 @@
 										@"INSERT INTO PLAYERS (TeamID, PlayerName, PreviouslyPlayed) SELECT %d, \"%@\", 0 WHERE NOT EXISTS (SELECT * FROM Players WHERE (PlayerName = \"%@\") AND (TeamID = %d))",
 										awayTeamID, [awayPlayersArray objectAtIndex:i], [awayPlayersArray objectAtIndex:i], awayTeamID]];
 	}
+
 }
 
 - (void) thirdTabSave {
@@ -107,6 +108,83 @@
 									@"INSERT INTO GAMES (HomeID, AwayID, GameDate, TossResult, Decision, MatchType, OversOrDays, UmpireOne, UmpireTwo) VALUES (%d, %d, '%@', \"%@\", \"%@\", \"%@\", %d, \"%@\", \"%@\")",
 									homeTeamID, awayTeamID, strDate, tossWonBy, decision, matchType, numberOversOrDays, umpireOne, umpireTwo]];
 	disableElements = YES;
+
+    [self setPlayersNotPlayed];
+    
+    for (int i=0 ; i<[homePlayersArray count] ; i++){
+        [self updatePlayedPlayersHome : [homePlayersArray objectAtIndex:i]];
+    }
+    for (int i=0 ; i<[awayPlayersArray count] ; i++){
+        [self updatePlayedPlayersAway : [awayPlayersArray objectAtIndex:i]];
+    }
+    
+}
+
+
+//Call function to update the players who last played
+- (void)updatePlayedPlayersHome:(NSString *)name {
+	const char *dbpath = [writableDBPath UTF8String];
+	sqlite3_stmt *statement;
+    if (sqlite3_open(dbpath, &cricketDB) == SQLITE_OK)
+    {
+        
+        NSString *string = [NSString stringWithFormat: @"UPDATE Players SET PreviouslyPlayed = 1 WHERE PlayerName = \"%@\" AND TEAMID = %d", name, homeTeamID];
+		const char *stmt = [string UTF8String];
+		sqlite3_prepare_v2(cricketDB, stmt, -1, &statement, NULL);
+		while (sqlite3_step(statement) == SQLITE_ROW) {
+			NSLog(@"\nAccess worked");
+            //Update player who has played
+            sqlite3_column_text(statement, 0);
+		}
+		sqlite3_finalize(statement);
+		sqlite3_close(cricketDB);
+	} else {
+		NSLog(@"\nCould not access DB");
+	}
+}
+
+//Call function to update the players who last played
+- (void)updatePlayedPlayersAway:(NSString *)name {
+	const char *dbpath = [writableDBPath UTF8String];
+	sqlite3_stmt *statement;
+    if (sqlite3_open(dbpath, &cricketDB) == SQLITE_OK)
+    {
+        
+        NSString *string = [NSString stringWithFormat: @"UPDATE Players SET PreviouslyPlayed = 1 WHERE PlayerName = \"%@\" AND TEAMID = %d", name, awayTeamID];
+		const char *stmt = [string UTF8String];
+		sqlite3_prepare_v2(cricketDB, stmt, -1, &statement, NULL);
+		while (sqlite3_step(statement) == SQLITE_ROW) {
+			NSLog(@"\nAccess worked");
+            //Update player who has played
+            sqlite3_column_text(statement, 0);
+		}
+		sqlite3_finalize(statement);
+		sqlite3_close(cricketDB);
+	} else {
+		NSLog(@"\nCould not access DB");
+	}
+}
+
+//Call function to update the players who last played
+- (void)setPlayersNotPlayed {
+	const char *dbpath = [writableDBPath UTF8String];
+	sqlite3_stmt *statement;
+    if (sqlite3_open(dbpath, &cricketDB) == SQLITE_OK)
+    {
+        
+        NSString *string = [NSString stringWithFormat: @"UPDATE Players SET PreviouslyPlayed = 0"];
+		const char *stmt = [string UTF8String];
+		sqlite3_prepare_v2(cricketDB, stmt, -1, &statement, NULL);
+		while (sqlite3_step(statement) == SQLITE_ROW) {
+			NSLog(@"\nAccess worked");
+            //Update player who has played
+            sqlite3_column_text(statement, 0);
+		}
+		sqlite3_finalize(statement);
+		sqlite3_close(cricketDB);
+	} else {
+		NSLog(@"\nCould not access DB");
+	}
 }
 
 - (int)returnIntFromDatabase:(NSString *)string {
