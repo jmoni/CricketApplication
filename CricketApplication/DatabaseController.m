@@ -63,7 +63,6 @@
 		} else {
 			[self secondTabSave];
 			[[[tabBar items] objectAtIndex:2] setEnabled:YES];
-			[[[tabBar items] objectAtIndex:2] setEnabled:YES];
 			[self setSelectedIndex: [self selectedIndex]+1];
 			[nextButton setStyle:UIBarButtonItemStyleDone];
 			[nextButton setTitle:@"Share"];
@@ -83,18 +82,19 @@
     NSLog(@"changed");
 }
 - (void) secondTabSave {
+    //Set home teamID to be used in second view controller for when adding players from database
+    homeTeamID = [self returnIntFromDatabase:[NSString stringWithFormat:
+                                              @"SELECT TeamID FROM TEAMS WHERE TeamName = '%@'", homeTeam]];
 	//HOME TEAM
-	homeTeamID = [self returnIntFromDatabase:[NSString stringWithFormat:
-								 @"SELECT TeamID FROM TEAMS WHERE TeamName == '%@'", homeTeam]];
-	for (int i = 0; i < [homePlayersArray count]; i++){
+    for (int i = 0; i < [homePlayersArray count]; i++){
 		[self insertStringIntoDatabase:[NSString stringWithFormat:
 										@"INSERT INTO PLAYERS (TeamID, PlayerName) SELECT %d, \"%@\" WHERE NOT EXISTS (SELECT * FROM Players WHERE (PlayerName = \"%@\") AND (TeamID = %d))",
 										homeTeamID, [homePlayersArray objectAtIndex:i], [homePlayersArray objectAtIndex:i], homeTeamID]];
 	}
-	
+	//Set away teamID to be used in second view controller for when adding players from database
+    awayTeamID = [self returnIntFromDatabase:[NSString stringWithFormat:
+											  @"SELECT TeamID FROM TEAMS WHERE TeamName = '%@'", awayTeam]];
 	//AWAY TEAM
-	awayTeamID = [self returnIntFromDatabase:[NSString stringWithFormat:
-											  @"SELECT TeamID FROM TEAMS WHERE TeamName == '%@'", awayTeam]];
 	for (int i = 0; i < [awayPlayersArray count]; i++){
 		[self insertStringIntoDatabase:[NSString stringWithFormat:
 										@"INSERT INTO PLAYERS (TeamID, PlayerName) SELECT %d, \"%@\" WHERE NOT EXISTS (SELECT * FROM Players WHERE (PlayerName = \"%@\") AND (TeamID = %d))",
