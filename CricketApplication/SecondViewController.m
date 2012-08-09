@@ -118,7 +118,7 @@ int aID;
     if (aID != awayTeamID){
         [awayPlayersArray removeAllObjects];
         [self addAwayPlayers];
-          NSLog(@"Reload away");
+        NSLog(@"Reload away");
     }
     hID = homeTeamID;
     aID = awayTeamID;

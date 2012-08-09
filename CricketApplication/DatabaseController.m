@@ -89,7 +89,7 @@
 	//HOME TEAM
     for (int i = 0; i < [homePlayersArray count]; i++){
 		[self insertStringIntoDatabase:[NSString stringWithFormat:
-										@"INSERT INTO PLAYERS (TeamID, PlayerName) SELECT %d, \"%@\" WHERE NOT EXISTS (SELECT * FROM Players WHERE (PlayerName = \"%@\") AND (TeamID = %d))",
+										@"INSERT INTO PLAYERS (TeamID, PlayerName, PreviouslyPlayed) SELECT %d, \"%@\", 0 WHERE NOT EXISTS (SELECT * FROM Players WHERE (PlayerName = \"%@\") AND (TeamID = %d))",
 										homeTeamID, [homePlayersArray objectAtIndex:i], [homePlayersArray objectAtIndex:i], homeTeamID]];
 	}
 	//Set away teamID to be used in second view controller for when adding players from database
@@ -98,7 +98,7 @@
 	//AWAY TEAM
 	for (int i = 0; i < [awayPlayersArray count]; i++){
 		[self insertStringIntoDatabase:[NSString stringWithFormat:
-										@"INSERT INTO PLAYERS (TeamID, PlayerName) SELECT %d, \"%@\" WHERE NOT EXISTS (SELECT * FROM Players WHERE (PlayerName = \"%@\") AND (TeamID = %d))",
+										@"INSERT INTO PLAYERS (TeamID, PlayerName, PreviouslyPlayed) SELECT %d, \"%@\", 0 WHERE NOT EXISTS (SELECT * FROM Players WHERE (PlayerName = \"%@\") AND (TeamID = %d))",
 										awayTeamID, [awayPlayersArray objectAtIndex:i], [awayPlayersArray objectAtIndex:i], awayTeamID]];
 	}
 }
