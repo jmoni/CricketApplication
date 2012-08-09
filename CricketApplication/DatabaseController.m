@@ -109,11 +109,14 @@
 									homeTeamID, awayTeamID, strDate, tossWonBy, decision, matchType, numberOversOrDays, umpireOne, umpireTwo]];
 	disableElements = YES;
 
+    //First set all players in array to not played
     [self setPlayersNotPlayed];
     
+    //Set players to last played in database based on list in team when game starts - Home Team
     for (int i=0 ; i<[homePlayersArray count] ; i++){
         [self updatePlayedPlayersHome : [homePlayersArray objectAtIndex:i]];
     }
+    //Set players to last played in database based on list in team when game starts - Away Team
     for (int i=0 ; i<[awayPlayersArray count] ; i++){
         [self updatePlayedPlayersAway : [awayPlayersArray objectAtIndex:i]];
     }
@@ -121,7 +124,7 @@
 }
 
 
-//Call function to update the players who last played
+//Call function to update the home players who last played
 - (void)updatePlayedPlayersHome:(NSString *)name {
 	const char *dbpath = [writableDBPath UTF8String];
 	sqlite3_stmt *statement;
@@ -143,7 +146,7 @@
 	}
 }
 
-//Call function to update the players who last played
+//Call function to update the away players who last played
 - (void)updatePlayedPlayersAway:(NSString *)name {
 	const char *dbpath = [writableDBPath UTF8String];
 	sqlite3_stmt *statement;
