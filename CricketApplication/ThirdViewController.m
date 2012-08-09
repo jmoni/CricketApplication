@@ -41,17 +41,24 @@ int wickets = 0;
 int overs;
 float economy = 0.00;
 int noBalls = 0;
+int noBallAdditions = 0;
 int wides = 0;
+int wideAdditions = 0;
 int byes = 0;
+int byeAdditions = 0;
 int legByes = 0;
+int legByeAdditions = 0;
 int penalties = 0;
-int total = 0;
+int penaltiesAdditions = 0;
+//int total = 0;
 int fieldingTeamSize;
 float fieldStats[5][20];
 int lastBowler;
 int bonusRuns = 0;
-char *fallOfWickets;
+NSString *fallOfWickets =@"";
 NSArray *waysToBeOut;
+NSString *wayBatterOut;
+int batterOutInt;
 
 @implementation ThirdViewController
 @synthesize ball6;
@@ -136,13 +143,14 @@ NSArray *waysToBeOut;
     [self resetBallValueToString:@"•"];
 	even = YES;
 	fieldStats[2][bowler] ++;
-    
     [self turnLabelsOrange:sender];
 	//maidens++;
 }
 -(IBAction)plusOne:(id)sender{
     if (value == -1)
 		value += 2;
+	else if (value > 99)
+		value = 1;
 	else
 		value ++;
     [self resetBallValueToString:[NSString stringWithFormat:@"%d", value]];
@@ -168,13 +176,54 @@ NSArray *waysToBeOut;
 }
 -(IBAction)confirm:(id)sender{
 	if (value > -1) {
-		if ([batter1Active isHidden]) {
+		if (value == 2000) {
+			fieldStats[4][bowler]++;
+			wickets++;
+			value = 0;
+			if(batterOutInt == 0) {
+				batter1Balls++;
+				[self showActionSheet:batterName1];
+			} else {
+				batter2Balls++;
+				[self showActionSheet:batterName2];
+			}
+		} else if (value == 3000){
+			wickets++;
+			value = 0;
+			if(batterOutInt == 0) {
+				batter1Balls++;
+				[self showActionSheet:batterName1];
+			} else {
+				batter2Balls++;
+				[self showActionSheet:batterName2];
+			}
+		} else if ([batter1Active isHidden]) {
 			batter2Runs += value;
 			batter2Balls++;
 		} else {
 			batter1Runs += value;
 			batter1Balls++;
 		}
+        
+        if (ballNo == 1){
+           fallOfWickets = [fallOfWickets stringByAppendingString:[NSString stringWithFormat:@"%@%@",ball1.text,@"$"]]; 
+        }
+        else if (ballNo == 2){
+            fallOfWickets = [fallOfWickets stringByAppendingString:[NSString stringWithFormat:@"%@%@",ball2.text,@"$"]];
+        }
+        if (ballNo == 3){
+            fallOfWickets = [fallOfWickets stringByAppendingString:[NSString stringWithFormat:@"%@%@",ball3.text,@"$"]];
+        }
+        if (ballNo == 4){
+            fallOfWickets = [fallOfWickets stringByAppendingString:[NSString stringWithFormat:@"%@%@",ball4.text,@"$"]]; 
+        }
+        if (ballNo == 5){
+            fallOfWickets = [fallOfWickets stringByAppendingString:[NSString stringWithFormat:@"%@%@",ball5.text,@"$"]];
+        }
+        if (ballNo == 6){
+            fallOfWickets = [fallOfWickets stringByAppendingString:[NSString stringWithFormat:@"%@%@",ball6.text,@"$"]];
+        }
+        
 		
 		//overs += 0.1;
 		fieldStats[1][bowler] += 0.1;
@@ -223,11 +272,20 @@ NSArray *waysToBeOut;
 		[oversLabel setText:[NSString stringWithFormat:@"%.1f", fieldStats[1][bowler]]];
 		[runsLabel setText:[NSString stringWithFormat:@"%.0f", fieldStats[3][bowler]]];
 		[maidensLabel setText:[NSString stringWithFormat:@"%.0f", fieldStats[2][bowler]/6]];
+		[wicketsLabel setText:[NSString stringWithFormat:@"%.0f", fieldStats[4][bowler]]];
 		if(fieldStats[1][bowler] > 0)
 			economy = fieldStats[3][bowler]/fieldStats[1][bowler];
 		[economyLabel setText:[NSString stringWithFormat:@"%.2f", economy]];
 
 		[self changeBatterFacingBowler];
+	} else if (value == -2) {
+		fieldStats[4][bowler]++;
+		wickets++;
+		[scoreLabel setText:[NSString stringWithFormat:@"%.0f/%d (%d Overs)", runs, wickets, overs]];
+		[wicketsLabel setText:[NSString stringWithFormat:@"%.0f", fieldStats[4][bowler]]];
+	} else if (value == -3){
+		wickets++;
+		[scoreLabel setText:[NSString stringWithFormat:@"%.0f/%d (%d Overs)", runs, wickets, overs]];
 	}
 }
 
@@ -334,7 +392,7 @@ NSArray *waysToBeOut;
     [self hideActionSheetB:sender];
     batterName1.enabled = false;
     batterName2.enabled = false;
-    height = 200;
+    height = 255;
     //create new view
     newView = [[UIView alloc] initWithFrame:CGRectMake(0, 200, 320, height)];
     newView.backgroundColor = [UIColor colorWithWhite:1 alpha:1];
@@ -388,22 +446,6 @@ NSArray *waysToBeOut;
     [penaltyRun setTitle:@"Penalty Run" forState:UIControlStateNormal];
     penaltyRun.frame = CGRectMake(110.0, 100.0, 100.0, 40.0);
     [newView addSubview:penaltyRun];
-    
-    /*UILabel *total = [[UILabel alloc] initWithFrame:CGRectMake(20.0, 150.0, 50.0, 21.0)];
-    total.text = @"Total:";
-    [newView addSubview:total];
-    
-    UILabel *totalVal = [[UILabel alloc] initWithFrame:CGRectMake(75.0, 150.0, 150.0, 21.0)];
-    totalVal.text = @"----------------";
-    [newView addSubview:totalVal];
-    
-    UIButton *undo = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-    [undo addTarget:self
-			 action:nil
-			forControlEvents:UIControlEventTouchDown];
-    [undo setTitle:@"Undo" forState:UIControlStateNormal];
-    undo.frame = CGRectMake(135.0, 180.0, 50.0, 40.0);
-    [newView addSubview:undo];*/
 	
     //add popup view
     [newView addSubview:toolbar];
@@ -420,9 +462,9 @@ NSArray *waysToBeOut;
 }
 
 -(IBAction)showOutOptions:(id)sender {
-    //batterName1.enabled = false;
-    //batterName2.enabled = false;
     height = 255;
+	[self turnLabelsOrange:sender];
+	
     //create new view
     newView = [[UIView alloc] initWithFrame:CGRectMake(0, 200, 320, height)];
     newView.backgroundColor = [UIColor colorWithWhite:1 alpha:1];
@@ -432,10 +474,13 @@ NSArray *waysToBeOut;
     toolbar.barStyle = UIBarStyleBlack;
     
     //add button
-    _infoButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Cancel" style:UIBarButtonItemStyleDone target:self action:@selector (hideActionSheet:)];
+    _infoButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Cancel" style:UIBarButtonItemStyleDone target:self action:@selector(hideActionSheet:)];
     
+	UIBarButtonItem *spacer = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:self action:nil];
 	
-	toolbar.items = [NSArray arrayWithObjects:_infoButtonItem, nil];
+	UIBarButtonItem *confirm = [[UIBarButtonItem alloc] initWithTitle:@"Confirm" style:UIBarButtonItemStyleDone target:self action:@selector(hideActionSheet:)];
+	
+	toolbar.items = [NSArray arrayWithObjects:_infoButtonItem, spacer, confirm, nil];
     
     
 	UIPickerView *batterOut= [[UIPickerView alloc] initWithFrame:CGRectMake(0, 40, 140, 250)];
@@ -471,19 +516,40 @@ NSArray *waysToBeOut;
 }
 
 -(IBAction)extraNoBall:(id)sender{
-    noBalls++;
-[noBallLabel setText:[NSString stringWithFormat:@"%d", noBalls]];
-    [totLabel setText:[NSString stringWithFormat:@"%d", (noBalls + wides + byes + legByes + penalties)]];
+    noBallAdditions++;
+
+    totLabel.text = [NSString stringWithFormat:@"%d%@%d", (noBalls+wides+byes+legByes+penalties),@"+",(noBallAdditions+wideAdditions+byeAdditions+legByeAdditions+penaltiesAdditions)];   
+    wideAdditions = 0;
+    byeAdditions =0;
+    legByeAdditions = 0;
+    penaltiesAdditions = 0;
+    wideLabel.textColor = [UIColor  blackColor];
+    byeLabel.textColor = [UIColor  blackColor];
+    legByeLabel.textColor = [UIColor  blackColor];
+    penLabel.textColor = [UIColor  blackColor];
+    value = 4000;
+    [noBallLabel setTextColor:[UIColor orangeColor]];
     [self hideActionSheetB:sender];
+    [self updateExtrasLabels:sender];
     [self turnLabelsOrange:sender];
     [self resetBallValueToString:@"NB"];
 
 }
 -(IBAction)extraWide:(id)sender{
-    wides++;
-    [wideLabel setText:[NSString stringWithFormat:@"%d", wides]];
-    [totLabel setText:[NSString stringWithFormat:@"%d", (noBalls + wides + byes + legByes + penalties)]];
+    wideAdditions++;
+    totLabel.text = [NSString stringWithFormat:@"%d%@%d", (noBalls+wides+byes+legByes+penalties),@"+",(noBallAdditions+wideAdditions+byeAdditions+legByeAdditions+penaltiesAdditions)];
+    noBallAdditions = 0;
+    byeAdditions =0;
+    legByeAdditions = 0;
+    penaltiesAdditions = 0;
+    noBallLabel.textColor = [UIColor blackColor];
+    byeLabel.textColor = [UIColor  blackColor];
+    legByeLabel.textColor = [UIColor  blackColor];
+    penLabel.textColor = [UIColor  blackColor];
+    value = 4000;
+    [wideLabel setTextColor:[UIColor orangeColor]];
     [self turnLabelsOrange:sender];
+    [self updateExtrasLabels:sender];
     [self resetBallValueToString:@"W"];
     [self hideActionSheetB:sender];
 }
@@ -502,7 +568,7 @@ NSArray *waysToBeOut;
 }
 
 -(IBAction)byeCalc:(id)sender string:(NSString *)identifier{
-    height = 200;
+    height = 255;
     newView = [[UIView alloc] initWithFrame:CGRectMake(0, 200, 320, height)];
     newView.backgroundColor = [UIColor colorWithWhite:1 alpha:1];
     
@@ -512,9 +578,11 @@ NSArray *waysToBeOut;
     
     //add button
     _infoButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Back" style:UIBarButtonItemStyleDone target:self action:@selector (showExtrasOptions:)];
-    
+    UIBarButtonItem *spacer = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:self action:nil];
+    UIBarButtonItem *enter = [[UIBarButtonItem alloc]
+                              initWithTitle:@"Done" style:UIBarButtonItemStyleDone target:self action:@selector(addExtras:)];
 	
-	toolbar.items = [NSArray arrayWithObjects:_infoButtonItem, nil];
+	toolbar.items = [NSArray arrayWithObjects:_infoButtonItem,spacer,enter, nil];
     //add popup view
     [newView addSubview:toolbar];
     [self.view addSubview:newView];
@@ -553,7 +621,6 @@ NSArray *waysToBeOut;
     [back setTitle:@"Back" forState:UIControlStateNormal];
     back.frame = CGRectMake(85.0, 100.0, 70.0, 40.0);
     [newView addSubview:back];
-
     
     UIButton *confirm = [UIButton buttonWithType:UIButtonTypeRoundedRect];
     [confirm addTarget:self
@@ -565,14 +632,17 @@ NSArray *waysToBeOut;
     if ([identifier isEqualToString:@"Bye"])
     {
         [confirm setTag:1];
+        [enter setTag:1];
     }
     else if ([identifier isEqualToString:@"Leg Bye"])
     {
         [confirm setTag:2];
+        [enter setTag:2];
     }
     else if ([identifier isEqualToString:@"Pen"])
     {
         [confirm setTag:3];
+        [enter setTag:3];
     }
 
     UILabel *extras = [[UILabel alloc] initWithFrame:CGRectMake(100.0, 150.0, 90.0,20.0)];
@@ -593,35 +663,61 @@ NSArray *waysToBeOut;
 
 }
 -(IBAction)addExtras:(id)sender{
+    if (bonusRuns!=0)
+    {
     if ([sender tag] == 1)
     {
-        byes+=bonusRuns;
-        byeLabel.text = [NSString stringWithFormat: @"%d",byes];
+        byeAdditions=bonusRuns;
         byeLabel.textColor = [UIColor orangeColor];
-        
+        noBallAdditions = 0;
+        wideAdditions =0;
+        legByeAdditions = 0;
+        penaltiesAdditions = 0;
+        noBallLabel.textColor = [UIColor blackColor];
+        wideLabel.textColor = [UIColor  blackColor];
+        legByeLabel.textColor = [UIColor  blackColor];
+        penLabel.textColor = [UIColor  blackColor];
         [self resetBallValueToString:[NSString stringWithFormat:@"%@%d",@"B",bonusRuns]];
     }
     else if ([sender tag] == 2)
     {
-        legByes+=bonusRuns;
-        legByeLabel.text = [NSString stringWithFormat: @"%d",bonusRuns];
+        legByeAdditions=bonusRuns;
         legByeLabel.textColor = [UIColor orangeColor];
-        
+        noBallAdditions = 0;
+        byeAdditions =0;
+        wideAdditions = 0;
+        penaltiesAdditions = 0;
+        noBallLabel.textColor = [UIColor blackColor];
+        wideLabel.textColor = [UIColor  blackColor];
+        byeLabel.textColor = [UIColor  blackColor];
+        penLabel.textColor = [UIColor  blackColor];
         [self resetBallValueToString:[NSString stringWithFormat:@"%@%d",@"LB",bonusRuns]];
 
     }
     else if ([sender tag] == 3)
     {
-        penalties+=bonusRuns;
-        penLabel.text = [NSString stringWithFormat: @"%d",bonusRuns];
+        penaltiesAdditions=bonusRuns;
         penLabel.textColor = [UIColor orangeColor];
+        noBallAdditions = 0;
+        byeAdditions =0;
+        legByeAdditions = 0;
+        wideAdditions = 0;
+        noBallLabel.textColor = [UIColor blackColor];
+        wideLabel.textColor = [UIColor  blackColor];
+        byeLabel.textColor = [UIColor  blackColor];
+        legByeLabel.textColor = [UIColor  blackColor];
         [self resetBallValueToString:[NSString stringWithFormat:@"%@%d",@"P",bonusRuns]];
     }
+        value = 4000;
+        [self updateExtrasLabels:sender];
     bonusRuns = 0;
+        [self turnLabelsOrange:sender];
+        totLabel.text = [NSString stringWithFormat:@"%d%@%d", (noBalls+wides+byes+legByes+penalties),@"+",(noBallAdditions+wideAdditions+byeAdditions+legByeAdditions+penaltiesAdditions)];
+        totLabel.textColor = [UIColor orangeColor];
+        
+    }
     [self hideActionSheetB:sender];
-    [self turnLabelsOrange:sender];
-    totLabel.text = [NSString stringWithFormat:@"%d", (noBalls+wides+byes+legByes+penalties)];
-    totLabel.textColor = [UIColor orangeColor];
+    
 }
 -(IBAction)byePlusOne:(id)sender{
     bonusRuns++;
@@ -637,103 +733,41 @@ NSArray *waysToBeOut;
     [runningTotal setText:[NSString stringWithFormat:@"%d", bonusRuns]];
 }
 
--(IBAction)caught:(id)sender{
-	[self hideActionSheetB:sender];
-	[self showSecondaryOutOptions:sender label:@"Caught By:"];
-}
-
--(IBAction)bowled:(id)sender{
-	[self hideActionSheetB:sender];
-}
-
--(IBAction)lbw:(id)sender{
-	[self hideActionSheetB:sender];
-}
-
--(IBAction)runOut:(id)sender{
-	[self hideActionSheetB:sender];
-}
-
--(IBAction)stumped:(id)sender{
-	[self hideActionSheetB:sender];
-}
-
--(IBAction)hitWicket:(id)sender{
-	[self hideActionSheetB:sender];
-}
-
--(IBAction)handledBall:(id)sender{
-	[self hideActionSheetB:sender];
-}
-
--(IBAction)hitBallTwice:(id)sender{
-	[self hideActionSheetB:sender];
-}
-
--(IBAction)obstructingField:(id)sender{
-	[self hideActionSheetB:sender];
-}
-
--(IBAction)timedOut:(id)sender{
-	[self hideActionSheetB:sender];
-}
-
--(IBAction)retired:(id)sender{
-	[self hideActionSheetB:sender];
-}
-
--(IBAction)showSecondaryOutOptions:(id)sender label:(NSString *)string {
-    height = 255;
-    //create new view
-    newView = [[UIView alloc] initWithFrame:CGRectMake(0, 200, 320, height)];
-    newView.backgroundColor = [UIColor colorWithWhite:1 alpha:1];
-    
-    //add toolbar
-    UIToolbar * toolbar = [[UIToolbar alloc] initWithFrame: CGRectMake(0, 0, 320, 40)];
-    toolbar.barStyle = UIBarStyleBlack;
-    
-    //add button
-    _infoButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Save" style:UIBarButtonItemStyleDone target:self action:@selector(hideActionSheet:)];
-    
-    
-    //UIBarButtonItem *cancel = [[UIBarButtonItem alloc] initWithTitle:@"Cancel" style:UIBarButtonItemStyleDone target:self action: nil];
-	
-	toolbar.items = [NSArray arrayWithObjects:_infoButtonItem, nil];
-    
-    
-    UILabel *label1 = [[UILabel alloc] initWithFrame:CGRectMake
-					   (20.0, 50.0, 100, 21)];
-	[label1 setText:string];
-	[newView addSubview:label1];
-	
-	UIButton *button1 = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-    [button1 addTarget:self
-			   action:@selector(showActionSheet:)
-				forControlEvents:UIControlEventTouchDown];
-    //[button1 setTitle:@"Caught" forState:UIControlStateNormal];
-    button1.frame = CGRectMake(120.0, 50.0, 130.0, 22.0);
-    [newView addSubview:button1];
-	
-    /*UIButton *caught = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-    [caught addTarget:self
-			   action:@selector(caught:)
-	 forControlEvents:UIControlEventTouchDown];
-    [caught setTitle:@"Caught" forState:UIControlStateNormal];
-    caught.frame = CGRectMake(20.0, 50.0, 65.0, 40.0);
-    [newView addSubview:caught];*/
-    
-    //add popup view
-    [newView addSubview:toolbar];
-    [self.view addSubview:newView];
-    
-    //animate it onto the screen
-    CGRect temp = newView.frame;
-    temp.origin.y = CGRectGetMaxY(self.view.bounds);
-    newView.frame = temp;
-    [UIView beginAnimations:nil context:nil];
-    temp.origin.y -= height;
-    newView.frame = temp;
-    [UIView commitAnimations];
+- (void)batterOutAction:(NSString *)string {
+	if([string isEqualToString:@"Bowled"]){
+		value = 2000;
+		[self resetBallValueToString:@"W"];
+	} else if([string isEqualToString:@"Caught"]){
+		value = 2000;
+		[self resetBallValueToString:@"W"];
+	} else if([string isEqualToString:@"LBW"]){
+		value = 2000;
+		[self resetBallValueToString:@"W"];
+	} else if([string isEqualToString:@"Run Out"]){
+		value = 3000;
+		[self resetBallValueToString:@"W"];
+	} else if([string isEqualToString:@"Stumped"]){
+		value = 3000;
+		[self resetBallValueToString:@"W"];
+	} else if([string isEqualToString:@"Hit Wicket"]){
+		value = 2000;
+		[self resetBallValueToString:@"W"];
+	} else if([string isEqualToString:@"Handled Ball"]){
+		value = 3000;
+		[self resetBallValueToString:@"W"];
+	} else if([string isEqualToString:@"Hit Ball Twice"]){
+		value = 3000;
+		[self resetBallValueToString:@"W"];
+	} else if([string isEqualToString:@"Obstructing Field"]){
+		value = 3000;
+		[self resetBallValueToString:@"W"];
+	} else if([string isEqualToString:@"Timed Out"]){
+		value = 3000;
+		[self resetBallValueToString:@"W"];
+	} else if([string isEqualToString:@"Retired"]){
+		value = 3000;
+		[self resetBallValueToString:@"W"];
+	}
 }
 
 -(IBAction)showActionSheet:(id)sender {
@@ -792,12 +826,12 @@ NSArray *waysToBeOut;
 	if ([pickerView tag] == 30){
 		if ([batter1Active isHidden])
 			[pickerView selectRow:1 inComponent:0 animated:YES];
-		else if ([batter2Active isHidden])
-			[pickerView selectRow:0 inComponent:0 animated:YES];
+		else
+			[self pickerView:pickerView didSelectRow:0 inComponent:0];
 		return;
 	}
 	if ([pickerView tag] == 31){
-		[pickerView selectRow:0 inComponent:0 animated:YES];
+		[self pickerView:pickerView didSelectRow:0 inComponent:0];
 		return;
 	}
 	if ([batterButton isEqual:batterName1] && batter1 < [pickerView numberOfRowsInComponent:0])
@@ -928,6 +962,14 @@ NSArray *waysToBeOut;
 
 - (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component
 {
+	if ([pickerView tag] == 30){
+		batterOutInt = row;
+		return;
+	}
+	if ([pickerView tag] == 31){
+		[self batterOutAction:[waysToBeOut objectAtIndex:row]];
+		return;
+	}
 	if ([batterButton isEqual:batterName2] && batter1 == row && row < [pickerView numberOfRowsInComponent:0]-1){
 		[pickerView selectRow:row+1 inComponent:0 animated:YES];
 		[UIView commitAnimations];
@@ -986,14 +1028,6 @@ NSArray *waysToBeOut;
 		[economyLabel setText:[NSString stringWithFormat:@"%.2f", economy]];
 	}
 }
-
-/*- (int)returnLastBowler {
-	for (int i = 0; i < fieldingTeamSize; i++){
-		if (fieldStats[0][i] == 1)
-			return i;
-	}
-	return -1;
-}*/
 
 - (void)fillWayOutArray{
 	waysToBeOut = [[NSArray alloc] initWithObjects:
@@ -1152,6 +1186,20 @@ NSArray *waysToBeOut;
     ball4.textColor =[UIColor blackColor];
     ball5.textColor =[UIColor blackColor];
     ball6.textColor =[UIColor blackColor];
+    noBallLabel.textColor = [UIColor blackColor];
+    wideLabel.textColor = [UIColor  blackColor];
+    byeLabel.textColor = [UIColor  blackColor];
+    legByeLabel.textColor = [UIColor  blackColor];
+    penLabel.textColor = [UIColor  blackColor];
+}
+
+-(IBAction)updateExtrasLabels:(id)sender
+{
+    [penLabel setText:[NSString stringWithFormat: @"%d%@%d",penalties,@"+",penaltiesAdditions]];
+    [noBallLabel setText:[NSString stringWithFormat:@"%d%@%d", noBalls,@"+",noBallAdditions]];
+    [legByeLabel setText:[NSString stringWithFormat: @"%d%@%d",legByes,@"+",legByeAdditions]];
+    [byeLabel setText: [NSString stringWithFormat: @"%d%@%d",byes,@"+",byeAdditions]];
+    [wideLabel setText:[NSString stringWithFormat:@"%d%@%d", wides,@"+", wideAdditions]];
 }
 
 - (void)viewDidUnload
