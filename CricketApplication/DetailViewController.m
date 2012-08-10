@@ -8,6 +8,7 @@
 
 #import "DetailViewController.h"
 #include "SecondViewController.h"
+#include "DatabaseController.h"
 
 @interface DetailViewController ()
 
@@ -24,6 +25,7 @@ int initialSliderValue;
 @synthesize ViceCaptainSlider;
 @synthesize WicketKeeperSlider;
 @synthesize previousPlayerButton;
+@synthesize bottomToolbar;
 @synthesize nextPlayerButton;
 
 - (IBAction)textFieldReturn:(id)sender
@@ -56,6 +58,15 @@ int initialSliderValue;
 	}
 	else
 	{
+		if(teamForDetailView == @"home"){
+			if (homeCaptain >= buttonIndex) homeCaptain--;
+			if (homeViceCaptain >= buttonIndex) homeViceCaptain--;
+			if (homeWicketKeeper >= buttonIndex) homeWicketKeeper--;
+		} else if(teamForDetailView == @"away"){
+			if (awayCaptain >= buttonIndex) awayCaptain--;
+			if (awayViceCaptain >= buttonIndex) awayViceCaptain--;
+			if (awayWicketKeeper >= buttonIndex) awayWicketKeeper--;
+		}
 		[self resignFirstResponder];
 		[arrayForDetailView removeObjectAtIndex:rowForDetaiView];
 		[self.navigationController popViewControllerAnimated:YES];
@@ -66,7 +77,7 @@ int initialSliderValue;
 	rowForDetaiView += 1;
 	
 	if ([teamForDetailView isEqualToString:@"home"]) {
-		self.playerEditTextBox.text = [homePlayersArray objectAtIndex:rowForDetaiView];
+		self.playerEditTextBox.text = [arrayForDetailView objectAtIndex:rowForDetaiView];
 		if (homeCaptain == rowForDetaiView)
 			[self.CaptainSlider setOn:YES animated:YES];
 		else
@@ -80,7 +91,7 @@ int initialSliderValue;
 		else
 			[self.WicketKeeperSlider setOn:NO animated:YES];
 	} else if ([teamForDetailView isEqualToString:@"away"]) {
-		self.playerEditTextBox.text = [awayPlayersArray objectAtIndex:rowForDetaiView];
+		self.playerEditTextBox.text = [arrayForDetailView objectAtIndex:rowForDetaiView];
 		if (awayCaptain == rowForDetaiView)
 			[self.CaptainSlider setOn:YES animated:YES];
 		else
@@ -275,6 +286,14 @@ int initialSliderValue;
 	} else {
 		[nextPlayerButton setEnabled:YES];
 	}
+	if(disableElements){
+		[playerEditTextBox setEnabled:NO];
+		[CaptainSlider setEnabled:NO];
+		[ViceCaptainSlider setEnabled:NO];
+		[WicketKeeperSlider setEnabled:NO];
+		[battingOrderSlider setEnabled:NO];
+		[bottomToolbar setHidden:YES];
+	}
 }
 
 - (void)viewDidUnload
@@ -288,6 +307,7 @@ int initialSliderValue;
 	[self setSliderValueLabel:nil];
 	[self setNextPlayerButton:nil];
 	[self setPreviousPlayerButton:nil];
+	[self setBottomToolbar:nil];
     [super viewDidUnload];
     // Release any retained subviews of the main view.
 }

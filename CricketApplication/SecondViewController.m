@@ -38,7 +38,6 @@ UIImage *viceCaptainIcon;
 UIImage *wicketKeeperIcon;
 UIImage *captainWicketKeeper;
 UIImage *viceCaptainWicketKeeper;
-
 int hID;
 int aID;
 
@@ -139,20 +138,24 @@ int aID;
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return 1;
+    return 2;
 }
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section{
-	if ([tableView isEqual:homePlayersTable]) return homeTeam;
-	else if ([tableView isEqual:awayPlayersTable]) return awayTeam;
+	if ([tableView isEqual:homePlayersTable] && section == 0) return homeTeam;
+	else if ([tableView isEqual:awayPlayersTable] && section == 0) return awayTeam;
+	else if ([tableView isEqual:homePlayersTable] && section == 1 && [homeOutPlayers count] > 0) return @"Out Players";
+	else if ([tableView isEqual:awayPlayersTable] && section == 1 && [awayOutPlayers count] > 0) return @"Out Players";
 	else return nil;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
 	int cellNumber = 0;
-	if ([tableView isEqual:homePlayersTable]) cellNumber = [homePlayersArray count];
-	else if ([tableView isEqual:awayPlayersTable]) cellNumber = [awayPlayersArray count];
+	if ([tableView isEqual:homePlayersTable] && section == 0) cellNumber = [homePlayersArray count];
+	else if ([tableView isEqual:awayPlayersTable] && section == 0) cellNumber = [awayPlayersArray count];
+	else if ([tableView isEqual:homePlayersTable] && section == 1) cellNumber = [homeOutPlayers count];
+	else if ([tableView isEqual:awayPlayersTable] && section == 1) cellNumber = [awayOutPlayers count];
     return cellNumber;
 }
 
@@ -175,46 +178,93 @@ int aID;
 	
 	if ([tableView isEqual:homePlayersTable])
     {
-		cell.textLabel.text = [homePlayersArray objectAtIndex:indexPath.row];
-		if (homeCaptain == indexPath.row && homeWicketKeeper == indexPath.row) {
-			[button setBackgroundImage:captainWicketKeeper forState:UIControlStateNormal];
-			[cell setAccessoryView:button];
-		} else if (homeViceCaptain == indexPath.row && homeWicketKeeper == indexPath.row) {
-			[button setBackgroundImage:viceCaptainWicketKeeper forState:UIControlStateNormal];
-			[cell setAccessoryView:button];
-		} else if (homeCaptain == indexPath.row) {
-			[button setBackgroundImage:captainIcon forState:UIControlStateNormal];
-			[cell setAccessoryView:button];
-		} else if (homeViceCaptain == indexPath.row) {
-			[button setBackgroundImage:viceCaptainIcon forState:UIControlStateNormal];
-			[cell setAccessoryView:button];
-		} else if (homeWicketKeeper == indexPath.row) {
-			[button setBackgroundImage:wicketKeeperIcon forState:UIControlStateNormal];
-			[cell setAccessoryView:button];
+		if(indexPath.section == 0){
+			cell.textLabel.text = [homePlayersArray objectAtIndex:indexPath.row];
+			if (homeCaptain == indexPath.row && homeWicketKeeper == indexPath.row) {
+				[button setBackgroundImage:captainWicketKeeper forState:UIControlStateNormal];
+				[cell setAccessoryView:button];
+			} else if (homeViceCaptain == indexPath.row && homeWicketKeeper == indexPath.row) {
+				[button setBackgroundImage:viceCaptainWicketKeeper forState:UIControlStateNormal];
+				[cell setAccessoryView:button];
+			} else if (homeCaptain == indexPath.row) {
+				[button setBackgroundImage:captainIcon forState:UIControlStateNormal];
+				[cell setAccessoryView:button];
+			} else if (homeViceCaptain == indexPath.row) {
+				[button setBackgroundImage:viceCaptainIcon forState:UIControlStateNormal];
+				[cell setAccessoryView:button];
+			} else if (homeWicketKeeper == indexPath.row) {
+				[button setBackgroundImage:wicketKeeperIcon forState:UIControlStateNormal];
+				[cell setAccessoryView:button];
+			} else {
+				[cell setAccessoryView:nil];
+				[cell setAccessoryType:UITableViewCellAccessoryDisclosureIndicator];
+			}
 		} else {
-			[cell setAccessoryView:nil];
-			[cell setAccessoryType:UITableViewCellAccessoryDisclosureIndicator];
+			cell.textLabel.text = [homeOutPlayers objectAtIndex:indexPath.row];
+			if (homeCaptain == indexPath.row+100 && homeWicketKeeper == indexPath.row+100) {
+				[button setBackgroundImage:captainWicketKeeper forState:UIControlStateNormal];
+				[cell setAccessoryView:button];
+			} else if (homeViceCaptain == indexPath.row+100 && homeWicketKeeper == indexPath.row+100) {
+				[button setBackgroundImage:viceCaptainWicketKeeper forState:UIControlStateNormal];
+				[cell setAccessoryView:button];
+			} else if (homeCaptain == indexPath.row+100) {
+				[button setBackgroundImage:captainIcon forState:UIControlStateNormal];
+				[cell setAccessoryView:button];
+			} else if (homeViceCaptain == indexPath.row+100) {
+				[button setBackgroundImage:viceCaptainIcon forState:UIControlStateNormal];
+				[cell setAccessoryView:button];
+			} else if (homeWicketKeeper == indexPath.row+100) {
+				[button setBackgroundImage:wicketKeeperIcon forState:UIControlStateNormal];
+				[cell setAccessoryView:button];
+			} else {
+				[cell setAccessoryView:nil];
+				[cell setAccessoryType:UITableViewCellAccessoryDisclosureIndicator];
+			}
 		}
 	} else if ([tableView isEqual:awayPlayersTable]) {
-		cell.textLabel.text = [awayPlayersArray objectAtIndex:indexPath.row];
-		if (awayCaptain == indexPath.row && awayWicketKeeper == indexPath.row) {
-			[button setBackgroundImage:captainWicketKeeper forState:UIControlStateNormal];
-			[cell setAccessoryView:button];
-		} else if (awayViceCaptain == indexPath.row && awayWicketKeeper == indexPath.row) {
-			[button setBackgroundImage:viceCaptainWicketKeeper forState:UIControlStateNormal];
-			[cell setAccessoryView:button];
-		} else if (awayCaptain == indexPath.row) {
-			[button setBackgroundImage:captainIcon forState:UIControlStateNormal];
-			[cell setAccessoryView:button];
-		} else if (awayViceCaptain == indexPath.row) {
-			[button setBackgroundImage:viceCaptainIcon forState:UIControlStateNormal];
-			[cell setAccessoryView:button];
-		} else if (awayWicketKeeper == indexPath.row) {
-			[button setBackgroundImage:wicketKeeperIcon forState:UIControlStateNormal];
-			[cell setAccessoryView:button];
-		} else
-			[cell setAccessoryView:nil];
-			[cell setAccessoryType:UITableViewCellAccessoryDisclosureIndicator];
+		if(indexPath.section == 0){
+			cell.textLabel.text = [awayPlayersArray objectAtIndex:indexPath.row];
+			if (awayCaptain == indexPath.row && awayWicketKeeper == indexPath.row) {
+				[button setBackgroundImage:captainWicketKeeper forState:UIControlStateNormal];
+				[cell setAccessoryView:button];
+			} else if (awayViceCaptain == indexPath.row && awayWicketKeeper == indexPath.row) {
+				[button setBackgroundImage:viceCaptainWicketKeeper forState:UIControlStateNormal];
+				[cell setAccessoryView:button];
+			} else if (awayCaptain == indexPath.row) {
+				[button setBackgroundImage:captainIcon forState:UIControlStateNormal];
+				[cell setAccessoryView:button];
+			} else if (awayViceCaptain == indexPath.row) {
+				[button setBackgroundImage:viceCaptainIcon forState:UIControlStateNormal];
+				[cell setAccessoryView:button];
+			} else if (awayWicketKeeper == indexPath.row) {
+				[button setBackgroundImage:wicketKeeperIcon forState:UIControlStateNormal];
+				[cell setAccessoryView:button];
+			} else {
+				[cell setAccessoryView:nil];
+				[cell setAccessoryType:UITableViewCellAccessoryDisclosureIndicator];
+			}
+		} else {
+			cell.textLabel.text = [awayOutPlayers objectAtIndex:indexPath.row];
+			if (awayCaptain == indexPath.row+100 && awayWicketKeeper == indexPath.row+100) {
+				[button setBackgroundImage:captainWicketKeeper forState:UIControlStateNormal];
+				[cell setAccessoryView:button];
+			} else if (awayViceCaptain == indexPath.row+100 && awayWicketKeeper == indexPath.row+100) {
+				[button setBackgroundImage:viceCaptainWicketKeeper forState:UIControlStateNormal];
+				[cell setAccessoryView:button];
+			} else if (awayCaptain == indexPath.row+100) {
+				[button setBackgroundImage:captainIcon forState:UIControlStateNormal];
+				[cell setAccessoryView:button];
+			} else if (awayViceCaptain == indexPath.row+100) {
+				[button setBackgroundImage:viceCaptainIcon forState:UIControlStateNormal];
+				[cell setAccessoryView:button];
+			} else if (awayWicketKeeper == indexPath.row+100) {
+				[button setBackgroundImage:wicketKeeperIcon forState:UIControlStateNormal];
+				[cell setAccessoryView:button];
+			} else {
+				[cell setAccessoryView:nil];
+				[cell setAccessoryType:UITableViewCellAccessoryDisclosureIndicator];
+			}
+		}
 	}
     return cell;
 }
@@ -222,7 +272,8 @@ int aID;
 #pragma mark Row reordering
 // Determine whether a given row is eligible for reordering or not.
 - (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath {
-    return YES;
+    if (disableElements) return NO;
+	else return YES;
 }
 // Process the row move. This means updating the data model to correct the item indices.
 - (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath
@@ -281,15 +332,26 @@ int aID;
 	//NSLog(@"awayCaptain:%d\nawayViceCaptain:%d\nawayWicketKeeper%d\n", awayCaptain, awayViceCaptain, awayWicketKeeper);
 }
 
+- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath{
+	if(disableElements) return NO;
+	else return YES;
+}
+
 // Update the data model according to edit actions delete or insert.
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle
 forRowAtIndexPath:(NSIndexPath *)indexPath {
 	
     if (editingStyle == UITableViewCellEditingStyleDelete && [tableView isEqual:homePlayersTable]) {
+		if (homeCaptain > indexPath.row) homeCaptain--;
+		if (homeViceCaptain > indexPath.row) homeViceCaptain--;
+		if (homeWicketKeeper > indexPath.row) homeWicketKeeper--;
         [homePlayersArray removeObjectAtIndex:indexPath.row];
 		[homePlayersTable reloadData];
     } else if (editingStyle == UITableViewCellEditingStyleDelete && [tableView isEqual:awayPlayersTable]) {
-        [awayPlayersArray removeObjectAtIndex:indexPath.row];
+        if (awayCaptain > indexPath.row) awayCaptain--;
+		if (awayViceCaptain > indexPath.row) awayViceCaptain--;
+		if (awayWicketKeeper > indexPath.row) awayWicketKeeper--;
+		[awayPlayersArray removeObjectAtIndex:indexPath.row];
 		[awayPlayersTable reloadData];
     }
 }
@@ -300,16 +362,22 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
 	DetailViewController *detail = [self.storyboard instantiateViewControllerWithIdentifier:@"Detail"];
 	
 	if ([tableView isEqual:homePlayersTable]) {
-		arrayForDetailView = homePlayersArray;
+		if (indexPath.section == 0)
+			arrayForDetailView = homePlayersArray;
+		else
+			arrayForDetailView = homeOutPlayers;
 		teamForDetailView = @"home";
 	} else if ([tableView isEqual:awayPlayersTable]) {
-		arrayForDetailView = awayPlayersArray;
+		if (indexPath.section == 0)
+			arrayForDetailView = awayPlayersArray;
+		else
+			arrayForDetailView = awayOutPlayers;
 		teamForDetailView = @"away";
 	}
 
 	[self.navigationController pushViewController:detail animated:YES];
 	
-	if ([tableView isEqual:homePlayersTable]) {
+	if ([tableView isEqual:homePlayersTable] && indexPath.section == 0) {
 		detail.playerEditTextBox.text = [homePlayersArray objectAtIndex:indexPath.row];
 		if (homeCaptain == indexPath.row)
 			[detail.CaptainSlider setOn:YES animated:YES];
@@ -317,7 +385,7 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
 			[detail.ViceCaptainSlider setOn:YES animated:YES];
 		if (homeWicketKeeper == indexPath.row)
 			[detail.WicketKeeperSlider setOn:YES animated:YES];
-	} else if ([tableView isEqual:awayPlayersTable]) {
+	} else if ([tableView isEqual:awayPlayersTable] && indexPath.section == 0) {
 		detail.playerEditTextBox.text = [awayPlayersArray objectAtIndex:indexPath.row];
 		if (awayCaptain == indexPath.row)
 			[detail.CaptainSlider setOn:YES animated:YES];
@@ -325,18 +393,35 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
 			[detail.ViceCaptainSlider setOn:YES animated:YES];
 		if (awayWicketKeeper == indexPath.row)
 			[detail.WicketKeeperSlider setOn:YES animated:YES];
+	} else if ([tableView isEqual:homePlayersTable] && indexPath.section == 1) {
+		detail.playerEditTextBox.text = [homeOutPlayers objectAtIndex:indexPath.row];
+		if (homeCaptain == indexPath.row+100)
+			[detail.CaptainSlider setOn:YES animated:YES];
+		else if (homeViceCaptain == indexPath.row+100)
+			[detail.ViceCaptainSlider setOn:YES animated:YES];
+		if (homeWicketKeeper == indexPath.row+100)
+			[detail.WicketKeeperSlider setOn:YES animated:YES];
+	} else if ([tableView isEqual:awayPlayersTable] && indexPath.section == 1) {
+		detail.playerEditTextBox.text = [awayOutPlayers objectAtIndex:indexPath.row];
+		if (awayCaptain == indexPath.row+100)
+			[detail.CaptainSlider setOn:YES animated:YES];
+		else if (awayViceCaptain == indexPath.row+100)
+			[detail.ViceCaptainSlider setOn:YES animated:YES];
+		if (awayWicketKeeper == indexPath.row+100)
+			[detail.WicketKeeperSlider setOn:YES animated:YES];
 	}
+		
 	detail.battingOrderSlider.value = indexPath.row+1.9;
 	detail.sliderValueLabel.text = [NSString stringWithFormat:@"%d", indexPath.row+1];
 }
 
-- (void)tableView:(UITableView *)tableView accessoryButtonTappedForRowWithIndexPath:(NSIndexPath *)indexPath {
+/*- (void)tableView:(UITableView *)tableView accessoryButtonTappedForRowWithIndexPath:(NSIndexPath *)indexPath {
 	[self tableView:tableView didDeselectRowAtIndexPath:indexPath];
 }
 
 - (IBAction)accessoryButtonPressed:(id)sender tableView:(UITableView *)tableView withIndexPath:(NSIndexPath *)indexPath {
 	[self tableView:tableView accessoryButtonTappedForRowWithIndexPath:indexPath];
-}
+}*/
 
 - (IBAction)EditTable:(id)sender{
 	//NSLog(@"Sender of edit button is: %@\"", sender);
@@ -421,11 +506,6 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
 		if (homeWonToss.selected) battingTeam = @"home";
 		else battingTeam = @"away";
     }
-}
-
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
-{
-	return (interfaceOrientation != UIInterfaceOrientationPortraitUpsideDown);
 }
 
 
@@ -530,13 +610,119 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
 	return returnThis;
 }
 
--(void) getTeamIDs{
+-(void)getTeamIDs{
     //Set away teamID to be used in second view controller for when adding players from database
     awayTeamID = [self returnIntFromDatabase:[NSString stringWithFormat:
 											  @"SELECT TeamID FROM TEAMS WHERE TeamName = '%@'", awayTeam]];
     //Set home teamID to be used in second view controller for when adding players from database
     homeTeamID = [self returnIntFromDatabase:[NSString stringWithFormat:
                                               @"SELECT TeamID FROM TEAMS WHERE TeamName = '%@'", homeTeam]];
+}
+
+- (void)viewDidLoad
+{
+    [super viewDidLoad];
+	// Do any additional setup after loading the view, typically from a nib.
+	//Button listener allocation
+    [homeWonToss addTarget:self action:@selector(tossButtonManage) forControlEvents:UIControlEventTouchUpInside];
+	[awayWonToss addTarget:self action:@selector(tossButtonManage) forControlEvents:UIControlEventTouchUpInside];
+	[battingButton addTarget:self action:@selector(decisionButtonManage) forControlEvents:UIControlEventTouchUpInside];
+	[fieldingButton addTarget:self action:@selector(decisionButtonManage) forControlEvents:UIControlEventTouchUpInside];
+	
+	//Setting initial players table values
+	homePlayersArray = [[NSMutableArray alloc] init];
+	awayPlayersArray = [[NSMutableArray alloc] init];
+	homeOutPlayers = [[NSMutableArray alloc] init];
+	awayOutPlayers = [[NSMutableArray alloc] init];
+	
+    
+    [self getTeamIDs];
+    hID = homeTeamID;
+    aID = awayTeamID;
+    
+    [self addHomePlayers];
+    [self addAwayPlayers];
+    
+    NSLog(@"The first time the view loaded h = %d , a = %d",hID,aID);
+	
+	homeViceCaptain = 1;
+	awayViceCaptain = 1;
+	
+	captainIcon = [UIImage imageNamed:@"CaptainIcon.png"];
+	viceCaptainIcon = [UIImage imageNamed:@"ViceCaptainIcon.png"];
+	wicketKeeperIcon = [UIImage imageNamed:@"WicketKeeperIcon.png"];
+	captainWicketKeeper = [UIImage imageNamed:@"captainWicketKeeper.png"];
+	viceCaptainWicketKeeper = [UIImage imageNamed:@"viceCaptainWicketKeeper.png"];
+	battingTeam = @"home";
+	tossWonBy = @"home";
+	decision = @"bat";
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+    NSLog(@"APPEAR!");
+    
+    NSLog(@"In appear the view loaded h = %d , a = %d",hID,aID);
+    
+    
+    hID = homeTeamID;
+    aID = awayTeamID;
+    
+    NSLog(@"In appear second the view loaded h = %d , a = %d",hID,aID);
+    [self getTeamIDs];
+    
+    if (hID != homeTeamID){
+        [homePlayersArray removeAllObjects];
+        [self addHomePlayers];
+        NSLog(@"Reload home");
+        
+    }
+    
+    if (aID != awayTeamID){
+        [awayPlayersArray removeAllObjects];
+        [self addAwayPlayers];
+        NSLog(@"Reload away");
+    }
+    hID = homeTeamID;
+    aID = awayTeamID;
+    
+    DatabaseController *instance = [[DatabaseController alloc] init];
+    [instance firstTabSave];
+    
+	[homePlayersTable reloadData];
+	[awayPlayersTable reloadData];
+	if(disableElements){
+		[homeWonToss setEnabled:NO];
+		[awayWonToss setEnabled:NO];
+		[battingButton setEnabled:NO];
+		[fieldingButton setEnabled:NO];
+		[homeNavBarAddButton setEnabled:NO];
+		[homeNavBarEditButton setEnabled:NO];
+		[awayNavBarAddButton setEnabled:NO];
+		[awayNavBarEditButton setEnabled:NO];
+	}
+	
+}
+
+
+- (void)viewDidUnload
+{
+	[self setHomePlayersTable:nil];
+	[self setAwayPlayersTable:nil];
+	[self setHomeNavBarEditButton:nil];
+	[self setAwayNavBarEditButton:nil];
+	[self setHomeNavBarAddButton:nil];
+	[self setAwayNavBarAddButton:nil];
+    [super viewDidUnload];
+    // Release any retained subviews of the main view.
+	[self setHomeWonToss:nil];
+	[self setAwayWonToss:nil];
+	[self setBattingButton:nil];
+	[self setFieldingButton:nil];
+}
+
+- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
+{
+	return (interfaceOrientation != UIInterfaceOrientationPortraitUpsideDown);
 }
 
 @end

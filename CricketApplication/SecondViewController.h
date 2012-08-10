@@ -10,6 +10,8 @@
 
 NSMutableArray *homePlayersArray;
 NSMutableArray *awayPlayersArray;
+NSMutableArray *homeOutPlayers;
+NSMutableArray *awayOutPlayers;
 NSMutableArray *arrayForDetailView;
 int rowForDetaiView;
 NSString *teamForDetailView;
