@@ -41,6 +41,7 @@ NSString *scoreString;
 @property (strong, nonatomic) IBOutlet UIButton *startGameButton;
 @property (strong, nonatomic) IBOutlet UILabel *scoreLabel;
 @property (strong, nonatomic) IBOutlet UIScrollView *ballsScrollView;
+@property (strong, nonatomic) IBOutlet UIButton *nextOverButton;
 
 -(IBAction)showActionSheet: (id) sender;
 -(IBAction)hideActionSheet: (UIBarButtonItem *)_infoButtonItem;
@@ -69,4 +70,5 @@ NSString *scoreString;
 -(IBAction)turnLabelsGreen:(id)sender;
 -(IBAction)turnLabelsBlack:(id)sender;
 -(IBAction)updateExtrasLabels:(id)sender;
+-(IBAction)nextOver:(id)sender;
 @end

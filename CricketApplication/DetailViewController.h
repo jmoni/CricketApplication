@@ -19,6 +19,7 @@
 @property (strong, nonatomic) IBOutlet UISwitch *WicketKeeperSlider;
 @property (strong, nonatomic) IBOutlet UIBarButtonItem *nextPlayerButton;
 @property (strong, nonatomic) IBOutlet UIBarButtonItem *previousPlayerButton;
+@property (strong, nonatomic) IBOutlet UIToolbar *bottomToolbar;
 
 - (IBAction)textFieldReturn:(id)sender;
 - (IBAction)backgroundTouched:(id)sender;
