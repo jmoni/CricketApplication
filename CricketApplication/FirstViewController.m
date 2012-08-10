@@ -11,7 +11,7 @@
 #import "DatabaseController.h"
 
 @interface FirstViewController ()
-
+    @property (strong, nonatomic) IBOutlet UIPickerView *chooseTeam;
 @end
 
 @implementation FirstViewController
@@ -28,10 +28,16 @@
 @synthesize scrollView = _scrollView;
 @synthesize umpireOneEntered = _umpireOneEntered;
 @synthesize umpireTwoEntered = _umpireTwoEntered;
+@synthesize storedHomeTeamButton = _storedHomeTeamButton;
+@synthesize storedAwayTeamButton = _storedAwayTeamButton;
+@synthesize chooseTeam = _chooseTeam;
 
 int height;
 UIView *newView;
 UITextField *activeField;
+bool homeButtonClicked;
+bool awayButtonClicked;
+
 
 -(IBAction)showActionSheet:(id)sender {
     _homeTeamEntered.enabled = false;
@@ -72,9 +78,12 @@ UITextField *activeField;
     newView.frame = temp;
     [UIView commitAnimations];
 }
+
 -(IBAction)hideActionSheet:(UIBarButtonItem *)_infoButtonItem{
     _homeTeamEntered.enabled = true;
     _awayTeamEntered.enabled = true;
+    _storedAwayTeamButton.enabled = true;
+    _storedHomeTeamButton.enabled = true;
 	
 	//animate onto screen
 	CGRect temp = newView.frame;
@@ -85,6 +94,151 @@ UITextField *activeField;
     newView.frame = temp;
     [UIView commitAnimations];
 	height = CGRectGetMaxY(self.view.bounds);
+}
+
+- (IBAction)homeButtonClicked: (id)sender{
+    homeButtonClicked = YES;
+    awayButtonClicked = NO;
+    //NSLog(@"HOME");
+    _homeTeamEntered.text = [teamsInDatabase objectAtIndex:0];
+    homeTeam = _homeTeamEntered.text;
+    //NSLog(@"Home Team in first view %@",homeTeam);
+}
+
+- (IBAction)awayButtonClicked: (id)sender{
+    awayButtonClicked = YES;
+    homeButtonClicked = NO;
+    //NSLog(@"AWAY");
+    _awayTeamEntered.text = [teamsInDatabase objectAtIndex:0];
+    awayTeam = _awayTeamEntered.text;
+    //NSLog(@"Away Team in first view %@",awayTeam);
+}
+
+//Return teams in database and put into array
+- (void)retrieveTeamsInDatabase {
+    const char *dbpath = [writableDBPath UTF8String];
+    sqlite3_stmt *statement;
+    if (sqlite3_open(dbpath, &cricketDB) == SQLITE_OK)
+    {
+        NSString *string = [NSString stringWithFormat: @"SELECT TeamName FROM TEAMS"];
+		const char *stmt = [string UTF8String];
+		sqlite3_prepare_v2(cricketDB, stmt, -1, &statement, NULL);
+        while (sqlite3_step(statement) == SQLITE_ROW) {
+            NSLog(@"\nAccess worked");
+            //Put players into away array
+            NSString *nameString = [NSString stringWithUTF8String:(char *)sqlite3_column_text(statement, 0)];
+            //NSLog(@"%@",nameString);
+            [teamsInDatabase addObject: nameString];
+        }
+        sqlite3_finalize(statement);
+        sqlite3_close(cricketDB);
+    } else {
+        NSLog(@"\nCould not access DB");
+    }
+}
+
+
+//Return teams in database and put into array
+- (int)countTeamsInDatabase {
+    const char *dbpath = [writableDBPath UTF8String];
+    sqlite3_stmt *statement;
+    int count = 0;
+    if (sqlite3_open(dbpath, &cricketDB) == SQLITE_OK)
+    {
+        NSString *string = [NSString stringWithFormat: @"SELECT COUNT(TeamName) FROM TEAMS"];
+		const char *stmt = [string UTF8String];
+		sqlite3_prepare_v2(cricketDB, stmt, -1, &statement, NULL);
+        while (sqlite3_step(statement) == SQLITE_ROW) {
+            NSLog(@"\nAccess worked");
+            //Put players into away array
+            count = sqlite3_column_int(statement, 0);
+        }
+        sqlite3_finalize(statement);
+        sqlite3_close(cricketDB);
+    } else {
+        NSLog(@"\nCould not access DB");
+    }
+    return count;
+}
+
+- (IBAction)showStoredTeams: (id)sender{
+    _homeTeamEntered.enabled = false;
+    _awayTeamEntered.enabled = false;
+    _storedAwayTeamButton.enabled = false;
+    _storedHomeTeamButton.enabled = false;
+    height = 255;
+    NSString *titleString;
+    
+    //create new view
+    newView = [[UIView alloc] initWithFrame:CGRectMake(0, 200, 320, height)];
+    newView.backgroundColor = [UIColor colorWithWhite:1 alpha:1];
+    
+    //add toolbar
+    UIToolbar * toolbar = [[UIToolbar alloc] initWithFrame: CGRectMake(0, 0, 320, 40)];
+    toolbar.barStyle = UIBarStyleBlack;
+    
+    //add button
+    _infoButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Done" style:UIBarButtonItemStyleDone     target:self action:@selector(hideActionSheet:)];
+    UIBarButtonItem *spacer = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:self action:nil];
+    titleString = @"Select Team";
+    UIBarButtonItem *titleButton = [[UIBarButtonItem alloc] initWithTitle:titleString style:UIBarButtonItemStylePlain target:nil action:nil];
+	
+    toolbar.items = [NSArray arrayWithObjects:_infoButtonItem, spacer, titleButton, spacer, nil];
+    
+    
+    //add a picker
+    _chooseTeam = [[UIPickerView alloc] initWithFrame: CGRectMake(0,40,320,250)];
+    _chooseTeam.hidden = false;
+    _chooseTeam.delegate = self;
+    _chooseTeam.dataSource = self;
+    _chooseTeam.showsSelectionIndicator = YES;
+	
+    //add popup view
+    [newView addSubview:toolbar];
+    [newView addSubview:_chooseTeam];
+    [self.view addSubview:newView];
+    
+    //animate it onto the screen
+    CGRect temp = newView.frame;
+    temp.origin.y = CGRectGetMaxY(self.view.bounds);
+    newView.frame = temp;
+    [UIView beginAnimations:nil context:nil];
+    temp.origin.y -= height;
+    newView.frame = temp;
+    [UIView commitAnimations];
+    
+}
+
+- (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView{
+    return 1;    
+}
+
+- (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component
+{
+    if (homeButtonClicked){
+        _homeTeamEntered.text = [teamsInDatabase objectAtIndex:row];
+        homeTeam = _homeTeamEntered.text;
+    }
+    else if (awayButtonClicked){
+        _awayTeamEntered.text = [teamsInDatabase objectAtIndex:row];
+        awayTeam = _awayTeamEntered.text;
+    }
+    //NSLog(@"%@",[teamsInDatabase objectAtIndex:row]);
+}
+
+//Number of rows in picker view
+- (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component{
+    return [teamsInDatabase count];
+}
+
+//Values in picker view
+- (NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component;
+{
+    return [teamsInDatabase objectAtIndex:row];
+}
+
+- (void) selectRowForSelection: (UIPickerView *) pickerView{
+    
 }
 
 -(IBAction)textFieldReturn:(id)sender
@@ -235,6 +389,16 @@ UITextField *activeField;
 	umpireTwo = @"Umpire 2";
     numberOversOrDays = 20;
 	matchType = @"overs";
+    
+    homeButtonClicked = NO;
+    awayButtonClicked = NO;
+    
+    //Initialise the array to hold teams
+    teamsInDatabase = [[NSMutableArray alloc] init];
+    
+    [self retrieveTeamsInDatabase];
+    //NSLog(@"%@",teamsInDatabase);
+    
 }
 
 - (void)viewDidUnload
@@ -252,6 +416,8 @@ UITextField *activeField;
 	[self setHomeTeamEntered:nil];
     [self setUmpireOneEntered:nil];
     [self setUmpireTwoEntered:nil];
+    [self setStoredHomeTeamButton:nil];
+    [self setStoredAwayTeamButton:nil];
     [super viewDidUnload];
     // Release any retained subviews of the main view.
 }

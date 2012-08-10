@@ -41,6 +41,101 @@ UIImage *viceCaptainWicketKeeper;
 int hID;
 int aID;
 
+- (void)viewDidLoad
+{
+    [super viewDidLoad];
+	// Do any additional setup after loading the view, typically from a nib.
+	//Button listener allocation
+    [homeWonToss addTarget:self action:@selector(tossButtonManage) forControlEvents:UIControlEventTouchUpInside];
+	[awayWonToss addTarget:self action:@selector(tossButtonManage) forControlEvents:UIControlEventTouchUpInside];
+	[battingButton addTarget:self action:@selector(decisionButtonManage) forControlEvents:UIControlEventTouchUpInside];
+	[fieldingButton addTarget:self action:@selector(decisionButtonManage) forControlEvents:UIControlEventTouchUpInside];
+	
+	//Setting initial players table values
+	homePlayersArray = [[NSMutableArray alloc] init];
+	awayPlayersArray = [[NSMutableArray alloc] init];
+
+    
+    [self getTeamIDs];
+    hID = homeTeamID;
+    aID = awayTeamID;
+    
+    [self addHomePlayers];
+    [self addAwayPlayers];
+    
+    //NSLog(@"The first time the view loaded h = %d , a = %d",hID,aID);
+      
+	homeViceCaptain = 1;
+	awayViceCaptain = 1;
+	
+	captainIcon = [UIImage imageNamed:@"CaptainIcon.png"];
+	viceCaptainIcon = [UIImage imageNamed:@"ViceCaptainIcon.png"];
+	wicketKeeperIcon = [UIImage imageNamed:@"WicketKeeperIcon.png"];
+	captainWicketKeeper = [UIImage imageNamed:@"captainWicketKeeper.png"];
+	viceCaptainWicketKeeper = [UIImage imageNamed:@"viceCaptainWicketKeeper.png"];
+	battingTeam = @"home";
+	tossWonBy = @"home";
+	decision = @"bat";
+}
+
+
+- (void)viewDidUnload
+{
+	[self setHomePlayersTable:nil];
+	[self setAwayPlayersTable:nil];
+	[self setHomeNavBarEditButton:nil];
+	[self setAwayNavBarEditButton:nil];
+	[self setHomeNavBarAddButton:nil];
+	[self setAwayNavBarAddButton:nil];
+    [super viewDidUnload];
+    // Release any retained subviews of the main view.
+	[self setHomeWonToss:nil];
+	[self setAwayWonToss:nil];
+	[self setBattingButton:nil];
+	[self setFieldingButton:nil];
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+    //NSLog(@"APPEAR!");
+    
+    //NSLog(@"In appear the view loaded h = %d , a = %d",hID,aID);
+    
+    
+    hID = homeTeamID;
+    aID = awayTeamID;
+    
+    //NSLog(@"In appear second the view loaded h = %d , a = %d",hID,aID);
+    [self getTeamIDs];
+    
+    if (hID != homeTeamID){
+        [homePlayersArray removeAllObjects];
+        [self addHomePlayers];
+        NSLog(@"Reload home");
+        
+    }
+    
+    if (aID != awayTeamID){
+        [awayPlayersArray removeAllObjects];
+        [self addAwayPlayers];
+        NSLog(@"Reload away");
+    }
+    hID = homeTeamID;
+    aID = awayTeamID;
+    
+    DatabaseController *instance = [[DatabaseController alloc] init];
+    [instance firstTabSave];
+    
+	[homePlayersTable reloadData];
+	[awayPlayersTable reloadData];
+	if(disableElements){
+		[homeWonToss setEnabled:NO];
+		[awayWonToss setEnabled:NO];
+		[battingButton setEnabled:NO];
+		[fieldingButton setEnabled:NO];
+	}
+
+}
+
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
     return 2;
