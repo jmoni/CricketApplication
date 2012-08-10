@@ -16,9 +16,10 @@ int numberOversOrDays;
 NSString *matchType;
 NSDate *date;
 NSString *strDate;
+NSMutableArray *teamsInDatabase;
 
 
-@interface FirstViewController : UIViewController <UIActionSheetDelegate, UITextFieldDelegate, UIScrollViewDelegate>{
+@interface FirstViewController : UIViewController <UIActionSheetDelegate, UITextFieldDelegate, UIScrollViewDelegate, UIPickerViewDelegate, UIPickerViewDataSource>{
 	IBOutlet UIDatePicker *datePicker;
 }
 
@@ -35,6 +36,8 @@ NSString *strDate;
 @property (strong, nonatomic) IBOutlet UIScrollView *scrollView;
 @property (strong, nonatomic) IBOutlet UITextField *umpireOneEntered;
 @property (strong, nonatomic) IBOutlet UITextField *umpireTwoEntered;
+@property (strong, nonatomic) IBOutlet UIButton *storedHomeTeamButton;
+@property (strong, nonatomic) IBOutlet UIButton *storedAwayTeamButton;
 
 
 
@@ -45,4 +48,7 @@ NSString *strDate;
 - (IBAction)sliderUpdate: (id)sender;
 - (IBAction)timeSliderUpdate: (id)sender;
 - (IBAction)flipSwitch: (id)sender;
+- (IBAction)showStoredTeams: (id)sender;
+- (IBAction)homeButtonClicked: (id)sender;
+- (IBAction)awayButtonClicked: (id)sender;
 @end

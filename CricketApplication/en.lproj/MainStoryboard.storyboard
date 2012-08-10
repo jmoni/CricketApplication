@@ -20,7 +20,7 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <subviews>
                                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Umpire 1" minimumFontSize="17" clearButtonMode="always" id="r4c-0C-Pss">
-                                        <rect key="frame" x="108" y="272" width="192" height="31"/>
+                                        <rect key="frame" x="108" y="272" width="197" height="31"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits" autocapitalizationType="words" returnKeyType="done"/>
@@ -44,7 +44,7 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Umpire 2" minimumFontSize="17" clearButtonMode="always" id="BXS-oT-Tmu">
-                                        <rect key="frame" x="108" y="317" width="192" height="31"/>
+                                        <rect key="frame" x="108" y="317" width="197" height="31"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits" autocapitalizationType="words" returnKeyType="done"/>
@@ -75,14 +75,14 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Away:" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" id="33g-qW-yDH">
-                                        <rect key="frame" x="20" y="80" width="53" height="21"/>
+                                        <rect key="frame" x="20" y="81" width="53" height="21"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Team 1" minimumFontSize="17" clearButtonMode="always" id="ZEb-Gx-S6m">
-                                        <rect key="frame" x="88" y="36" width="212" height="31"/>
+                                        <rect key="frame" x="74" y="36" width="164" height="31"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits" autocapitalizationType="words" returnKeyType="done"/>
@@ -92,7 +92,7 @@
                                         </connections>
                                     </textField>
                                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Team 2" minimumFontSize="17" clearButtonMode="always" id="Ndf-bB-5Cu">
-                                        <rect key="frame" x="88" y="75" width="212" height="31"/>
+                                        <rect key="frame" x="74" y="76" width="164" height="31"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits" autocapitalizationType="words" returnKeyType="done"/>
@@ -102,7 +102,7 @@
                                         </connections>
                                     </textField>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="54i-gY-iLM">
-                                        <rect key="frame" x="146" y="123" width="154" height="21"/>
+                                        <rect key="frame" x="146" y="123" width="159" height="21"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
                                         <state key="normal" title="Set Date">
@@ -131,7 +131,7 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" id="pgH-oW-I60">
-                                        <rect key="frame" x="146" y="162" width="154" height="44"/>
+                                        <rect key="frame" x="146" y="162" width="159" height="44"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <segments>
                                             <segment title="Overs"/>
@@ -169,6 +169,38 @@
                                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="WIi-KL-5TK">
+                                        <rect key="frame" x="244" y="36" width="65" height="31"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                        <state key="normal" title="Stored">
+                                            <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
+                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <state key="highlighted">
+                                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="homeButtonClicked:" destination="2" eventType="touchUpInside" id="RQK-YQ-wNp"/>
+                                            <action selector="showStoredTeams:" destination="2" eventType="touchUpInside" id="HFf-wX-8xF"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="vcg-8s-ntW">
+                                        <rect key="frame" x="244" y="76" width="65" height="31"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                        <state key="normal" title="Stored">
+                                            <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
+                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <state key="highlighted">
+                                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="awayButtonClicked:" destination="2" eventType="touchUpInside" id="IzU-E4-hd7"/>
+                                            <action selector="showStoredTeams:" destination="2" eventType="touchUpInside" id="RnN-yY-vK0"/>
+                                        </connections>
+                                    </button>
                                 </subviews>
                             </scrollView>
                         </subviews>
@@ -186,6 +218,8 @@
                         <outlet property="overSlide" destination="bdN-ml-MgV" id="KTQ-vQ-OnJ"/>
                         <outlet property="overTimeLabel" destination="d1O-vo-ils" id="svt-II-nYQ"/>
                         <outlet property="scrollView" destination="DhV-mD-UBH" id="ajq-PR-ZWp"/>
+                        <outlet property="storedAwayTeamButton" destination="vcg-8s-ntW" id="nb4-Vn-RTp"/>
+                        <outlet property="storedHomeTeamButton" destination="WIi-KL-5TK" id="hLc-ij-iLF"/>
                         <outlet property="switcher" destination="pgH-oW-I60" id="59T-ab-T3K"/>
                         <outlet property="timeLabel" destination="Hez-8K-NCX" id="G7C-i2-7bH"/>
                         <outlet property="timeSlide" destination="GKa-39-q6P" id="u4Y-uF-CxQ"/>
@@ -1160,6 +1194,164 @@
         <image name="second.png" width="30" height="30"/>
         <image name="second@2x.png" width="60" height="60"/>
     </resources>
+    <classes>
+        <class className="DatabaseController" superclassName="UITabBarController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/DatabaseController.h"/>
+            <relationships>
+                <relationship kind="action" name="next:"/>
+                <relationship kind="action" name="share:"/>
+                <relationship kind="outlet" name="navBar" candidateClass="UINavigationItem"/>
+                <relationship kind="outlet" name="nextButton" candidateClass="UIBarButtonItem"/>
+                <relationship kind="outlet" name="saveButton" candidateClass="UIBarButtonItem"/>
+                <relationship kind="outlet" name="tabBar" candidateClass="UITabBar"/>
+            </relationships>
+        </class>
+        <class className="DetailViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/DetailViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="CSlider:"/>
+                <relationship kind="action" name="VCSlider:"/>
+                <relationship kind="action" name="WKSlider:"/>
+                <relationship kind="action" name="backgroundTouched:"/>
+                <relationship kind="action" name="battingOrderSliderChanged:"/>
+                <relationship kind="action" name="battingOrderSliderChanging:"/>
+                <relationship kind="action" name="deletePlayer:"/>
+                <relationship kind="action" name="getInitialSlideValue:"/>
+                <relationship kind="action" name="nextPlayer:"/>
+                <relationship kind="action" name="previousPlayer:"/>
+                <relationship kind="action" name="textFieldReturn:"/>
+                <relationship kind="outlet" name="CaptainSlider" candidateClass="UISwitch"/>
+                <relationship kind="outlet" name="NavBar" candidateClass="UINavigationItem"/>
+                <relationship kind="outlet" name="ViceCaptainSlider" candidateClass="UISwitch"/>
+                <relationship kind="outlet" name="WicketKeeperSlider" candidateClass="UISwitch"/>
+                <relationship kind="outlet" name="battingOrderSlider" candidateClass="UISlider"/>
+                <relationship kind="outlet" name="nextPlayerButton" candidateClass="UIBarButtonItem"/>
+                <relationship kind="outlet" name="playerEditTextBox" candidateClass="UITextField"/>
+                <relationship kind="outlet" name="previousPlayerButton" candidateClass="UIBarButtonItem"/>
+                <relationship kind="outlet" name="sliderValueLabel" candidateClass="UILabel"/>
+            </relationships>
+        </class>
+        <class className="FirstViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/FirstViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="awayButtonClicked:"/>
+                <relationship kind="action" name="changeDate:"/>
+                <relationship kind="action" name="flipSwitch:"/>
+                <relationship kind="action" name="hideActionSheet:" candidateClass="UIBarButtonItem"/>
+                <relationship kind="action" name="homeButtonClicked:"/>
+                <relationship kind="action" name="showActionSheet:"/>
+                <relationship kind="action" name="showStoredTeams:"/>
+                <relationship kind="action" name="sliderUpdate:"/>
+                <relationship kind="action" name="textFieldDidBeginEditing:" candidateClass="UITextField"/>
+                <relationship kind="action" name="textFieldDidEndEditing:" candidateClass="UITextField"/>
+                <relationship kind="action" name="textFieldReturn:"/>
+                <relationship kind="action" name="timeSliderUpdate:"/>
+                <relationship kind="outlet" name="awayTeamEntered" candidateClass="UITextField"/>
+                <relationship kind="outlet" name="chooseTeam" candidateClass="UIPickerView"/>
+                <relationship kind="outlet" name="dateButton" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="datePicker" candidateClass="UIDatePicker"/>
+                <relationship kind="outlet" name="dateText" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="homeTeamEntered" candidateClass="UITextField"/>
+                <relationship kind="outlet" name="infoButtonItem" candidateClass="UIBarButtonItem"/>
+                <relationship kind="outlet" name="overSlide" candidateClass="UISlider"/>
+                <relationship kind="outlet" name="overTimeLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="scrollView" candidateClass="UIScrollView"/>
+                <relationship kind="outlet" name="storedAwayTeamButton" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="storedHomeTeamButton" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="switcher" candidateClass="UISegmentedControl"/>
+                <relationship kind="outlet" name="timeLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="timeSlide" candidateClass="UISlider"/>
+                <relationship kind="outlet" name="umpireOneEntered" candidateClass="UITextField"/>
+                <relationship kind="outlet" name="umpireTwoEntered" candidateClass="UITextField"/>
+            </relationships>
+        </class>
+        <class className="SecondViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/SecondViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="AddCell:"/>
+                <relationship kind="action" name="EditTable:"/>
+                <relationship kind="action" name="accessoryButtonPressed:tableView:withIndexPath:"/>
+                <relationship kind="outlet" name="awayNavBarAddButton" candidateClass="UIBarButtonItem"/>
+                <relationship kind="outlet" name="awayNavBarEditButton" candidateClass="UIBarButtonItem"/>
+                <relationship kind="outlet" name="awayPlayersTable" candidateClass="UITableView"/>
+                <relationship kind="outlet" name="awayWonToss" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="battingButton" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="fieldingButton" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="homeNavBarAddButton" candidateClass="UIBarButtonItem"/>
+                <relationship kind="outlet" name="homeNavBarEditButton" candidateClass="UIBarButtonItem"/>
+                <relationship kind="outlet" name="homePlayersTable" candidateClass="UITableView"/>
+                <relationship kind="outlet" name="homeWonToss" candidateClass="UIButton"/>
+            </relationships>
+        </class>
+        <class className="ThirdViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/ThirdViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="addExtras:"/>
+                <relationship kind="action" name="byeCalc:string:"/>
+                <relationship kind="action" name="byePlusOne:"/>
+                <relationship kind="action" name="confirm:"/>
+                <relationship kind="action" name="extraBye:"/>
+                <relationship kind="action" name="extraLegBye:"/>
+                <relationship kind="action" name="extraNoBall:"/>
+                <relationship kind="action" name="extraPen:"/>
+                <relationship kind="action" name="extraWide:"/>
+                <relationship kind="action" name="four:"/>
+                <relationship kind="action" name="fourBye:"/>
+                <relationship kind="action" name="hideActionSheet:" candidateClass="UIBarButtonItem"/>
+                <relationship kind="action" name="hideActionSheetB:"/>
+                <relationship kind="action" name="noRuns:"/>
+                <relationship kind="action" name="plusOne:"/>
+                <relationship kind="action" name="showActionSheet:"/>
+                <relationship kind="action" name="showExtrasOptions:"/>
+                <relationship kind="action" name="showOutOptions:"/>
+                <relationship kind="action" name="six:"/>
+                <relationship kind="action" name="sixBye:"/>
+                <relationship kind="action" name="startGame:"/>
+                <relationship kind="action" name="turnLabelsBlack:"/>
+                <relationship kind="action" name="turnLabelsGreen:"/>
+                <relationship kind="action" name="turnLabelsOrange:"/>
+                <relationship kind="action" name="turnLabelsRed:"/>
+                <relationship kind="action" name="undo:"/>
+                <relationship kind="action" name="updateExtrasLabels:"/>
+                <relationship kind="outlet" name="ball1" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="ball2" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="ball3" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="ball4" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="ball5" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="ball6" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="ballsScrollView" candidateClass="UIScrollView"/>
+                <relationship kind="outlet" name="batter1Active" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="batter1BallsLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="batter1RunsLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="batter2Active" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="batter2BallsLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="batter2RunsLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="batterName1" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="batterName2" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="bowlerButton" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="byeLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="choosePlayer" candidateClass="UIPickerView"/>
+                <relationship kind="outlet" name="economyLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="infoButtonItem" candidateClass="UIBarButtonItem"/>
+                <relationship kind="outlet" name="legByeLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="maidensLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="noBallLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="oneActive" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="oversLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="penLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="runsLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="scoreLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="startGameButton" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="teamName" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="totLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="twoActive" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="wicketsLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="wideLabel" candidateClass="UILabel"/>
+                <relationship kind="outletCollection" name="ballLabels" candidateClass="UILabel"/>
+                <relationship kind="outletCollection" name="calculatorView" candidateClass="UIButton"/>
+            </relationships>
+        </class>
+    </classes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
         <simulatedOrientationMetrics key="orientation"/>
