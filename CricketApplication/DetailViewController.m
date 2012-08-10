@@ -11,13 +11,14 @@
 #include "DatabaseController.h"
 
 @interface DetailViewController ()
+@property (strong, nonatomic) IBOutlet UIPickerView *choosePlayer;
 
 @end
 
 int initialSliderValue;
 
 @implementation DetailViewController
-@synthesize playerEditTextBox;
+@synthesize playerEditTextBox = _playerEditTextBox;
 @synthesize battingOrderSlider;
 @synthesize sliderValueLabel;
 @synthesize NavBar;
@@ -26,27 +27,127 @@ int initialSliderValue;
 @synthesize WicketKeeperSlider;
 @synthesize previousPlayerButton;
 @synthesize bottomToolbar;
+@synthesize storedPlayersClicked = _storedPlayersClicked;
 @synthesize nextPlayerButton;
+@synthesize infoButtonItem = _infoButtonItem;
+
+int height;
+UIView *newView;
+
+- (IBAction)storedPlayersAction:(id)sender{
+    
+}
+
+- (IBAction)showStoredTeams: (id)sender{
+    /*
+    _homeTeamEntered.enabled = false;
+    _awayTeamEntered.enabled = false;
+    _storedAwayTeamButton.enabled = false;
+    _storedHomeTeamButton.enabled = false;*/
+    
+    height = 255;
+    NSString *titleString;
+    
+    //create new view
+    newView = [[UIView alloc] initWithFrame:CGRectMake(0, 200, 320, height)];
+    newView.backgroundColor = [UIColor colorWithWhite:1 alpha:1];
+    
+    //add toolbar
+    UIToolbar * toolbar = [[UIToolbar alloc] initWithFrame: CGRectMake(0, 0, 320, 40)];
+    toolbar.barStyle = UIBarStyleBlack;
+    
+    //add button
+    _infoButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Done" style:UIBarButtonItemStyleDone     target:self action:@selector(hideActionSheet:)];
+    UIBarButtonItem *spacer = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:self action:nil];
+    titleString = @"Select Player";
+    UIBarButtonItem *titleButton = [[UIBarButtonItem alloc] initWithTitle:titleString style:UIBarButtonItemStylePlain target:nil action:nil];
+	
+    toolbar.items = [NSArray arrayWithObjects:_infoButtonItem, spacer, titleButton, spacer, nil];
+    
+    
+    //add a picker
+    _choosePlayer = [[UIPickerView alloc] initWithFrame: CGRectMake(0,40,320,250)];
+    _choosePlayer.hidden = false;
+    _choosePlayer.delegate = self;
+    _choosePlayer.dataSource = self;
+    _choosePlayer.showsSelectionIndicator = YES;
+	
+    //add popup view
+    [newView addSubview:toolbar];
+    [newView addSubview:_choosePlayer];
+    [self.view addSubview:newView];
+    
+    //animate it onto the screen
+    CGRect temp = newView.frame;
+    temp.origin.y = CGRectGetMaxY(self.view.bounds);
+    newView.frame = temp;
+    [UIView beginAnimations:nil context:nil];
+    temp.origin.y -= height;
+    newView.frame = temp;
+    [UIView commitAnimations];
+    
+}
+
+
+- (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView{
+    return 1;
+}
+
+- (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component
+{
+    _playerEditTextBox.text = [playersInDatabase objectAtIndex:row];
+    //homeTeam = _homeTeamEntered.text;
+    //NSLog(@"%@",[teamsInDatabase objectAtIndex:row]);
+}
+
+//Number of rows in picker view
+- (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component{
+    return [playersInDatabase count];
+}
+
+//Values in picker view
+- (NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component;
+{
+    return [playersInDatabase objectAtIndex:row];
+}
+
+
+-(IBAction)hideActionSheet:(UIBarButtonItem *)_infoButtonItem{
+    /*_homeTeamEntered.enabled = true;
+    _awayTeamEntered.enabled = true;
+    _storedAwayTeamButton.enabled = true;
+    _storedHomeTeamButton.enabled = true;*/
+	
+	//animate onto screen
+	CGRect temp = newView.frame;
+    temp.origin.y = height;
+    newView.frame = temp;
+    [UIView beginAnimations:nil context:nil];
+    temp.origin.y += height;
+    newView.frame = temp;
+    [UIView commitAnimations];
+	height = CGRectGetMaxY(self.view.bounds);
+}
 
 - (IBAction)textFieldReturn:(id)sender
 {
 	[self changeArrayValue];
-	[playerEditTextBox resignFirstResponder];
+	[_playerEditTextBox resignFirstResponder];
 }
 
 - (IBAction)backgroundTouched:(id)sender
 {
 	[self changeArrayValue];
-	[playerEditTextBox resignFirstResponder];
+	[_playerEditTextBox resignFirstResponder];
 }
 
 - (void)changeArrayValue{
-	[arrayForDetailView replaceObjectAtIndex:rowForDetaiView withObject:[playerEditTextBox text]];
+	[arrayForDetailView replaceObjectAtIndex:rowForDetaiView withObject:[_playerEditTextBox text]];
 }
 
 - (IBAction)deletePlayer:(id)sender {
 	UIAlertView* mes=[[UIAlertView alloc] initWithTitle:@""
-				message:[NSString stringWithFormat:@"Are you sure you want to delete %@", [playerEditTextBox text]] delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Yes", nil];
+				message:[NSString stringWithFormat:@"Are you sure you want to delete %@", [_playerEditTextBox text]] delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Yes", nil];
 	[mes show];
 }
 
@@ -270,6 +371,28 @@ int initialSliderValue;
 	}
 }
 
+- (void) retrievePlayersInDatabase: (int) teamID{
+    const char *dbpath = [writableDBPath UTF8String];
+    sqlite3_stmt *statement;
+    if (sqlite3_open(dbpath, &cricketDB) == SQLITE_OK)
+    {
+        NSString *string = [NSString stringWithFormat: @"SELECT PlayerName FROM PLAYERS WHERE TeamID = %d", teamID];
+		const char *stmt = [string UTF8String];
+		sqlite3_prepare_v2(cricketDB, stmt, -1, &statement, NULL);
+        while (sqlite3_step(statement) == SQLITE_ROW) {
+            NSLog(@"\nAccess worked");
+            //Put players into away array
+            NSString *nameString = [NSString stringWithUTF8String:(char *)sqlite3_column_text(statement, 0)];
+            NSLog(@"Player : %@",nameString);
+            [playersInDatabase addObject: nameString];
+        }
+        sqlite3_finalize(statement);
+        sqlite3_close(cricketDB);
+    } else {
+        NSLog(@"\nCould not access DB");
+    }
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -287,13 +410,26 @@ int initialSliderValue;
 		[nextPlayerButton setEnabled:YES];
 	}
 	if(disableElements){
-		[playerEditTextBox setEnabled:NO];
+		[_playerEditTextBox setEnabled:NO];
 		[CaptainSlider setEnabled:NO];
 		[ViceCaptainSlider setEnabled:NO];
 		[WicketKeeperSlider setEnabled:NO];
 		[battingOrderSlider setEnabled:NO];
 		[bottomToolbar setHidden:YES];
 	}
+    
+    //Initialise the array to hold teams
+    playersInDatabase = [[NSMutableArray alloc] init];
+    //[self retrievePlayersInDatabase];
+    if(teamForDetailView == @"home"){
+        [self retrievePlayersInDatabase : homeTeamID];
+        NSLog(@"HOME");
+    }
+    else if(teamForDetailView == @"away"){
+        [self retrievePlayersInDatabase : awayTeamID];
+        NSLog(@"AWAY");
+    }
+    NSLog(@"%@",playersInDatabase);
 }
 
 - (void)viewDidUnload
@@ -308,6 +444,7 @@ int initialSliderValue;
 	[self setNextPlayerButton:nil];
 	[self setPreviousPlayerButton:nil];
 	[self setBottomToolbar:nil];
+    [self setStoredPlayersClicked:nil];
     [super viewDidUnload];
     // Release any retained subviews of the main view.
 }

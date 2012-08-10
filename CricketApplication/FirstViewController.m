@@ -237,10 +237,6 @@ bool awayButtonClicked;
     return [teamsInDatabase objectAtIndex:row];
 }
 
-- (void) selectRowForSelection: (UIPickerView *) pickerView{
-    
-}
-
 -(IBAction)textFieldReturn:(id)sender
 {
 	if([[_homeTeamEntered text] length] > 0)

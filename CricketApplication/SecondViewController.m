@@ -548,7 +548,7 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
     [self addHomePlayers];
     [self addAwayPlayers];
     
-    NSLog(@"The first time the view loaded h = %d , a = %d",hID,aID);
+    //NSLog(@"The first time the view loaded h = %d , a = %d",hID,aID);
 	
 	homeViceCaptain = 1;
 	awayViceCaptain = 1;
@@ -564,15 +564,15 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
 }
 
 - (void)viewDidAppear:(BOOL)animated {
-    NSLog(@"APPEAR!");
+    //NSLog(@"APPEAR!");
     
-    NSLog(@"In appear the view loaded h = %d , a = %d",hID,aID);
+    //NSLog(@"In appear the view loaded h = %d , a = %d",hID,aID);
     
     
     hID = homeTeamID;
     aID = awayTeamID;
     
-    NSLog(@"In appear second the view loaded h = %d , a = %d",hID,aID);
+    //NSLog(@"In appear second the view loaded h = %d , a = %d",hID,aID);
     [self getTeamIDs];
     
     if (hID != homeTeamID){
