@@ -313,10 +313,6 @@ int batterOutInt;
 				if(fieldStats[0][i] != 0)
 					fieldStats[0][i]--;
 			}
-			if (even)
-				even = NO;
-			else
-				even = YES;
 		}
 		if ((fieldStats[1][bowler]-(int)(fieldStats[1][bowler]))*10 == 6) {
 			fieldStats[1][bowler] -= 0.6;
@@ -350,11 +346,11 @@ int batterOutInt;
 
 - (IBAction)undo:(id)sender {
 	if (fieldStats[1][bowler] >= 0 && ballNo > 1) {
-		if (value > -1) {
-			
-		} else {
+		if (value <= -1) {
 			if (ballNo == 1)
 				fieldStats[1][bowler]--;
+			if (ballNo == 7)
+				[nextOverButton setHidden:YES];
 			ballNo--;
 			value = [self getBallValue];
 			if (value%2 == 0) even = YES; else even = NO;
@@ -383,29 +379,39 @@ int batterOutInt;
             {
                 noBalls --;
                 noBallLabel.text = [NSString stringWithFormat:@"%d", noBalls];
+				if ([batter1Active isHidden]) batStats[1][batter2]++;
+				else batStats[1][batter1]++;
             }
             if([firstChar isEqualToString:@"W"])
             {
                 wides --;
                 wideLabel.text = [NSString stringWithFormat:@"%d", wides];
+				if ([batter1Active isHidden]) batStats[1][batter2]++;
+				else batStats[1][batter1]++;
             }
             if([firstChar isEqualToString:@"B"])
             {
                 int toSubtract = [[deletedVal substringFromIndex:1] intValue];
                 byes -= toSubtract;
                 byeLabel.text = [NSString stringWithFormat:@"%d", byes];
+				if ([batter1Active isHidden]) batStats[1][batter2]++;
+				else batStats[1][batter1]++;
             }
             if([firstChar isEqualToString:@"L"])
             {
                 int toSubtract = [[deletedVal substringFromIndex:2] intValue];
                 legByes -= toSubtract;
                 legByeLabel.text = [NSString stringWithFormat:@"%d", legByes];
+				if ([batter1Active isHidden]) batStats[1][batter2]++;
+				else batStats[1][batter1]++;
             }
             if([firstChar isEqualToString:@"P"])
             {
                 int toSubtract = [[deletedVal substringFromIndex:1] intValue];
                 penalties -= toSubtract;
                 penLabel.text = [NSString stringWithFormat:@"%d", penalties];
+				if ([batter1Active isHidden]) batStats[1][batter2]++;
+				else batStats[1][batter1]++;
             }
             totLabel.text = [NSString stringWithFormat:@"%d", (noBalls + wides + byes + legByes +penalties) ];
 		}
@@ -445,26 +451,9 @@ int batterOutInt;
 	ball6.text = @"-";
 	[self turnLabelsBlack:sender];
 	[self changeBowler];
-	
-	/*if ((fieldStats[1][bowler]-(int)(fieldStats[1][bowler]))*10 == 6) {
-		fieldStats[1][bowler] -= 0.6;
-		fieldStats[1][bowler]++;
-	}
-	[self turnLabelsRed:sender];
-	[scoreLabel setText:[NSString stringWithFormat:@"%.0f/%d (%d Overs)", runs, wickets, overs]];
-	[batter1RunsLabel setText:[NSString stringWithFormat:@"%.0f", batStats[2][batter1]]];
-	[batter2RunsLabel setText:[NSString stringWithFormat:@"%.0f", batStats[2][batter2]]];
-	[batter1BallsLabel setText:[NSString stringWithFormat:@"%.0f", batStats[1][batter1]]];
-	[batter2BallsLabel setText:[NSString stringWithFormat:@"%.0f", batStats[1][batter2]]];
-	[oversLabel setText:[NSString stringWithFormat:@"%.1f", fieldStats[1][bowler]]];
-	[runsLabel setText:[NSString stringWithFormat:@"%.0f", fieldStats[3][bowler]]];
-	[maidensLabel setText:[NSString stringWithFormat:@"%.0f", fieldStats[2][bowler]/6]];
-	[wicketsLabel setText:[NSString stringWithFormat:@"%.0f", fieldStats[4][bowler]]];
-	if(fieldStats[1][bowler] > 0)
-	economy = fieldStats[3][bowler]/fieldStats[1][bowler];
-	[economyLabel setText:[NSString stringWithFormat:@"%.2f", economy]];
-
-	[self changeBatterFacingBowler];*/
+	if (even)
+		even = NO;
+	[self changeBatterFacingBowler];
 	[nextOverButton setHidden:YES];
 }
 
