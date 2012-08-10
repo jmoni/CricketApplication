@@ -367,12 +367,47 @@ int batterOutInt;
 			else 
 				fieldStats[1][bowler] -= 0.1;
 			fieldStats[3][bowler] -= value;
-            
+            NSString *deletedVal = [NSString stringWithFormat:@"%@", [fallOfWickets objectAtIndex:[fallOfWickets count]-1]];
             [fallOfWickets removeObjectAtIndex:[fallOfWickets count]-1];
+            NSString *firstChar = [deletedVal substringToIndex:1];
+            if([firstChar isEqualToString:@"N"])
+            {
+                noBalls --;
+                noBallLabel.text = [NSString stringWithFormat:@"%d", noBalls];
+            }
+            if([firstChar isEqualToString:@"W"])
+            {
+                wides --;
+                wideLabel.text = [NSString stringWithFormat:@"%d", wides];
+            }
+            if([firstChar isEqualToString:@"B"])
+            {
+                int toSubtract = [[deletedVal substringFromIndex:1] intValue];
+                byes -= toSubtract;
+                byeLabel.text = [NSString stringWithFormat:@"%d", byes];
+            }
+            if([firstChar isEqualToString:@"L"])
+            {
+                int toSubtract = [[deletedVal substringFromIndex:2] intValue];
+                legByes -= toSubtract;
+                legByeLabel.text = [NSString stringWithFormat:@"%d", legByes];
+            }
+            if([firstChar isEqualToString:@"P"])
+            {
+                int toSubtract = [[deletedVal substringFromIndex:1] intValue];
+                penalties -= toSubtract;
+                penLabel.text = [NSString stringWithFormat:@"%d", penalties];
+            }
+            totLabel.text = [NSString stringWithFormat:@"%d", (noBalls + wides + byes + legByes +penalties) ];
 		}
 		[self resetBallValueToString:@"-"];
 		value = -1;
         [self turnLabelsBlack:sender];
+        
+        ballNo --;
+        [self turnLabelsGreen:sender];
+        ballNo ++;
+        
 		[self turnLabelsRed:sender];
 		[scoreLabel setText:[NSString stringWithFormat:@"%.0f/%d (%d Overs)", runs, wickets, overs]];
 		[batter1RunsLabel setText:[NSString stringWithFormat:@"%.0f", batStats[2][batter1]]];
@@ -582,12 +617,12 @@ int batterOutInt;
 
 -(IBAction)extraNoBall:(id)sender{
     noBallAdditions=1;
-
-    totLabel.text = [NSString stringWithFormat:@"%d%@%d", (noBalls+wides+byes+legByes+penalties),@"+",(noBallAdditions+wideAdditions+byeAdditions+legByeAdditions+penaltiesAdditions)];   
+    
     wideAdditions = 0;
     byeAdditions =0;
     legByeAdditions = 0;
     penaltiesAdditions = 0;
+    totLabel.text = [NSString stringWithFormat:@"%d%@%d", (noBalls+wides+byes+legByes+penalties),@"+",(noBallAdditions+wideAdditions+byeAdditions+legByeAdditions+penaltiesAdditions)]; 
     wideLabel.textColor = [UIColor  blackColor];
     byeLabel.textColor = [UIColor  blackColor];
     legByeLabel.textColor = [UIColor  blackColor];
@@ -602,11 +637,12 @@ int batterOutInt;
 }
 -(IBAction)extraWide:(id)sender{
     wideAdditions=1;
-    totLabel.text = [NSString stringWithFormat:@"%d%@%d", (noBalls+wides+byes+legByes+penalties),@"+",(noBallAdditions+wideAdditions+byeAdditions+legByeAdditions+penaltiesAdditions)];
+    
     noBallAdditions = 0;
     byeAdditions =0;
     legByeAdditions = 0;
     penaltiesAdditions = 0;
+    totLabel.text = [NSString stringWithFormat:@"%d%@%d", (noBalls+wides+byes+legByes+penalties),@"+",(noBallAdditions+wideAdditions+byeAdditions+legByeAdditions+penaltiesAdditions)];
     noBallLabel.textColor = [UIColor blackColor];
     byeLabel.textColor = [UIColor  blackColor];
     legByeLabel.textColor = [UIColor  blackColor];
@@ -1238,26 +1274,41 @@ int batterOutInt;
     }
     else if (ballNo == 2)
     {
+        ball1.textColor =[UIColor colorWithRed:.1 green:.5 blue:0 alpha:1.0];
         ball2.textColor =[UIColor colorWithRed:.1 green:.5 blue:0 alpha:1.0];
 
     }
     else if (ballNo == 3)
     {
+        ball1.textColor =[UIColor colorWithRed:.1 green:.5 blue:0 alpha:1.0];
+        ball2.textColor =[UIColor colorWithRed:.1 green:.5 blue:0 alpha:1.0];
         ball3.textColor =[UIColor colorWithRed:.1 green:.5 blue:0 alpha:1.0];
 
     }
     else if (ballNo == 4)
     {
+        ball1.textColor =[UIColor colorWithRed:.1 green:.5 blue:0 alpha:1.0];
+        ball2.textColor =[UIColor colorWithRed:.1 green:.5 blue:0 alpha:1.0];
+        ball3.textColor =[UIColor colorWithRed:.1 green:.5 blue:0 alpha:1.0];
         ball4.textColor =[UIColor colorWithRed:.1 green:.5 blue:0 alpha:1.0];
 
     }
     else if (ballNo == 5)
     {
+        ball1.textColor =[UIColor colorWithRed:.1 green:.5 blue:0 alpha:1.0];
+        ball2.textColor =[UIColor colorWithRed:.1 green:.5 blue:0 alpha:1.0];
+        ball3.textColor =[UIColor colorWithRed:.1 green:.5 blue:0 alpha:1.0];
+        ball4.textColor =[UIColor colorWithRed:.1 green:.5 blue:0 alpha:1.0];
         ball5.textColor =[UIColor colorWithRed:.1 green:.5 blue:0 alpha:1.0];
 
     }
     else if (ballNo == 6)
     {
+        ball1.textColor =[UIColor colorWithRed:.1 green:.5 blue:0 alpha:1.0];
+        ball2.textColor =[UIColor colorWithRed:.1 green:.5 blue:0 alpha:1.0];
+        ball3.textColor =[UIColor colorWithRed:.1 green:.5 blue:0 alpha:1.0];
+        ball4.textColor =[UIColor colorWithRed:.1 green:.5 blue:0 alpha:1.0];
+        ball5.textColor =[UIColor colorWithRed:.1 green:.5 blue:0 alpha:1.0];
         ball6.textColor =[UIColor colorWithRed:.1 green:.5 blue:0 alpha:1.0];
     }
 }
