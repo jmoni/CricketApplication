@@ -9,7 +9,7 @@
 #import "DatabaseController.h"
 #import "ThirdViewController.h"
 #import "sqlite3.h"
-#include "SecondViewController.h"e
+#include "SecondViewController.h"
 #include "FirstViewController.h"
 
 @interface DatabaseController ()
