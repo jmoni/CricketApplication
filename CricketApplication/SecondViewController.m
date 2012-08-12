@@ -246,12 +246,28 @@ int aID;
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle
 forRowAtIndexPath:(NSIndexPath *)indexPath {
 	
+    if([tableView isEqual:homePlayersTable]){
+        NSString *a = [homePlayersArray objectAtIndex:indexPath.row];
+        NSLog(@"Remove the name : %@",a);
+        //[playersInDatabase addObject:a];
+        NSLog(@"Add players %@", playersInDatabase);
+    }
+    else if([tableView isEqual:awayPlayersTable]){
+        NSString *a = [awayPlayersArray objectAtIndex:indexPath.row];
+        NSLog(@"Remove the name : %@",a);
+        //[playersInDatabase addObject:a];
+        NSLog(@"Add players %@", playersInDatabase);
+    }
+    
+    
+    
     if (editingStyle == UITableViewCellEditingStyleDelete && [tableView isEqual:homePlayersTable]) {
 		if (homeCaptain > indexPath.row) homeCaptain--;
 		if (homeViceCaptain > indexPath.row) homeViceCaptain--;
 		if (homeWicketKeeper > indexPath.row) homeWicketKeeper--;
         [homePlayersArray removeObjectAtIndex:indexPath.row];
 		[homePlayersTable reloadData];
+        
     } else if (editingStyle == UITableViewCellEditingStyleDelete && [tableView isEqual:awayPlayersTable]) {
         if (awayCaptain > indexPath.row) awayCaptain--;
 		if (awayViceCaptain > indexPath.row) awayViceCaptain--;
@@ -365,9 +381,12 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
 		[homePlayersArray addObject:[NSString stringWithFormat:@"Player %d", homePlayersCount]];
 		[homePlayersTable reloadData];
 		homePlayersCount++;
+        //[displayPlayers addObject:[NSString stringWithFormat:@"Player %d", homePlayersCount]];
+        
 	} else if ([sender isEqual:awayNavBarAddButton]) {
 		[awayPlayersArray addObject:[NSString stringWithFormat:@"Player %d", awayPlayersCount]];
 		[awayPlayersTable reloadData];
+        //[displayPlayers addObject:[NSString stringWithFormat:@"Player %d", homePlayersCount]];
 		awayPlayersCount++;
 	}
 
@@ -567,7 +586,6 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
     //NSLog(@"APPEAR!");
     
     //NSLog(@"In appear the view loaded h = %d , a = %d",hID,aID);
-    
     
     hID = homeTeamID;
     aID = awayTeamID;

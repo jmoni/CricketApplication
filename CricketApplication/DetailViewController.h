@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 
 NSMutableArray *playersInDatabase;
+NSMutableArray *displayPlayers;
 
 @interface DetailViewController : UIViewController <UITextFieldDelegate, UIScrollViewDelegate, UIPickerViewDelegate, UIPickerViewDataSource>
 

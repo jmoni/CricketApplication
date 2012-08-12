@@ -34,16 +34,17 @@ int initialSliderValue;
 int height;
 UIView *newView;
 
-- (IBAction)storedPlayersAction:(id)sender{
-    
-}
 
-- (IBAction)showStoredTeams: (id)sender{
-    /*
-    _homeTeamEntered.enabled = false;
-    _awayTeamEntered.enabled = false;
-    _storedAwayTeamButton.enabled = false;
-    _storedHomeTeamButton.enabled = false;*/
+
+- (IBAction)storedPlayersAction: (id)sender{
+    NSLog(@"stored");
+    _playerEditTextBox.enabled = false;
+    _storedPlayersClicked.enabled = false;
+    battingOrderSlider.enabled = false;
+    CaptainSlider.enabled = false;
+    ViceCaptainSlider.enabled = false;
+    
+    _playerEditTextBox.text = [displayPlayers objectAtIndex:0];
     
     height = 255;
     NSString *titleString;
@@ -95,28 +96,27 @@ UIView *newView;
 
 - (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component
 {
-    _playerEditTextBox.text = [playersInDatabase objectAtIndex:row];
-    //homeTeam = _homeTeamEntered.text;
-    //NSLog(@"%@",[teamsInDatabase objectAtIndex:row]);
+    _playerEditTextBox.text = [displayPlayers objectAtIndex:row];
 }
 
 //Number of rows in picker view
 - (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component{
-    return [playersInDatabase count];
+    return [displayPlayers count];
 }
 
 //Values in picker view
 - (NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component;
 {
-    return [playersInDatabase objectAtIndex:row];
+    return [displayPlayers objectAtIndex:row];
 }
 
 
 -(IBAction)hideActionSheet:(UIBarButtonItem *)_infoButtonItem{
-    /*_homeTeamEntered.enabled = true;
-    _awayTeamEntered.enabled = true;
-    _storedAwayTeamButton.enabled = true;
-    _storedHomeTeamButton.enabled = true;*/
+    _playerEditTextBox.enabled = true;
+    _storedPlayersClicked.enabled = true;
+    battingOrderSlider.enabled = true;
+    CaptainSlider.enabled = true;
+    ViceCaptainSlider.enabled = true;
 	
 	//animate onto screen
 	CGRect temp = newView.frame;
@@ -127,6 +127,7 @@ UIView *newView;
     newView.frame = temp;
     [UIView commitAnimations];
 	height = CGRectGetMaxY(self.view.bounds);
+    [self changeArrayValue];
 }
 
 - (IBAction)textFieldReturn:(id)sender
@@ -393,8 +394,122 @@ UIView *newView;
     }
 }
 
+- (void) editPlayersInArray{
+    
+    //NSLog(@"%d",[playersInDatabase count]);
+    //NSLog(@"%d",[homePlayersArray count]);
+    
+    
+    if (teamForDetailView == @"home"){
+        for (int i=0 ; i <[playersInDatabase count]; i++){
+            for (int j=0 ; j <[homePlayersArray count]; j++){
+                NSString *a = (NSString *) [playersInDatabase objectAtIndex:i];
+                NSString *b = (NSString *) [homePlayersArray objectAtIndex:j];
+                if ([a isEqualToString:b]){
+                    NSLog(@"REMOVE");
+                    [displayPlayers replaceObjectAtIndex:i withObject:@"Remove"];
+                }
+            }
+        }
+    }
+    else if (teamForDetailView == @"away"){
+        for (int i=0 ; i <[playersInDatabase count]; i++){
+            for (int j=0 ; j <[awayPlayersArray count]; j++){
+                NSString *a = (NSString *) [playersInDatabase objectAtIndex:i];
+                NSString *b = (NSString *) [awayPlayersArray objectAtIndex:j];
+                if ([a isEqualToString:b]){
+                    NSLog(@"REMOVE");
+                    [displayPlayers replaceObjectAtIndex:i withObject:@"Remove"];
+                }
+            }
+        }
+    }
+    
+    //NSLog(@"%d",[displayPlayers count]);
+    
+    //Remove the strings "remove' from array
+    for (int i=0 ; i<[displayPlayers count]; i++){
+        NSLog(@"%d",i);
+        if([displayPlayers objectAtIndex:i] == @"Remove"){
+            NSLog(@"Player Remove %d: %@",i,[displayPlayers objectAtIndex:i]);
+            [displayPlayers removeObjectAtIndex:i];
+            i--;
+        }
+    }
+    
+    
+    //Hide click button if the array is empty
+    int c = [displayPlayers count];
+    if (c < 1) _storedPlayersClicked.hidden = true;
+    else _storedPlayersClicked.hidden = false;
+    //NSLog(@"\n\n\n\n\n\ndisplayPlayers NEW%@\n\n\n\n\n\n",displayPlayers);
+
+
+}
+
+//Return teams in database and put into array
+- (int)countPlayersInDatabase : (int) teamID{
+    const char *dbpath = [writableDBPath UTF8String];
+    sqlite3_stmt *statement;
+    int count = 0;
+    if (sqlite3_open(dbpath, &cricketDB) == SQLITE_OK)
+    {
+        NSString *string = [NSString stringWithFormat: @"SELECT COUNT(PlayerName) FROM Players WHERE TeamID = %d", teamID];
+		const char *stmt = [string UTF8String];
+		sqlite3_prepare_v2(cricketDB, stmt, -1, &statement, NULL);
+        while (sqlite3_step(statement) == SQLITE_ROW) {
+            NSLog(@"\nAccess worked");
+            //Put players into away array
+            count = sqlite3_column_int(statement, 0);
+        }
+        sqlite3_finalize(statement);
+        sqlite3_close(cricketDB);
+    } else {
+        NSLog(@"\nCould not access DB");
+    }
+    return count;
+}
+
 - (void)viewDidLoad
 {
+    int c;
+    
+    //Initialise the array to hold teams
+    playersInDatabase = [[NSMutableArray alloc] init];
+    
+    //Fill database!
+    if(teamForDetailView == @"home"){
+        [self retrievePlayersInDatabase : homeTeamID];
+    }
+    else if(teamForDetailView == @"away"){
+        [self retrievePlayersInDatabase : awayTeamID];
+    }
+    
+    //Count number of players in database
+    c = [playersInDatabase count];
+    if (c < 1) _storedPlayersClicked.hidden = true;
+    else _storedPlayersClicked.hidden = false;
+    
+    //Make the display players array equal to the playersInDatabase array
+    displayPlayers = [[NSMutableArray alloc] initWithArray:playersInDatabase copyItems:YES];
+    
+    if(teamForDetailView == @"home"){
+        c = [self countPlayersInDatabase: homeTeamID];
+    }
+    else if(teamForDetailView == @"away"){
+        c = [self countPlayersInDatabase: awayTeamID];
+    }
+    
+    if (c < 1){
+        _storedPlayersClicked.hidden = true;
+    }
+    else{
+        _storedPlayersClicked.hidden = false;
+    }
+    
+    //Edit display players array
+    [self editPlayersInArray];
+
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
 	NavBar.title = [arrayForDetailView objectAtIndex:rowForDetaiView];
@@ -417,19 +532,6 @@ UIView *newView;
 		[battingOrderSlider setEnabled:NO];
 		[bottomToolbar setHidden:YES];
 	}
-    
-    //Initialise the array to hold teams
-    playersInDatabase = [[NSMutableArray alloc] init];
-    //[self retrievePlayersInDatabase];
-    if(teamForDetailView == @"home"){
-        [self retrievePlayersInDatabase : homeTeamID];
-        NSLog(@"HOME");
-    }
-    else if(teamForDetailView == @"away"){
-        [self retrievePlayersInDatabase : awayTeamID];
-        NSLog(@"AWAY");
-    }
-    NSLog(@"%@",playersInDatabase);
 }
 
 - (void)viewDidUnload
@@ -448,6 +550,7 @@ UIView *newView;
     [super viewDidUnload];
     // Release any retained subviews of the main view.
 }
+
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
