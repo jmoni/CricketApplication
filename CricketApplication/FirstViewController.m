@@ -37,6 +37,8 @@ UIView *newView;
 UITextField *activeField;
 bool homeButtonClicked;
 bool awayButtonClicked;
+int homeTeamInt;
+int awayTeamInt;
 
 
 -(IBAction)showActionSheet:(id)sender {
@@ -102,6 +104,7 @@ bool awayButtonClicked;
     //NSLog(@"HOME");
     _homeTeamEntered.text = [teamsInDatabase objectAtIndex:0];
     homeTeam = _homeTeamEntered.text;
+    NSLog(@"%d",homeTeamInt);
     //NSLog(@"Home Team in first view %@",homeTeam);
 }
 
@@ -111,6 +114,7 @@ bool awayButtonClicked;
     //NSLog(@"AWAY");
     _awayTeamEntered.text = [teamsInDatabase objectAtIndex:0];
     awayTeam = _awayTeamEntered.text;
+    [_chooseTeam selectRow:awayTeamInt inComponent:0 animated:YES];
     //NSLog(@"Away Team in first view %@",awayTeam);
 }
 
@@ -192,7 +196,17 @@ bool awayButtonClicked;
     _chooseTeam.delegate = self;
     _chooseTeam.dataSource = self;
     _chooseTeam.showsSelectionIndicator = YES;
-	
+
+   //Automatically scroll to the team already choosen
+    if (homeButtonClicked){
+        [_chooseTeam selectRow:homeTeamInt inComponent:0 animated:YES];
+        [self pickerView:_chooseTeam didSelectRow:homeTeamInt inComponent:0];
+    }
+    else if (awayButtonClicked){
+        [_chooseTeam selectRow:awayTeamInt inComponent:0 animated:YES];
+        [self pickerView:_chooseTeam didSelectRow:awayTeamInt inComponent:0];
+    }
+    
     //add popup view
     [newView addSubview:toolbar];
     [newView addSubview:_chooseTeam];
@@ -218,10 +232,12 @@ bool awayButtonClicked;
     if (homeButtonClicked){
         _homeTeamEntered.text = [teamsInDatabase objectAtIndex:row];
         homeTeam = _homeTeamEntered.text;
+        homeTeamInt = row;  //Int to set for automatic scroll in team picker
     }
     else if (awayButtonClicked){
         _awayTeamEntered.text = [teamsInDatabase objectAtIndex:row];
         awayTeam = _awayTeamEntered.text;
+        awayTeamInt = row;  //Int to set for automatic scroll in team picker
     }
     //NSLog(@"%@",[teamsInDatabase objectAtIndex:row]);
 }
@@ -389,6 +405,9 @@ bool awayButtonClicked;
     homeButtonClicked = NO;
     awayButtonClicked = NO;
     
+    homeTeamInt = 0;
+    awayTeamInt = 1;
+    
     //Initialise the array to hold teams
     teamsInDatabase = [[NSMutableArray alloc] init];
     
@@ -428,6 +447,8 @@ bool awayButtonClicked;
 		[_switcher setEnabled:NO];
 		[_overSlide setEnabled:NO];
 		[_timeSlide setEnabled:NO];
+		[_storedAwayTeamButton setEnabled:NO];
+		[_storedHomeTeamButton setEnabled:NO];
 	}
 }
 

@@ -33,10 +33,6 @@ int batter1;
 int batter2;
 int bowler;
 BOOL even;
-//int batter1Balls = 0;
-//int batter2Balls = 0;
-//int batter1Runs = 0;
-//int batter2Runs = 0;
 float runs = 0;
 int wickets = 0;
 int overs;
@@ -51,11 +47,9 @@ int legByes = 0;
 int legByeAdditions = 0;
 int penalties = 0;
 int penaltiesAdditions = 0;
-//int total = 0;
 int fieldingTeamSize;
 int battingTeamSize;
 float fieldStats[5][20];
-float batStats[4][20];
 int lastBowler;
 int bonusRuns = 0;
 NSMutableArray *fallOfWickets;
@@ -96,6 +90,7 @@ NSMutableArray *allBallLabels;
 @synthesize scoreLabel;
 @synthesize ballsScrollView;
 @synthesize nextOverButton;
+@synthesize enterButton;
 @synthesize batterName1;
 @synthesize batterName2;
 @synthesize teamName;
@@ -142,6 +137,17 @@ NSMutableArray *allBallLabels;
         ball1.textColor = [UIColor redColor];
 		//[bowlerButton setEnabled:NO];
 	}
+}
+
+-(int)outTypeToInt{
+	for (int i = 0; i < [waysToBeOut count]; i++){
+		if ([outType isEqualToString:[waysToBeOut objectAtIndex:i]]){
+			if (i == 1) return 100+outBy;
+			else if (i == 4) return 200+outBy;
+			else return i;
+		}
+	}
+	return -1;
 }
 
 -(IBAction)noRuns:(id)sender{
@@ -234,12 +240,14 @@ NSMutableArray *allBallLabels;
 				//batter1Balls++;
 				batStats[1][batter1]++;
 				batStats[0][batter1] = 1;
+				batStats[3][batter1] = [self outTypeToInt];
 				[self removePlayerWhenOut:batter1];
 				[self showActionSheet:batterName1];
 			} else {
 				//batter2Balls++;
 				batStats[1][batter2]++;
 				batStats[0][batter2] = 1;
+				batStats[3][batter2] = [self outTypeToInt];
 				[self removePlayerWhenOut:batter2];
 				[self showActionSheet:batterName2];
 			}
@@ -250,12 +258,14 @@ NSMutableArray *allBallLabels;
 				//batter1Balls++;
 				batStats[1][batter1]++;
 				batStats[0][batter1] = 1;
+				batStats[3][batter1] = [self outTypeToInt];
 				[self removePlayerWhenOut:batter1];
 				[self showActionSheet:batterName1];
 			} else {
 				//batter2Balls++;
 				batStats[1][batter2]++;
 				batStats[0][batter2] = 1;
+				batStats[3][batter2] = [self outTypeToInt];
 				[self removePlayerWhenOut:batter2];
 				[self showActionSheet:batterName2];
 			}
@@ -705,6 +715,8 @@ NSMutableArray *allBallLabels;
     batterName1.enabled = false;
     batterName2.enabled = false;
     height = 255;
+	NSString *titleString;
+	
     //create new view
     newView = [[UIView alloc] initWithFrame:CGRectMake(0, 200, 320, height)];
     newView.backgroundColor = [UIColor colorWithWhite:1 alpha:1];
@@ -715,9 +727,11 @@ NSMutableArray *allBallLabels;
     
     //add button
     _infoButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Cancel" style:UIBarButtonItemStyleDone target:self action:@selector(hideActionSheet:)];
-
+	UIBarButtonItem *spacer = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:self action:nil];
+	titleString = @"Extras";
+	UIBarButtonItem *titleButton = [[UIBarButtonItem alloc] initWithTitle:titleString style:UIBarButtonItemStylePlain target:nil action:nil];
 	
-	toolbar.items = [NSArray arrayWithObjects:_infoButtonItem, nil];
+	toolbar.items = [NSArray arrayWithObjects:_infoButtonItem, spacer, titleButton, spacer, nil];
         
     UIButton *nB = [UIButton buttonWithType:UIButtonTypeRoundedRect];
     [nB addTarget:self
@@ -775,7 +789,8 @@ NSMutableArray *allBallLabels;
 
 -(IBAction)showOutOptions:(id)sender {
     height = 255;
-	[self turnLabelsOrange:sender];
+	NSString *titleString;
+	outPicker = YES;
 	
     //create new view
     newView = [[UIView alloc] initWithFrame:CGRectMake(0, 200, 320, height)];
@@ -786,14 +801,15 @@ NSMutableArray *allBallLabels;
     toolbar.barStyle = UIBarStyleBlack;
     
     //add button
-    _infoButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Cancel" style:UIBarButtonItemStyleDone target:self action:@selector(hideActionSheet:)];
-    
-	UIBarButtonItem *spacer = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:self action:nil];
-	
+    _infoButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Cancel" style:UIBarButtonItemStyleDone target:self action:@selector(hideActionSheetB:)];
 	UIBarButtonItem *confirm = [[UIBarButtonItem alloc] initWithTitle:@"Confirm" style:UIBarButtonItemStyleDone target:self action:@selector(hideActionSheet:)];
+
 	
-	toolbar.items = [NSArray arrayWithObjects:_infoButtonItem, spacer, confirm, nil];
-    
+	UIBarButtonItem *spacer = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:self action:nil];
+	titleString = @"Wicket";
+	UIBarButtonItem *titleButton = [[UIBarButtonItem alloc] initWithTitle:titleString style:UIBarButtonItemStylePlain target:nil action:nil];
+	
+	toolbar.items = [NSArray arrayWithObjects:_infoButtonItem, spacer, titleButton, spacer, confirm, nil];
     
 	UIPickerView *batterOut= [[UIPickerView alloc] initWithFrame:CGRectMake(0, 40, 140, 250)];
 	[batterOut setTag:30];
@@ -827,9 +843,154 @@ NSMutableArray *allBallLabels;
     [UIView commitAnimations];
 }
 
+-(IBAction)showOutByPicker:(id)sender typeOfOut:(NSString *)string{
+	height = 255;
+	NSString *titleString;
+	
+    //create new view
+    newView = [[UIView alloc] initWithFrame:CGRectMake(0, 200, 320, height)];
+    newView.backgroundColor = [UIColor colorWithWhite:1 alpha:1];
+    
+    //add toolbar
+    UIToolbar * toolbar = [[UIToolbar alloc] initWithFrame: CGRectMake(0, 0, 320, 40)];
+    toolbar.barStyle = UIBarStyleBlack;
+    
+    //add button
+    _infoButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Confirm" style:UIBarButtonItemStyleDone target:self action:@selector(hideActionSheet:)];
+	
+	UIBarButtonItem *spacer = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:self action:nil];
+	titleString = [NSString stringWithFormat:@"%@ By", string];
+	UIBarButtonItem *titleButton = [[UIBarButtonItem alloc] initWithTitle:titleString style:UIBarButtonItemStylePlain target:nil action:nil];
+	
+	toolbar.items = [NSArray arrayWithObjects:_infoButtonItem, spacer, titleButton, spacer, nil];
+    
+	UIPickerView *outBy= [[UIPickerView alloc] initWithFrame:CGRectMake(0, 40, 320, 250)];
+	[outBy setTag:32];
+	outBy.hidden = false;
+    outBy.delegate = self;
+    outBy.dataSource = self;
+    outBy.showsSelectionIndicator = YES;
+	[self selectRowForSelection:outBy];
+	
+    //add popup view
+    [newView addSubview:toolbar];
+    [newView addSubview:outBy];
+    [self.view addSubview:newView];
+    
+    //animate it onto the screen
+    CGRect temp = newView.frame;
+    temp.origin.y = CGRectGetMaxY(self.view.bounds);
+    newView.frame = temp;
+    [UIView beginAnimations:nil context:nil];
+    temp.origin.y -= height;
+    newView.frame = temp;
+    [UIView commitAnimations];
+}
+
+-(IBAction)byeCalc:(id)sender string:(NSString *)identifier{
+    height = 255;
+	NSString *titleString;
+	
+    newView = [[UIView alloc] initWithFrame:CGRectMake(0, 200, 320, height)];
+    newView.backgroundColor = [UIColor colorWithWhite:1 alpha:1];
+    
+    //add toolbar
+    UIToolbar * toolbar = [[UIToolbar alloc] initWithFrame: CGRectMake(0, 0, 320, 40)];
+    toolbar.barStyle = UIBarStyleBlack;
+    
+    //add button
+    _infoButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Back" style:UIBarButtonItemStyleDone target:self action:@selector (showExtrasOptions:)];
+    UIBarButtonItem *spacer = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:self action:nil];
+    UIBarButtonItem *enter = [[UIBarButtonItem alloc]
+                              initWithTitle:@"Done" style:UIBarButtonItemStyleDone target:self action:@selector(addExtras:)];
+	titleString = @"No. of Extras";
+	
+	UIBarButtonItem *titleButton = [[UIBarButtonItem alloc] initWithTitle:titleString style:UIBarButtonItemStylePlain target:nil action:nil];
+	
+	
+	toolbar.items = [NSArray arrayWithObjects:_infoButtonItem,spacer, titleButton, spacer, enter, nil];
+    //add popup view
+    [newView addSubview:toolbar];
+    [self.view addSubview:newView];
+    NSString *title = [@"+1 " stringByAppendingString: identifier];
+    UIButton *plusOne = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+    [plusOne addTarget:self
+                action:@selector(byePlusOne:)
+      forControlEvents:UIControlEventTouchDown];
+    [plusOne setTitle:title forState:UIControlStateNormal];
+    plusOne.frame = CGRectMake(30.0, 50.0, 80.0, 40.0);
+    [newView addSubview:plusOne];
+    
+    title = [@"4 " stringByAppendingString: identifier];
+    UIButton *four = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+    [four addTarget:self
+			 action:@selector(fourBye:)
+   forControlEvents:UIControlEventTouchDown];
+    [four setTitle:title forState:UIControlStateNormal];
+    four.frame = CGRectMake(120.0, 50.0, 80.0, 40.0);
+    [newView addSubview:four];
+    
+    
+    title = [@"6 " stringByAppendingString: identifier];
+    UIButton *six = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+    [six addTarget:self
+            action:@selector(sixBye:)
+  forControlEvents:UIControlEventTouchDown];
+    [six setTitle:title forState:UIControlStateNormal];
+    six.frame = CGRectMake(210.0, 50.0, 80.0, 40.0);
+    [newView addSubview:six];
+    
+    UIButton *back = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+    [back addTarget:self
+			 action:@selector(showExtrasOptions:)
+   forControlEvents:UIControlEventTouchDown];
+    [back setTitle:@"Back" forState:UIControlStateNormal];
+    back.frame = CGRectMake(85.0, 100.0, 70.0, 40.0);
+    [newView addSubview:back];
+    
+    UIButton *confirm = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+    [confirm addTarget:self
+                action:@selector(addExtras:)
+	  forControlEvents:UIControlEventTouchDown];
+    [confirm setTitle:@"Confirm" forState:UIControlStateNormal];
+    confirm.frame = CGRectMake(165.0, 100.0, 70.0, 40.0);
+    [newView addSubview:confirm];
+    if ([identifier isEqualToString:@"Bye"])
+    {
+        [confirm setTag:1];
+        [enter setTag:1];
+    }
+    else if ([identifier isEqualToString:@"Leg Bye"])
+    {
+        [confirm setTag:2];
+        [enter setTag:2];
+    }
+    else if ([identifier isEqualToString:@"Pen"])
+    {
+        [confirm setTag:3];
+        [enter setTag:3];
+    }
+	
+    UILabel *extras = [[UILabel alloc] initWithFrame:CGRectMake(100.0, 150.0, 90.0,20.0)];
+    extras.text = @"Extras:";
+    [newView addSubview: extras];
+    
+    runningTotal = [[UILabel alloc] initWithFrame:CGRectMake(160.0, 150.0, 40.0,20.0)];
+    [newView addSubview: runningTotal];
+    
+    //animate it onto the screen
+    CGRect temp = newView.frame;
+    temp.origin.y = CGRectGetMaxY(self.view.bounds);
+    newView.frame = temp;
+    [UIView beginAnimations:nil context:nil];
+    temp.origin.y -= height;
+    newView.frame = temp;
+    [UIView commitAnimations];
+	
+}
+
 -(IBAction)extraNoBall:(id)sender{
     noBallAdditions=1;
-    
     wideAdditions = 0;
     byeAdditions =0;
     legByeAdditions = 0;
@@ -880,101 +1041,6 @@ NSMutableArray *allBallLabels;
     [self byeCalc:sender string:@"Pen"];
 }
 
--(IBAction)byeCalc:(id)sender string:(NSString *)identifier{
-    height = 255;
-    newView = [[UIView alloc] initWithFrame:CGRectMake(0, 200, 320, height)];
-    newView.backgroundColor = [UIColor colorWithWhite:1 alpha:1];
-    
-    //add toolbar
-    UIToolbar * toolbar = [[UIToolbar alloc] initWithFrame: CGRectMake(0, 0, 320, 40)];
-    toolbar.barStyle = UIBarStyleBlack;
-    
-    //add button
-    _infoButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Back" style:UIBarButtonItemStyleDone target:self action:@selector (showExtrasOptions:)];
-    UIBarButtonItem *spacer = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:self action:nil];
-    UIBarButtonItem *enter = [[UIBarButtonItem alloc]
-                              initWithTitle:@"Done" style:UIBarButtonItemStyleDone target:self action:@selector(addExtras:)];
-	
-	toolbar.items = [NSArray arrayWithObjects:_infoButtonItem,spacer,enter, nil];
-    //add popup view
-    [newView addSubview:toolbar];
-    [self.view addSubview:newView];
-    NSString *title = [@"+1 " stringByAppendingString: identifier];
-    UIButton *plusOne = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-    [plusOne addTarget:self
-                action:@selector(byePlusOne:)
-      forControlEvents:UIControlEventTouchDown];
-    [plusOne setTitle:title forState:UIControlStateNormal];
-    plusOne.frame = CGRectMake(30.0, 50.0, 80.0, 40.0);
-    [newView addSubview:plusOne];
-    
-    title = [@"4 " stringByAppendingString: identifier];
-    UIButton *four = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-    [four addTarget:self
-                action:@selector(fourBye:)
-      forControlEvents:UIControlEventTouchDown];
-    [four setTitle:title forState:UIControlStateNormal];
-    four.frame = CGRectMake(120.0, 50.0, 80.0, 40.0);
-    [newView addSubview:four];
-    
-    
-    title = [@"6 " stringByAppendingString: identifier];
-    UIButton *six = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-    [six addTarget:self
-            action:@selector(sixBye:)
-      forControlEvents:UIControlEventTouchDown];
-    [six setTitle:title forState:UIControlStateNormal];
-    six.frame = CGRectMake(210.0, 50.0, 80.0, 40.0);
-    [newView addSubview:six];
-    
-    UIButton *back = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-    [back addTarget:self
-            action:@selector(showExtrasOptions:)
-  forControlEvents:UIControlEventTouchDown];
-    [back setTitle:@"Back" forState:UIControlStateNormal];
-    back.frame = CGRectMake(85.0, 100.0, 70.0, 40.0);
-    [newView addSubview:back];
-    
-    UIButton *confirm = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-    [confirm addTarget:self
-                action:@selector(addExtras:)
-  forControlEvents:UIControlEventTouchDown];
-    [confirm setTitle:@"Confirm" forState:UIControlStateNormal];
-    confirm.frame = CGRectMake(165.0, 100.0, 70.0, 40.0);
-    [newView addSubview:confirm];
-    if ([identifier isEqualToString:@"Bye"])
-    {
-        [confirm setTag:1];
-        [enter setTag:1];
-    }
-    else if ([identifier isEqualToString:@"Leg Bye"])
-    {
-        [confirm setTag:2];
-        [enter setTag:2];
-    }
-    else if ([identifier isEqualToString:@"Pen"])
-    {
-        [confirm setTag:3];
-        [enter setTag:3];
-    }
-
-    UILabel *extras = [[UILabel alloc] initWithFrame:CGRectMake(100.0, 150.0, 90.0,20.0)];
-    extras.text = @"Extras:";
-    [newView addSubview: extras];
-    
-    runningTotal = [[UILabel alloc] initWithFrame:CGRectMake(160.0, 150.0, 40.0,20.0)];
-    [newView addSubview: runningTotal];
-    
-    //animate it onto the screen
-    CGRect temp = newView.frame;
-    temp.origin.y = CGRectGetMaxY(self.view.bounds);
-    newView.frame = temp;
-    [UIView beginAnimations:nil context:nil];
-    temp.origin.y -= height;
-    newView.frame = temp;
-    [UIView commitAnimations];
-
-}
 -(IBAction)addExtras:(id)sender{
     if (bonusRuns!=0)
     {
@@ -1053,6 +1119,7 @@ NSMutableArray *allBallLabels;
 	} else if([string isEqualToString:@"Caught"]){
 		value = 2000;
 		[self resetBallValueToString:@"W"];
+		[self showOutByPicker:bowlerButton typeOfOut:@"Caught"];
 	} else if([string isEqualToString:@"LBW"]){
 		value = 2000;
 		[self resetBallValueToString:@"W"];
@@ -1062,6 +1129,7 @@ NSMutableArray *allBallLabels;
 	} else if([string isEqualToString:@"Stumped"]){
 		value = 3000;
 		[self resetBallValueToString:@"W"];
+		[self showOutByPicker:bowlerButton typeOfOut:@"Stumped"];
 	} else if([string isEqualToString:@"Hit Wicket"]){
 		value = 2000;
 		[self resetBallValueToString:@"W"];
@@ -1075,12 +1143,14 @@ NSMutableArray *allBallLabels;
 		value = 3000;
 		[self resetBallValueToString:@"W"];
 	} else if([string isEqualToString:@"Timed Out"]){
+		//Ball doesn't increase
 		value = 3000;
 		[self resetBallValueToString:@"W"];
 	} else if([string isEqualToString:@"Retired"]){
 		value = 1000;
 		[self resetBallValueToString:@"W"];
 	}
+	outType = string;
 }
 
 -(IBAction)showActionSheet:(id)sender {
@@ -1135,6 +1205,46 @@ NSMutableArray *allBallLabels;
     [UIView commitAnimations];
 }
 
+//Used when clicking the done button
+- (IBAction)hideActionSheet:(UIBarButtonItem *)infoButtonItem{
+	if (![startGameButton isHidden]) {
+		batterName1.enabled = true;
+		batterName2.enabled = true;
+	}
+	//animate onto screen
+	CGRect temp = newView.frame;
+    temp.origin.y = height;
+    newView.frame = temp;
+    [UIView beginAnimations:nil context:nil];
+    temp.origin.y += height;
+    newView.frame = temp;
+    [UIView commitAnimations];
+	height = CGRectGetMaxY(self.view.bounds);
+	if (outPicker){
+		[self batterOutAction:outType];
+		[self turnLabelsOrange:infoButtonItem];
+	}
+	outPicker = NO;
+}
+
+//Used for clicked on the background
+-(IBAction)hideActionSheetB:(id)sender{
+	if (![startGameButton isHidden]) {
+		batterName1.enabled = true;
+		batterName2.enabled = true;
+	}
+	//animate onto screen
+	CGRect temp = newView.frame;
+    temp.origin.y =height;
+    newView.frame = temp;
+    [UIView beginAnimations:nil context:nil];
+    temp.origin.y += height;
+    newView.frame = temp;
+    [UIView commitAnimations];
+	height = CGRectGetMaxY(self.view.bounds);
+	outPicker = NO;
+}
+
 - (void) selectRowForSelection:(UIPickerView *)pickerView {
 	if ([pickerView tag] == 30){
 		if ([batter1Active isHidden]){
@@ -1146,6 +1256,17 @@ NSMutableArray *allBallLabels;
 	}
 	if ([pickerView tag] == 31){
 		[self pickerView:pickerView didSelectRow:0 inComponent:0];
+		return;
+	}
+	if ([pickerView tag] == 32){
+		if ([outType isEqualToString:@"Stumped"] && [battingTeam isEqualToString:@"home"]){
+			[pickerView selectRow:awayWicketKeeper inComponent:0 animated:YES];
+			[self pickerView:pickerView didSelectRow:1 inComponent:0];
+		} else if ([outType isEqualToString:@"Stumped"] && [battingTeam isEqualToString:@"away"]){
+			[pickerView selectRow:homeWicketKeeper inComponent:0 animated:YES];
+			[self pickerView:pickerView didSelectRow:1 inComponent:0];
+		} else
+			[self pickerView:pickerView didSelectRow:0 inComponent:0];
 		return;
 	}
 	if ([batterButton isEqual:batterName1] && batter1 < [pickerView numberOfRowsInComponent:0])
@@ -1165,7 +1286,7 @@ NSMutableArray *allBallLabels;
 		[pickerView selectRow:batter1 inComponent:0 animated:YES];
 		[batterButton setTitle:[awayPlayersArray objectAtIndex:batter1] forState:UIControlStateNormal];
 	}
-
+	
 	if (batter2 >= [homePlayersArray count] && [battingTeam isEqualToString:@"home"]) {
 		batter2 = 1;
 		[pickerView selectRow:batter2 inComponent:0 animated:YES];
@@ -1198,46 +1319,13 @@ NSMutableArray *allBallLabels;
 	}
 }
 
-//Used when clicking the done button
-- (IBAction)hideActionSheet:(UIBarButtonItem *)_infoButtonItem{
-	if (![startGameButton isHidden]) {
-		batterName1.enabled = true;
-		batterName2.enabled = true;
-	}
-	//animate onto screen
-	CGRect temp = newView.frame;
-    temp.origin.y = height;
-    newView.frame = temp;
-    [UIView beginAnimations:nil context:nil];
-    temp.origin.y += height;
-    newView.frame = temp;
-    [UIView commitAnimations];
-	height = CGRectGetMaxY(self.view.bounds);
-}
-
-//Used for clicked on the background
--(IBAction)hideActionSheetB:(id)sender{
-	if (![startGameButton isHidden]) {
-		batterName1.enabled = true;
-		batterName2.enabled = true;
-	}
-	//animate onto screen
-	CGRect temp = newView.frame;
-    temp.origin.y =height;
-    newView.frame = temp;
-    [UIView beginAnimations:nil context:nil];
-    temp.origin.y += height;
-    newView.frame = temp;
-    [UIView commitAnimations];
-	height = CGRectGetMaxY(self.view.bounds);
-}
-
 - (NSInteger) numberOfComponentsInPickerView:(UIPickerView *)_choosePlayer{
     return 1;
 }
 
 //number of rows in picker view
 - (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component{
+	if ([pickerView tag] == 32) batterButton = bowlerButton;
 	if ([pickerView tag] == 30){
 		return 2;
 	} else if ([pickerView tag] == 31){
@@ -1255,6 +1343,7 @@ NSMutableArray *allBallLabels;
 
 //values in picker view
 - (NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component {
+	if ([pickerView tag] == 32) batterButton = bowlerButton;
 	if ([pickerView tag] == 30){
 		if (row == 0)
 			return [[batterName1 titleLabel] text];
@@ -1280,7 +1369,11 @@ NSMutableArray *allBallLabels;
 		return;
 	}
 	if ([pickerView tag] == 31){
-		[self batterOutAction:[waysToBeOut objectAtIndex:row]];
+		outType = [NSString stringWithFormat:@"%@", [waysToBeOut objectAtIndex:row]];
+		return;
+	}
+	if ([pickerView tag] == 32){
+		outBy = row;
 		return;
 	}
 	if ([batterButton isEqual:batterName2] && batter1 == row && row < [pickerView numberOfRowsInComponent:0]-1){
@@ -1303,7 +1396,7 @@ NSMutableArray *allBallLabels;
 		[UIView commitAnimations];
 		[self pickerView:pickerView didSelectRow:row-1 inComponent:0];
 		return;
-	} else if ([batterButton isEqual:bowlerButton] && fieldStats[0][row] > 0 && row < [pickerView numberOfRowsInComponent:0]-1){
+	} /*else if ([batterButton isEqual:bowlerButton] && fieldStats[0][row] > 0 && row < [pickerView numberOfRowsInComponent:0]-1){
 		[pickerView selectRow:row+1 inComponent:0 animated:YES];
 		[UIView commitAnimations];
 		[self pickerView:pickerView didSelectRow:row+1 inComponent:0];
@@ -1313,7 +1406,7 @@ NSMutableArray *allBallLabels;
 		[UIView commitAnimations];
 		[self pickerView:pickerView didSelectRow:row-1 inComponent:0];
 		return;
-	}
+	}*/
 	if ([battingTeam isEqualToString:@"home"]){
 		if ([batterButton isEqual:bowlerButton])
 			[batterButton setTitle:[awayPlayersArray objectAtIndex:row] forState:UIControlStateNormal];
@@ -1350,7 +1443,7 @@ NSMutableArray *allBallLabels;
 
 - (void)fillWayOutArray{
 	waysToBeOut = [[NSArray alloc] initWithObjects:
-				   @"Bowled", @"Caught", @"LBW", @"Run Out", @"Stumped By", @"Hit Wicket", @"Handled Ball", @"Hit Ball Twice", @"Obstr. Field", @"Timed Out", @"Retired", nil];
+				   @"Bowled", @"Caught", @"LBW", @"Run Out", @"Stumped", @"Hit Wicket", @"Handled Ball", @"Hit Ball Twice", @"Obstr. Field", @"Timed Out", @"Retired", nil];
 }
 
 -(IBAction)turnLabelsOrange:(id)sender
@@ -1379,7 +1472,7 @@ NSMutableArray *allBallLabels;
     {
         ball6.textColor =[UIColor orangeColor];
     }
-	[[calculatorView objectAtIndex:6] setBackgroundColor:[UIColor orangeColor]];
+	[enterButton setBackgroundColor:[UIColor orangeColor]];
 }
 
 -(IBAction)turnLabelsRed:(id)sender
@@ -1408,7 +1501,7 @@ NSMutableArray *allBallLabels;
     {
         ball6.textColor =[UIColor redColor];
     }
-	[[calculatorView objectAtIndex:6] setBackgroundColor:[UIColor clearColor]];
+	[enterButton setBackgroundColor:[UIColor clearColor]];
 }
 
 -(IBAction)turnLabelsGreen:(id)sender
@@ -1590,6 +1683,7 @@ NSMutableArray *allBallLabels;
     [self setScoreLabel:nil];
     [self setBallsScrollView:nil];
 	[self setNextOverButton:nil];
+	[self setEnterButton:nil];
     [super viewDidUnload];
     // Release any retained subviews of the main view.
 }

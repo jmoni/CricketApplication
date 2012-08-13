@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 
 NSString *scoreString;
+float batStats[4][20];
 
 @interface ThirdViewController : UIViewController <UIPickerViewDelegate, UIPickerViewDataSource, UIActionSheetDelegate, UIScrollViewDelegate>
 
@@ -42,6 +43,7 @@ NSString *scoreString;
 @property (strong, nonatomic) IBOutlet UILabel *scoreLabel;
 @property (strong, nonatomic) IBOutlet UIScrollView *ballsScrollView;
 @property (strong, nonatomic) IBOutlet UIButton *nextOverButton;
+@property (strong, nonatomic) IBOutlet UIButton *enterButton;
 
 -(IBAction)showActionSheet: (id) sender;
 -(IBAction)hideActionSheet: (UIBarButtonItem *)_infoButtonItem;
