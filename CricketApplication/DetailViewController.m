@@ -288,6 +288,7 @@ int initialSliderValue;
 	}
 	if(disableElements){
 		[playerEditTextBox setEnabled:NO];
+		[playerEditTextBox setClearButtonMode:UITextFieldViewModeNever];
 		[CaptainSlider setEnabled:NO];
 		[ViceCaptainSlider setEnabled:NO];
 		[WicketKeeperSlider setEnabled:NO];

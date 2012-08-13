@@ -9,8 +9,10 @@
 #import "SecondViewController.h"
 #import "sqlite3.h"
 #include "DetailViewController.h"
+#include "StatsViewController.h"
 #include "DatabaseController.h"
 #include "FirstViewController.h"
+#include "ThirdViewController.h"
 
 @interface SecondViewController ()
 @property (strong, nonatomic) IBOutlet UIBarButtonItem *homeNavBarEditButton;
@@ -47,20 +49,20 @@ int aID;
 }
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section{
-	if ([tableView isEqual:homePlayersTable] && section == 0) return homeTeam;
-	else if ([tableView isEqual:awayPlayersTable] && section == 0) return awayTeam;
-	else if ([tableView isEqual:homePlayersTable] && section == 1 && [homeOutPlayers count] > 0) return @"Out Players";
-	else if ([tableView isEqual:awayPlayersTable] && section == 1 && [awayOutPlayers count] > 0) return @"Out Players";
+	if ([tableView isEqual:homePlayersTable] && section == 1) return homeTeam;
+	else if ([tableView isEqual:awayPlayersTable] && section == 1) return awayTeam;
+	else if ([tableView isEqual:homePlayersTable] && section == 0 && [homeOutPlayers count] > 0) return @"Out Players";
+	else if ([tableView isEqual:awayPlayersTable] && section == 0 && [awayOutPlayers count] > 0) return @"Out Players";
 	else return nil;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
 	int cellNumber = 0;
-	if ([tableView isEqual:homePlayersTable] && section == 0) cellNumber = [homePlayersArray count];
-	else if ([tableView isEqual:awayPlayersTable] && section == 0) cellNumber = [awayPlayersArray count];
-	else if ([tableView isEqual:homePlayersTable] && section == 1) cellNumber = [homeOutPlayers count];
-	else if ([tableView isEqual:awayPlayersTable] && section == 1) cellNumber = [awayOutPlayers count];
+	if ([tableView isEqual:homePlayersTable] && section == 1) cellNumber = [homePlayersArray count];
+	else if ([tableView isEqual:awayPlayersTable] && section == 1) cellNumber = [awayPlayersArray count];
+	else if ([tableView isEqual:homePlayersTable] && section == 0) cellNumber = [homeOutPlayers count];
+	else if ([tableView isEqual:awayPlayersTable] && section == 0) cellNumber = [awayOutPlayers count];
     return cellNumber;
 }
 
@@ -83,7 +85,7 @@ int aID;
 	
 	if ([tableView isEqual:homePlayersTable])
     {
-		if(indexPath.section == 0){
+		if(indexPath.section == 1){
 			cell.textLabel.text = [homePlayersArray objectAtIndex:indexPath.row];
 			if (homeCaptain == indexPath.row && homeWicketKeeper == indexPath.row) {
 				[button setBackgroundImage:captainWicketKeeper forState:UIControlStateNormal];
@@ -127,7 +129,7 @@ int aID;
 			}
 		}
 	} else if ([tableView isEqual:awayPlayersTable]) {
-		if(indexPath.section == 0){
+		if(indexPath.section == 1){
 			cell.textLabel.text = [awayPlayersArray objectAtIndex:indexPath.row];
 			if (awayCaptain == indexPath.row && awayWicketKeeper == indexPath.row) {
 				[button setBackgroundImage:captainWicketKeeper forState:UIControlStateNormal];
@@ -265,24 +267,24 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
 	rowForDetaiView = indexPath.row;
 	DetailViewController *detail = [self.storyboard instantiateViewControllerWithIdentifier:@"Detail"];
+	StatsViewController *stats = [self.storyboard instantiateViewControllerWithIdentifier:@"Stats"];
 	
 	if ([tableView isEqual:homePlayersTable]) {
-		if (indexPath.section == 0)
+		if (indexPath.section == 1)
 			arrayForDetailView = homePlayersArray;
 		else
 			arrayForDetailView = homeOutPlayers;
 		teamForDetailView = @"home";
 	} else if ([tableView isEqual:awayPlayersTable]) {
-		if (indexPath.section == 0)
+		if (indexPath.section == 1)
 			arrayForDetailView = awayPlayersArray;
 		else
 			arrayForDetailView = awayOutPlayers;
 		teamForDetailView = @"away";
 	}
-
-	[self.navigationController pushViewController:detail animated:YES];
 	
-	if ([tableView isEqual:homePlayersTable] && indexPath.section == 0) {
+	if ([tableView isEqual:homePlayersTable] && indexPath.section == 1) {
+		[self.navigationController pushViewController:detail animated:YES];
 		detail.playerEditTextBox.text = [homePlayersArray objectAtIndex:indexPath.row];
 		if (homeCaptain == indexPath.row)
 			[detail.CaptainSlider setOn:YES animated:YES];
@@ -290,7 +292,8 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
 			[detail.ViceCaptainSlider setOn:YES animated:YES];
 		if (homeWicketKeeper == indexPath.row)
 			[detail.WicketKeeperSlider setOn:YES animated:YES];
-	} else if ([tableView isEqual:awayPlayersTable] && indexPath.section == 0) {
+	} else if ([tableView isEqual:awayPlayersTable] && indexPath.section == 1) {
+		[self.navigationController pushViewController:detail animated:YES];
 		detail.playerEditTextBox.text = [awayPlayersArray objectAtIndex:indexPath.row];
 		if (awayCaptain == indexPath.row)
 			[detail.CaptainSlider setOn:YES animated:YES];
@@ -298,35 +301,58 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
 			[detail.ViceCaptainSlider setOn:YES animated:YES];
 		if (awayWicketKeeper == indexPath.row)
 			[detail.WicketKeeperSlider setOn:YES animated:YES];
-	} else if ([tableView isEqual:homePlayersTable] && indexPath.section == 1) {
-		detail.playerEditTextBox.text = [homeOutPlayers objectAtIndex:indexPath.row];
+	} else if ([tableView isEqual:homePlayersTable] && indexPath.section == 0) {
+		[self.navigationController pushViewController:stats animated:YES];
+		stats.playerEditTextBox.text = [homeOutPlayers objectAtIndex:indexPath.row];
 		if (homeCaptain == indexPath.row+100)
-			[detail.CaptainSlider setOn:YES animated:YES];
+			[stats.CaptainSlider setOn:YES animated:YES];
 		else if (homeViceCaptain == indexPath.row+100)
-			[detail.ViceCaptainSlider setOn:YES animated:YES];
+			[stats.ViceCaptainSlider setOn:YES animated:YES];
 		if (homeWicketKeeper == indexPath.row+100)
-			[detail.WicketKeeperSlider setOn:YES animated:YES];
-	} else if ([tableView isEqual:awayPlayersTable] && indexPath.section == 1) {
-		detail.playerEditTextBox.text = [awayOutPlayers objectAtIndex:indexPath.row];
+			[stats.WicketKeeperSlider setOn:YES animated:YES];
+		stats.ballsLabel.text = [NSString stringWithFormat:@"%.0f", batStats[1][indexPath.row+[homePlayersArray count]]];
+		stats.runsLabel.text = [NSString stringWithFormat:@"%.0f", batStats[2][indexPath.row+[homePlayersArray count]]];
+		stats.wayOutLabel.text = [self decodeWayOutNumber:indexPath.row forTeam:@"home"];
+	} else if ([tableView isEqual:awayPlayersTable] && indexPath.section == 0) {
+		[self.navigationController pushViewController:stats animated:YES];
+		stats.playerEditTextBox.text = [awayOutPlayers objectAtIndex:indexPath.row];
 		if (awayCaptain == indexPath.row+100)
-			[detail.CaptainSlider setOn:YES animated:YES];
+			[stats.CaptainSlider setOn:YES animated:YES];
 		else if (awayViceCaptain == indexPath.row+100)
-			[detail.ViceCaptainSlider setOn:YES animated:YES];
+			[stats.ViceCaptainSlider setOn:YES animated:YES];
 		if (awayWicketKeeper == indexPath.row+100)
-			[detail.WicketKeeperSlider setOn:YES animated:YES];
+			[stats.WicketKeeperSlider setOn:YES animated:YES];
+		stats.ballsLabel.text = [NSString stringWithFormat:@"%.0f", batStats[1][indexPath.row+[awayPlayersArray count]]];
+		stats.runsLabel.text = [NSString stringWithFormat:@"%.0f", batStats[2][indexPath.row+[awayPlayersArray count]]];
+		stats.wayOutLabel.text = [self decodeWayOutNumber:indexPath.row forTeam:@"away"];
 	}
-		
+
 	detail.battingOrderSlider.value = indexPath.row+1.9;
 	detail.sliderValueLabel.text = [NSString stringWithFormat:@"%d", indexPath.row+1];
 }
 
-/*- (void)tableView:(UITableView *)tableView accessoryButtonTappedForRowWithIndexPath:(NSIndexPath *)indexPath {
-	[self tableView:tableView didDeselectRowAtIndexPath:indexPath];
+- (NSString *) decodeWayOutNumber:(int)player forTeam:(NSString *)team{
+	int temp;
+	if ([team isEqualToString:@"home"]){
+		temp = batStats[3][player+[homePlayersArray count]];
+		NSLog(@"%d", temp);
+		if (temp > 199) return [NSString stringWithFormat:@"Stumped by %@", [awayPlayersArray objectAtIndex:temp-200]];
+		if (temp > 99) return [NSString stringWithFormat:@"Caught by %@", [awayPlayersArray objectAtIndex:temp-100]];
+	} else {
+		temp = batStats[3][player+[awayPlayersArray count]];
+		if (temp > 199) return [NSString stringWithFormat:@"Stumped by %@", [homePlayersArray objectAtIndex:temp-200]];
+		if (temp > 99) return [NSString stringWithFormat:@"Caught by %@", [homePlayersArray objectAtIndex:temp-100]];
+	}
+	if (temp == 0) return @"Bowled";
+	if (temp == 2) return @"LBW";
+	if (temp == 3) return @"Run Out";
+	if (temp == 5) return @"Hit Wicket";
+	if (temp == 6) return @"Handled Ball";
+	if (temp == 7) return @"Hit Ball Twice";
+	if (temp == 8) return @"Obstucting Field";
+	if (temp == 9) return @"Timed Out";
+	return nil;
 }
-
-- (IBAction)accessoryButtonPressed:(id)sender tableView:(UITableView *)tableView withIndexPath:(NSIndexPath *)indexPath {
-	[self tableView:tableView accessoryButtonTappedForRowWithIndexPath:indexPath];
-}*/
 
 - (IBAction)EditTable:(id)sender{
 	//NSLog(@"Sender of edit button is: %@\"", sender);
