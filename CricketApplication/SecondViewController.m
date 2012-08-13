@@ -462,7 +462,6 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
 //Add Home Players
 -(void) addHomePlayers{
     //Get the TeamID home team (greater than 0) from the database if there are already players on the team and if not set to -1
-    NSLog(@"%d", homeTeamID);
     int c = [self returnIntFromDatabase:[NSString stringWithFormat:
                                          @"SELECT TeamID FROM PLAYERS WHERE TeamID = '%d'",
                                          homeTeamID]];
@@ -592,9 +591,7 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
     
     [self addHomePlayers];
     [self addAwayPlayers];
-    
-    //NSLog(@"The first time the view loaded h = %d , a = %d",hID,aID);
-	
+    	
 	homeViceCaptain = 1;
 	awayViceCaptain = 1;
 	
@@ -609,27 +606,20 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
 }
 
 - (void)viewDidAppear:(BOOL)animated {
-    //NSLog(@"APPEAR!");
-    
-    //NSLog(@"In appear the view loaded h = %d , a = %d",hID,aID);
     
     hID = homeTeamID;
     aID = awayTeamID;
     
-    //NSLog(@"In appear second the view loaded h = %d , a = %d",hID,aID);
     [self getTeamIDs];
     
     if (hID != homeTeamID){
         [homePlayersArray removeAllObjects];
-        [self addHomePlayers];
-        NSLog(@"Reload home");
-        
+        [self addHomePlayers];        
     }
     
     if (aID != awayTeamID){
         [awayPlayersArray removeAllObjects];
         [self addAwayPlayers];
-        NSLog(@"Reload away");
     }
     hID = homeTeamID;
     aID = awayTeamID;
