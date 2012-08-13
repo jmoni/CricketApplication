@@ -61,6 +61,8 @@ NSMutableArray *extraBallLabels;
 bool outPicker = NO;
 NSString *outType;
 int outBy;
+bool extra = FALSE;
+NSMutableArray *allBallLabels;
 float inningNumber = 1;
 
 @implementation ThirdViewController
@@ -463,8 +465,8 @@ float inningNumber = 1;
         if (ballNo == 1){
             [fallOfWickets addObject: ball1.text];
         }
-        if (ballNo == 2){
-            [fallOfWickets addObject:ball2.text];
+        else if (ballNo == 2){
+            [fallOfWickets addObject: ball2.text];
         }
         if (ballNo == 3){
             [fallOfWickets addObject: ball3.text];
@@ -478,6 +480,10 @@ float inningNumber = 1;
         if (ballNo == 6){
             [fallOfWickets addObject: ball6.text];
         }
+        }
+        else extra = FALSE;
+        
+        
 		//overs += 0.1;
 		fieldStats[1][bowler] += 0.1;
 		runs += value;
@@ -536,8 +542,8 @@ float inningNumber = 1;
 	if (fieldStats[1][bowler] >= 0 && ballNo > 1) {
 		NSString *deletedVal = [NSString stringWithFormat:@"%@", [fallOfWickets objectAtIndex:[fallOfWickets count]-1]];
 		NSString *firstChar = [deletedVal substringToIndex:1];
-		if (value <= -1 && ![firstChar isEqualToString:@"W"]) {
-			if (ballNo == 1)
+		if (value <= -1 && ! [firstChar isEqualToString:@"W"]) {
+			/*if (ballNo == 1)
 				fieldStats[1][bowler]--;
 			if (ballNo == 7)
 				[nextOverButton setHidden:YES];
@@ -561,7 +567,7 @@ float inningNumber = 1;
 				fieldStats[1][bowler] -= 0.5;
 			else 
 				fieldStats[1][bowler] -= 0.1;
-			fieldStats[3][bowler] -= value;
+			fieldStats[3][bowler] -= value;*/
             [fallOfWickets removeObjectAtIndex:[fallOfWickets count]-1];
             if([firstChar isEqualToString:@"n"])
             {

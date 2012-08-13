@@ -199,12 +199,12 @@
 		BDE2B14715C6AA63009E9F40 /* CricketApplication */ = {
 			isa = PBXGroup;
 			children = (
-				9F42936A15D9419C00457E7B /* FourthTab */,
 				BDA16D9F15D00A1600DD9301 /* Database */,
 				BDE2B15315C6AA64009E9F40 /* MainStoryboard.storyboard */,
 				BDE2B19215C6ADBA009E9F40 /* FirstTab */,
 				BDE2B19315C6ADCD009E9F40 /* SecondTab */,
 				CE19D6F815C7F25D0023B990 /* ThirdTab */,
+				9F42936A15D9419C00457E7B /* FourthTab */,
 				BDE2B19415C6ADDF009E9F40 /* Delegate */,
 				BDE2B18115C6AD8C009E9F40 /* Images */,
 				BDE2B14815C6AA63009E9F40 /* Supporting Files */,
@@ -442,6 +442,7 @@
 				BDD69ED015C81772002FE1CA /* DetailViewController.m in Sources */,
 				9F134C1115D00E1D0056EE03 /* DatabaseController.m in Sources */,
 				BD27828D15D5338100B8788D /* StatsViewController.m in Sources */,
+				9F1C3A9A15D9530000B03A1B /* ScoreViewController.m in Sources */,
 				BDB0A6B815D958220072341D /* MBProgressHUD.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

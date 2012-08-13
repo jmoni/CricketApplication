@@ -76,6 +76,7 @@ float batStats[4][20];
 -(IBAction)updateExtrasLabels:(id)sender;
 -(IBAction)nextOver:(id)sender;
 -(IBAction)resetExtra:(id)sender;
+-(IBAction)moveBackBallLabel:(id)sender;
 -(IBAction)endGame:(id)sender;
 -(IBAction)closeInnings:(id)sender;
 @end
