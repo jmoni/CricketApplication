@@ -11,7 +11,6 @@
 #include "DatabaseController.h"
 
 @interface DetailViewController ()
-@property (strong, nonatomic) IBOutlet UIPickerView *choosePlayer;
 
 @end
 
@@ -30,7 +29,7 @@ int initialSliderValue;
 @synthesize storedPlayersClicked = _storedPlayersClicked;
 @synthesize nextPlayerButton;
 @synthesize infoButtonItem = _infoButtonItem;
-
+@synthesize choosePlayer = _choosePlayer;
 int height;
 UIView *newView;
 

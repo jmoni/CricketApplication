@@ -25,6 +25,7 @@ NSMutableArray *displayPlayers;
 @property (strong, nonatomic) IBOutlet UIToolbar *bottomToolbar;
 @property (strong, nonatomic) IBOutlet UIButton *storedPlayersClicked;
 @property (strong, nonatomic) IBOutlet UIBarButtonItem *infoButtonItem;
+@property (strong, nonatomic) IBOutlet UIPickerView * choosePlayer;
 
 - (IBAction)textFieldReturn:(id)sender;
 - (IBAction)backgroundTouched:(id)sender;
