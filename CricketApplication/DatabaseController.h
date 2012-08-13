@@ -14,6 +14,7 @@ int awayTeamID;
 NSString *writableDBPath;
 sqlite3 *cricketDB;
 bool disableElements;
+int currentGameID;
 
 @interface DatabaseController : UITabBarController <UITabBarControllerDelegate, UINavigationControllerDelegate>
 @property (strong, nonatomic) IBOutlet UIBarButtonItem *saveButton;
@@ -26,4 +27,5 @@ bool disableElements;
 - (void)thirdTabSave;
 - (IBAction)next: (id) sender;
 - (IBAction)share: (id) sender;
+- (void)insertStringIntoDatabase:(NSString *)string;
 @end

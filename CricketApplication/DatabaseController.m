@@ -107,9 +107,11 @@
 	[self insertStringIntoDatabase:[NSString stringWithFormat:
 									@"INSERT INTO GAMES (HomeID, AwayID, GameDate, TossResult, Decision, MatchType, OversOrDays, UmpireOne, UmpireTwo) VALUES (%d, %d, '%@', \"%@\", \"%@\", \"%@\", %d, \"%@\", \"%@\")",
 									homeTeamID, awayTeamID, strDate, tossWonBy, decision, matchType, numberOversOrDays, umpireOne, umpireTwo]];
+	currentGameID = [self returnIntFromDatabase:[NSString stringWithFormat:
+								 @"SELECT GameID FROM GAMES"]];
 	disableElements = YES;
     
-    NSLog(@"START GAME");
+    NSLog(@"START GAME %d", currentGameID);
 
     //First set all players in array to not played
     [self setPlayersNotPlayed];

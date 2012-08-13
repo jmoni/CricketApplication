@@ -11,6 +11,7 @@
 #include "SecondViewController.h"
 #include "FirstViewController.h"
 #include "DatabaseController.h"
+#include "MBProgressHUD.h"
 
 @interface ThirdViewController ()
 @property (strong, nonatomic) IBOutlet UIButton *batterName1;
@@ -60,6 +61,7 @@ NSMutableArray *extraBallLabels;
 bool outPicker = NO;
 NSString *outType;
 int outBy;
+float inningNumber = 1;
 
 @implementation ThirdViewController
 @synthesize ball6;
@@ -93,6 +95,8 @@ int outBy;
 @synthesize ballsScrollView;
 @synthesize nextOverButton;
 @synthesize enterButton;
+@synthesize endGameButton;
+@synthesize closeInningsButton;
 @synthesize batterName1;
 @synthesize batterName2;
 @synthesize teamName;
@@ -113,24 +117,40 @@ int outBy;
 - (void)startGame:(id)sender {
 	UIAlertView* mes=[[UIAlertView alloc] initWithTitle:@"Are you ready to start game?"
 				message:[NSString stringWithFormat:@"Ensure all game details are correct as you will not be able to edit these once the game starts."] delegate:self cancelButtonTitle:@"No" otherButtonTitles:@"Yes", nil];
+	[mes setTag:0];
+	[mes show];
+}
+
+- (IBAction)endGame:(id)sender{
+	UIAlertView* mes=[[UIAlertView alloc] initWithTitle:@"End Game"
+												message:[NSString stringWithFormat:@"Are you sure you want to end the game?"] delegate:self cancelButtonTitle:@"No" otherButtonTitles:@"Yes", nil];
+	[mes setTag:1];
+	[mes show];
+}
+
+- (IBAction)closeInnings:(id)sender{
+	UIAlertView* mes=[[UIAlertView alloc] initWithTitle:@"Close Innings"
+												message:[NSString stringWithFormat:@"Are you sure you want to close the current innings?"] delegate:self cancelButtonTitle:@"No" otherButtonTitles:@"Yes", nil];
+	[mes setTag:2];
 	[mes show];
 }
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
+	DatabaseController *instance = [[DatabaseController alloc] init];
 	if (buttonIndex == 0)
 	{
 		[self resignFirstResponder];
 	}
-	else
+	else if (alertView.tag == 0)
 	{
+		//start game
 		[self resignFirstResponder];
 		[startGameButton setHidden:YES];
 		for(int i = 0; i < [calculatorView count]; i++){
 			[[calculatorView objectAtIndex:i] setHidden:NO];
 		}
 		[ballsScrollView setHidden:NO];
-		DatabaseController *instance = [[DatabaseController alloc] init];
 		[instance firstTabSave];
 		[instance secondTabSave];
 		[instance thirdTabSave];
@@ -139,6 +159,62 @@ int outBy;
         ball1.textColor = [UIColor redColor];
 		//[bowlerButton setEnabled:NO];
 	}
+	else if (alertView.tag == 1)
+	{
+		//end game
+		[self resignFirstResponder];
+	}
+	else if (alertView.tag == 2)
+	{
+		//close innings
+		NSString *fow = @"";
+		for (int i = [fallOfWickets count]-1; i >= 0; i--){
+			fow = [NSString stringWithFormat:@"%@$%@", fow, [fallOfWickets objectAtIndex:i]];
+		}
+		if ([battingTeam isEqualToString:@"home"]){
+			[instance insertStringIntoDatabase:[NSString stringWithFormat:
+											@"INSERT INTO INNINGS (GameID, BattingTeamID, InningNumber, FallOfWickets, Score) VALUES (%d, %d, %d, \"%@\", \"%@\")",
+											currentGameID, homeTeamID, (int)inningNumber, fow, [scoreLabel text]]];
+		} else {
+			[instance insertStringIntoDatabase:[NSString stringWithFormat:
+											@"INSERT INTO INNINGS (GameID, BattingTeamID, InningNumber, FallOfWickets, Score) VALUES (%d, %d, %d, \"%@\", \"%@\")",
+											currentGameID, awayTeamID, (int)inningNumber, fow, [scoreLabel text]]];
+		}
+		
+		inningNumber+=0.5;
+		if([battingTeam isEqualToString:@"home"])
+			battingTeam = @"away";
+		else
+			battingTeam = @"home";
+		
+		[self showHUD:@"Innings closed"];
+		[self viewDidLoad];
+		ball1.text = @"-";
+		ball2.text = @"-";
+		ball3.text = @"-";
+		ball4.text = @"-";
+		ball5.text = @"-";
+		ball6.text = @"-";
+		[self turnLabelsBlack:closeInningsButton];
+		[nextOverButton setHidden:YES];
+		[endGameButton setHidden:YES];
+		[closeInningsButton setHidden:YES];
+
+		[self resignFirstResponder];
+	}
+}
+
+- (IBAction)showHUD:(NSString *)string {
+	MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
+	
+	// Configure for text only and offset down
+	hud.mode = MBProgressHUDModeText;
+	hud.labelText = string;
+	hud.margin = 10.f;
+	hud.yOffset = 150.f;
+	hud.removeFromSuperViewOnHide = YES;
+	
+	[hud hide:YES afterDelay:3];
 }
 
 -(int)outTypeToInt{
@@ -330,7 +406,7 @@ int outBy;
         if (ballNo == 1){
             [fallOfWickets addObject: ball1.text];
         }
-        else if (ballNo == 2){
+        if (ballNo == 2){
             [fallOfWickets addObject:ball2.text];
         }
         if (ballNo == 3){
@@ -345,7 +421,6 @@ int outBy;
         if (ballNo == 6){
             [fallOfWickets addObject:ball6.text];
         }
-
 		//overs += 0.1;
 		fieldStats[1][bowler] += 0.1;
 		runs += value;
@@ -360,6 +435,8 @@ int outBy;
 		else{
 			ballNo++;
 			[nextOverButton setHidden:NO];
+			[endGameButton setHidden:NO];
+			[closeInningsButton setHidden:NO];
 			fieldStats[2][bowler] -= (int)(fieldStats[2][bowler])%6;
 			overs++;
 			//maidens -= maidens%6;
@@ -400,7 +477,9 @@ int outBy;
 
 - (IBAction)undo:(id)sender {
 	if (fieldStats[1][bowler] >= 0 && ballNo > 1) {
-		if (value <= -1) {
+		NSString *deletedVal = [NSString stringWithFormat:@"%@", [fallOfWickets objectAtIndex:[fallOfWickets count]-1]];
+		NSString *firstChar = [deletedVal substringToIndex:1];
+		if (value <= -1 && ![firstChar isEqualToString:@"W"]) {
 			if (ballNo == 1)
 				fieldStats[1][bowler]--;
 			if (ballNo == 7)
@@ -426,10 +505,8 @@ int outBy;
 			else 
 				fieldStats[1][bowler] -= 0.1;
 			fieldStats[3][bowler] -= value;
-            NSString *deletedVal = [NSString stringWithFormat:@"%@", [fallOfWickets objectAtIndex:[fallOfWickets count]-1]];
             [fallOfWickets removeObjectAtIndex:[fallOfWickets count]-1];
-            NSString *firstChar = [deletedVal substringToIndex:1];
-            if([firstChar isEqualToString:@"N"])
+            if([firstChar isEqualToString:@"n"])
             {
                 noBalls --;
                 runs --;
@@ -437,7 +514,7 @@ int outBy;
 				if ([batter1Active isHidden]) batStats[1][batter2]++;
 				else batStats[1][batter1]++;
             }
-            if([firstChar isEqualToString:@"W"])
+            if([firstChar isEqualToString:@"w"])
             {
                 wides --;
                 runs --;
@@ -445,7 +522,7 @@ int outBy;
 				if ([batter1Active isHidden]) batStats[1][batter2]++;
 				else batStats[1][batter1]++;
             }
-            if([firstChar isEqualToString:@"B"])
+            if([firstChar isEqualToString:@"b"])
             {
                 int toSubtract = [[deletedVal substringFromIndex:1] intValue];
                 byes -= toSubtract;
@@ -454,7 +531,7 @@ int outBy;
 				if ([batter1Active isHidden]) batStats[1][batter2]++;
 				else batStats[1][batter1]++;
             }
-            if([firstChar isEqualToString:@"L"])
+            if([firstChar isEqualToString:@"l"])
             {
                 int toSubtract = [[deletedVal substringFromIndex:2] intValue];
                 legByes -= toSubtract;
@@ -463,7 +540,7 @@ int outBy;
 				if ([batter1Active isHidden]) batStats[1][batter2]++;
 				else batStats[1][batter1]++;
             }
-            if([firstChar isEqualToString:@"P"])
+            if([firstChar isEqualToString:@"p"])
             {
                 int toSubtract = [[deletedVal substringFromIndex:1] intValue];
                 runs -= toSubtract;
@@ -514,6 +591,8 @@ int outBy;
 		even = NO;
 	[self changeBatterFacingBowler];
 	[nextOverButton setHidden:YES];
+	[endGameButton setHidden:YES];
+	[closeInningsButton setHidden:YES];
 }
 
 - (void)resetBallValueToString:(NSString *)string {
@@ -918,7 +997,7 @@ int outBy;
     [self hideActionSheetB:sender];
     [self updateExtrasLabels:sender];
     [self turnLabelsOrange:sender];
-    [self resetBallValueToString:@"NB"];
+    [self resetBallValueToString:@"nb"];
 
 }
 -(IBAction)extraWide:(id)sender{
@@ -937,7 +1016,7 @@ int outBy;
     [wideLabel setTextColor:[UIColor orangeColor]];
     [self turnLabelsOrange:sender];
     [self updateExtrasLabels:sender];
-    [self resetBallValueToString:@"W"];
+    [self resetBallValueToString:@"w"];
     [self hideActionSheetB:sender];
 }
 -(IBAction)extraBye:(id)sender{
@@ -969,7 +1048,7 @@ int outBy;
         wideLabel.textColor = [UIColor  blackColor];
         legByeLabel.textColor = [UIColor  blackColor];
         penLabel.textColor = [UIColor  blackColor];
-        [self resetBallValueToString:[NSString stringWithFormat:@"%@%d",@"B",bonusRuns]];
+        [self resetBallValueToString:[NSString stringWithFormat:@"%@%d",@"b",bonusRuns]];
     }
     else if ([sender tag] == 2)
     {
@@ -983,7 +1062,7 @@ int outBy;
         wideLabel.textColor = [UIColor  blackColor];
         byeLabel.textColor = [UIColor  blackColor];
         penLabel.textColor = [UIColor  blackColor];
-        [self resetBallValueToString:[NSString stringWithFormat:@"%@%d",@"LB",bonusRuns]];
+        [self resetBallValueToString:[NSString stringWithFormat:@"%@%d",@"lb",bonusRuns]];
 
     }
     else if ([sender tag] == 3)
@@ -998,7 +1077,7 @@ int outBy;
         wideLabel.textColor = [UIColor  blackColor];
         byeLabel.textColor = [UIColor  blackColor];
         legByeLabel.textColor = [UIColor  blackColor];
-        [self resetBallValueToString:[NSString stringWithFormat:@"%@%d",@"P",bonusRuns]];
+        [self resetBallValueToString:[NSString stringWithFormat:@"%@%d",@"p",bonusRuns]];
     }
         value = 4000;
         [self updateExtrasLabels:sender];
@@ -1309,17 +1388,7 @@ int outBy;
 		[UIView commitAnimations];
 		[self pickerView:pickerView didSelectRow:row-1 inComponent:0];
 		return;
-	} /*else if ([batterButton isEqual:bowlerButton] && fieldStats[0][row] > 0 && row < [pickerView numberOfRowsInComponent:0]-1){
-		[pickerView selectRow:row+1 inComponent:0 animated:YES];
-		[UIView commitAnimations];
-		[self pickerView:pickerView didSelectRow:row+1 inComponent:0];
-		return;
-	} else if ([batterButton isEqual:bowlerButton] && fieldStats[0][row] > 0 && row == [pickerView numberOfRowsInComponent:0]-1){
-		[pickerView selectRow:row-1 inComponent:0 animated:YES];
-		[UIView commitAnimations];
-		[self pickerView:pickerView didSelectRow:row-1 inComponent:0];
-		return;
-	}*/
+	}
 	if ([battingTeam isEqualToString:@"home"]){
 		if ([batterButton isEqual:bowlerButton])
 			[batterButton setTitle:[awayPlayersArray objectAtIndex:row] forState:UIControlStateNormal];
@@ -1535,8 +1604,38 @@ int outBy;
 			}
 		}
 	}
+	[scoreLabel setText:@"-"];
+	[batter1RunsLabel setText:@"-"];
+	[batter2RunsLabel setText:@"-"];
+	[batter1BallsLabel setText:@"-"];
+	[batter2BallsLabel setText:@"-"];
+	[oversLabel setText:@"-"];
+	[runsLabel setText:@"-"];
+	[maidensLabel setText:@"-"];
+	[wicketsLabel setText:@"-"];
+	[economyLabel setText:@"-"];
+	[totLabel setText:@"-"];
+	[noBallLabel setText:@"-"];
+	[wideLabel setText:@"-"];
+	[byeLabel setText:@"-"];
+	[legByeLabel setText:@"-"];
+	[penLabel setText:@"-"];
+	
+	extraCount = 0;
+	ballNo = 1;
+	runs = 0;
+	wickets = 0;
+	overs = 0;
+	economy = 0.00;
+	noBalls = 0;
+	wides = 0;
+	byes = 0;
+	legByes = 0;
+	penalties = 0;
+	bonusRuns = 0;	
 	lastBowler = 0;
 	[self fillWayOutArray];
+	
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -1597,6 +1696,8 @@ int outBy;
     [self setBallsScrollView:nil];
 	[self setNextOverButton:nil];
 	[self setEnterButton:nil];
+	[self setEndGameButton:nil];
+	[self setCloseInningsButton:nil];
     [super viewDidUnload];
     // Release any retained subviews of the main view.
 }
