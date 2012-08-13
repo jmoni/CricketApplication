@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="1.1" toolsVersion="2182" systemVersion="11D50" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" initialViewController="uFg-XV-yPu">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="1.1" toolsVersion="2549" systemVersion="12A269" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" initialViewController="uFg-XV-yPu">
     <dependencies>
         <deployment defaultVersion="1296" identifier="iOS"/>
         <development version="4200" identifier="xcode"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="1181"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="1498"/>
     </dependencies>
     <scenes>
         <!--First View Controller - First Tab-->
@@ -580,6 +580,92 @@
                 </viewController>
             </objects>
             <point key="canvasLocation" x="1082" y="-168"/>
+        </scene>
+        <!--Score View Controller - Item-->
+        <scene sceneID="5hz-cP-UjT">
+            <objects>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="qJq-dP-iBz" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <viewController id="AAa-Lb-1dD" customClass="ScoreViewController" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="6Dm-mE-YMa">
+                        <rect key="frame" x="0.0" y="64" width="320" height="367"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Innings (by team)" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" id="5SU-1u-7jv">
+                                <rect key="frame" x="20" y="49" width="280" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Score Card" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" id="t3u-9s-ZFR">
+                                <rect key="frame" x="83" y="20" width="155" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="R" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" id="xb1-Tm-6nl">
+                                <rect key="frame" x="146" y="78" width="20" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="M" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" id="Y6y-DR-7sh">
+                                <rect key="frame" x="174" y="78" width="20" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="B" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" id="Qqf-Xp-jZh">
+                                <rect key="frame" x="202" y="78" width="20" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="4s" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" id="zOG-L1-Cvw">
+                                <rect key="frame" x="230" y="78" width="20" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="6s" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" id="3BG-9h-WG3">
+                                <rect key="frame" x="258" y="78" width="20" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="SR" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" id="phU-fE-NDr">
+                                <rect key="frame" x="286" y="78" width="24" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="fNc-0R-hQf">
+                                <rect key="frame" x="20" y="97" width="118" height="250"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <connections>
+                                    <outlet property="dataSource" destination="AAa-Lb-1dD" id="dbc-pW-AEn"/>
+                                    <outlet property="delegate" destination="AAa-Lb-1dD" id="JjQ-T8-jk5"/>
+                                </connections>
+                            </tableView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                    </view>
+                    <tabBarItem key="tabBarItem" title="Item" id="OyE-Zd-WDJ"/>
+                    <connections>
+                        <outlet property="firstTeamBatTitle" destination="5SU-1u-7jv" id="6Xt-90-0lU"/>
+                        <outlet property="tableOfPlayers" destination="fNc-0R-hQf" id="Qa5-iu-T8L"/>
+                    </connections>
+                </viewController>
+            </objects>
+            <point key="canvasLocation" x="183" y="1086"/>
         </scene>
         <!--Third View Controller - Third Tab-->
         <scene sceneID="dLs-TD-eaK">
@@ -1207,6 +1293,7 @@
                         <segue destination="2" kind="relationship" relationship="viewControllers" id="26"/>
                         <segue destination="3" kind="relationship" relationship="viewControllers" id="XkG-Iy-GHV"/>
                         <segue destination="QzP-vb-Ig0" kind="relationship" relationship="viewControllers" id="XJp-dg-7Zf"/>
+                        <segue destination="AAa-Lb-1dD" kind="relationship" relationship="viewControllers" id="Okc-Mb-e7u"/>
                     </connections>
                 </tabBarController>
             </objects>
@@ -1404,8 +1491,10 @@
                 <relationship kind="action" name="battingOrderSliderChanging:"/>
                 <relationship kind="action" name="deletePlayer:"/>
                 <relationship kind="action" name="getInitialSlideValue:"/>
+                <relationship kind="action" name="hideActionSheet:" candidateClass="UIBarButtonItem"/>
                 <relationship kind="action" name="nextPlayer:"/>
                 <relationship kind="action" name="previousPlayer:"/>
+                <relationship kind="action" name="storedPlayersAction:"/>
                 <relationship kind="action" name="textFieldReturn:"/>
                 <relationship kind="outlet" name="CaptainSlider" candidateClass="UISwitch"/>
                 <relationship kind="outlet" name="NavBar" candidateClass="UINavigationItem"/>
@@ -1413,10 +1502,13 @@
                 <relationship kind="outlet" name="WicketKeeperSlider" candidateClass="UISwitch"/>
                 <relationship kind="outlet" name="battingOrderSlider" candidateClass="UISlider"/>
                 <relationship kind="outlet" name="bottomToolbar" candidateClass="UIToolbar"/>
+                <relationship kind="outlet" name="choosePlayer" candidateClass="UIPickerView"/>
+                <relationship kind="outlet" name="infoButtonItem" candidateClass="UIBarButtonItem"/>
                 <relationship kind="outlet" name="nextPlayerButton" candidateClass="UIBarButtonItem"/>
                 <relationship kind="outlet" name="playerEditTextBox" candidateClass="UITextField"/>
                 <relationship kind="outlet" name="previousPlayerButton" candidateClass="UIBarButtonItem"/>
                 <relationship kind="outlet" name="sliderValueLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="storedPlayersClicked" candidateClass="UIButton"/>
             </relationships>
         </class>
         <class className="FirstViewController" superclassName="UIViewController">
@@ -1430,6 +1522,8 @@
                 <relationship kind="action" name="showActionSheet:"/>
                 <relationship kind="action" name="showStoredTeams:"/>
                 <relationship kind="action" name="sliderUpdate:"/>
+                <relationship kind="action" name="textFieldDidBeginEditing:" candidateClass="UITextField"/>
+                <relationship kind="action" name="textFieldDidEndEditing:" candidateClass="UITextField"/>
                 <relationship kind="action" name="textFieldReturn:"/>
                 <relationship kind="action" name="timeSliderUpdate:"/>
                 <relationship kind="outlet" name="awayTeamEntered" candidateClass="UITextField"/>
@@ -1449,6 +1543,13 @@
                 <relationship kind="outlet" name="timeSlide" candidateClass="UISlider"/>
                 <relationship kind="outlet" name="umpireOneEntered" candidateClass="UITextField"/>
                 <relationship kind="outlet" name="umpireTwoEntered" candidateClass="UITextField"/>
+            </relationships>
+        </class>
+        <class className="ScoreViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/ScoreViewController.h"/>
+            <relationships>
+                <relationship kind="outlet" name="firstTeamBatTitle" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="tableOfPlayers" candidateClass="UITableView"/>
             </relationships>
         </class>
         <class className="SecondViewController" superclassName="UIViewController">
@@ -1503,8 +1604,10 @@
                 <relationship kind="action" name="nextOver:"/>
                 <relationship kind="action" name="noRuns:"/>
                 <relationship kind="action" name="plusOne:"/>
+                <relationship kind="action" name="resetExtra:"/>
                 <relationship kind="action" name="showActionSheet:"/>
                 <relationship kind="action" name="showExtrasOptions:"/>
+                <relationship kind="action" name="showOutByPicker:typeOfOut:"/>
                 <relationship kind="action" name="showOutOptions:"/>
                 <relationship kind="action" name="six:"/>
                 <relationship kind="action" name="sixBye:"/>
