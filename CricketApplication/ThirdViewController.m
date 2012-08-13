@@ -585,7 +585,8 @@ float inningNumber = 1;
                 runs --;
                 wideLabel.text = [NSString stringWithFormat:@"%d", wides];
                 extraCount--;
-                [[[ballsScrollView subviews] objectAtIndex:[[ballsScrollView subviews] count]-1]removeFromSuperview];                [allBallLabels removeLastObject];
+                [[[ballsScrollView subviews] objectAtIndex:[[ballsScrollView subviews] count]-1]removeFromSuperview];
+				[allBallLabels removeLastObject];
                 [self moveBackBallLabel:sender];
             }
             if([firstChar isEqualToString:@"b"])
@@ -595,7 +596,8 @@ float inningNumber = 1;
                 runs -= toSubtract;
                 byeLabel.text = [NSString stringWithFormat:@"%d", byes];
                 extraCount--;
-                [[[ballsScrollView subviews] objectAtIndex:[[ballsScrollView subviews] count]-1]removeFromSuperview];                [allBallLabels removeLastObject];
+                [[[ballsScrollView subviews] objectAtIndex:[[ballsScrollView subviews] count]-1]removeFromSuperview];
+				[allBallLabels removeLastObject];
                 [self moveBackBallLabel:sender];
             }
             if([firstChar isEqualToString:@"l"])
@@ -605,7 +607,8 @@ float inningNumber = 1;
                 runs -= toSubtract;
                 legByeLabel.text = [NSString stringWithFormat:@"%d", legByes];
                 extraCount--;
-                [[[ballsScrollView subviews] objectAtIndex:[[ballsScrollView subviews] count]-1]removeFromSuperview];                [allBallLabels removeLastObject];
+                [[[ballsScrollView subviews] objectAtIndex:[[ballsScrollView subviews] count]-1]removeFromSuperview];
+				[allBallLabels removeLastObject];
                 [self moveBackBallLabel:sender];
             }
             if([firstChar isEqualToString:@"p"])
@@ -615,7 +618,8 @@ float inningNumber = 1;
                 penalties -= toSubtract;
                 penLabel.text = [NSString stringWithFormat:@"%d", penalties];
                 extraCount--;
-                [[[ballsScrollView subviews] objectAtIndex:[[ballsScrollView subviews] count]-1]removeFromSuperview];                [allBallLabels removeLastObject];
+                [[[ballsScrollView subviews] objectAtIndex:[[ballsScrollView subviews] count]-1]removeFromSuperview];
+				[allBallLabels removeLastObject];
                 [self moveBackBallLabel:sender];
             }
             else
