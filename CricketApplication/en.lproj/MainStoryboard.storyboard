@@ -1004,7 +1004,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="d2z-Fe-3Q2">
-                                <rect key="frame" x="19" y="135" width="281" height="152"/>
+                                <rect key="frame" x="19" y="136" width="281" height="152"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="35"/>
                                 <state key="normal" title="Start Game">
@@ -1171,10 +1171,10 @@
                                 </subviews>
                                 <gestureRecognizers/>
                             </scrollView>
-                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="iek-G1-mbn">
-                                <rect key="frame" x="93" y="136" width="207" height="116"/>
+                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="wordWrap" id="iek-G1-mbn">
+                                <rect key="frame" x="245" y="136" width="55" height="116"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="boldSystem" pointSize="32"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="24"/>
                                 <state key="normal" title="Next Over">
                                     <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
@@ -1184,6 +1184,36 @@
                                 </state>
                                 <connections>
                                     <action selector="nextOver:" destination="QzP-vb-Ig0" eventType="touchUpInside" id="mbc-4r-nqp"/>
+                                </connections>
+                            </button>
+                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="wordWrap" id="2oM-5D-3Py">
+                                <rect key="frame" x="93" y="136" width="135" height="33"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="19"/>
+                                <state key="normal" title="End Game">
+                                    <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <state key="highlighted">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="endGame:" destination="QzP-vb-Ig0" eventType="touchUpInside" id="y2w-Zq-632"/>
+                                </connections>
+                            </button>
+                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="wordWrap" id="R17-To-itC">
+                                <rect key="frame" x="93" y="177" width="135" height="74"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="19"/>
+                                <state key="normal" title="Close Innings">
+                                    <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <state key="highlighted">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="closeInnings:" destination="QzP-vb-Ig0" eventType="touchUpInside" id="xLM-mL-Jdh"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -1211,7 +1241,9 @@
                         <outlet property="batterName2" destination="XXX-cD-XUH" id="wC2-Rp-Fqu"/>
                         <outlet property="bowlerButton" destination="C0C-9H-10D" id="oth-jc-iK1"/>
                         <outlet property="byeLabel" destination="QNw-jd-3B2" id="2oy-vi-yKX"/>
+                        <outlet property="closeInningsButton" destination="R17-To-itC" id="HCu-SC-8sT"/>
                         <outlet property="economyLabel" destination="0ex-4u-Uhb" id="n8q-h0-gZu"/>
+                        <outlet property="endGameButton" destination="2oM-5D-3Py" id="Qoi-bE-4vV"/>
                         <outlet property="enterButton" destination="geV-B2-qlI" id="7Dq-Nc-WZ7"/>
                         <outlet property="legByeLabel" destination="oUq-EK-DEF" id="91E-Pi-Gdn"/>
                         <outlet property="maidensLabel" destination="JE1-BR-FmZ" id="IdK-ne-GXx"/>
@@ -1297,7 +1329,7 @@
                     </connections>
                 </tabBarController>
             </objects>
-            <point key="canvasLocation" x="-36" y="168"/>
+            <point key="canvasLocation" x="-30" y="168"/>
         </scene>
         <!--Stats View Controller-->
         <scene sceneID="MTk-vg-S4Z">
@@ -1468,197 +1500,6 @@
         <image name="second.png" width="30" height="30"/>
         <image name="second@2x.png" width="60" height="60"/>
     </resources>
-    <classes>
-        <class className="DatabaseController" superclassName="UITabBarController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/DatabaseController.h"/>
-            <relationships>
-                <relationship kind="action" name="next:"/>
-                <relationship kind="action" name="share:"/>
-                <relationship kind="outlet" name="navBar" candidateClass="UINavigationItem"/>
-                <relationship kind="outlet" name="nextButton" candidateClass="UIBarButtonItem"/>
-                <relationship kind="outlet" name="saveButton" candidateClass="UIBarButtonItem"/>
-                <relationship kind="outlet" name="tabBar" candidateClass="UITabBar"/>
-            </relationships>
-        </class>
-        <class className="DetailViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/DetailViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="CSlider:"/>
-                <relationship kind="action" name="VCSlider:"/>
-                <relationship kind="action" name="WKSlider:"/>
-                <relationship kind="action" name="backgroundTouched:"/>
-                <relationship kind="action" name="battingOrderSliderChanged:"/>
-                <relationship kind="action" name="battingOrderSliderChanging:"/>
-                <relationship kind="action" name="deletePlayer:"/>
-                <relationship kind="action" name="getInitialSlideValue:"/>
-                <relationship kind="action" name="hideActionSheet:" candidateClass="UIBarButtonItem"/>
-                <relationship kind="action" name="nextPlayer:"/>
-                <relationship kind="action" name="previousPlayer:"/>
-                <relationship kind="action" name="storedPlayersAction:"/>
-                <relationship kind="action" name="textFieldReturn:"/>
-                <relationship kind="outlet" name="CaptainSlider" candidateClass="UISwitch"/>
-                <relationship kind="outlet" name="NavBar" candidateClass="UINavigationItem"/>
-                <relationship kind="outlet" name="ViceCaptainSlider" candidateClass="UISwitch"/>
-                <relationship kind="outlet" name="WicketKeeperSlider" candidateClass="UISwitch"/>
-                <relationship kind="outlet" name="battingOrderSlider" candidateClass="UISlider"/>
-                <relationship kind="outlet" name="bottomToolbar" candidateClass="UIToolbar"/>
-                <relationship kind="outlet" name="choosePlayer" candidateClass="UIPickerView"/>
-                <relationship kind="outlet" name="infoButtonItem" candidateClass="UIBarButtonItem"/>
-                <relationship kind="outlet" name="nextPlayerButton" candidateClass="UIBarButtonItem"/>
-                <relationship kind="outlet" name="playerEditTextBox" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="previousPlayerButton" candidateClass="UIBarButtonItem"/>
-                <relationship kind="outlet" name="sliderValueLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="storedPlayersClicked" candidateClass="UIButton"/>
-            </relationships>
-        </class>
-        <class className="FirstViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/FirstViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="awayButtonClicked:"/>
-                <relationship kind="action" name="changeDate:"/>
-                <relationship kind="action" name="flipSwitch:"/>
-                <relationship kind="action" name="hideActionSheet:" candidateClass="UIBarButtonItem"/>
-                <relationship kind="action" name="homeButtonClicked:"/>
-                <relationship kind="action" name="showActionSheet:"/>
-                <relationship kind="action" name="showStoredTeams:"/>
-                <relationship kind="action" name="sliderUpdate:"/>
-                <relationship kind="action" name="textFieldDidBeginEditing:" candidateClass="UITextField"/>
-                <relationship kind="action" name="textFieldDidEndEditing:" candidateClass="UITextField"/>
-                <relationship kind="action" name="textFieldReturn:"/>
-                <relationship kind="action" name="timeSliderUpdate:"/>
-                <relationship kind="outlet" name="awayTeamEntered" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="chooseTeam" candidateClass="UIPickerView"/>
-                <relationship kind="outlet" name="dateButton" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="datePicker" candidateClass="UIDatePicker"/>
-                <relationship kind="outlet" name="dateText" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="homeTeamEntered" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="infoButtonItem" candidateClass="UIBarButtonItem"/>
-                <relationship kind="outlet" name="overSlide" candidateClass="UISlider"/>
-                <relationship kind="outlet" name="overTimeLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="scrollView" candidateClass="UIScrollView"/>
-                <relationship kind="outlet" name="storedAwayTeamButton" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="storedHomeTeamButton" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="switcher" candidateClass="UISegmentedControl"/>
-                <relationship kind="outlet" name="timeLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="timeSlide" candidateClass="UISlider"/>
-                <relationship kind="outlet" name="umpireOneEntered" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="umpireTwoEntered" candidateClass="UITextField"/>
-            </relationships>
-        </class>
-        <class className="ScoreViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/ScoreViewController.h"/>
-            <relationships>
-                <relationship kind="outlet" name="firstTeamBatTitle" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="tableOfPlayers" candidateClass="UITableView"/>
-            </relationships>
-        </class>
-        <class className="SecondViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/SecondViewController.h"/>
-            <relationships>
-                <relationship kind="outlet" name="awayNavBarAddButton" candidateClass="UIBarButtonItem"/>
-                <relationship kind="outlet" name="awayNavBarEditButton" candidateClass="UIBarButtonItem"/>
-                <relationship kind="outlet" name="awayPlayersTable" candidateClass="UITableView"/>
-                <relationship kind="outlet" name="awayWonToss" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="battingButton" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="fieldingButton" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="homeNavBarAddButton" candidateClass="UIBarButtonItem"/>
-                <relationship kind="outlet" name="homeNavBarEditButton" candidateClass="UIBarButtonItem"/>
-                <relationship kind="outlet" name="homePlayersTable" candidateClass="UITableView"/>
-                <relationship kind="outlet" name="homeWonToss" candidateClass="UIButton"/>
-            </relationships>
-        </class>
-        <class className="StatsViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/StatsViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="backgroundTouched:"/>
-                <relationship kind="action" name="deletePlayer:"/>
-                <relationship kind="action" name="nextPlayer:"/>
-                <relationship kind="action" name="previousPlayer:"/>
-                <relationship kind="action" name="textFieldReturn:"/>
-                <relationship kind="outlet" name="CaptainSlider" candidateClass="UISwitch"/>
-                <relationship kind="outlet" name="NavBar" candidateClass="UINavigationItem"/>
-                <relationship kind="outlet" name="ViceCaptainSlider" candidateClass="UISwitch"/>
-                <relationship kind="outlet" name="WicketKeeperSlider" candidateClass="UISwitch"/>
-                <relationship kind="outlet" name="ballsLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="playerEditTextBox" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="runsLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="wayOutLabel" candidateClass="UILabel"/>
-            </relationships>
-        </class>
-        <class className="ThirdViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/ThirdViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="addExtras:"/>
-                <relationship kind="action" name="byeCalc:string:"/>
-                <relationship kind="action" name="byePlusOne:"/>
-                <relationship kind="action" name="confirm:"/>
-                <relationship kind="action" name="extraBye:"/>
-                <relationship kind="action" name="extraLegBye:"/>
-                <relationship kind="action" name="extraNoBall:"/>
-                <relationship kind="action" name="extraPen:"/>
-                <relationship kind="action" name="extraWide:"/>
-                <relationship kind="action" name="four:"/>
-                <relationship kind="action" name="fourBye:"/>
-                <relationship kind="action" name="hideActionSheet:" candidateClass="UIBarButtonItem"/>
-                <relationship kind="action" name="hideActionSheetB:"/>
-                <relationship kind="action" name="nextOver:"/>
-                <relationship kind="action" name="noRuns:"/>
-                <relationship kind="action" name="plusOne:"/>
-                <relationship kind="action" name="resetExtra:"/>
-                <relationship kind="action" name="showActionSheet:"/>
-                <relationship kind="action" name="showExtrasOptions:"/>
-                <relationship kind="action" name="showOutByPicker:typeOfOut:"/>
-                <relationship kind="action" name="showOutOptions:"/>
-                <relationship kind="action" name="six:"/>
-                <relationship kind="action" name="sixBye:"/>
-                <relationship kind="action" name="startGame:"/>
-                <relationship kind="action" name="turnLabelsBlack:"/>
-                <relationship kind="action" name="turnLabelsGreen:"/>
-                <relationship kind="action" name="turnLabelsOrange:"/>
-                <relationship kind="action" name="turnLabelsRed:"/>
-                <relationship kind="action" name="undo:"/>
-                <relationship kind="action" name="updateExtrasLabels:"/>
-                <relationship kind="outlet" name="ball1" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="ball2" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="ball3" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="ball4" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="ball5" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="ball6" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="ballsScrollView" candidateClass="UIScrollView"/>
-                <relationship kind="outlet" name="batter1Active" candidateClass="UIImageView"/>
-                <relationship kind="outlet" name="batter1BallsLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="batter1RunsLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="batter2Active" candidateClass="UIImageView"/>
-                <relationship kind="outlet" name="batter2BallsLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="batter2RunsLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="batterName1" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="batterName2" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="bowlerButton" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="byeLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="choosePlayer" candidateClass="UIPickerView"/>
-                <relationship kind="outlet" name="economyLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="enterButton" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="infoButtonItem" candidateClass="UIBarButtonItem"/>
-                <relationship kind="outlet" name="legByeLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="maidensLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="nextOverButton" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="noBallLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="oneActive" candidateClass="UIImageView"/>
-                <relationship kind="outlet" name="oversLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="penLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="runsLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="scoreLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="startGameButton" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="teamName" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="totLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="twoActive" candidateClass="UIImageView"/>
-                <relationship kind="outlet" name="wicketsLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="wideLabel" candidateClass="UILabel"/>
-                <relationship kind="outletCollection" name="ballLabels" candidateClass="UILabel"/>
-                <relationship kind="outletCollection" name="calculatorView" candidateClass="UIButton"/>
-            </relationships>
-        </class>
-    </classes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
         <simulatedOrientationMetrics key="orientation"/>

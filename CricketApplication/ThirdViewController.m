@@ -11,6 +11,7 @@
 #include "SecondViewController.h"
 #include "FirstViewController.h"
 #include "DatabaseController.h"
+#include "MBProgressHUD.h"
 
 @interface ThirdViewController ()
 @property (strong, nonatomic) IBOutlet UIButton *batterName1;
@@ -60,6 +61,9 @@ NSMutableArray *extraBallLabels;
 bool outPicker = NO;
 NSString *outType;
 int outBy;
+bool extra = FALSE;
+NSMutableArray *allBallLabels;
+float inningNumber = 1;
 
 @implementation ThirdViewController
 @synthesize ball6;
@@ -93,6 +97,8 @@ int outBy;
 @synthesize ballsScrollView;
 @synthesize nextOverButton;
 @synthesize enterButton;
+@synthesize endGameButton;
+@synthesize closeInningsButton;
 @synthesize batterName1;
 @synthesize batterName2;
 @synthesize teamName;
@@ -113,24 +119,40 @@ int outBy;
 - (void)startGame:(id)sender {
 	UIAlertView* mes=[[UIAlertView alloc] initWithTitle:@"Are you ready to start game?"
 				message:[NSString stringWithFormat:@"Ensure all game details are correct as you will not be able to edit these once the game starts."] delegate:self cancelButtonTitle:@"No" otherButtonTitles:@"Yes", nil];
+	[mes setTag:0];
+	[mes show];
+}
+
+- (IBAction)endGame:(id)sender{
+	UIAlertView* mes=[[UIAlertView alloc] initWithTitle:@"End Game"
+												message:[NSString stringWithFormat:@"Are you sure you want to end the game?"] delegate:self cancelButtonTitle:@"No" otherButtonTitles:@"Yes", nil];
+	[mes setTag:1];
+	[mes show];
+}
+
+- (IBAction)closeInnings:(id)sender{
+	UIAlertView* mes=[[UIAlertView alloc] initWithTitle:@"Close Innings"
+												message:[NSString stringWithFormat:@"Are you sure you want to close the current innings?"] delegate:self cancelButtonTitle:@"No" otherButtonTitles:@"Yes", nil];
+	[mes setTag:2];
 	[mes show];
 }
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
+	DatabaseController *instance = [[DatabaseController alloc] init];
 	if (buttonIndex == 0)
 	{
 		[self resignFirstResponder];
 	}
-	else
+	else if (alertView.tag == 0)
 	{
+		//start game
 		[self resignFirstResponder];
 		[startGameButton setHidden:YES];
 		for(int i = 0; i < [calculatorView count]; i++){
 			[[calculatorView objectAtIndex:i] setHidden:NO];
 		}
 		[ballsScrollView setHidden:NO];
-		DatabaseController *instance = [[DatabaseController alloc] init];
 		[instance firstTabSave];
 		[instance secondTabSave];
 		[instance thirdTabSave];
@@ -139,6 +161,62 @@ int outBy;
         ball1.textColor = [UIColor redColor];
 		//[bowlerButton setEnabled:NO];
 	}
+	else if (alertView.tag == 1)
+	{
+		//end game
+		[self resignFirstResponder];
+	}
+	else if (alertView.tag == 2)
+	{
+		//close innings
+		NSString *fow = @"";
+		for (int i = [fallOfWickets count]-1; i >= 0; i--){
+			fow = [NSString stringWithFormat:@"%@$%@", fow, [fallOfWickets objectAtIndex:i]];
+		}
+		if ([battingTeam isEqualToString:@"home"]){
+			[instance insertStringIntoDatabase:[NSString stringWithFormat:
+											@"INSERT INTO INNINGS (GameID, BattingTeamID, InningNumber, FallOfWickets, Score) VALUES (%d, %d, %d, \"%@\", \"%@\")",
+											currentGameID, homeTeamID, (int)inningNumber, fow, [scoreLabel text]]];
+		} else {
+			[instance insertStringIntoDatabase:[NSString stringWithFormat:
+											@"INSERT INTO INNINGS (GameID, BattingTeamID, InningNumber, FallOfWickets, Score) VALUES (%d, %d, %d, \"%@\", \"%@\")",
+											currentGameID, awayTeamID, (int)inningNumber, fow, [scoreLabel text]]];
+		}
+		
+		inningNumber+=0.5;
+		if([battingTeam isEqualToString:@"home"])
+			battingTeam = @"away";
+		else
+			battingTeam = @"home";
+		
+		[self showHUD:@"Innings closed"];
+		[self viewDidLoad];
+		ball1.text = @"-";
+		ball2.text = @"-";
+		ball3.text = @"-";
+		ball4.text = @"-";
+		ball5.text = @"-";
+		ball6.text = @"-";
+		[self turnLabelsBlack:closeInningsButton];
+		[nextOverButton setHidden:YES];
+		[endGameButton setHidden:YES];
+		[closeInningsButton setHidden:YES];
+
+		[self resignFirstResponder];
+	}
+}
+
+- (IBAction)showHUD:(NSString *)string {
+	MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
+	
+	// Configure for text only and offset down
+	hud.mode = MBProgressHUDModeText;
+	hud.labelText = string;
+	hud.margin = 10.f;
+	hud.yOffset = 150.f;
+	hud.removeFromSuperViewOnHide = YES;
+	
+	[hud hide:YES afterDelay:3];
 }
 
 -(int)outTypeToInt{
@@ -284,7 +362,7 @@ int outBy;
             runs += byeAdditions;
             runs += legByeAdditions;
             runs += penaltiesAdditions;
-            
+            extra = TRUE;
             noBallAdditions = 0;
             wideAdditions=0;
             byeAdditions=0;
@@ -305,15 +383,72 @@ int outBy;
             penLabel.textColor = [UIColor blackColor];
             totLabel.textColor = [UIColor blackColor];
             
-            UILabel *toAdd= [[UILabel alloc] initWithFrame:CGRectMake(242.0+(extraCount*33), 6, 25,21)];
+            UILabel *toAdd= [[UILabel alloc] initWithFrame:CGRectMake(77 + (((extraCount-1)+(ballNo-1))*33), 6, 25,21)];
+            toAdd.tag = extraCount;
             
             [toAdd setTextAlignment:UITextAlignmentCenter];
-            [toAdd setText:@"-"];
-            [extraBallLabels addObject:toAdd];
-            [ballsScrollView addSubview: toAdd];
-            
+            if (ballNo == 1)
+            {
+                [ball1 setFrame:CGRectMake(ball1.frame.origin.x +33,6,25,21)];
+                [ball2 setFrame:CGRectMake(ball2.frame.origin.x +33,6,25,21)];
+                [ball3 setFrame:CGRectMake(ball3.frame.origin.x +33,6,25, 21)];
+                [ball4 setFrame:CGRectMake(ball4.frame.origin.x +33,6,25, 21)];
+                [ball5 setFrame:CGRectMake(ball5.frame.origin.x +33,6, 25, 21)];
+                [ball6 setFrame:CGRectMake(ball6.frame.origin.x +33, 6, 25, 21)];
+                [fallOfWickets addObject: ball1.text];
+                [toAdd setText: ball1.text];
+                [ball1 setText: @"-"];
+            }
+            else if (ballNo == 2)
+            {
+                [ball2 setFrame:CGRectMake(ball2.frame.origin.x +33,6,25,21)];
+                [ball3 setFrame:CGRectMake(ball3.frame.origin.x +33,6,25, 21)];
+                [ball4 setFrame:CGRectMake(ball4.frame.origin.x +33,6,25, 21)];
+                [ball5 setFrame:CGRectMake(ball5.frame.origin.x +33,6, 25, 21)];
+                [ball6 setFrame:CGRectMake(ball6.frame.origin.x +33, 6, 25, 21)];
+                [fallOfWickets addObject: ball2.text];
+                [toAdd setText: ball2.text];
+                [ball2 setText: @"-"];
+            }
+            else if (ballNo == 3)
+            {
+                [ball3 setFrame:CGRectMake(ball3.frame.origin.x +33,6,25, 21)];
+                [ball4 setFrame:CGRectMake(ball4.frame.origin.x +33,6,25, 21)];
+                [ball5 setFrame:CGRectMake(ball5.frame.origin.x +33,6, 25, 21)];
+                [ball6 setFrame:CGRectMake(ball6.frame.origin.x +33, 6, 25, 21)];
+                [fallOfWickets addObject: ball3.text];
+                [toAdd setText: ball3.text];
+                [ball3 setText: @"-"];
+            }
+            else if (ballNo == 4)
+            {
+                [ball4 setFrame:CGRectMake(ball4.frame.origin.x +33,6,25, 21)];
+                [ball5 setFrame:CGRectMake(ball5.frame.origin.x +33,6, 25, 21)];
+                [ball6 setFrame:CGRectMake(ball6.frame.origin.x +33, 6, 25, 21)];
+                [fallOfWickets addObject: ball4.text];
+                [toAdd setText: ball4.text];
+                [ball4 setText: @"-"];
+            }
+            else if (ballNo == 5)
+            {
+                [ball5 setFrame:CGRectMake(ball5.frame.origin.x +33,6, 25, 21)];
+                [ball6 setFrame:CGRectMake(ball6.frame.origin.x +33, 6, 25, 21)];
+                [fallOfWickets addObject: ball5.text];
+                [toAdd setText: ball5.text];
+                [ball5 setText: @"-"];
+            }
+            else if (ballNo == 6)
+            {
+                [ball6 setFrame:CGRectMake(ball6.frame.origin.x +33, 6, 25, 21)];
+                [fallOfWickets addObject: ball6.text];
+                [toAdd setText: ball6.text];
+                [ball6 setText: @"-"];
+            }
+            [allBallLabels addObject:toAdd];
+            [ballsScrollView addSubview: [allBallLabels objectAtIndex:extraCount-1]];
             [ballsScrollView setContentOffset:CGPointMake((33*extraCount),0) animated:YES];
             ballsScrollView.contentSize = CGSizeMake(ballsScrollView.contentSize.width  + (33*extraCount), ballsScrollView.contentSize.height);
+            ballNo--;
             
 		} else if ([batter1Active isHidden]) {
 			//batter2Runs += value;
@@ -326,26 +461,29 @@ int outBy;
 			batStats[1][batter1]++;
 			batStats[2][batter1] += value;
 		}
-        
+        if (!extra){
         if (ballNo == 1){
             [fallOfWickets addObject: ball1.text];
         }
         else if (ballNo == 2){
-            [fallOfWickets addObject:ball2.text];
+            [fallOfWickets addObject: ball2.text];
         }
         if (ballNo == 3){
-            [fallOfWickets addObject:ball3.text];
+            [fallOfWickets addObject: ball3.text];
         }
         if (ballNo == 4){
-            [fallOfWickets addObject:ball4.text];
+            [fallOfWickets addObject: ball4.text];
         }
         if (ballNo == 5){
-            [fallOfWickets addObject:ball5.text];
+            [fallOfWickets addObject: ball5.text];
         }
         if (ballNo == 6){
-            [fallOfWickets addObject:ball6.text];
+            [fallOfWickets addObject: ball6.text];
         }
-
+        }
+        else extra = FALSE;
+        
+        
 		//overs += 0.1;
 		fieldStats[1][bowler] += 0.1;
 		runs += value;
@@ -360,6 +498,8 @@ int outBy;
 		else{
 			ballNo++;
 			[nextOverButton setHidden:NO];
+			[endGameButton setHidden:NO];
+			[closeInningsButton setHidden:NO];
 			fieldStats[2][bowler] -= (int)(fieldStats[2][bowler])%6;
 			overs++;
 			//maidens -= maidens%6;
@@ -400,8 +540,10 @@ int outBy;
 
 - (IBAction)undo:(id)sender {
 	if (fieldStats[1][bowler] >= 0 && ballNo > 1) {
-		if (value <= -1) {
-			if (ballNo == 1)
+		NSString *deletedVal = [NSString stringWithFormat:@"%@", [fallOfWickets objectAtIndex:[fallOfWickets count]-1]];
+		NSString *firstChar = [deletedVal substringToIndex:1];
+		if (value <= -1 && ! [firstChar isEqualToString:@"W"]) {
+			/*if (ballNo == 1)
 				fieldStats[1][bowler]--;
 			if (ballNo == 7)
 				[nextOverButton setHidden:YES];
@@ -425,56 +567,98 @@ int outBy;
 				fieldStats[1][bowler] -= 0.5;
 			else 
 				fieldStats[1][bowler] -= 0.1;
-			fieldStats[3][bowler] -= value;
-            NSString *deletedVal = [NSString stringWithFormat:@"%@", [fallOfWickets objectAtIndex:[fallOfWickets count]-1]];
+			fieldStats[3][bowler] -= value;*/
             [fallOfWickets removeObjectAtIndex:[fallOfWickets count]-1];
-            NSString *firstChar = [deletedVal substringToIndex:1];
-            if([firstChar isEqualToString:@"N"])
+            if([firstChar isEqualToString:@"n"])
             {
                 noBalls --;
                 runs --;
                 noBallLabel.text = [NSString stringWithFormat:@"%d", noBalls];
-				if ([batter1Active isHidden]) batStats[1][batter2]++;
-				else batStats[1][batter1]++;
+                extraCount--;
+                [[[ballsScrollView subviews] objectAtIndex:[[ballsScrollView subviews] count]-1]removeFromSuperview];
+                [allBallLabels removeLastObject];
+                [self moveBackBallLabel:sender];
             }
-            if([firstChar isEqualToString:@"W"])
+            if([firstChar isEqualToString:@"w"])
             {
                 wides --;
                 runs --;
                 wideLabel.text = [NSString stringWithFormat:@"%d", wides];
-				if ([batter1Active isHidden]) batStats[1][batter2]++;
-				else batStats[1][batter1]++;
+                extraCount--;
+                [[[ballsScrollView subviews] objectAtIndex:[[ballsScrollView subviews] count]-1]removeFromSuperview];
+				[allBallLabels removeLastObject];
+                [self moveBackBallLabel:sender];
             }
-            if([firstChar isEqualToString:@"B"])
+            if([firstChar isEqualToString:@"b"])
             {
                 int toSubtract = [[deletedVal substringFromIndex:1] intValue];
                 byes -= toSubtract;
                 runs -= toSubtract;
                 byeLabel.text = [NSString stringWithFormat:@"%d", byes];
-				if ([batter1Active isHidden]) batStats[1][batter2]++;
-				else batStats[1][batter1]++;
+                extraCount--;
+                [[[ballsScrollView subviews] objectAtIndex:[[ballsScrollView subviews] count]-1]removeFromSuperview];
+				[allBallLabels removeLastObject];
+                [self moveBackBallLabel:sender];
             }
-            if([firstChar isEqualToString:@"L"])
+            if([firstChar isEqualToString:@"l"])
             {
                 int toSubtract = [[deletedVal substringFromIndex:2] intValue];
                 legByes -= toSubtract;
                 runs -= toSubtract;
                 legByeLabel.text = [NSString stringWithFormat:@"%d", legByes];
-				if ([batter1Active isHidden]) batStats[1][batter2]++;
-				else batStats[1][batter1]++;
+                extraCount--;
+                [[[ballsScrollView subviews] objectAtIndex:[[ballsScrollView subviews] count]-1]removeFromSuperview];
+				[allBallLabels removeLastObject];
+                [self moveBackBallLabel:sender];
             }
-            if([firstChar isEqualToString:@"P"])
+            if([firstChar isEqualToString:@"p"])
             {
                 int toSubtract = [[deletedVal substringFromIndex:1] intValue];
                 runs -= toSubtract;
                 penalties -= toSubtract;
                 penLabel.text = [NSString stringWithFormat:@"%d", penalties];
-				if ([batter1Active isHidden]) batStats[1][batter2]++;
-				else batStats[1][batter1]++;
+                extraCount--;
+                [[[ballsScrollView subviews] objectAtIndex:[[ballsScrollView subviews] count]-1]removeFromSuperview];
+				[allBallLabels removeLastObject];
+                [self moveBackBallLabel:sender];
             }
+            else
+            {
+                if (ballNo == 1)
+                    fieldStats[1][bowler]--;
+                if (ballNo == 7)
+                    [nextOverButton setHidden:YES];
+                ballNo--;
+                value = [self getBallValue];
+                if (value%2 == 0) even = YES; else even = NO;
+                [self changeBatterFacingBowler];
+                if ([batter1Active isHidden]) {
+                    //batter2Runs -= value;
+                    //batter2Balls--;
+                    batStats[2][batter2] -= value;
+                    batStats[1][batter2]--;
+                } else {
+                    //batter1Runs -= value;
+                    //batter1Balls--;
+                    batStats[2][batter1] -= value;
+                    batStats[1][batter1]--;
+                }
+                runs -= value;
+                if (fieldStats[1][bowler]-(int)(fieldStats[1][bowler]) == 0)
+                    fieldStats[1][bowler] -= 0.5;
+                else 
+                    fieldStats[1][bowler] -= 0.1;
+                fieldStats[3][bowler] -= value;
+                [self resetBallValueToString:@"-"];
+            }
+            
             totLabel.text = [NSString stringWithFormat:@"%d", (noBalls + wides + byes + legByes +penalties) ];
+            
+            
+            //if ([batter1Active isHidden]) batStats[1][batter2]++;
+            //else batStats[1][batter1]++;
 		}
-		[self resetBallValueToString:@"-"];
+
 		value = -1;
         [self turnLabelsBlack:sender];
         
@@ -500,6 +684,20 @@ int outBy;
 	}
 }
 
+-(void)moveBackBallLabel:(id)sender
+{
+    if (ballNo <=6) [ball6 setFrame:CGRectMake(ball6.frame.origin.x-33, 6, 25, 21)];
+    if (ballNo <=5)[ball5 setFrame:CGRectMake(ball5.frame.origin.x-33, 6, 25, 21)];
+    if (ballNo <=4)[ball4 setFrame:CGRectMake(ball4.frame.origin.x-33, 6, 25, 21)];
+    if (ballNo <=3)[ball3 setFrame:CGRectMake(ball3.frame.origin.x-33, 6, 25, 21)];
+    if (ballNo <=2)[ball2 setFrame:CGRectMake(ball2.frame.origin.x-33, 6, 25, 21)];
+    if (ballNo <=1)[ball1 setFrame:CGRectMake(ball1.frame.origin.x-33, 6, 25, 21)];
+    
+    [ballsScrollView setContentOffset:CGPointMake((33*extraCount),0) animated:YES];
+    ballsScrollView.contentSize = CGSizeMake(ballsScrollView.contentSize.width  + (33*extraCount), ballsScrollView.contentSize.height);
+    
+}
+
 - (void)nextOver:(id)sender{
 	ballNo = 1;
 	ball1.text = @"-";
@@ -514,6 +712,8 @@ int outBy;
 		even = NO;
 	[self changeBatterFacingBowler];
 	[nextOverButton setHidden:YES];
+	[endGameButton setHidden:YES];
+	[closeInningsButton setHidden:YES];
 }
 
 - (void)resetBallValueToString:(NSString *)string {
@@ -918,7 +1118,7 @@ int outBy;
     [self hideActionSheetB:sender];
     [self updateExtrasLabels:sender];
     [self turnLabelsOrange:sender];
-    [self resetBallValueToString:@"NB"];
+    [self resetBallValueToString:@"nb"];
 
 }
 -(IBAction)extraWide:(id)sender{
@@ -937,7 +1137,7 @@ int outBy;
     [wideLabel setTextColor:[UIColor orangeColor]];
     [self turnLabelsOrange:sender];
     [self updateExtrasLabels:sender];
-    [self resetBallValueToString:@"W"];
+    [self resetBallValueToString:@"w"];
     [self hideActionSheetB:sender];
 }
 -(IBAction)extraBye:(id)sender{
@@ -969,7 +1169,7 @@ int outBy;
         wideLabel.textColor = [UIColor  blackColor];
         legByeLabel.textColor = [UIColor  blackColor];
         penLabel.textColor = [UIColor  blackColor];
-        [self resetBallValueToString:[NSString stringWithFormat:@"%@%d",@"B",bonusRuns]];
+        [self resetBallValueToString:[NSString stringWithFormat:@"%@%d",@"b",bonusRuns]];
     }
     else if ([sender tag] == 2)
     {
@@ -983,7 +1183,7 @@ int outBy;
         wideLabel.textColor = [UIColor  blackColor];
         byeLabel.textColor = [UIColor  blackColor];
         penLabel.textColor = [UIColor  blackColor];
-        [self resetBallValueToString:[NSString stringWithFormat:@"%@%d",@"LB",bonusRuns]];
+        [self resetBallValueToString:[NSString stringWithFormat:@"%@%d",@"lb",bonusRuns]];
 
     }
     else if ([sender tag] == 3)
@@ -998,7 +1198,7 @@ int outBy;
         wideLabel.textColor = [UIColor  blackColor];
         byeLabel.textColor = [UIColor  blackColor];
         legByeLabel.textColor = [UIColor  blackColor];
-        [self resetBallValueToString:[NSString stringWithFormat:@"%@%d",@"P",bonusRuns]];
+        [self resetBallValueToString:[NSString stringWithFormat:@"%@%d",@"p",bonusRuns]];
     }
         value = 4000;
         [self updateExtrasLabels:sender];
@@ -1309,17 +1509,7 @@ int outBy;
 		[UIView commitAnimations];
 		[self pickerView:pickerView didSelectRow:row-1 inComponent:0];
 		return;
-	} /*else if ([batterButton isEqual:bowlerButton] && fieldStats[0][row] > 0 && row < [pickerView numberOfRowsInComponent:0]-1){
-		[pickerView selectRow:row+1 inComponent:0 animated:YES];
-		[UIView commitAnimations];
-		[self pickerView:pickerView didSelectRow:row+1 inComponent:0];
-		return;
-	} else if ([batterButton isEqual:bowlerButton] && fieldStats[0][row] > 0 && row == [pickerView numberOfRowsInComponent:0]-1){
-		[pickerView selectRow:row-1 inComponent:0 animated:YES];
-		[UIView commitAnimations];
-		[self pickerView:pickerView didSelectRow:row-1 inComponent:0];
-		return;
-	}*/
+	}
 	if ([battingTeam isEqualToString:@"home"]){
 		if ([batterButton isEqual:bowlerButton])
 			[batterButton setTitle:[awayPlayersArray objectAtIndex:row] forState:UIControlStateNormal];
@@ -1493,7 +1683,7 @@ int outBy;
     [super viewDidLoad];
     [ballsScrollView setDelegate:self];
     [ballsScrollView setContentSize:CGSizeMake(280, 33)];
-    extraBallLabels =[[NSMutableArray alloc ] init];
+    allBallLabels =[[NSMutableArray alloc ] init];
 	// Do any additional setup after loading the view.
 	batter1 = 0;
 	batter2 = 1;
@@ -1535,8 +1725,38 @@ int outBy;
 			}
 		}
 	}
+	[scoreLabel setText:@"-"];
+	[batter1RunsLabel setText:@"-"];
+	[batter2RunsLabel setText:@"-"];
+	[batter1BallsLabel setText:@"-"];
+	[batter2BallsLabel setText:@"-"];
+	[oversLabel setText:@"-"];
+	[runsLabel setText:@"-"];
+	[maidensLabel setText:@"-"];
+	[wicketsLabel setText:@"-"];
+	[economyLabel setText:@"-"];
+	[totLabel setText:@"-"];
+	[noBallLabel setText:@"-"];
+	[wideLabel setText:@"-"];
+	[byeLabel setText:@"-"];
+	[legByeLabel setText:@"-"];
+	[penLabel setText:@"-"];
+	
+	extraCount = 0;
+	ballNo = 1;
+	runs = 0;
+	wickets = 0;
+	overs = 0;
+	economy = 0.00;
+	noBalls = 0;
+	wides = 0;
+	byes = 0;
+	legByes = 0;
+	penalties = 0;
+	bonusRuns = 0;	
 	lastBowler = 0;
 	[self fillWayOutArray];
+	
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -1597,6 +1817,8 @@ int outBy;
     [self setBallsScrollView:nil];
 	[self setNextOverButton:nil];
 	[self setEnterButton:nil];
+	[self setEndGameButton:nil];
+	[self setCloseInningsButton:nil];
     [super viewDidUnload];
     // Release any retained subviews of the main view.
 }

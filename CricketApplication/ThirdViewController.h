@@ -44,6 +44,8 @@ float batStats[4][20];
 @property (strong, nonatomic) IBOutlet UIScrollView *ballsScrollView;
 @property (strong, nonatomic) IBOutlet UIButton *nextOverButton;
 @property (strong, nonatomic) IBOutlet UIButton *enterButton;
+@property (strong, nonatomic) IBOutlet UIButton *endGameButton;
+@property (strong, nonatomic) IBOutlet UIButton *closeInningsButton;
 
 -(IBAction)showActionSheet: (id) sender;
 -(IBAction)hideActionSheet: (UIBarButtonItem *)_infoButtonItem;
@@ -74,4 +76,7 @@ float batStats[4][20];
 -(IBAction)updateExtrasLabels:(id)sender;
 -(IBAction)nextOver:(id)sender;
 -(IBAction)resetExtra:(id)sender;
+-(IBAction)moveBackBallLabel:(id)sender;
+-(IBAction)endGame:(id)sender;
+-(IBAction)closeInnings:(id)sender;
 @end

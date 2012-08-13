@@ -539,6 +539,7 @@ int playerInt;
 		[WicketKeeperSlider setEnabled:NO];
 		[battingOrderSlider setEnabled:NO];
 		[bottomToolbar setHidden:YES];
+		[_storedPlayersClicked setHidden:YES];
 	}
 }
 
