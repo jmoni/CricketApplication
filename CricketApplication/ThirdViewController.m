@@ -56,6 +56,7 @@ NSMutableArray *fallOfWickets;
 NSArray *waysToBeOut;
 NSString *wayBatterOut;
 int batterOutInt;
+NSMutableArray *extraBallLabels;
 bool outPicker = NO;
 NSString *outType;
 int outBy;

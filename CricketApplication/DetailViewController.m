@@ -524,8 +524,7 @@ UIView *newView;
 		[nextPlayerButton setEnabled:YES];
 	}
 	if(disableElements){
-		[playerEditTextBox setEnabled:NO];
-		[playerEditTextBox setClearButtonMode:UITextFieldViewModeNever];
+		[_playerEditTextBox setEnabled:NO];
 		[CaptainSlider setEnabled:NO];
 		[ViceCaptainSlider setEnabled:NO];
 		[WicketKeeperSlider setEnabled:NO];
