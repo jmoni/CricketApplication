@@ -447,6 +447,8 @@ int awayTeamInt;
 		[_switcher setEnabled:NO];
 		[_overSlide setEnabled:NO];
 		[_timeSlide setEnabled:NO];
+		[_storedAwayTeamButton setEnabled:NO];
+		[_storedHomeTeamButton setEnabled:NO];
 	}
 }
 
