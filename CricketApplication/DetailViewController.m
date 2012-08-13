@@ -37,7 +37,6 @@ int playerInt;
 
 
 - (IBAction)storedPlayersAction: (id)sender{
-    NSLog(@"stored");
     _playerEditTextBox.enabled = false;
     _storedPlayersClicked.enabled = false;
     battingOrderSlider.enabled = false;
@@ -389,7 +388,6 @@ int playerInt;
             NSLog(@"\nAccess worked");
             //Put players into away array
             NSString *nameString = [NSString stringWithUTF8String:(char *)sqlite3_column_text(statement, 0)];
-            NSLog(@"Player : %@",nameString);
             [playersInDatabase addObject: nameString];
         }
         sqlite3_finalize(statement);
@@ -400,7 +398,6 @@ int playerInt;
 }
 
 - (void) editPlayersInArray{
-    
     if (teamForDetailView == @"home"){
         for (int i=0 ; i <[playersInDatabase count]; i++){
             for (int j=0 ; j <[homePlayersArray count]; j++){
@@ -418,38 +415,28 @@ int playerInt;
                 NSString *a = (NSString *) [playersInDatabase objectAtIndex:i];
                 NSString *b = (NSString *) [awayPlayersArray objectAtIndex:j];
                 if ([a isEqualToString:b]){
-                    NSLog(@"REMOVE adhs");
                     [displayPlayers replaceObjectAtIndex:i withObject:@"Remove"];
                 }
             }
         }
     }
-    
     //Remove the strings "remove' from array
     for (int i=0 ; i<[displayPlayers count]; i++){
-        NSLog(@"%d",i);
         if([displayPlayers objectAtIndex:i] == @"Remove"){
             [displayPlayers removeObjectAtIndex:i];
             i--;
         }
     }
-    
     //Hide click button if the array is empty
     int c = [displayPlayers count];
     if (c < 1) _storedPlayersClicked.hidden = true;
     else _storedPlayersClicked.hidden = false;
-    
-    
     if (teamForDetailView == @"home"){
         [displayPlayers addObject:[homePlayersArray objectAtIndex:rowForDetaiView]];
     }
     else if (teamForDetailView == @"away"){
         [displayPlayers addObject:[awayPlayersArray objectAtIndex:rowForDetaiView]];
     }
-    
-    
-    NSLog(@"\n\n\n\n\n\ndisplayPlayers NEW%@\n\n\n\n\n\n",displayPlayers);
-
 
 }
 
