@@ -11,7 +11,7 @@
 NSString *scoreString;
 float batStats[4][20];
 
-@interface ThirdViewController : UIViewController <UIPickerViewDelegate, UIPickerViewDataSource, UIActionSheetDelegate>
+@interface ThirdViewController : UIViewController <UIPickerViewDelegate, UIPickerViewDataSource, UIActionSheetDelegate, UIScrollViewDelegate>
 
 @property (strong, nonatomic) IBOutlet UILabel *ball6;
 @property (strong, nonatomic) IBOutlet UILabel *ball5;
@@ -73,4 +73,5 @@ float batStats[4][20];
 -(IBAction)turnLabelsBlack:(id)sender;
 -(IBAction)updateExtrasLabels:(id)sender;
 -(IBAction)nextOver:(id)sender;
+-(IBAction)resetExtra:(id)sender;
 @end

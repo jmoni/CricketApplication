@@ -8,7 +8,10 @@
 
 #import <UIKit/UIKit.h>
 
-@interface DetailViewController : UIViewController <UITextFieldDelegate>
+NSMutableArray *playersInDatabase;
+NSMutableArray *displayPlayers;
+
+@interface DetailViewController : UIViewController <UITextFieldDelegate, UIScrollViewDelegate, UIPickerViewDelegate, UIPickerViewDataSource>
 
 @property (strong, nonatomic) IBOutlet UITextField *playerEditTextBox;
 @property (strong, nonatomic) IBOutlet UISlider *battingOrderSlider;
@@ -20,6 +23,9 @@
 @property (strong, nonatomic) IBOutlet UIBarButtonItem *nextPlayerButton;
 @property (strong, nonatomic) IBOutlet UIBarButtonItem *previousPlayerButton;
 @property (strong, nonatomic) IBOutlet UIToolbar *bottomToolbar;
+@property (strong, nonatomic) IBOutlet UIButton *storedPlayersClicked;
+@property (strong, nonatomic) IBOutlet UIBarButtonItem *infoButtonItem;
+@property (strong, nonatomic) IBOutlet UIPickerView * choosePlayer;
 
 - (IBAction)textFieldReturn:(id)sender;
 - (IBAction)backgroundTouched:(id)sender;
@@ -32,4 +38,5 @@
 - (IBAction)deletePlayer:(id)sender;
 - (IBAction)nextPlayer:(id)sender;
 - (IBAction)previousPlayer:(id)sender;
+- (IBAction)storedPlayersAction:(id)sender;
 @end

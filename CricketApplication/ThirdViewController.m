@@ -24,6 +24,7 @@
 
 UIView *newView;
 UILabel *runningTotal;
+int extraCount = 0;
 int height = 255;
 int value = -1;
 int ballNo = 1;
@@ -157,6 +158,7 @@ int outBy;
 	fieldStats[2][bowler] ++;
     [self turnLabelsOrange:sender];
 	//maidens++;
+    [self resetExtra:sender];
 }
 -(IBAction)plusOne:(id)sender{
     if (value == -1)
@@ -172,6 +174,7 @@ int outBy;
 		even = NO;
 	else
 		even = YES;
+    [self resetExtra:sender];
 }
 -(IBAction)four:(id)sender{
     value = 4;
@@ -179,12 +182,38 @@ int outBy;
     
     [self turnLabelsOrange:sender];
 	even = YES;
+    [self resetExtra:sender];
 }
 -(IBAction)six:(id)sender{
     value = 6;
+    
     [self resetBallValueToString:[NSString stringWithFormat:@"%d", value]];
+    [self resetExtra:sender];
     [self turnLabelsOrange:sender];
 	even = YES;
+}
+
+-(IBAction)resetExtra:(id)sender
+{
+    noBallAdditions = 0;
+    wideAdditions = 0;
+    byeAdditions = 0;
+    legByeAdditions = 0;
+    penaltiesAdditions = 0;
+    [noBallLabel setTextColor:[UIColor blackColor]];
+    [noBallLabel setText: [NSString stringWithFormat: @"%d", noBalls]];
+    [wideLabel setTextColor:[UIColor blackColor]];
+    [wideLabel setText: [NSString stringWithFormat: @"%d", wides]];
+    [byeLabel setTextColor:[UIColor blackColor]];
+    [byeLabel setText: [NSString stringWithFormat: @"%d", byes]];
+    [legByeLabel setTextColor:[UIColor blackColor]];
+    [legByeLabel setText: [NSString stringWithFormat: @"%d", legByes]];
+    [penLabel setTextColor:[UIColor blackColor]];
+    [penLabel setText: [NSString stringWithFormat: @"%d", penalties]];
+    [totLabel setTextColor:[UIColor blackColor]];
+    [totLabel setText: [NSString stringWithFormat:@"%d", (noBalls + wides + byes + legByes + penalties)]];
+    
+    
 }
 -(IBAction)confirm:(id)sender{
 	if (value > -1) {
@@ -242,6 +271,7 @@ int outBy;
 				[self showActionSheet:batterName2];
 			}
         } else if (value == 4000){
+            extraCount ++;
             value = 0;
             noBalls += noBallAdditions;
             wides += wideAdditions;
@@ -273,6 +303,16 @@ int outBy;
             legByeLabel.textColor = [UIColor blackColor];
             penLabel.textColor = [UIColor blackColor];
             totLabel.textColor = [UIColor blackColor];
+            
+            UILabel *toAdd= [[UILabel alloc] initWithFrame:CGRectMake(242.0+(extraCount*33), 6, 25,21)];
+            
+            [toAdd setTextAlignment:UITextAlignmentCenter];
+            [toAdd setText:@"-"];
+            [extraBallLabels addObject:toAdd];
+            [ballsScrollView addSubview: toAdd];
+            
+            [ballsScrollView setContentOffset:CGPointMake((33*extraCount),0) animated:YES];
+            ballsScrollView.contentSize = CGSizeMake(ballsScrollView.contentSize.width  + (33*extraCount), ballsScrollView.contentSize.height);
             
 		} else if ([batter1Active isHidden]) {
 			//batter2Runs += value;
@@ -391,6 +431,7 @@ int outBy;
             if([firstChar isEqualToString:@"N"])
             {
                 noBalls --;
+                runs --;
                 noBallLabel.text = [NSString stringWithFormat:@"%d", noBalls];
 				if ([batter1Active isHidden]) batStats[1][batter2]++;
 				else batStats[1][batter1]++;
@@ -398,6 +439,7 @@ int outBy;
             if([firstChar isEqualToString:@"W"])
             {
                 wides --;
+                runs --;
                 wideLabel.text = [NSString stringWithFormat:@"%d", wides];
 				if ([batter1Active isHidden]) batStats[1][batter2]++;
 				else batStats[1][batter1]++;
@@ -406,6 +448,7 @@ int outBy;
             {
                 int toSubtract = [[deletedVal substringFromIndex:1] intValue];
                 byes -= toSubtract;
+                runs -= toSubtract;
                 byeLabel.text = [NSString stringWithFormat:@"%d", byes];
 				if ([batter1Active isHidden]) batStats[1][batter2]++;
 				else batStats[1][batter1]++;
@@ -414,6 +457,7 @@ int outBy;
             {
                 int toSubtract = [[deletedVal substringFromIndex:2] intValue];
                 legByes -= toSubtract;
+                runs -= toSubtract;
                 legByeLabel.text = [NSString stringWithFormat:@"%d", legByes];
 				if ([batter1Active isHidden]) batStats[1][batter2]++;
 				else batStats[1][batter1]++;
@@ -421,6 +465,7 @@ int outBy;
             if([firstChar isEqualToString:@"P"])
             {
                 int toSubtract = [[deletedVal substringFromIndex:1] intValue];
+                runs -= toSubtract;
                 penalties -= toSubtract;
                 penLabel.text = [NSString stringWithFormat:@"%d", penalties];
 				if ([batter1Active isHidden]) batStats[1][batter2]++;
@@ -1445,6 +1490,9 @@ int outBy;
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    [ballsScrollView setDelegate:self];
+    [ballsScrollView setContentSize:CGSizeMake(280, 33)];
+    extraBallLabels =[[NSMutableArray alloc ] init];
 	// Do any additional setup after loading the view.
 	batter1 = 0;
 	batter2 = 1;
@@ -1509,6 +1557,7 @@ int outBy;
 		[teamName setText:awayTeam];
 }
 
+                                       
 - (void)viewDidUnload
 {
     [self setBatterName1:nil];
