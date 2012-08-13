@@ -33,6 +33,7 @@ int initialSliderValue;
 
 int height;
 UIView *newView;
+int playerInt;
 
 
 
@@ -72,7 +73,11 @@ UIView *newView;
     _choosePlayer.delegate = self;
     _choosePlayer.dataSource = self;
     _choosePlayer.showsSelectionIndicator = YES;
-	
+    
+    //Automatically scroll to the team already choosen
+    [_choosePlayer selectRow:playerInt inComponent:0 animated:YES];
+    [self pickerView:_choosePlayer didSelectRow:playerInt inComponent:0];
+
     //add popup view
     [newView addSubview:toolbar];
     [newView addSubview:_choosePlayer];
@@ -97,6 +102,7 @@ UIView *newView;
 - (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component
 {
     _playerEditTextBox.text = [displayPlayers objectAtIndex:row];
+    playerInt = row;
 }
 
 //Number of rows in picker view
@@ -396,17 +402,12 @@ UIView *newView;
 
 - (void) editPlayersInArray{
     
-    //NSLog(@"%d",[playersInDatabase count]);
-    //NSLog(@"%d",[homePlayersArray count]);
-    
-    
     if (teamForDetailView == @"home"){
         for (int i=0 ; i <[playersInDatabase count]; i++){
             for (int j=0 ; j <[homePlayersArray count]; j++){
                 NSString *a = (NSString *) [playersInDatabase objectAtIndex:i];
                 NSString *b = (NSString *) [homePlayersArray objectAtIndex:j];
                 if ([a isEqualToString:b]){
-                    NSLog(@"REMOVE");
                     [displayPlayers replaceObjectAtIndex:i withObject:@"Remove"];
                 }
             }
@@ -418,31 +419,37 @@ UIView *newView;
                 NSString *a = (NSString *) [playersInDatabase objectAtIndex:i];
                 NSString *b = (NSString *) [awayPlayersArray objectAtIndex:j];
                 if ([a isEqualToString:b]){
-                    NSLog(@"REMOVE");
+                    NSLog(@"REMOVE adhs");
                     [displayPlayers replaceObjectAtIndex:i withObject:@"Remove"];
                 }
             }
         }
     }
     
-    //NSLog(@"%d",[displayPlayers count]);
-    
     //Remove the strings "remove' from array
     for (int i=0 ; i<[displayPlayers count]; i++){
         NSLog(@"%d",i);
         if([displayPlayers objectAtIndex:i] == @"Remove"){
-            NSLog(@"Player Remove %d: %@",i,[displayPlayers objectAtIndex:i]);
             [displayPlayers removeObjectAtIndex:i];
             i--;
         }
     }
     
-    
     //Hide click button if the array is empty
     int c = [displayPlayers count];
     if (c < 1) _storedPlayersClicked.hidden = true;
     else _storedPlayersClicked.hidden = false;
-    //NSLog(@"\n\n\n\n\n\ndisplayPlayers NEW%@\n\n\n\n\n\n",displayPlayers);
+    
+    
+    if (teamForDetailView == @"home"){
+        [displayPlayers addObject:[homePlayersArray objectAtIndex:rowForDetaiView]];
+    }
+    else if (teamForDetailView == @"away"){
+        [displayPlayers addObject:[awayPlayersArray objectAtIndex:rowForDetaiView]];
+    }
+    
+    
+    NSLog(@"\n\n\n\n\n\ndisplayPlayers NEW%@\n\n\n\n\n\n",displayPlayers);
 
 
 }
@@ -473,6 +480,8 @@ UIView *newView;
 - (void)viewDidLoad
 {
     int c;
+    
+    playerInt = 0;
     
     //Initialise the array to hold teams
     playersInDatabase = [[NSMutableArray alloc] init];
