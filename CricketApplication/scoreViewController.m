@@ -91,7 +91,7 @@
 }
 
 - (void)viewDidAppear:(BOOL)animated{
-    int c = currentGameID;
+   // int c = currentGameID;
 }
 
 - (void)viewDidUnload
