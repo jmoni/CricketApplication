@@ -81,4 +81,5 @@ float batStats[4][20];
 -(IBAction)endGame:(id)sender;
 -(IBAction)closeInnings:(id)sender;
 -(void)startInningsFunction:(id)sender;
+-(IBAction)switchBatter:(id)sender;
 @end

@@ -66,6 +66,8 @@ NSMutableArray *allBallLabels;
 float inningNumber = 1;
 NSString *newBatsman;
 int batterReplace = 0;
+bool bowlerReplace = FALSE;
+
 
 @implementation ThirdViewController
 @synthesize ball6;
@@ -368,6 +370,7 @@ int batterReplace = 0;
             }
         }
 		if (value == 1000){
+            [self changeBatterFacingBowler];
 			wickets++;
 			value = 0;
             batterReplace = 1;
@@ -388,6 +391,7 @@ int batterReplace = 0;
 				[self showActionSheet:batterName2];
 			}
         } else if (value == 2000) {
+            [self changeBatterFacingBowler];
 			fieldStats[4][bowler]++;
 			wickets++;
 			value = 0;
@@ -411,6 +415,7 @@ int batterReplace = 0;
 				[self showActionSheet:batterName2];
 			}
 		} else if (value == 3000){
+            [self changeBatterFacingBowler];
 			wickets++;
 			value = 0;
 			if(batterOutInt == 0) {
@@ -467,7 +472,7 @@ int batterReplace = 0;
             
             UILabel *toAdd= [[UILabel alloc] initWithFrame:CGRectMake(77 + (((extraCount-1)+(ballNo-1))*33), 6, 25,21)];
             toAdd.tag = extraCount;
-            
+            toAdd.textColor = [UIColor colorWithRed:.1 green:.5 blue:0 alpha:1.0];
             [toAdd setTextAlignment:UITextAlignmentCenter];
             if (ballNo == 1)
             {
@@ -714,7 +719,71 @@ int batterReplace = 0;
 		if(fieldStats[1][bowler] > 0)
 			economy = fieldStats[3][bowler]/fieldStats[1][bowler];
 		[economyLabel setText:[NSString stringWithFormat:@"%.2f", economy]];
-	} else {
+	} else if(fieldStats[1] [bowler] >=0 && ballNo ==1)
+    {
+        NSString *deletedVal = [NSString stringWithFormat:@"%@", [fallOfWickets objectAtIndex:[fallOfWickets count]-1]];
+		NSString *firstChar = [deletedVal substringToIndex:1];
+		if (value <= -1 && ! [firstChar isEqualToString:@"W"]) {
+            [fallOfWickets removeObjectAtIndex:[fallOfWickets count]-1];
+            if([firstChar isEqualToString:@"n"])
+            {
+                noBalls --;
+                runs --;
+                noBallLabel.text = [NSString stringWithFormat:@"%d", noBalls];
+                extraCount--;
+                [[[ballsScrollView subviews] objectAtIndex:[[ballsScrollView subviews] count]-1]removeFromSuperview];
+                [allBallLabels removeLastObject];
+                [self moveBackBallLabel:sender];
+            }
+            if([firstChar isEqualToString:@"w"])
+            {
+                wides --;
+                runs --;
+                wideLabel.text = [NSString stringWithFormat:@"%d", wides];
+                extraCount--;
+                [[[ballsScrollView subviews] objectAtIndex:[[ballsScrollView subviews] count]-1]removeFromSuperview];
+				[allBallLabels removeLastObject];
+                [self moveBackBallLabel:sender];
+            }
+            if([firstChar isEqualToString:@"b"])
+            {
+                int toSubtract = [[deletedVal substringFromIndex:1] intValue];
+                byes -= toSubtract;
+                runs -= toSubtract;
+                byeLabel.text = [NSString stringWithFormat:@"%d", byes];
+                extraCount--;
+                [[[ballsScrollView subviews] objectAtIndex:[[ballsScrollView subviews] count]-1]removeFromSuperview];
+				[allBallLabels removeLastObject];
+                [self moveBackBallLabel:sender];
+            }
+            if([firstChar isEqualToString:@"l"])
+            {
+                int toSubtract = [[deletedVal substringFromIndex:2] intValue];
+                legByes -= toSubtract;
+                runs -= toSubtract;
+                legByeLabel.text = [NSString stringWithFormat:@"%d", legByes];
+                extraCount--;
+                [[[ballsScrollView subviews] objectAtIndex:[[ballsScrollView subviews] count]-1]removeFromSuperview];
+				[allBallLabels removeLastObject];
+                [self moveBackBallLabel:sender];
+            }
+            if([firstChar isEqualToString:@"p"])
+            {
+                int toSubtract = [[deletedVal substringFromIndex:1] intValue];
+                runs -= toSubtract;
+                penalties -= toSubtract;
+                penLabel.text = [NSString stringWithFormat:@"%d", penalties];
+                extraCount--;
+                [[[ballsScrollView subviews] objectAtIndex:[[ballsScrollView subviews] count]-1]removeFromSuperview];
+				[allBallLabels removeLastObject];
+                [self moveBackBallLabel:sender];
+            }
+        } 
+        totLabel.text = [NSString stringWithFormat:@"%d", (noBalls + wides + byes + legByes +penalties) ];
+        
+		[scoreLabel setText:[NSString stringWithFormat:@"%.0f/%d (%d Overs)", runs, wickets, overs]];
+    }
+    else {
 		[ball1 setText:@"-"];
 		value = -1;
 	}
@@ -723,11 +792,11 @@ int batterReplace = 0;
 -(void)moveBackBallLabel:(id)sender
 {
     if (ballNo <=6) [ball6 setFrame:CGRectMake(ball6.frame.origin.x-33, 6, 25, 21)];
-    if (ballNo <=5)[ball5 setFrame:CGRectMake(ball5.frame.origin.x-33, 6, 25, 21)];
-    if (ballNo <=4)[ball4 setFrame:CGRectMake(ball4.frame.origin.x-33, 6, 25, 21)];
-    if (ballNo <=3)[ball3 setFrame:CGRectMake(ball3.frame.origin.x-33, 6, 25, 21)];
-    if (ballNo <=2)[ball2 setFrame:CGRectMake(ball2.frame.origin.x-33, 6, 25, 21)];
-    if (ballNo <=1)[ball1 setFrame:CGRectMake(ball1.frame.origin.x-33, 6, 25, 21)];
+    if (ballNo <=5) [ball5 setFrame:CGRectMake(ball5.frame.origin.x-33, 6, 25, 21)];
+    if (ballNo <=4) [ball4 setFrame:CGRectMake(ball4.frame.origin.x-33, 6, 25, 21)];
+    if (ballNo <=3) [ball3 setFrame:CGRectMake(ball3.frame.origin.x-33, 6, 25, 21)];
+    if (ballNo <=2) [ball2 setFrame:CGRectMake(ball2.frame.origin.x-33, 6, 25, 21)];
+    if (ballNo <=1) [ball1 setFrame:CGRectMake(ball1.frame.origin.x-33, 6, 25, 21)];
     
     [ballsScrollView setContentOffset:CGPointMake((33*extraCount),0) animated:YES];
     ballsScrollView.contentSize = CGSizeMake(ballsScrollView.contentSize.width  - 33, ballsScrollView.contentSize.height);
@@ -740,6 +809,9 @@ int batterReplace = 0;
         [[ballsScrollView viewWithTag:i] removeFromSuperview];
         [allBallLabels removeLastObject];
     }
+    //for (int i=0; i<[fallOfWickets count]; i++)
+    //    NSLog([fallOfWickets objectAtIndex:i]);
+    
     ballNo = 1;
     [ball1 setFrame:CGRectMake(77, 6, 25, 21)];
 	ball1.text = @"-";
@@ -859,6 +931,7 @@ int batterReplace = 0;
 			[batter1Active setHidden:YES];
 			[batter2Active setHidden:NO];
 		}
+even = true;
 	}
 }
 
@@ -1336,16 +1409,45 @@ int batterReplace = 0;
 	UIBarButtonItem *spacer = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:self action:nil];
 	
 	if ([batterButton isEqual:bowlerButton])
+    {
 		titleString = @"Select Bowler";
+        bowlerReplace = TRUE;
+         _choosePlayer = [[UIPickerView alloc] initWithFrame: CGRectMake(0,40,320,250)];
+    }
 	else
+    {
 		titleString = @"Select Batter";
+        _choosePlayer = [[UIPickerView alloc] initWithFrame: CGRectMake(0,40,320,150)];
+        UISegmentedControl *battingNext = [[UISegmentedControl alloc] initWithFrame:CGRectMake(10,210,300,40)];
+        [battingNext insertSegmentWithTitle:@"Batting Next" atIndex:0 animated:YES];
+        [battingNext insertSegmentWithTitle:@"Not Batting Next" atIndex:1 animated:YES];
+        [battingNext addTarget:self action:@selector(switchBatter:)  forControlEvents: UIControlEventValueChanged];
+        if ([batterButton isEqual:batterName1] && batter1Active.isHidden == FALSE)
+        {
+            [battingNext setSelectedSegmentIndex: 0];
+        }
+        else if ([batterButton isEqual:batterName1] && batter1Active.isHidden == TRUE)
+        {
+            [battingNext setSelectedSegmentIndex: 1];
+        }
+        else if ([batterButton isEqual:batterName2] && batter2Active.isHidden == FALSE)
+        {
+            [battingNext setSelectedSegmentIndex: 0];
+        }
+        else if ([batterButton isEqual:batterName2] && batter2Active.isHidden == TRUE)
+        {
+            [battingNext setSelectedSegmentIndex: 1];
+        }
+        
+        [newView addSubview: battingNext];
+    }
 	
 	UIBarButtonItem *titleButton = [[UIBarButtonItem alloc] initWithTitle:titleString style:UIBarButtonItemStylePlain target:nil action:nil];
 	
     toolbar.items = [NSArray arrayWithObjects:_infoButtonItem, spacer, titleButton, spacer, nil];
     
     //add a picker
-    _choosePlayer = [[UIPickerView alloc] initWithFrame: CGRectMake(0,40,320,250)];
+   
     _choosePlayer.hidden = false;
     _choosePlayer.delegate = self;
     _choosePlayer.dataSource = self;
@@ -1366,6 +1468,11 @@ int batterReplace = 0;
     newView.frame = temp;
     [UIView commitAnimations];
 }
+         
+-(IBAction)switchBatter:(id)sender
+{
+    even = NO;
+}
 
 //Used when clicking the done button
 - (IBAction)hideActionSheet:(UIBarButtonItem *)infoButtonItem{
@@ -1375,8 +1482,15 @@ int batterReplace = 0;
 	}
     if (batterReplace == 1 || batterReplace == 2)
     {
+        [self changeBatterFacingBowler];
         [fallOfWickets addObject:[NSString stringWithFormat:@"%@%d%@%@",@"NEW",batterReplace,@"-",newBatsman]];
+        
         batterReplace = 0;
+    }
+    if (bowlerReplace)
+    {
+        bowlerReplace = FALSE;
+        [fallOfWickets addObject:[NSString stringWithFormat:@"%@%@",@"CBOWL",newBatsman]];
     }
 	//animate onto screen
 	CGRect temp = newView.frame;

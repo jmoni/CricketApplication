@@ -429,8 +429,14 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
 	[self createEditableCopyOfDatabaseIfNeeded];
-	for (int i = 1; i < 4; i++){
-		[[[tabBar items] objectAtIndex:i] setEnabled:FALSE];
+	if (!loadElements){
+		for (int i = 1; i < 4; i++){
+			[[[tabBar items] objectAtIndex:i] setEnabled:FALSE];
+		}
+	} else {
+		[nextButton setStyle:UIBarButtonItemStyleDone];
+		[nextButton setTitle:@"Share"];
+		[nextButton setAction: @selector(share:)];
 	}
 	[navBar setTitle:@"Cricket Application"];
 }

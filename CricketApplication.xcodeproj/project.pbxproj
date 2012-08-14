@@ -216,8 +216,8 @@
 		BDE2B14715C6AA63009E9F40 /* CricketApplication */ = {
 			isa = PBXGroup;
 			children = (
-				BDA16D9F15D00A1600DD9301 /* Database */,
 				BDE2B15315C6AA64009E9F40 /* MainStoryboard.storyboard */,
+				BDA16D9F15D00A1600DD9301 /* Database */,
 				BD966F5715DA6DB4006AC0BB /* Game List View */,
 				BDE2B19215C6ADBA009E9F40 /* FirstTab */,
 				BDE2B19315C6ADCD009E9F40 /* SecondTab */,
