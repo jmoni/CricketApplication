@@ -284,6 +284,8 @@
     return temp;
 }
 
+
+
 - (void)insertStringIntoDatabase:(NSString *)string {
 	const char *dbpath = [writableDBPath UTF8String];
 	sqlite3_stmt *statement;

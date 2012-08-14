@@ -38,12 +38,11 @@ NSMutableArray *awayPlayersDB;
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
     // Total number of innings for entire match (to find out how many sections are needed)
-    NSLog(@"skdjfskjdh");
-    return (homeNumberInnings + awayNumberInnings);
+    NSInteger t = homeNumberInnings + awayNumberInnings;
+    return t;
 }
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section{
-    NSLog(@"sadfhajsfjasdglfa %@",firstTeamBatting);
     if (((int)section % 2 == 0) && [firstTeamBatting isEqualToString: @"home"]){
         NSLog(@"%d",1);
         return [NSString stringWithFormat:@"Team : %@",homeTeamName];
@@ -70,8 +69,6 @@ NSMutableArray *awayPlayersDB;
      else if ([tableView isEqual:awayPlayersTable] && section == 1) cellNumber = [awayPlayersArray count];
      */
     
-    NSLog(@"skdjfskjdh");
-    
     if ([firstTeamBatting isEqualToString: @"home"])return [playerNamesHome count];
     else if ([firstTeamBatting isEqualToString: @"away"]) return [playerNamesAway count];
     else return 0;
@@ -86,8 +83,6 @@ NSMutableArray *awayPlayersDB;
     
     // Configure the cell.
     // Set the values in the table
-    
-    NSLog(@"sjfhskdhfka");
     
     if (indexPath.section == 0){
         if ([firstTeamBatting isEqualToString: @"home"]) cell.lblName.text = [homePlayersDB objectAtIndex:indexPath.row];
@@ -187,6 +182,7 @@ NSMutableArray *awayPlayersDB;
     
     
     //-------------------------------------------------------------------testing
+    NSLog(@"Game ID : %d",gameID);
     NSLog(@"Home Team ID : %d",homeTeamID);
     NSLog(@"Away Team ID : %d",awayTeamID);
     NSLog(@"Home Number of Innings : %d",homeNumberInnings);
