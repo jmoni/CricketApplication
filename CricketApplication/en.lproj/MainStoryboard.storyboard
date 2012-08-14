@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="1.1" toolsVersion="2182" systemVersion="11D50" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" initialViewController="uFg-XV-yPu">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="1.1" toolsVersion="2549" systemVersion="12A269" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" initialViewController="uFg-XV-yPu">
     <dependencies>
         <deployment defaultVersion="1296" identifier="iOS"/>
         <development version="4200" identifier="xcode"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="1181"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="1498"/>
     </dependencies>
     <scenes>
         <!--First View Controller - First Tab-->
@@ -1631,7 +1631,6 @@
                 <relationship kind="action" name="battingOrderSliderChanging:"/>
                 <relationship kind="action" name="deletePlayer:"/>
                 <relationship kind="action" name="getInitialSlideValue:"/>
-                <relationship kind="action" name="hideActionSheet:" candidateClass="UIBarButtonItem"/>
                 <relationship kind="action" name="nextPlayer:"/>
                 <relationship kind="action" name="previousPlayer:"/>
                 <relationship kind="action" name="storedPlayersAction:"/>
@@ -1767,8 +1766,6 @@
                 <relationship kind="action" name="resetExtra:"/>
                 <relationship kind="action" name="showActionSheet:"/>
                 <relationship kind="action" name="showExtrasOptions:"/>
-                <relationship kind="action" name="showHUD:" candidateClass="NSString"/>
-                <relationship kind="action" name="showOutByPicker:typeOfOut:"/>
                 <relationship kind="action" name="showOutOptions:"/>
                 <relationship kind="action" name="six:"/>
                 <relationship kind="action" name="sixBye:"/>
@@ -1798,6 +1795,7 @@
                 <relationship kind="outlet" name="byeLabel" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="choosePlayer" candidateClass="UIPickerView"/>
                 <relationship kind="outlet" name="closeInningsButton" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="currentOverLabel" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="economyLabel" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="endGameButton" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="enterButton" candidateClass="UIButton"/>

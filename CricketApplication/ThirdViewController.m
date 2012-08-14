@@ -140,6 +140,18 @@ int batterReplace = 0;
 	[mes show];
 }
 
+- (void)startInningsFunction:(id)sender{
+	//start game
+	[startGameButton setHidden:YES];
+	for(int i = 0; i < [calculatorView count]; i++){
+		[[calculatorView objectAtIndex:i] setHidden:NO];
+	}
+	[ballsScrollView setHidden:NO];
+	[batterName1 setEnabled:NO];
+	[batterName2 setEnabled:NO];
+	ball1.textColor = [UIColor redColor];
+}
+
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
 	DatabaseController *instance = [[DatabaseController alloc] init];
@@ -235,6 +247,8 @@ int batterReplace = 0;
 		[endGameButton setHidden:YES];
 		[closeInningsButton setHidden:YES];
 		[startGameButton setTitle:@"Start Innings" forState:UIControlStateNormal];
+		[startGameButton removeTarget:self action:@selector(startGameButton:) forControlEvents:UIControlEventTouchUpInside];
+		[startGameButton addTarget:self action:@selector(startInningsFunction:) forControlEvents:UIControlEventTouchUpInside];
 		[batterName1 setEnabled:YES];
 		[batterName2 setEnabled:YES];
 		[ballsScrollView setHidden:YES];
@@ -254,7 +268,7 @@ int batterReplace = 0;
 	hud.yOffset = 150.f;
 	hud.removeFromSuperViewOnHide = YES;
 	
-	[hud hide:YES afterDelay:2];
+	[hud hide:YES afterDelay:1];
 }
 
 -(int)outTypeToInt{
@@ -574,7 +588,7 @@ int batterReplace = 0;
 		[economyLabel setText:[NSString stringWithFormat:@"%.2f", economy]];
 		
 		[self changeBatterFacingBowler];
-	} else if (value == -2) {
+	}/* else if (value == -2) {
 		fieldStats[4][bowler]++;
 		wickets++;
 		[scoreLabel setText:[NSString stringWithFormat:@"%.0f/%d (%d Overs)", runs, wickets, overs]];
@@ -582,7 +596,7 @@ int batterReplace = 0;
 	} else if (value == -3){
 		wickets++;
 		[scoreLabel setText:[NSString stringWithFormat:@"%.0f/%d (%d Overs)", runs, wickets, overs]];
-	}
+	}*/
 }
 
 - (IBAction)undo:(id)sender {
