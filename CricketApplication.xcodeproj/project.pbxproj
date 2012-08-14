@@ -65,10 +65,10 @@
 /* Begin PBXFileReference section */
 		9F134C0F15D00E1D0056EE03 /* DatabaseController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DatabaseController.h; path = CricketApplication/DatabaseController.h; sourceTree = "<group>"; };
 		9F134C1015D00E1D0056EE03 /* DatabaseController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DatabaseController.m; path = CricketApplication/DatabaseController.m; sourceTree = "<group>"; };
-		9F1C3A9815D9530000B03A1B /* ScoreViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScoreViewController.h; sourceTree = "<group>"; };
 		9F699B0E15DA5448005F445C /* MyCutstomViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyCutstomViewCell.h; sourceTree = "<group>"; };
 		9F699B0F15DA5448005F445C /* MyCutstomViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyCutstomViewCell.m; sourceTree = "<group>"; };
 		9FF866EF15DA6F2000400126 /* ScoreViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ScoreViewController.m; sourceTree = "<group>"; };
+		9FF8670515DA9B3700400126 /* ScoreViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScoreViewController.h; sourceTree = "<group>"; };
 		BD27828B15D5338100B8788D /* StatsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StatsViewController.h; sourceTree = "<group>"; };
 		BD27828C15D5338100B8788D /* StatsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StatsViewController.m; sourceTree = "<group>"; };
 		BD851B6015CA93C5000BA6F3 /* CaptainIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = CaptainIcon.png; sourceTree = "<group>"; };
@@ -152,8 +152,8 @@
 		9F42936A15D9419C00457E7B /* FourthTab */ = {
 			isa = PBXGroup;
 			children = (
+				9FF8670515DA9B3700400126 /* ScoreViewController.h */,
 				9FF866EF15DA6F2000400126 /* ScoreViewController.m */,
-				9F1C3A9815D9530000B03A1B /* ScoreViewController.h */,
 				9F699B0E15DA5448005F445C /* MyCutstomViewCell.h */,
 				9F699B0F15DA5448005F445C /* MyCutstomViewCell.m */,
 			);
