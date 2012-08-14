@@ -28,4 +28,9 @@ int currentGameID;
 - (IBAction)next: (id) sender;
 - (IBAction)share: (id) sender;
 - (void)insertStringIntoDatabase:(NSString *)string;
+//- (int)countTeamsInDatabase;
+- (void)retrieveTeamsInDatabase;
+- (void)retrieveGamesInDatabaseWithFinishedStatus:(int)status;
+- (void)removeGameInDatabase:(int)gameID;
+- (void)updateCurrentGameFinshed;
 @end

@@ -16,7 +16,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" id="DhV-mD-UBH">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="367"/>
+                                <rect key="frame" x="0.0" y="-1" width="320" height="367"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <subviews>
                                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Umpire 1" minimumFontSize="17" clearButtonMode="always" id="r4c-0C-Pss">
@@ -349,7 +349,7 @@
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                             </view>
                             <tableView clipsSubviews="YES" tag="2" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" allowsSelectionDuringEditing="YES" rowHeight="34" sectionHeaderHeight="22" sectionFooterHeight="22" id="0GV-5E-HRb" userLabel="awayPlayersTable">
-                                <rect key="frame" x="160" y="44" width="160" height="296"/>
+                                <rect key="frame" x="160" y="44" width="160" height="295"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
@@ -369,15 +369,15 @@
                                 </connections>
                             </tableView>
                             <tableView clipsSubviews="YES" tag="1" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" allowsSelectionDuringEditing="YES" rowHeight="34" sectionHeaderHeight="22" sectionFooterHeight="22" id="db5-RW-BmL" userLabel="homePlayersTable">
-                                <rect key="frame" x="0.0" y="44" width="159" height="296"/>
+                                <rect key="frame" x="0.0" y="44" width="160" height="295"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="blue" showsReorderControl="YES" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="Cell" id="8g9-ob-OkJ">
-                                        <rect key="frame" x="0.0" y="22" width="159" height="34"/>
+                                        <rect key="frame" x="0.0" y="22" width="160" height="34"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                            <rect key="frame" x="0.0" y="0.0" width="139" height="33"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="140" height="33"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         </view>
@@ -515,7 +515,7 @@
                                 <autoresizingMask key="autoresizingMask"/>
                             </imageView>
                             <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="0G9-Fe-cg2">
-                                <rect key="frame" x="0.0" y="372" width="320" height="44"/>
+                                <rect key="frame" x="1" y="372" width="320" height="44"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                                 <items>
                                     <barButtonItem title="Previous Player" id="NzY-mq-4Al">
@@ -581,13 +581,13 @@
             </objects>
             <point key="canvasLocation" x="1082" y="-168"/>
         </scene>
-        <!--Score View Controller - Item-->
+        <!--Score View Controller - Score Card-->
         <scene sceneID="5hz-cP-UjT">
             <objects>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="qJq-dP-iBz" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <viewController id="AAa-Lb-1dD" customClass="ScoreViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="Score Card" title="Score Card" id="AAa-Lb-1dD" customClass="ScoreViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="6Dm-mE-YMa">
-                        <rect key="frame" x="0.0" y="64" width="320" height="367"/>
+                        <rect key="frame" x="0.0" y="64" width="320" height="416"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Score Card" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="15" id="t3u-9s-ZFR">
@@ -724,6 +724,7 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
                     <tabBarItem key="tabBarItem" title="Item" id="OyE-Zd-WDJ"/>
+                    <navigationItem key="navigationItem" id="n3d-Wl-Gsi"/>
                     <connections>
                         <outlet property="tableOfPlayers" destination="fNc-0R-hQf" id="Qa5-iu-T8L"/>
                     </connections>
@@ -1174,7 +1175,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <scrollView hidden="YES" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" alwaysBounceHorizontal="YES" showsVerticalScrollIndicator="NO" id="WRa-BT-IGQ">
-                                <rect key="frame" x="20" y="254" width="280" height="33"/>
+                                <rect key="frame" x="20" y="253" width="280" height="33"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <subviews>
                                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="-" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" id="tiK-LQ-rCO">
@@ -1339,6 +1340,7 @@
                         <outletCollection property="ballLabels" destination="bnQ-dP-8bS" id="g85-8M-1Ty"/>
                         <outletCollection property="ballLabels" destination="2jl-VC-JP5" id="sxV-ic-QMm"/>
                         <outletCollection property="ballLabels" destination="Q6Q-xl-rFk" id="Sjb-ob-Ect"/>
+                        <segue destination="uFg-XV-yPu" kind="modal" identifier="endGameSegue" modalTransitionStyle="crossDissolve" id="0pP-rE-R1i"/>
                     </connections>
                 </viewController>
             </objects>
@@ -1358,17 +1360,58 @@
                         <autoresizingMask key="autoresizingMask"/>
                     </toolbar>
                     <connections>
-                        <segue destination="4" kind="relationship" relationship="rootViewController" id="w2C-yS-PWu"/>
+                        <segue destination="eVk-AR-6h0" kind="relationship" relationship="rootViewController" id="bqW-zG-bMx"/>
                     </connections>
                 </navigationController>
             </objects>
-            <point key="canvasLocation" x="-557" y="168"/>
+            <point key="canvasLocation" x="-949" y="168"/>
+        </scene>
+        <!--Game List View Controller - Game List View-->
+        <scene sceneID="Kxb-JO-KiX">
+            <objects>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="hSr-fM-qDN" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <tableViewController storyboardIdentifier="Game List View" title="Game List View" id="eVk-AR-6h0" customClass="GameListViewController" sceneMemberID="viewController">
+                    <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="4h3-V9-3Qn">
+                        <rect key="frame" x="0.0" y="64" width="320" height="416"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <prototypes>
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="blue" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="Cell" id="yQ1-0v-3xy">
+                                <rect key="frame" x="0.0" y="22" width="320" height="44"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                    <rect key="frame" x="0.0" y="0.0" width="300" height="43"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                </view>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="eVk-AR-6h0" id="pTS-ZI-x1Y"/>
+                            <outlet property="delegate" destination="eVk-AR-6h0" id="ihs-qM-zPD"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" id="Xf9-Mr-6M0">
+                        <barButtonItem key="rightBarButtonItem" title="New Game" id="HaL-GN-3VY">
+                            <connections>
+                                <action selector="addNewGame:" destination="eVk-AR-6h0" id="4Sw-oe-bDI"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="mainTableView" destination="4h3-V9-3Qn" id="egT-IS-HSJ"/>
+                        <segue destination="4" kind="push" identifier="New Game" id="rIq-B5-LK6"/>
+                        <segue destination="AAa-Lb-1dD" kind="push" identifier="Score Card" id="edw-py-GQ9"/>
+                    </connections>
+                </tableViewController>
+            </objects>
+            <point key="canvasLocation" x="-502" y="168"/>
         </scene>
         <!--Database Controller-->
         <scene sceneID="15">
             <objects>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="14" sceneMemberID="firstResponder"/>
-                <tabBarController id="4" customClass="DatabaseController" sceneMemberID="viewController">
+                <tabBarController storyboardIdentifier="Database Controller" id="4" customClass="DatabaseController" sceneMemberID="viewController">
                     <navigationItem key="navigationItem" id="f7R-kv-gRN">
                         <barButtonItem key="rightBarButtonItem" title="Next" id="EIC-aa-9kP">
                             <connections>
@@ -1569,4 +1612,7 @@
         <simulatedOrientationMetrics key="orientation"/>
         <simulatedScreenMetrics key="destination"/>
     </simulatedMetricsContainer>
+    <inferredMetricsTieBreakers>
+        <segue reference="edw-py-GQ9"/>
+    </inferredMetricsTieBreakers>
 </document>

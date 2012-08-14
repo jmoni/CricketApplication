@@ -12,6 +12,7 @@
 #include "FirstViewController.h"
 #include "DatabaseController.h"
 #include "MBProgressHUD.h"
+#include "GameListViewController.h"
 
 @interface ThirdViewController ()
 @property (strong, nonatomic) IBOutlet UIButton *batterName1;
@@ -117,8 +118,8 @@ float inningNumber = 1;
 }
 
 - (void)startGame:(id)sender {
-	UIAlertView* mes=[[UIAlertView alloc] initWithTitle:@"Are you ready to start game?"
-				message:[NSString stringWithFormat:@"Ensure all game details are correct as you will not be able to edit these once the game starts."] delegate:self cancelButtonTitle:@"No" otherButtonTitles:@"Yes", nil];
+	UIAlertView* mes=[[UIAlertView alloc] initWithTitle:@"Are you ready to start?"
+												message:[NSString stringWithFormat:@"Ensure all details are correct as you will not be able to edit these once the game starts."] delegate:self cancelButtonTitle:@"No" otherButtonTitles:@"Yes", nil];
 	[mes setTag:0];
 	[mes show];
 }
@@ -159,12 +160,28 @@ float inningNumber = 1;
 		[batterName1 setEnabled:NO];
 		[batterName2 setEnabled:NO];
         ball1.textColor = [UIColor redColor];
-		//[bowlerButton setEnabled:NO];
 	}
 	else if (alertView.tag == 1)
 	{
 		//end game
 		[self resignFirstResponder];
+		[self showHUD:@"Game ended"];
+		NSString *fow = @"";
+		for (int i = [fallOfWickets count]-1; i >= 0; i--){
+			fow = [NSString stringWithFormat:@"%@$%@", fow, [fallOfWickets objectAtIndex:i]];
+		}
+		if ([battingTeam isEqualToString:@"home"]){
+			[instance insertStringIntoDatabase:[NSString stringWithFormat:
+												@"INSERT INTO INNINGS (GameID, BattingTeamID, InningNumber, FallOfWickets, Score) VALUES (%d, %d, %d, \"%@\", \"%@\")",
+												currentGameID, homeTeamID, (int)inningNumber, fow, [scoreLabel text]]];
+		} else {
+			[instance insertStringIntoDatabase:[NSString stringWithFormat:
+												@"INSERT INTO INNINGS (GameID, BattingTeamID, InningNumber, FallOfWickets, Score) VALUES (%d, %d, %d, \"%@\", \"%@\")",
+												currentGameID, awayTeamID, (int)inningNumber, fow, [scoreLabel text]]];
+		}
+		[instance updateCurrentGameFinshed];
+		[self performSegueWithIdentifier:@"endGameSegue" sender:endGameButton];
+		
 	}
 	else if (alertView.tag == 2)
 	{
@@ -175,12 +192,12 @@ float inningNumber = 1;
 		}
 		if ([battingTeam isEqualToString:@"home"]){
 			[instance insertStringIntoDatabase:[NSString stringWithFormat:
-											@"INSERT INTO INNINGS (GameID, BattingTeamID, InningNumber, FallOfWickets, Score) VALUES (%d, %d, %d, \"%@\", \"%@\")",
-											currentGameID, homeTeamID, (int)inningNumber, fow, [scoreLabel text]]];
+												@"INSERT INTO INNINGS (GameID, BattingTeamID, InningNumber, FallOfWickets, Score) VALUES (%d, %d, %d, \"%@\", \"%@\")",
+												currentGameID, homeTeamID, (int)inningNumber, fow, [scoreLabel text]]];
 		} else {
 			[instance insertStringIntoDatabase:[NSString stringWithFormat:
-											@"INSERT INTO INNINGS (GameID, BattingTeamID, InningNumber, FallOfWickets, Score) VALUES (%d, %d, %d, \"%@\", \"%@\")",
-											currentGameID, awayTeamID, (int)inningNumber, fow, [scoreLabel text]]];
+												@"INSERT INTO INNINGS (GameID, BattingTeamID, InningNumber, FallOfWickets, Score) VALUES (%d, %d, %d, \"%@\", \"%@\")",
+												currentGameID, awayTeamID, (int)inningNumber, fow, [scoreLabel text]]];
 		}
 		
 		inningNumber+=0.5;
@@ -201,7 +218,12 @@ float inningNumber = 1;
 		[nextOverButton setHidden:YES];
 		[endGameButton setHidden:YES];
 		[closeInningsButton setHidden:YES];
-
+		[startGameButton setTitle:@"Start Innings" forState:UIControlStateNormal];
+		[batterName1 setEnabled:YES];
+		[batterName2 setEnabled:YES];
+		[ballsScrollView setHidden:YES];
+		[startGameButton setHidden:NO];
+		
 		[self resignFirstResponder];
 	}
 }
@@ -216,7 +238,7 @@ float inningNumber = 1;
 	hud.yOffset = 150.f;
 	hud.removeFromSuperViewOnHide = YES;
 	
-	[hud hide:YES afterDelay:3];
+	[hud hide:YES afterDelay:2];
 }
 
 -(int)outTypeToInt{
@@ -462,24 +484,24 @@ float inningNumber = 1;
 			batStats[2][batter1] += value;
 		}
         if (!extra){
-        if (ballNo == 1){
-            [fallOfWickets addObject: ball1.text];
-        }
-        else if (ballNo == 2){
-            [fallOfWickets addObject: ball2.text];
-        }
-        if (ballNo == 3){
-            [fallOfWickets addObject: ball3.text];
-        }
-        if (ballNo == 4){
-            [fallOfWickets addObject: ball4.text];
-        }
-        if (ballNo == 5){
-            [fallOfWickets addObject: ball5.text];
-        }
-        if (ballNo == 6){
-            [fallOfWickets addObject: ball6.text];
-        }
+			if (ballNo == 1){
+				[fallOfWickets addObject: ball1.text];
+			}
+			else if (ballNo == 2){
+				[fallOfWickets addObject: ball2.text];
+			}
+			if (ballNo == 3){
+				[fallOfWickets addObject: ball3.text];
+			}
+			if (ballNo == 4){
+				[fallOfWickets addObject: ball4.text];
+			}
+			if (ballNo == 5){
+				[fallOfWickets addObject: ball5.text];
+			}
+			if (ballNo == 6){
+				[fallOfWickets addObject: ball6.text];
+			}
         }
         else extra = FALSE;
         
@@ -525,7 +547,7 @@ float inningNumber = 1;
 		if(fieldStats[1][bowler] > 0)
 			economy = fieldStats[3][bowler]/fieldStats[1][bowler];
 		[economyLabel setText:[NSString stringWithFormat:@"%.2f", economy]];
-
+		
 		[self changeBatterFacingBowler];
 	} else if (value == -2) {
 		fieldStats[4][bowler]++;
@@ -554,7 +576,7 @@ float inningNumber = 1;
                 [allBallLabels removeLastObject];
                 [self moveBackBallLabel:sender];
             }
-            else if([firstChar isEqualToString:@"w"])
+            if([firstChar isEqualToString:@"w"])
             {
                 wides --;
                 runs --;
@@ -564,7 +586,7 @@ float inningNumber = 1;
 				[allBallLabels removeLastObject];
                 [self moveBackBallLabel:sender];
             }
-            else if([firstChar isEqualToString:@"b"])
+            if([firstChar isEqualToString:@"b"])
             {
                 int toSubtract = [[deletedVal substringFromIndex:1] intValue];
                 byes -= toSubtract;
@@ -575,7 +597,7 @@ float inningNumber = 1;
 				[allBallLabels removeLastObject];
                 [self moveBackBallLabel:sender];
             }
-            else if([firstChar isEqualToString:@"l"])
+            if([firstChar isEqualToString:@"l"])
             {
                 int toSubtract = [[deletedVal substringFromIndex:2] intValue];
                 legByes -= toSubtract;
@@ -586,7 +608,7 @@ float inningNumber = 1;
 				[allBallLabels removeLastObject];
                 [self moveBackBallLabel:sender];
             }
-            else if([firstChar isEqualToString:@"p"])
+            if([firstChar isEqualToString:@"p"])
             {
                 int toSubtract = [[deletedVal substringFromIndex:1] intValue];
                 runs -= toSubtract;
@@ -621,7 +643,7 @@ float inningNumber = 1;
                 runs -= value;
                 if (fieldStats[1][bowler]-(int)(fieldStats[1][bowler]) == 0)
                     fieldStats[1][bowler] -= 0.5;
-                else 
+                else
                     fieldStats[1][bowler] -= 0.1;
                 fieldStats[3][bowler] -= value;
                 [self resetBallValueToString:@"-"];
@@ -633,8 +655,7 @@ float inningNumber = 1;
             //if ([batter1Active isHidden]) batStats[1][batter2]++;
             //else batStats[1][batter1]++;
 		}
-        
-
+		
 		value = -1;
         [self turnLabelsBlack:sender];
         
@@ -654,71 +675,9 @@ float inningNumber = 1;
 		if(fieldStats[1][bowler] > 0)
 			economy = fieldStats[3][bowler]/fieldStats[1][bowler];
 		[economyLabel setText:[NSString stringWithFormat:@"%.2f", economy]];
-	} else if (fieldStats[1][bowler] >= 0 && ballNo == 1){
-        NSString *deletedVal = [NSString stringWithFormat:@"%@", [fallOfWickets objectAtIndex:[fallOfWickets count]-1]];
-		NSString *firstChar = [deletedVal substringToIndex:1];
-		if (value <= -1 && ! [firstChar isEqualToString:@"W"]) {
-            [fallOfWickets removeObjectAtIndex:[fallOfWickets count]-1];
-            if([firstChar isEqualToString:@"n"])
-            {
-                noBalls --;
-                runs --;
-                noBallLabel.text = [NSString stringWithFormat:@"%d", noBalls];
-                extraCount--;
-                [[[ballsScrollView subviews] objectAtIndex:[[ballsScrollView subviews] count]-1]removeFromSuperview];
-                [allBallLabels removeLastObject];
-                [self moveBackBallLabel:sender];
-            }
-            else if([firstChar isEqualToString:@"w"])
-            {
-                wides --;
-                runs --;
-                wideLabel.text = [NSString stringWithFormat:@"%d", wides];
-                extraCount--;
-                [[[ballsScrollView subviews] objectAtIndex:[[ballsScrollView subviews] count]-1]removeFromSuperview];
-				[allBallLabels removeLastObject];
-                [self moveBackBallLabel:sender];
-            }
-            else if([firstChar isEqualToString:@"b"])
-            {
-                int toSubtract = [[deletedVal substringFromIndex:1] intValue];
-                byes -= toSubtract;
-                runs -= toSubtract;
-                byeLabel.text = [NSString stringWithFormat:@"%d", byes];
-                extraCount--;
-                [[[ballsScrollView subviews] objectAtIndex:[[ballsScrollView subviews] count]-1]removeFromSuperview];
-				[allBallLabels removeLastObject];
-                [self moveBackBallLabel:sender];
-            }
-            else if([firstChar isEqualToString:@"l"])
-            {
-                int toSubtract = [[deletedVal substringFromIndex:2] intValue];
-                legByes -= toSubtract;
-                runs -= toSubtract;
-                legByeLabel.text = [NSString stringWithFormat:@"%d", legByes];
-                extraCount--;
-                [[[ballsScrollView subviews] objectAtIndex:[[ballsScrollView subviews] count]-1]removeFromSuperview];
-				[allBallLabels removeLastObject];
-                [self moveBackBallLabel:sender];
-            }
-            else if([firstChar isEqualToString:@"p"])
-            {
-                int toSubtract = [[deletedVal substringFromIndex:1] intValue];
-                runs -= toSubtract;
-                penalties -= toSubtract;
-                penLabel.text = [NSString stringWithFormat:@"%d", penalties];
-                extraCount--;
-                [[[ballsScrollView subviews] objectAtIndex:[[ballsScrollView subviews] count]-1]removeFromSuperview];
-				[allBallLabels removeLastObject];
-                [self moveBackBallLabel:sender];
-            }
-        totLabel.text = [NSString stringWithFormat:@"%d", (noBalls + wides + byes + legByes +penalties) ];
-        }
-        [scoreLabel setText:[NSString stringWithFormat:@"%.0f/%d (%d Overs)", runs, wickets, overs]];
-    }
-    else {
-            [ball1 setText:@"-"];
-            value = -1; 		
+	} else {
+		[ball1 setText:@"-"];
+		value = -1;
 	}
 }
 
@@ -828,8 +787,8 @@ float inningNumber = 1;
 - (void)changePlayerNameWhenRetired:(int)player{
 	if ([battingTeam isEqualToString:@"home"]){
 		[homePlayersArray insertObject:
-			[NSString stringWithFormat:@"RET:%@", [homePlayersArray objectAtIndex:player]]
-			atIndex:player];
+		 [NSString stringWithFormat:@"RET:%@", [homePlayersArray objectAtIndex:player]]
+							   atIndex:player];
 		[homePlayersArray removeObjectAtIndex:player+1];
 	} else {
 		[awayPlayersArray insertObject:
@@ -883,11 +842,11 @@ float inningNumber = 1;
 	UIBarButtonItem *titleButton = [[UIBarButtonItem alloc] initWithTitle:titleString style:UIBarButtonItemStylePlain target:nil action:nil];
 	
 	toolbar.items = [NSArray arrayWithObjects:_infoButtonItem, spacer, titleButton, spacer, nil];
-        
+	
     UIButton *nB = [UIButton buttonWithType:UIButtonTypeRoundedRect];
     [nB addTarget:self
 		   action:@selector(extraNoBall:)
-			forControlEvents:UIControlEventTouchDown];
+ forControlEvents:UIControlEventTouchDown];
     [nB setTitle:@"No Ball" forState:UIControlStateNormal];
     nB.frame = CGRectMake(20.0, 50.0, 65.0, 40.0);
     [newView addSubview:nB];
@@ -895,7 +854,7 @@ float inningNumber = 1;
     UIButton *wide = [UIButton buttonWithType:UIButtonTypeRoundedRect];
     [wide addTarget:self
              action:@selector(extraWide:)
-			forControlEvents:UIControlEventTouchDown];
+   forControlEvents:UIControlEventTouchDown];
     [wide setTitle:@"Wide" forState:UIControlStateNormal];
     wide.frame = CGRectMake(95.0, 50.0, 65.0, 40.0);
     [newView addSubview:wide];
@@ -903,7 +862,7 @@ float inningNumber = 1;
     UIButton *bye = [UIButton buttonWithType:UIButtonTypeRoundedRect];
     [bye addTarget:self
 			action:@selector(extraBye:)
-			forControlEvents:UIControlEventTouchDown];
+  forControlEvents:UIControlEventTouchDown];
     [bye setTitle:@"Bye" forState:UIControlStateNormal];
     bye.frame = CGRectMake(170.0, 50.0, 65.0, 40.0);
     [newView addSubview:bye];
@@ -911,15 +870,15 @@ float inningNumber = 1;
     UIButton *legBye = [UIButton buttonWithType:UIButtonTypeRoundedRect];
     [legBye addTarget:self
 			   action:@selector(extraLegBye:)
-				forControlEvents:UIControlEventTouchDown];
+	 forControlEvents:UIControlEventTouchDown];
     [legBye setTitle:@"Leg Bye" forState:UIControlStateNormal];
     legBye.frame = CGRectMake(245.0, 50.0, 65.0, 40.0);
     [newView addSubview:legBye];
     
     UIButton *penaltyRun = [UIButton buttonWithType:UIButtonTypeRoundedRect];
     [penaltyRun addTarget:self
-				action:@selector(extraPen:)
-				forControlEvents:UIControlEventTouchDown];
+				   action:@selector(extraPen:)
+		 forControlEvents:UIControlEventTouchDown];
     [penaltyRun setTitle:@"Penalty Run" forState:UIControlStateNormal];
     penaltyRun.frame = CGRectMake(110.0, 100.0, 100.0, 40.0);
     [newView addSubview:penaltyRun];
@@ -954,7 +913,7 @@ float inningNumber = 1;
     //add button
     _infoButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Cancel" style:UIBarButtonItemStyleDone target:self action:@selector(hideActionSheetB:)];
 	UIBarButtonItem *confirm = [[UIBarButtonItem alloc] initWithTitle:@"Confirm" style:UIBarButtonItemStyleDone target:self action:@selector(hideActionSheet:)];
-
+	
 	
 	UIBarButtonItem *spacer = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:self action:nil];
 	titleString = @"Wicket";
@@ -1146,7 +1105,7 @@ float inningNumber = 1;
     byeAdditions =0;
     legByeAdditions = 0;
     penaltiesAdditions = 0;
-    totLabel.text = [NSString stringWithFormat:@"%d%@%d", (noBalls+wides+byes+legByes+penalties),@"+",(noBallAdditions+wideAdditions+byeAdditions+legByeAdditions+penaltiesAdditions)]; 
+    totLabel.text = [NSString stringWithFormat:@"%d%@%d", (noBalls+wides+byes+legByes+penalties),@"+",(noBallAdditions+wideAdditions+byeAdditions+legByeAdditions+penaltiesAdditions)];
     wideLabel.textColor = [UIColor  blackColor];
     byeLabel.textColor = [UIColor  blackColor];
     legByeLabel.textColor = [UIColor  blackColor];
@@ -1157,7 +1116,7 @@ float inningNumber = 1;
     [self updateExtrasLabels:sender];
     [self turnLabelsOrange:sender];
     [self resetBallValueToString:@"nb"];
-
+	
 }
 -(IBAction)extraWide:(id)sender{
     wideAdditions=1;
@@ -1195,52 +1154,52 @@ float inningNumber = 1;
 -(IBAction)addExtras:(id)sender{
     if (bonusRuns!=0)
     {
-    if ([sender tag] == 1)
-    {
-        byeAdditions=bonusRuns;
-        byeLabel.textColor = [UIColor orangeColor];
-        noBallAdditions = 0;
-        wideAdditions =0;
-        legByeAdditions = 0;
-        penaltiesAdditions = 0;
-        noBallLabel.textColor = [UIColor blackColor];
-        wideLabel.textColor = [UIColor  blackColor];
-        legByeLabel.textColor = [UIColor  blackColor];
-        penLabel.textColor = [UIColor  blackColor];
-        [self resetBallValueToString:[NSString stringWithFormat:@"%@%d",@"b",bonusRuns]];
-    }
-    else if ([sender tag] == 2)
-    {
-        legByeAdditions=bonusRuns;
-        legByeLabel.textColor = [UIColor orangeColor];
-        noBallAdditions = 0;
-        byeAdditions =0;
-        wideAdditions = 0;
-        penaltiesAdditions = 0;
-        noBallLabel.textColor = [UIColor blackColor];
-        wideLabel.textColor = [UIColor  blackColor];
-        byeLabel.textColor = [UIColor  blackColor];
-        penLabel.textColor = [UIColor  blackColor];
-        [self resetBallValueToString:[NSString stringWithFormat:@"%@%d",@"lb",bonusRuns]];
-
-    }
-    else if ([sender tag] == 3)
-    {
-        penaltiesAdditions=bonusRuns;
-        penLabel.textColor = [UIColor orangeColor];
-        noBallAdditions = 0;
-        byeAdditions =0;
-        legByeAdditions = 0;
-        wideAdditions = 0;
-        noBallLabel.textColor = [UIColor blackColor];
-        wideLabel.textColor = [UIColor  blackColor];
-        byeLabel.textColor = [UIColor  blackColor];
-        legByeLabel.textColor = [UIColor  blackColor];
-        [self resetBallValueToString:[NSString stringWithFormat:@"%@%d",@"p",bonusRuns]];
-    }
+		if ([sender tag] == 1)
+		{
+			byeAdditions=bonusRuns;
+			byeLabel.textColor = [UIColor orangeColor];
+			noBallAdditions = 0;
+			wideAdditions =0;
+			legByeAdditions = 0;
+			penaltiesAdditions = 0;
+			noBallLabel.textColor = [UIColor blackColor];
+			wideLabel.textColor = [UIColor  blackColor];
+			legByeLabel.textColor = [UIColor  blackColor];
+			penLabel.textColor = [UIColor  blackColor];
+			[self resetBallValueToString:[NSString stringWithFormat:@"%@%d",@"b",bonusRuns]];
+		}
+		else if ([sender tag] == 2)
+		{
+			legByeAdditions=bonusRuns;
+			legByeLabel.textColor = [UIColor orangeColor];
+			noBallAdditions = 0;
+			byeAdditions =0;
+			wideAdditions = 0;
+			penaltiesAdditions = 0;
+			noBallLabel.textColor = [UIColor blackColor];
+			wideLabel.textColor = [UIColor  blackColor];
+			byeLabel.textColor = [UIColor  blackColor];
+			penLabel.textColor = [UIColor  blackColor];
+			[self resetBallValueToString:[NSString stringWithFormat:@"%@%d",@"lb",bonusRuns]];
+			
+		}
+		else if ([sender tag] == 3)
+		{
+			penaltiesAdditions=bonusRuns;
+			penLabel.textColor = [UIColor orangeColor];
+			noBallAdditions = 0;
+			byeAdditions =0;
+			legByeAdditions = 0;
+			wideAdditions = 0;
+			noBallLabel.textColor = [UIColor blackColor];
+			wideLabel.textColor = [UIColor  blackColor];
+			byeLabel.textColor = [UIColor  blackColor];
+			legByeLabel.textColor = [UIColor  blackColor];
+			[self resetBallValueToString:[NSString stringWithFormat:@"%@%d",@"p",bonusRuns]];
+		}
         value = 4000;
         [self updateExtrasLabels:sender];
-    bonusRuns = 0;
+		bonusRuns = 0;
         [self turnLabelsOrange:sender];
         totLabel.text = [NSString stringWithFormat:@"%d%@%d", (noBalls+wides+byes+legByes+penalties),@"+",(noBallAdditions+wideAdditions+byeAdditions+legByeAdditions+penaltiesAdditions)];
         totLabel.textColor = [UIColor orangeColor];
@@ -1328,7 +1287,7 @@ float inningNumber = 1;
 		titleString = @"Select Bowler";
 	else
 		titleString = @"Select Batter";
-		
+	
 	UIBarButtonItem *titleButton = [[UIBarButtonItem alloc] initWithTitle:titleString style:UIBarButtonItemStylePlain target:nil action:nil];
 	
     toolbar.items = [NSArray arrayWithObjects:_infoButtonItem, spacer, titleButton, spacer, nil];
@@ -1655,14 +1614,14 @@ float inningNumber = 1;
     {
         ball1.textColor =[UIColor colorWithRed:.1 green:.5 blue:0 alpha:1.0];
         ball2.textColor =[UIColor colorWithRed:.1 green:.5 blue:0 alpha:1.0];
-
+		
     }
     else if (ballNo == 3)
     {
         ball1.textColor =[UIColor colorWithRed:.1 green:.5 blue:0 alpha:1.0];
         ball2.textColor =[UIColor colorWithRed:.1 green:.5 blue:0 alpha:1.0];
         ball3.textColor =[UIColor colorWithRed:.1 green:.5 blue:0 alpha:1.0];
-
+		
     }
     else if (ballNo == 4)
     {
@@ -1670,7 +1629,7 @@ float inningNumber = 1;
         ball2.textColor =[UIColor colorWithRed:.1 green:.5 blue:0 alpha:1.0];
         ball3.textColor =[UIColor colorWithRed:.1 green:.5 blue:0 alpha:1.0];
         ball4.textColor =[UIColor colorWithRed:.1 green:.5 blue:0 alpha:1.0];
-
+		
     }
     else if (ballNo == 5)
     {
@@ -1679,7 +1638,7 @@ float inningNumber = 1;
         ball3.textColor =[UIColor colorWithRed:.1 green:.5 blue:0 alpha:1.0];
         ball4.textColor =[UIColor colorWithRed:.1 green:.5 blue:0 alpha:1.0];
         ball5.textColor =[UIColor colorWithRed:.1 green:.5 blue:0 alpha:1.0];
-
+		
     }
     else if (ballNo == 6)
     {
@@ -1791,7 +1750,7 @@ float inningNumber = 1;
 	byes = 0;
 	legByes = 0;
 	penalties = 0;
-	bonusRuns = 0;	
+	bonusRuns = 0;
 	lastBowler = 0;
 	[self fillWayOutArray];
 	
@@ -1816,7 +1775,7 @@ float inningNumber = 1;
 		[teamName setText:awayTeam];
 }
 
-                                       
+
 - (void)viewDidUnload
 {
     [self setBatterName1:nil];
