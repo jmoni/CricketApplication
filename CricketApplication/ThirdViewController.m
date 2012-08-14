@@ -543,31 +543,6 @@ float inningNumber = 1;
 		NSString *deletedVal = [NSString stringWithFormat:@"%@", [fallOfWickets objectAtIndex:[fallOfWickets count]-1]];
 		NSString *firstChar = [deletedVal substringToIndex:1];
 		if (value <= -1 && ! [firstChar isEqualToString:@"W"]) {
-			/*if (ballNo == 1)
-				fieldStats[1][bowler]--;
-			if (ballNo == 7)
-				[nextOverButton setHidden:YES];
-			ballNo--;
-			value = [self getBallValue];
-			if (value%2 == 0) even = YES; else even = NO;
-			[self changeBatterFacingBowler];
-			if ([batter1Active isHidden]) {
-				//batter2Runs -= value;
-				//batter2Balls--;
-				batStats[2][batter2] -= value;
-				batStats[1][batter2]--;
-			} else {
-				//batter1Runs -= value;
-				//batter1Balls--;
-				batStats[2][batter1] -= value;
-				batStats[1][batter1]--;
-			}
-			runs -= value;
-			if (fieldStats[1][bowler]-(int)(fieldStats[1][bowler]) == 0)
-				fieldStats[1][bowler] -= 0.5;
-			else 
-				fieldStats[1][bowler] -= 0.1;
-			fieldStats[3][bowler] -= value;*/
             [fallOfWickets removeObjectAtIndex:[fallOfWickets count]-1];
             if([firstChar isEqualToString:@"n"])
             {
@@ -579,7 +554,7 @@ float inningNumber = 1;
                 [allBallLabels removeLastObject];
                 [self moveBackBallLabel:sender];
             }
-            if([firstChar isEqualToString:@"w"])
+            else if([firstChar isEqualToString:@"w"])
             {
                 wides --;
                 runs --;
@@ -589,7 +564,7 @@ float inningNumber = 1;
 				[allBallLabels removeLastObject];
                 [self moveBackBallLabel:sender];
             }
-            if([firstChar isEqualToString:@"b"])
+            else if([firstChar isEqualToString:@"b"])
             {
                 int toSubtract = [[deletedVal substringFromIndex:1] intValue];
                 byes -= toSubtract;
@@ -600,7 +575,7 @@ float inningNumber = 1;
 				[allBallLabels removeLastObject];
                 [self moveBackBallLabel:sender];
             }
-            if([firstChar isEqualToString:@"l"])
+            else if([firstChar isEqualToString:@"l"])
             {
                 int toSubtract = [[deletedVal substringFromIndex:2] intValue];
                 legByes -= toSubtract;
@@ -611,7 +586,7 @@ float inningNumber = 1;
 				[allBallLabels removeLastObject];
                 [self moveBackBallLabel:sender];
             }
-            if([firstChar isEqualToString:@"p"])
+            else if([firstChar isEqualToString:@"p"])
             {
                 int toSubtract = [[deletedVal substringFromIndex:1] intValue];
                 runs -= toSubtract;
@@ -658,6 +633,7 @@ float inningNumber = 1;
             //if ([batter1Active isHidden]) batStats[1][batter2]++;
             //else batStats[1][batter1]++;
 		}
+        
 
 		value = -1;
         [self turnLabelsBlack:sender];
@@ -678,9 +654,71 @@ float inningNumber = 1;
 		if(fieldStats[1][bowler] > 0)
 			economy = fieldStats[3][bowler]/fieldStats[1][bowler];
 		[economyLabel setText:[NSString stringWithFormat:@"%.2f", economy]];
-	} else {
-		[ball1 setText:@"-"];
-		value = -1;
+	} else if (fieldStats[1][bowler] >= 0 && ballNo == 1){
+        NSString *deletedVal = [NSString stringWithFormat:@"%@", [fallOfWickets objectAtIndex:[fallOfWickets count]-1]];
+		NSString *firstChar = [deletedVal substringToIndex:1];
+		if (value <= -1 && ! [firstChar isEqualToString:@"W"]) {
+            [fallOfWickets removeObjectAtIndex:[fallOfWickets count]-1];
+            if([firstChar isEqualToString:@"n"])
+            {
+                noBalls --;
+                runs --;
+                noBallLabel.text = [NSString stringWithFormat:@"%d", noBalls];
+                extraCount--;
+                [[[ballsScrollView subviews] objectAtIndex:[[ballsScrollView subviews] count]-1]removeFromSuperview];
+                [allBallLabels removeLastObject];
+                [self moveBackBallLabel:sender];
+            }
+            else if([firstChar isEqualToString:@"w"])
+            {
+                wides --;
+                runs --;
+                wideLabel.text = [NSString stringWithFormat:@"%d", wides];
+                extraCount--;
+                [[[ballsScrollView subviews] objectAtIndex:[[ballsScrollView subviews] count]-1]removeFromSuperview];
+				[allBallLabels removeLastObject];
+                [self moveBackBallLabel:sender];
+            }
+            else if([firstChar isEqualToString:@"b"])
+            {
+                int toSubtract = [[deletedVal substringFromIndex:1] intValue];
+                byes -= toSubtract;
+                runs -= toSubtract;
+                byeLabel.text = [NSString stringWithFormat:@"%d", byes];
+                extraCount--;
+                [[[ballsScrollView subviews] objectAtIndex:[[ballsScrollView subviews] count]-1]removeFromSuperview];
+				[allBallLabels removeLastObject];
+                [self moveBackBallLabel:sender];
+            }
+            else if([firstChar isEqualToString:@"l"])
+            {
+                int toSubtract = [[deletedVal substringFromIndex:2] intValue];
+                legByes -= toSubtract;
+                runs -= toSubtract;
+                legByeLabel.text = [NSString stringWithFormat:@"%d", legByes];
+                extraCount--;
+                [[[ballsScrollView subviews] objectAtIndex:[[ballsScrollView subviews] count]-1]removeFromSuperview];
+				[allBallLabels removeLastObject];
+                [self moveBackBallLabel:sender];
+            }
+            else if([firstChar isEqualToString:@"p"])
+            {
+                int toSubtract = [[deletedVal substringFromIndex:1] intValue];
+                runs -= toSubtract;
+                penalties -= toSubtract;
+                penLabel.text = [NSString stringWithFormat:@"%d", penalties];
+                extraCount--;
+                [[[ballsScrollView subviews] objectAtIndex:[[ballsScrollView subviews] count]-1]removeFromSuperview];
+				[allBallLabels removeLastObject];
+                [self moveBackBallLabel:sender];
+            }
+        totLabel.text = [NSString stringWithFormat:@"%d", (noBalls + wides + byes + legByes +penalties) ];
+        }
+        [scoreLabel setText:[NSString stringWithFormat:@"%.0f/%d (%d Overs)", runs, wickets, overs]];
+    }
+    else {
+            [ball1 setText:@"-"];
+            value = -1; 		
 	}
 }
 
