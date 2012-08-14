@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		9F134C1115D00E1D0056EE03 /* DatabaseController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F134C1015D00E1D0056EE03 /* DatabaseController.m */; };
 		9F1C3A9A15D9530000B03A1B /* ScoreViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F1C3A9915D9530000B03A1B /* ScoreViewController.m */; };
+		9F699B1015DA5448005F445C /* MyCutstomViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F699B0F15DA5448005F445C /* MyCutstomViewCell.m */; };
 		BD27828D15D5338100B8788D /* StatsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BD27828C15D5338100B8788D /* StatsViewController.m */; };
 		BD851B6315CA93C5000BA6F3 /* CaptainIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = BD851B6015CA93C5000BA6F3 /* CaptainIcon.png */; };
 		BD851B6415CA93C5000BA6F3 /* ViceCaptainIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = BD851B6115CA93C5000BA6F3 /* ViceCaptainIcon.png */; };
@@ -65,6 +66,8 @@
 		9F134C1015D00E1D0056EE03 /* DatabaseController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DatabaseController.m; path = CricketApplication/DatabaseController.m; sourceTree = "<group>"; };
 		9F1C3A9815D9530000B03A1B /* ScoreViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScoreViewController.h; sourceTree = "<group>"; };
 		9F1C3A9915D9530000B03A1B /* ScoreViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ScoreViewController.m; sourceTree = "<group>"; };
+		9F699B0E15DA5448005F445C /* MyCutstomViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyCutstomViewCell.h; sourceTree = "<group>"; };
+		9F699B0F15DA5448005F445C /* MyCutstomViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyCutstomViewCell.m; sourceTree = "<group>"; };
 		BD27828B15D5338100B8788D /* StatsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StatsViewController.h; sourceTree = "<group>"; };
 		BD27828C15D5338100B8788D /* StatsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StatsViewController.m; sourceTree = "<group>"; };
 		BD851B6015CA93C5000BA6F3 /* CaptainIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = CaptainIcon.png; sourceTree = "<group>"; };
@@ -148,6 +151,8 @@
 			children = (
 				9F1C3A9815D9530000B03A1B /* ScoreViewController.h */,
 				9F1C3A9915D9530000B03A1B /* ScoreViewController.m */,
+				9F699B0E15DA5448005F445C /* MyCutstomViewCell.h */,
+				9F699B0F15DA5448005F445C /* MyCutstomViewCell.m */,
 			);
 			name = FourthTab;
 			sourceTree = "<group>";
@@ -444,6 +449,7 @@
 				BD27828D15D5338100B8788D /* StatsViewController.m in Sources */,
 				9F1C3A9A15D9530000B03A1B /* ScoreViewController.m in Sources */,
 				BDB0A6C515D966540072341D /* MBProgressHUD.m in Sources */,
+				9F699B1015DA5448005F445C /* MyCutstomViewCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

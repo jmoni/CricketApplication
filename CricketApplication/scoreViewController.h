@@ -7,12 +7,16 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "MyCutstomViewCell.h"
 
 @interface ScoreViewController : UIViewController <UITableViewDelegate, UITableViewDataSource>{
     NSArray *playerNames;
+    BOOL searching;
+    BOOL letUserSelectRow;
 }
 @property (strong, nonatomic) IBOutlet UILabel *firstTeamBatTitle;
 @property (strong, nonatomic) IBOutlet UITableView *tableOfPlayers;
 @property (strong, nonatomic) NSArray *playerNames;
+
 
 @end
