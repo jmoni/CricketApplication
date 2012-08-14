@@ -33,4 +33,7 @@ int currentGameID;
 - (void)retrieveGamesInDatabaseWithFinishedStatus:(int)status;
 - (void)removeGameInDatabase:(int)gameID;
 - (void)updateCurrentGameFinshed;
+- (int)returnIntFromDatabase:(NSString *)string;
+- (NSString *)returnStringFromDatabase:(NSString *)string;
+- (NSMutableArray *)returnPlayersFromDatabase:(NSString *)string;
 @end

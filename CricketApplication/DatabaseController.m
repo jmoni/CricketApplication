@@ -260,6 +260,30 @@
 	return returnThis;
 }
 
+//Return an array of players
+- (NSMutableArray *)returnPlayersFromDatabase:(NSString *)string {
+    NSMutableArray *temp = [[NSMutableArray alloc] init];
+    const char *dbpath = [writableDBPath UTF8String];
+	sqlite3_stmt *statement;
+    if (sqlite3_open(dbpath, &cricketDB) == SQLITE_OK)
+    {
+		const char *stmt = [string UTF8String];
+		sqlite3_prepare_v2(cricketDB, stmt, -1, &statement, NULL);
+        while (sqlite3_step(statement) == SQLITE_ROW) {
+            NSLog(@"\nAccess worked");
+            //Put players into array
+            NSString *nameString = [NSString stringWithUTF8String:(char *)sqlite3_column_text(statement, 0)];
+            //NSLog(@"%@",nameString);
+            [temp addObject: nameString];
+        }
+        sqlite3_finalize(statement);
+        sqlite3_close(cricketDB);
+	} else {
+		NSLog(@"\nCould not access DB");
+	}
+    return temp;
+}
+
 - (void)insertStringIntoDatabase:(NSString *)string {
 	const char *dbpath = [writableDBPath UTF8String];
 	sqlite3_stmt *statement;
