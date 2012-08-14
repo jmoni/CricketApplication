@@ -39,6 +39,7 @@ NSMutableArray *awayPlayersDB;
 {
     // Total number of innings for entire match (to find out how many sections are needed)
     NSInteger t = homeNumberInnings + awayNumberInnings;
+    NSLog(@"The total number of innings and therefore sections : %d",t);
     return t;
 }
 

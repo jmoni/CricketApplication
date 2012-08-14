@@ -462,7 +462,7 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
 //Add Home Players
 -(void) addHomePlayers{
     DatabaseController *instance = [[DatabaseController alloc]init];
-    NSLog(@"HOME TEAM ID%d",homeTeamID);
+
     //Get the TeamID home team (greater than 0) from the database if there are already players on the team and if not set to -1
     int c = [instance returnIntFromDatabase:[NSString stringWithFormat:
                                          @"SELECT TeamID FROM PLAYERS WHERE TeamID = '%d'",
@@ -484,7 +484,6 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
 //Add Away Players
 -(void) addAwayPlayers{
     DatabaseController *instance = [[DatabaseController alloc]init];
-    NSLog(@"AWAY TEAM ID%d",awayTeamID);
 
     //Get the TeamID away team (greater than 0) from the database if there are already players on the team and if not set to -1
     int c = [instance returnIntFromDatabase:[NSString stringWithFormat:
