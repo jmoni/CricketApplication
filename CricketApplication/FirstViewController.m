@@ -11,7 +11,7 @@
 #import "DatabaseController.h"
 
 @interface FirstViewController ()
-    @property (strong, nonatomic) IBOutlet UIPickerView *chooseTeam;
+@property (strong, nonatomic) IBOutlet UIPickerView *chooseTeam;
 @end
 
 @implementation FirstViewController
@@ -39,6 +39,7 @@ bool homeButtonClicked;
 bool awayButtonClicked;
 int homeTeamInt;
 int awayTeamInt;
+DatabaseController *instance;
 
 
 -(IBAction)showActionSheet:(id)sender {
@@ -49,15 +50,15 @@ int awayTeamInt;
     //create new view
     newView = [[UIView alloc] initWithFrame:CGRectMake(0, 200, 320, height)];
     newView.backgroundColor = [UIColor colorWithWhite:1 alpha:1];
-
+	
     //add toolbar
     UIToolbar * toolbar = [[UIToolbar alloc] initWithFrame: CGRectMake(0, 0, 320, 40)];
     toolbar.barStyle = UIBarStyleBlack;
-
+	
     //add button
     _infoButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Done" style:UIBarButtonItemStyleDone     target:self action:@selector(hideActionSheet:)];
     toolbar.items = [NSArray arrayWithObjects:_infoButtonItem, nil];
-
+	
     //add date picker
     datePicker = [[UIDatePicker alloc] init];
     datePicker.datePickerMode = UIDatePickerModeDate;
@@ -66,11 +67,11 @@ int awayTeamInt;
     datePicker.frame = CGRectMake(0, 40, 320, 250);
     [datePicker addTarget:self action:@selector(changeDate:) forControlEvents:UIControlEventValueChanged];
     [newView addSubview:datePicker];
-
+	
     //add popup view
     [newView addSubview:toolbar];
     [self.view addSubview:newView];
-
+	
     //animate it onto the screen
     CGRect temp = newView.frame;
     temp.origin.y = CGRectGetMaxY(self.view.bounds);
@@ -118,53 +119,6 @@ int awayTeamInt;
     //NSLog(@"Away Team in first view %@",awayTeam);
 }
 
-//Return teams in database and put into array
-- (void)retrieveTeamsInDatabase {
-    const char *dbpath = [writableDBPath UTF8String];
-    sqlite3_stmt *statement;
-    if (sqlite3_open(dbpath, &cricketDB) == SQLITE_OK)
-    {
-        NSString *string = [NSString stringWithFormat: @"SELECT TeamName FROM TEAMS"];
-		const char *stmt = [string UTF8String];
-		sqlite3_prepare_v2(cricketDB, stmt, -1, &statement, NULL);
-        while (sqlite3_step(statement) == SQLITE_ROW) {
-            NSLog(@"\nAccess worked");
-            //Put players into away array
-            NSString *nameString = [NSString stringWithUTF8String:(char *)sqlite3_column_text(statement, 0)];
-            //NSLog(@"%@",nameString);
-            [teamsInDatabase addObject: nameString];
-        }
-        sqlite3_finalize(statement);
-        sqlite3_close(cricketDB);
-    } else {
-        NSLog(@"\nCould not access DB");
-    }
-}
-
-
-//Return teams in database and put into array
-- (int)countTeamsInDatabase {
-    const char *dbpath = [writableDBPath UTF8String];
-    sqlite3_stmt *statement;
-    int count = 0;
-    if (sqlite3_open(dbpath, &cricketDB) == SQLITE_OK)
-    {
-        NSString *string = [NSString stringWithFormat: @"SELECT COUNT(TeamName) FROM TEAMS"];
-		const char *stmt = [string UTF8String];
-		sqlite3_prepare_v2(cricketDB, stmt, -1, &statement, NULL);
-        while (sqlite3_step(statement) == SQLITE_ROW) {
-            NSLog(@"\nAccess worked");
-            //Put players into away array
-            count = sqlite3_column_int(statement, 0);
-        }
-        sqlite3_finalize(statement);
-        sqlite3_close(cricketDB);
-    } else {
-        NSLog(@"\nCould not access DB");
-    }
-    return count;
-}
-
 - (IBAction)showStoredTeams: (id)sender{
     _homeTeamEntered.enabled = false;
     _awayTeamEntered.enabled = false;
@@ -196,8 +150,8 @@ int awayTeamInt;
     _chooseTeam.delegate = self;
     _chooseTeam.dataSource = self;
     _chooseTeam.showsSelectionIndicator = YES;
-
-   //Automatically scroll to the team already choosen
+	
+	//Automatically scroll to the team already choosen
     if (homeButtonClicked){
         [_chooseTeam selectRow:homeTeamInt inComponent:0 animated:YES];
         [self pickerView:_chooseTeam didSelectRow:homeTeamInt inComponent:0];
@@ -224,7 +178,7 @@ int awayTeamInt;
 }
 
 - (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView{
-    return 1;    
+    return 1;
 }
 
 - (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component
@@ -326,7 +280,7 @@ int awayTeamInt;
         _timeLabel.text = temp;
     }
     else {
-         temp = [labelNum stringByAppendingFormat:@" Days"];
+		temp = [labelNum stringByAppendingFormat:@" Days"];
         _timeLabel.text = temp;
     }
     numberOversOrDays = (int)_timeSlide.value;
@@ -390,6 +344,7 @@ int awayTeamInt;
 	// Do any additional setup after loading the view, typically from a nib.
     date= [NSDate date];
     NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
+	instance = [[DatabaseController alloc] init];
     [dateFormat setDateFormat:@"dd/MM/yyyy"];
 	
     strDate = [dateFormat stringFromDate:date];
@@ -411,7 +366,7 @@ int awayTeamInt;
     //Initialise the array to hold teams
     teamsInDatabase = [[NSMutableArray alloc] init];
     
-    [self retrieveTeamsInDatabase];
+    [instance retrieveTeamsInDatabase];
     //NSLog(@"%@",teamsInDatabase);
     
 }

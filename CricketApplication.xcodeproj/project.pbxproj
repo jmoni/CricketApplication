@@ -16,6 +16,7 @@
 		BD851B6515CA93C5000BA6F3 /* WicketKeeperIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = BD851B6215CA93C5000BA6F3 /* WicketKeeperIcon.png */; };
 		BD851B6815CA9CBA000BA6F3 /* captainWicketKeeper.png in Resources */ = {isa = PBXBuildFile; fileRef = BD851B6615CA9CBA000BA6F3 /* captainWicketKeeper.png */; };
 		BD851B6915CA9CBA000BA6F3 /* viceCaptainWicketKeeper.png in Resources */ = {isa = PBXBuildFile; fileRef = BD851B6715CA9CBA000BA6F3 /* viceCaptainWicketKeeper.png */; };
+		BD966F5615DA6C52006AC0BB /* GameListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BD966F5515DA6C51006AC0BB /* GameListViewController.m */; };
 		BDA16DB415D02C4000DD9301 /* cricket.db in Resources */ = {isa = PBXBuildFile; fileRef = BDA16DB315D02C4000DD9301 /* cricket.db */; };
 		BDA16DB615D030D700DD9301 /* CricketDatabase.sql in Resources */ = {isa = PBXBuildFile; fileRef = BDA16DB515D030D700DD9301 /* CricketDatabase.sql */; };
 		BDB0A6C515D966540072341D /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = BDB0A6C415D966540072341D /* MBProgressHUD.m */; };
@@ -75,6 +76,8 @@
 		BD851B6215CA93C5000BA6F3 /* WicketKeeperIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = WicketKeeperIcon.png; sourceTree = "<group>"; };
 		BD851B6615CA9CBA000BA6F3 /* captainWicketKeeper.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = captainWicketKeeper.png; sourceTree = "<group>"; };
 		BD851B6715CA9CBA000BA6F3 /* viceCaptainWicketKeeper.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = viceCaptainWicketKeeper.png; sourceTree = "<group>"; };
+		BD966F5415DA6C51006AC0BB /* GameListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameListViewController.h; sourceTree = "<group>"; };
+		BD966F5515DA6C51006AC0BB /* GameListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GameListViewController.m; sourceTree = "<group>"; };
 		BDA16DB315D02C4000DD9301 /* cricket.db */ = {isa = PBXFileReference; lastKnownFileType = file; name = cricket.db; path = CricketApplication/cricket.db; sourceTree = "<group>"; };
 		BDA16DB515D030D700DD9301 /* CricketDatabase.sql */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = CricketDatabase.sql; path = CricketApplication/CricketDatabase.sql; sourceTree = "<group>"; };
 		BDB0A6C315D966540072341D /* MBProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MBProgressHUD.h; sourceTree = "<group>"; };
@@ -206,6 +209,8 @@
 			children = (
 				BDA16D9F15D00A1600DD9301 /* Database */,
 				BDE2B15315C6AA64009E9F40 /* MainStoryboard.storyboard */,
+				BD966F5415DA6C51006AC0BB /* GameListViewController.h */,
+				BD966F5515DA6C51006AC0BB /* GameListViewController.m */,
 				BDE2B19215C6ADBA009E9F40 /* FirstTab */,
 				BDE2B19315C6ADCD009E9F40 /* SecondTab */,
 				CE19D6F815C7F25D0023B990 /* ThirdTab */,
@@ -450,6 +455,7 @@
 				9F1C3A9A15D9530000B03A1B /* ScoreViewController.m in Sources */,
 				BDB0A6C515D966540072341D /* MBProgressHUD.m in Sources */,
 				9F699B1015DA5448005F445C /* MyCutstomViewCell.m in Sources */,
+				BD966F5615DA6C52006AC0BB /* GameListViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
