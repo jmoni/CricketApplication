@@ -11,6 +11,7 @@
 #import "sqlite3.h"
 #include "SecondViewController.h"
 #include "FirstViewController.h"
+#include "GameListViewController.h"
 
 @interface DatabaseController ()
 @end
@@ -63,6 +64,7 @@
 		} else {
 			[self secondTabSave];
 			[[[tabBar items] objectAtIndex:2] setEnabled:YES];
+			[[[tabBar items] objectAtIndex:3] setEnabled:YES];
 			[self setSelectedIndex: [self selectedIndex]+1];
 			[nextButton setStyle:UIBarButtonItemStyleDone];
 			[nextButton setTitle:@"Share"];
@@ -100,7 +102,7 @@
 										@"INSERT INTO PLAYERS (TeamID, PlayerName, PreviouslyPlayed) SELECT %d, \"%@\", 1 WHERE NOT EXISTS (SELECT * FROM Players WHERE (PlayerName = \"%@\") AND (TeamID = %d))",
 										awayTeamID, [awayPlayersArray objectAtIndex:i], [awayPlayersArray objectAtIndex:i], awayTeamID]];
 	}
-
+	
 }
 
 - (void) thirdTabSave {
@@ -108,11 +110,13 @@
 									@"INSERT INTO GAMES (HomeID, AwayID, GameDate, TossResult, Decision, MatchType, OversOrDays, UmpireOne, UmpireTwo) VALUES (%d, %d, '%@', \"%@\", \"%@\", \"%@\", %d, \"%@\", \"%@\")",
 									homeTeamID, awayTeamID, strDate, tossWonBy, decision, matchType, numberOversOrDays, umpireOne, umpireTwo]];
 	currentGameID = [self returnIntFromDatabase:[NSString stringWithFormat:
-								 @"SELECT GameID FROM GAMES"]];
+												 @"SELECT GameID FROM GAMES"]];
+	[self insertStringIntoDatabase:[NSString stringWithFormat:
+									@"INSERT INTO INNINGS (GameID, BattingTeamID, InningNumber, FallOfWickets, Score) VALUES (%d, %d, 0, \"nil\", \"nil\")", currentGameID, homeTeamID]];
 	disableElements = YES;
     
     NSLog(@"START GAME %d", currentGameID);
-
+	
     //First set all players in array to not played
     [self setPlayersNotPlayed];
     
@@ -172,6 +176,28 @@
 	}
 }
 
+//Call function to update the games to finished
+- (void)updateCurrentGameFinshed {
+	const char *dbpath = [writableDBPath UTF8String];
+	sqlite3_stmt *statement;
+    if (sqlite3_open(dbpath, &cricketDB) == SQLITE_OK)
+    {
+        
+        NSString *string = [NSString stringWithFormat: @"UPDATE Games SET GameFinished = 1 WHERE GameID = %d", currentGameID];
+		const char *stmt = [string UTF8String];
+		sqlite3_prepare_v2(cricketDB, stmt, -1, &statement, NULL);
+		while (sqlite3_step(statement) == SQLITE_ROW) {
+			NSLog(@"\nAccess worked");
+            //Update game to finished
+            sqlite3_column_text(statement, 0);
+		}
+		sqlite3_finalize(statement);
+		sqlite3_close(cricketDB);
+	} else {
+		NSLog(@"\nCould not access DB");
+	}
+}
+
 //Call function to update the players who last played
 - (void)setPlayersNotPlayed {
 	const char *dbpath = [writableDBPath UTF8String];
@@ -214,6 +240,26 @@
 	return returnThis;
 }
 
+- (NSString *)returnStringFromDatabase:(NSString *)string {
+	NSString *returnThis = nil;
+	const char *dbpath = [writableDBPath UTF8String];
+	sqlite3_stmt *statement;
+    if (sqlite3_open(dbpath, &cricketDB) == SQLITE_OK)
+    {
+		const char *stmt = [string UTF8String];
+		sqlite3_prepare_v2(cricketDB, stmt, -1, &statement, NULL);
+		while (sqlite3_step(statement) == SQLITE_ROW) {
+			NSLog(@"\nAccess worked");
+			returnThis = [NSString stringWithUTF8String:(char *)sqlite3_column_text(statement, 0)];
+		}
+		sqlite3_finalize(statement);
+		sqlite3_close(cricketDB);
+	} else {
+		NSLog(@"\nCould not access DB");
+	}
+	return returnThis;
+}
+
 - (void)insertStringIntoDatabase:(NSString *)string {
 	const char *dbpath = [writableDBPath UTF8String];
 	sqlite3_stmt *statement;
@@ -233,6 +279,115 @@
 	}
 }
 
+//Return teams in database and put into array
+- (void)retrieveTeamsInDatabase {
+    const char *dbpath = [writableDBPath UTF8String];
+    sqlite3_stmt *statement;
+    if (sqlite3_open(dbpath, &cricketDB) == SQLITE_OK)
+    {
+        NSString *string = [NSString stringWithFormat: @"SELECT TeamName FROM TEAMS"];
+		const char *stmt = [string UTF8String];
+		sqlite3_prepare_v2(cricketDB, stmt, -1, &statement, NULL);
+        while (sqlite3_step(statement) == SQLITE_ROW) {
+            NSLog(@"\nAccess worked");
+            //Put players into array
+            NSString *nameString = [NSString stringWithUTF8String:(char *)sqlite3_column_text(statement, 0)];
+            //NSLog(@"%@",nameString);
+            [teamsInDatabase addObject: nameString];
+        }
+        sqlite3_finalize(statement);
+        sqlite3_close(cricketDB);
+    } else {
+        NSLog(@"\nCould not access DB");
+    }
+}
+
+//Return games in database and put into array
+- (void)retrieveGamesInDatabaseWithFinishedStatus:(int)status {
+	int counter = 0;
+    const char *dbpath = [writableDBPath UTF8String];
+    sqlite3_stmt *statement;
+    if (sqlite3_open(dbpath, &cricketDB) == SQLITE_OK)
+    {
+        NSString *string = [NSString stringWithFormat: @"SELECT HomeID, AwayID, GameDate FROM GAMES WHERE GameFinished = %d", status];
+		const char *stmt = [string UTF8String];
+		sqlite3_prepare_v2(cricketDB, stmt, -1, &statement, NULL);
+        while (sqlite3_step(statement) == SQLITE_ROW) {
+			if (counter == 0 && status == 1) [gamesInDatabase removeAllObjects];
+			if (counter == 0 && status == 0) [gamesInProgressInDatabase removeAllObjects];
+            NSLog(@"\nAccess worked");
+            //Put players into array
+            NSString *nameString = [self returnStringFromDatabase:[NSString stringWithFormat:
+																   @"SELECT TeamName FROM TEAMS WHERE TeamID = %d", sqlite3_column_int(statement, 0)]];
+            nameString = [NSString stringWithFormat:@"%@ vs. %@", nameString,
+						  [self returnStringFromDatabase:[NSString stringWithFormat:
+														  @"SELECT TeamName FROM TEAMS WHERE TeamID = %d", sqlite3_column_int(statement, 1)]]];
+			nameString = [NSString stringWithFormat:@"%@ on %s", nameString,sqlite3_column_text(statement, 2)];
+			//NSLog(@"%@",nameString);
+            if(status == 1)[gamesInDatabase addObject: nameString];
+			if(status == 0)[gamesInProgressInDatabase addObject:nameString];
+			counter++;
+        }
+        sqlite3_finalize(statement);
+        sqlite3_close(cricketDB);
+    } else {
+        NSLog(@"\nCould not access DB");
+    }
+}
+
+//Remove game in database
+- (void)removeGameInDatabase:(int)gameID {
+    const char *dbpath = [writableDBPath UTF8String];
+    sqlite3_stmt *statement;
+    if (sqlite3_open(dbpath, &cricketDB) == SQLITE_OK)
+    {
+        NSString *string = [NSString stringWithFormat: @"DELETE FROM Innings WHERE GameID = (SELECT GameID FROM GAMES WHERE ROWID = %d);", gameID+1];
+		const char *stmt = [string UTF8String];
+		sqlite3_prepare_v2(cricketDB, stmt, -1, &statement, NULL);
+		if (sqlite3_step(statement) == SQLITE_DONE) {
+			NSLog(@"\nAccess worked");
+		} else {
+			NSLog(@"\nAccess failed");
+		}
+		string = [NSString stringWithFormat: @"DELETE FROM GAMES WHERE ROWID = %d", gameID+1];
+		stmt = [string UTF8String];
+		sqlite3_prepare_v2(cricketDB, stmt, -1, &statement, NULL);
+		if (sqlite3_step(statement) == SQLITE_DONE) {
+			NSLog(@"\nAccess worked");
+		} else {
+			NSLog(@"\nAccess failed");
+		}
+		sqlite3_finalize(statement);
+		sqlite3_close(cricketDB);
+	} else {
+		NSLog(@"\nCould not access DB");
+	}
+}
+
+
+/*Return teams in database and put into array
+ - (int)countTeamsInDatabase {
+ const char *dbpath = [writableDBPath UTF8String];
+ sqlite3_stmt *statement;
+ int count = 0;
+ if (sqlite3_open(dbpath, &cricketDB) == SQLITE_OK)
+ {
+ NSString *string = [NSString stringWithFormat: @"SELECT COUNT(TeamName) FROM TEAMS"];
+ const char *stmt = [string UTF8String];
+ sqlite3_prepare_v2(cricketDB, stmt, -1, &statement, NULL);
+ while (sqlite3_step(statement) == SQLITE_ROW) {
+ NSLog(@"\nAccess worked");
+ //Put players into away array
+ count = sqlite3_column_int(statement, 0);
+ }
+ sqlite3_finalize(statement);
+ sqlite3_close(cricketDB);
+ } else {
+ NSLog(@"\nCould not access DB");
+ }
+ return count;
+ }*/
+
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -245,7 +400,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
 	[self createEditableCopyOfDatabaseIfNeeded];
-	for (int i = 1; i < 3; i++){
+	for (int i = 1; i < 4; i++){
 		[[[tabBar items] objectAtIndex:i] setEnabled:FALSE];
 	}
 	[navBar setTitle:@"Cricket Application"];
