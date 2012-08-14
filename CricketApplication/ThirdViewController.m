@@ -528,8 +528,7 @@ int batterReplace = 0;
 			//batter1Balls++;
 			batStats[1][batter1]++;
 			batStats[2][batter1] += value;
-		}
-        
+		}       
         
         
 		//overs += 0.1;
