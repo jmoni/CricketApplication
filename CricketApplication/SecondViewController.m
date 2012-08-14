@@ -462,6 +462,7 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
 //Add Home Players
 -(void) addHomePlayers{
     DatabaseController *instance = [[DatabaseController alloc]init];
+    NSLog(@"HOME TEAM ID%d",homeTeamID);
     //Get the TeamID home team (greater than 0) from the database if there are already players on the team and if not set to -1
     int c = [instance returnIntFromDatabase:[NSString stringWithFormat:
                                          @"SELECT TeamID FROM PLAYERS WHERE TeamID = '%d'",
@@ -483,6 +484,8 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
 //Add Away Players
 -(void) addAwayPlayers{
     DatabaseController *instance = [[DatabaseController alloc]init];
+    NSLog(@"AWAY TEAM ID%d",awayTeamID);
+
     //Get the TeamID away team (greater than 0) from the database if there are already players on the team and if not set to -1
     int c = [instance returnIntFromDatabase:[NSString stringWithFormat:
                                      @"SELECT TeamID FROM PLAYERS WHERE TeamID = '%d'",
@@ -495,7 +498,7 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
     }
     //Players are in database - hometeam
     else{
-        [instance returnPlayersFromDatabase:[NSString stringWithFormat:@"SELECT PlayerName FROM Players WHERE TEAMID = '%d' AND PreviouslyPlayed = 1",
+        awayPlayersArray = [instance returnPlayersFromDatabase:[NSString stringWithFormat:@"SELECT PlayerName FROM Players WHERE TEAMID = '%d' AND PreviouslyPlayed = 1",
                                  awayTeamID]];
     }
 }
@@ -555,6 +558,7 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
     
     [self getTeamIDs];
     
+    // IDs have changed so add new players
     if (hID != homeTeamID){
         [homePlayersArray removeAllObjects];
         [self addHomePlayers];        
