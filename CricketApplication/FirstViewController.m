@@ -338,6 +338,41 @@ DatabaseController *instance;
     _scrollView.scrollIndicatorInsets = contentInsets;
 }
 
+- (void)loadElements{
+	NSLog(@"HELLO");
+	_homeTeamEntered.text = [instance returnStringFromDatabase:[NSString stringWithFormat:@"SELECT TeamName FROM Teams WHERE TeamID = (SELECT HomeID FROM Games WHERE GameID = %d)", currentGameID]];
+	homeTeam = [instance returnStringFromDatabase:@""];
+	_awayTeamEntered.text = [instance returnStringFromDatabase:[NSString stringWithFormat:@"SELECT TeamName FROM Teams WHERE TeamID = (SELECT AwayID FROM Games WHERE GameID = %d)", currentGameID]];
+	awayTeam = [instance returnStringFromDatabase:@""];
+	NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
+    [dateFormat setDateFormat:@"dd/MM/yyyy"];
+    strDate = [instance returnDateOfMatchFromDatabase];
+    [_dateButton setTitle:strDate forState:UIControlStateNormal];
+	if (![[instance returnStringFromDatabase:[NSString stringWithFormat:@"SELECT MatchType FROM Games WHERE GameID = %d", currentGameID]] isEqualToString:@"overs"]){
+		[_switcher setSelectedSegmentIndex:1];
+		matchType = @"timed";
+        _overSlide.hidden = TRUE;
+        _timeSlide.hidden = FALSE;
+        _overTimeLabel.hidden = TRUE;
+        _timeLabel.hidden = FALSE;
+        numberOversOrDays = (int)_timeSlide.value;
+		[_timeSlide setValue:[instance returnIntFromDatabase:[NSString stringWithFormat:@"SELECT OversOrDays FROM Games WHERE GameID = %d", currentGameID]]];
+		[_timeLabel setText:[NSString stringWithFormat:@"%d Days", [instance returnIntFromDatabase:[NSString stringWithFormat:@"SELECT OversOrDays FROM Games WHERE GameID = %d", currentGameID]]]];
+	} else {
+		[_switcher setSelectedSegmentIndex:0];
+		matchType = @"overs";
+        _overSlide.hidden = FALSE;
+        _timeSlide.hidden = TRUE;
+        _overTimeLabel.hidden = FALSE;
+        _timeLabel.hidden = TRUE;
+        numberOversOrDays = (int)_overSlide.value;
+		[_overSlide setValue:[instance returnIntFromDatabase:[NSString stringWithFormat:@"SELECT OversOrDays FROM Games WHERE GameID = %d", currentGameID]]];
+		[_overTimeLabel setText:[NSString stringWithFormat:@"%d", [instance returnIntFromDatabase:[NSString stringWithFormat:@"SELECT OversOrDays FROM Games WHERE GameID = %d", currentGameID]]]];
+	}
+//[_umpireOneEntered setText:[instance returnStringFromDatabase:[NSString stringWithFormat:@"SELECT ", currentGameID]]];
+		
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -367,8 +402,9 @@ DatabaseController *instance;
     teamsInDatabase = [[NSMutableArray alloc] init];
     
     [instance retrieveTeamsInDatabase];
-    //NSLog(@"%@",teamsInDatabase);
-    
+	
+    //if game is in progress, load values into correct places
+	if (loadElements) [self loadElements];
 }
 
 - (void)viewDidUnload

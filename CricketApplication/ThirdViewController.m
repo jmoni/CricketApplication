@@ -142,6 +142,18 @@ bool bowlerReplace = FALSE;
 	[mes show];
 }
 
+- (void)startInningsFunction:(id)sender{
+	//start game
+	[startGameButton setHidden:YES];
+	for(int i = 0; i < [calculatorView count]; i++){
+		[[calculatorView objectAtIndex:i] setHidden:NO];
+	}
+	[ballsScrollView setHidden:NO];
+	[batterName1 setEnabled:NO];
+	[batterName2 setEnabled:NO];
+	ball1.textColor = [UIColor redColor];
+}
+
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
 	DatabaseController *instance = [[DatabaseController alloc] init];
@@ -237,6 +249,8 @@ bool bowlerReplace = FALSE;
 		[endGameButton setHidden:YES];
 		[closeInningsButton setHidden:YES];
 		[startGameButton setTitle:@"Start Innings" forState:UIControlStateNormal];
+		[startGameButton removeTarget:self action:@selector(startGameButton:) forControlEvents:UIControlEventTouchUpInside];
+		[startGameButton addTarget:self action:@selector(startInningsFunction:) forControlEvents:UIControlEventTouchUpInside];
 		[batterName1 setEnabled:YES];
 		[batterName2 setEnabled:YES];
 		[ballsScrollView setHidden:YES];
@@ -256,7 +270,7 @@ bool bowlerReplace = FALSE;
 	hud.yOffset = 150.f;
 	hud.removeFromSuperViewOnHide = YES;
 	
-	[hud hide:YES afterDelay:2];
+	[hud hide:YES afterDelay:1];
 }
 
 -(int)outTypeToInt{

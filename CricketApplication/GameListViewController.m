@@ -31,6 +31,7 @@ DatabaseController *instance;
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+	instance = [[DatabaseController alloc] init];
 	gamesInDatabase = [[NSMutableArray alloc] init];
 	gamesInProgressInDatabase = [[NSMutableArray alloc] init];
 	//next two lines in view did appear instead
@@ -44,7 +45,6 @@ DatabaseController *instance;
 }
 
 - (void)viewDidAppear:(BOOL)animated{
-	instance = [[DatabaseController alloc] init];
 	[instance retrieveGamesInDatabaseWithFinishedStatus:0];
 	[instance retrieveGamesInDatabaseWithFinishedStatus:1];
 	[mainTableView reloadData];
@@ -72,8 +72,8 @@ DatabaseController *instance;
 }
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section{
-	if (section == 1 && [gamesInDatabase count] > 0) return @"Old Games";
-	else if (section == 0 && [gamesInProgressInDatabase count] > 0) return @"Current Games";
+	if (section == 1 && [gamesInDatabase count] > 0) return @"Game Summary";
+	else if (section == 0 && [gamesInProgressInDatabase count] > 0) return @"Games in Progress";
 	else return nil;
 }
 
@@ -91,11 +91,17 @@ DatabaseController *instance;
     
     // Configure the cell...
 	[[cell textLabel] setFont:[UIFont systemFontOfSize:14.0f]];
-    if (indexPath.section == 1)
-		[[cell textLabel] setText:[NSString stringWithFormat:@"%@", [gamesInDatabase objectAtIndex:[gamesInDatabase count]-1-indexPath.row]]];
-	else if (indexPath.section == 0)
-		[[cell textLabel] setText:[NSString stringWithFormat:@"%@", [gamesInProgressInDatabase objectAtIndex:[gamesInProgressInDatabase count]-1-indexPath.row]]];
-    return cell;
+	for (int i = 0; i < [[gamesInDatabase objectAtIndex:[gamesInDatabase count]-1-indexPath.row] length]; i++){
+		unichar ch = [[gamesInDatabase objectAtIndex:[gamesInDatabase count]-1-indexPath.row] characterAtIndex:i];
+		if (ch == '$') {
+			if (indexPath.section == 1)
+				[[cell textLabel] setText:[NSString stringWithFormat:@"%@", [[gamesInDatabase objectAtIndex:[gamesInDatabase count]-1-indexPath.row] substringFromIndex:i+1]]];
+			else if (indexPath.section == 0)
+				[[cell textLabel] setText:[NSString stringWithFormat:@"%@", [[gamesInProgressInDatabase objectAtIndex:[gamesInProgressInDatabase count]-1-indexPath.row] substringFromIndex:i+1]]];
+			
+		}
+	}
+	return cell;
 }
 
 
@@ -113,8 +119,17 @@ DatabaseController *instance;
 {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
         // Delete the row from the data source
-		[instance removeGameInDatabase:indexPath.row];
-        [gamesInDatabase removeObjectAtIndex:indexPath.row];
+		for (int i = 0; i < [[gamesInDatabase objectAtIndex:indexPath.row] length]; i++){
+			unichar ch = [[gamesInDatabase objectAtIndex:indexPath.row] characterAtIndex:i];
+			if (ch == '$') {
+				if (indexPath.section == 1)
+					[instance removeGameInDatabase:
+					 [[NSString stringWithFormat:@"%@", [[gamesInDatabase objectAtIndex:indexPath.row] substringToIndex:i]] integerValue]];
+			}
+		}
+		//[instance removeGameInDatabase:(int)[gamesInDatabase objectAtIndex:indexPath.row]];
+        //[gamesInDatabase removeObjectAtIndex:indexPath.row];
+		[self viewDidAppear:YES];
 		[tableView reloadData];
     }
     else if (editingStyle == UITableViewCellEditingStyleInsert) {
@@ -144,15 +159,31 @@ DatabaseController *instance;
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     // Navigation logic may go here. Create and push another view controller.
-    
-	ScoreViewController *detailViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"Score Card"];
-	// ...
-	// Pass the selected object to the new view controller.
-	[self.navigationController pushViewController:detailViewController animated:YES];
+	for (int i = 0; i < [[gamesInDatabase objectAtIndex:indexPath.row] length]; i++){
+		unichar ch = [[gamesInDatabase objectAtIndex:indexPath.row] characterAtIndex:i];
+		if (ch == '$') {
+			if (indexPath.section == 1)
+				currentGameID = [[NSString stringWithFormat:@"%@", [[gamesInDatabase objectAtIndex:[gamesInDatabase count]-1-indexPath.row] substringToIndex:i]] integerValue];
+			else if (indexPath.section == 0)
+				currentGameID = [[NSString stringWithFormat:@"%@", [[gamesInProgressInDatabase objectAtIndex:[gamesInProgressInDatabase count]-1-indexPath.row] substringToIndex:i]] integerValue];
+		}
+	}
+	NSLog(@"%d", currentGameID);
+    if (indexPath. section == 1){
+		ScoreViewController *detailViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"Score Card"];
+		[self.navigationController pushViewController:detailViewController animated:YES];
+	} else {
+		disableElements = YES;
+		loadElements = YES;
+		DatabaseController *tabView = [self.storyboard instantiateViewControllerWithIdentifier:@"Database Controller"];
+		[self.navigationController pushViewController:tabView animated:YES];
+	}
 	
 }
 
 - (IBAction)addNewGame:(id)sender{
+	disableElements = NO;
+	loadElements = NO;
 	DatabaseController *tabView = [self.storyboard instantiateViewControllerWithIdentifier:@"Database Controller"];
 	[self.navigationController pushViewController:tabView animated:YES];
 }

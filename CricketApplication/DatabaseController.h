@@ -14,6 +14,7 @@ int awayTeamID;
 NSString *writableDBPath;
 sqlite3 *cricketDB;
 bool disableElements;
+bool loadElements;
 int currentGameID;
 
 @interface DatabaseController : UITabBarController <UITabBarControllerDelegate, UINavigationControllerDelegate>
@@ -28,9 +29,13 @@ int currentGameID;
 - (IBAction)next: (id) sender;
 - (IBAction)share: (id) sender;
 - (void)insertStringIntoDatabase:(NSString *)string;
-//- (int)countTeamsInDatabase;
 - (void)retrieveTeamsInDatabase;
 - (void)retrieveGamesInDatabaseWithFinishedStatus:(int)status;
 - (void)removeGameInDatabase:(int)gameID;
 - (void)updateCurrentGameFinshed;
+- (NSString *)returnStringFromDatabase:(NSString *)string;
+- (NSString *)returnDateOfMatchFromDatabase;
+- (int)returnIntFromDatabase:(NSString *)string;
+- (NSMutableArray *)returnPlayersFromDatabase:(NSString *)string;
+
 @end
