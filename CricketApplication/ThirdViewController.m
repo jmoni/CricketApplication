@@ -361,7 +361,7 @@ int batterReplace = 0;
 				//batter1Balls++;
 				batStats[1][batter1]++;
 				batStats[0][batter1] = 1;
-                [fallOfWickets addObject:[NSString stringWithString:@"R1"]];
+                [fallOfWickets addObject:@"R1"];
 				[self changePlayerNameWhenRetired:batter1];
 				[self showActionSheet:batterName1];
 			} else {
@@ -369,7 +369,7 @@ int batterReplace = 0;
                 batterReplace = 2;
 				batStats[1][batter2]++;
 				batStats[0][batter2] = 1;
-                [fallOfWickets addObject:[NSString stringWithString:@"R2"]];
+                [fallOfWickets addObject:@"R2"];
 				[self changePlayerNameWhenRetired:batter2];
 				[self showActionSheet:batterName2];
 			}
