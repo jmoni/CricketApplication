@@ -119,12 +119,21 @@ DatabaseController *instance;
 {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
         // Delete the row from the data source
-		for (int i = 0; i < [[gamesInDatabase objectAtIndex:indexPath.row] length]; i++){
-			unichar ch = [[gamesInDatabase objectAtIndex:indexPath.row] characterAtIndex:i];
-			if (ch == '$') {
-				if (indexPath.section == 1)
+		if (indexPath.section == 1){
+			for (int i = 0; i < [[gamesInDatabase objectAtIndex:[gamesInDatabase count]-1-indexPath.row] length]; i++){
+				unichar ch = [[gamesInDatabase objectAtIndex:[gamesInDatabase count]-1-indexPath.row] characterAtIndex:i];
+				if (ch == '$') {
+						[instance removeGameInDatabase:
+						 [[NSString stringWithFormat:@"%@", [[gamesInDatabase objectAtIndex:[gamesInDatabase count]-1-indexPath.row] substringToIndex:i]] integerValue]];
+				}
+			}
+		} else if (indexPath.section == 0){
+			for (int i = 0; i < [[gamesInProgressInDatabase objectAtIndex:[gamesInProgressInDatabase count]-1-indexPath.row] length]; i++){
+				unichar ch = [[gamesInProgressInDatabase objectAtIndex:[gamesInProgressInDatabase count]-1-indexPath.row] characterAtIndex:i];
+				if (ch == '$') {
 					[instance removeGameInDatabase:
-					 [[NSString stringWithFormat:@"%@", [[gamesInDatabase objectAtIndex:indexPath.row] substringToIndex:i]] integerValue]];
+					 [[NSString stringWithFormat:@"%@", [[gamesInProgressInDatabase objectAtIndex:[gamesInProgressInDatabase count]-1-indexPath.row] substringToIndex:i]] integerValue]];
+				}
 			}
 		}
 		//[instance removeGameInDatabase:(int)[gamesInDatabase objectAtIndex:indexPath.row]];

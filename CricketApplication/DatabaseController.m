@@ -342,9 +342,9 @@
 			string = @"SELECT GameID, HomeID, AwayID, GameDate FROM GAMES";
 		const char *stmt = [string UTF8String];
 		sqlite3_prepare_v2(cricketDB, stmt, -1, &statement, NULL);
+		if (counter == 0 && status == 1) [gamesInDatabase removeAllObjects];
+		if (counter == 0 && status == 0) [gamesInProgressInDatabase removeAllObjects];
         while (sqlite3_step(statement) == SQLITE_ROW) {
-			if (counter == 0 && status == 1) [gamesInDatabase removeAllObjects];
-			if (counter == 0 && status == 0) [gamesInProgressInDatabase removeAllObjects];
             NSLog(@"\nAccess worked");
             //Put players into array
             NSString *nameString = [NSString stringWithFormat:@"%d", sqlite3_column_int(statement, 0)];
