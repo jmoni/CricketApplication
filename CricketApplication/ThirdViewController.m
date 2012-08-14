@@ -62,9 +62,10 @@ NSMutableArray *extraBallLabels;
 bool outPicker = NO;
 NSString *outType;
 int outBy;
-bool extra = FALSE;
 NSMutableArray *allBallLabels;
 float inningNumber = 1;
+NSString *newBatsman;
+int batterReplace = 0;
 
 @implementation ThirdViewController
 @synthesize ball6;
@@ -100,6 +101,7 @@ float inningNumber = 1;
 @synthesize enterButton;
 @synthesize endGameButton;
 @synthesize closeInningsButton;
+@synthesize currentOverLabel;
 @synthesize batterName1;
 @synthesize batterName2;
 @synthesize teamName;
@@ -205,15 +207,29 @@ float inningNumber = 1;
 			battingTeam = @"away";
 		else
 			battingTeam = @"home";
-		
+		for (int i=1; i<=extraCount;i++)
+        {
+            [[ballsScrollView viewWithTag:i] removeFromSuperview];
+            [allBallLabels removeLastObject];
+        }  
+        
 		[self showHUD:@"Innings closed"];
 		[self viewDidLoad];
-		ball1.text = @"-";
-		ball2.text = @"-";
-		ball3.text = @"-";
-		ball4.text = @"-";
-		ball5.text = @"-";
-		ball6.text = @"-";
+              
+        ballNo = 1;
+        [ball1 setFrame:CGRectMake(77, 6, 25, 21)];
+        ball1.text = @"-";
+        [ball2 setFrame:CGRectMake(110, 6, 25, 21)];
+        ball2.text = @"-";
+        [ball3 setFrame:CGRectMake(143, 6, 25, 21)];
+        ball3.text = @"-";
+        [ball4 setFrame:CGRectMake(176, 6, 25, 21)];
+        ball4.text = @"-";
+        [ball5 setFrame:CGRectMake(209, 6, 25, 21)];
+        ball5.text = @"-";
+        [ball6 setFrame:CGRectMake(242, 6, 25, 21)];
+        ball6.text = @"-";
+        [ballsScrollView setContentSize:CGSizeMake(280,33)];
 		[self turnLabelsBlack:closeInningsButton];
 		[nextOverButton setHidden:YES];
 		[endGameButton setHidden:YES];
@@ -313,24 +329,47 @@ float inningNumber = 1;
     [penLabel setText: [NSString stringWithFormat: @"%d", penalties]];
     [totLabel setTextColor:[UIColor blackColor]];
     [totLabel setText: [NSString stringWithFormat:@"%d", (noBalls + wides + byes + legByes + penalties)]];
-    
-    
 }
+
 -(IBAction)confirm:(id)sender{
 	if (value > -1) {
+        if (value<1000){
+            if (ballNo == 1){
+                [fallOfWickets addObject: ball1.text];
+            }
+            else if (ballNo == 2){
+                [fallOfWickets addObject: ball2.text];
+            }
+            if (ballNo == 3){
+                [fallOfWickets addObject: ball3.text];
+            }
+            if (ballNo == 4){
+                [fallOfWickets addObject: ball4.text];
+            }
+            if (ballNo == 5){
+                [fallOfWickets addObject: ball5.text];
+            }
+            if (ballNo == 6){
+                [fallOfWickets addObject: ball6.text];
+            }
+        }
 		if (value == 1000){
 			wickets++;
 			value = 0;
+            batterReplace = 1;
 			if(batterOutInt == 0) {
 				//batter1Balls++;
 				batStats[1][batter1]++;
 				batStats[0][batter1] = 1;
+                [fallOfWickets addObject:[NSString stringWithString:@"R1"]];
 				[self changePlayerNameWhenRetired:batter1];
 				[self showActionSheet:batterName1];
 			} else {
 				//batter2Balls++;
+                batterReplace = 2;
 				batStats[1][batter2]++;
 				batStats[0][batter2] = 1;
+                [fallOfWickets addObject:[NSString stringWithString:@"R2"]];
 				[self changePlayerNameWhenRetired:batter2];
 				[self showActionSheet:batterName2];
 			}
@@ -340,16 +379,20 @@ float inningNumber = 1;
 			value = 0;
 			if(batterOutInt == 0) {
 				//batter1Balls++;
+                batterReplace = 1;
 				batStats[1][batter1]++;
 				batStats[0][batter1] = 1;
 				batStats[3][batter1] = [self outTypeToInt];
+                [fallOfWickets addObject:[NSString stringWithFormat:@"%@%d",@"W1-",[self outTypeToInt]]];
 				[self removePlayerWhenOut:batter1];
 				[self showActionSheet:batterName1];
 			} else {
 				//batter2Balls++;
+                batterReplace = 2;
 				batStats[1][batter2]++;
 				batStats[0][batter2] = 1;
 				batStats[3][batter2] = [self outTypeToInt];
+                [fallOfWickets addObject:[NSString stringWithFormat:@"%@%d",@"W2-",[self outTypeToInt]]];
 				[self removePlayerWhenOut:batter2];
 				[self showActionSheet:batterName2];
 			}
@@ -358,16 +401,20 @@ float inningNumber = 1;
 			value = 0;
 			if(batterOutInt == 0) {
 				//batter1Balls++;
+                batterReplace = 1;
 				batStats[1][batter1]++;
 				batStats[0][batter1] = 1;
 				batStats[3][batter1] = [self outTypeToInt];
+                [fallOfWickets addObject:[NSString stringWithFormat:@"%@%d",@"W1-",[self outTypeToInt]]];
 				[self removePlayerWhenOut:batter1];
 				[self showActionSheet:batterName1];
 			} else {
 				//batter2Balls++;
+                batterReplace = 2;
 				batStats[1][batter2]++;
 				batStats[0][batter2] = 1;
 				batStats[3][batter2] = [self outTypeToInt];
+                [fallOfWickets addObject:[NSString stringWithFormat:@"%@%d",@"W2-",[self outTypeToInt]]];
 				[self removePlayerWhenOut:batter2];
 				[self showActionSheet:batterName2];
 			}
@@ -384,7 +431,6 @@ float inningNumber = 1;
             runs += byeAdditions;
             runs += legByeAdditions;
             runs += penaltiesAdditions;
-            extra = TRUE;
             noBallAdditions = 0;
             wideAdditions=0;
             byeAdditions=0;
@@ -482,28 +528,7 @@ float inningNumber = 1;
 			//batter1Balls++;
 			batStats[1][batter1]++;
 			batStats[2][batter1] += value;
-		}
-        if (!extra){
-			if (ballNo == 1){
-				[fallOfWickets addObject: ball1.text];
-			}
-			else if (ballNo == 2){
-				[fallOfWickets addObject: ball2.text];
-			}
-			if (ballNo == 3){
-				[fallOfWickets addObject: ball3.text];
-			}
-			if (ballNo == 4){
-				[fallOfWickets addObject: ball4.text];
-			}
-			if (ballNo == 5){
-				[fallOfWickets addObject: ball5.text];
-			}
-			if (ballNo == 6){
-				[fallOfWickets addObject: ball6.text];
-			}
-        }
-        else extra = FALSE;
+		}       
         
         
 		//overs += 0.1;
@@ -691,19 +716,32 @@ float inningNumber = 1;
     if (ballNo <=1)[ball1 setFrame:CGRectMake(ball1.frame.origin.x-33, 6, 25, 21)];
     
     [ballsScrollView setContentOffset:CGPointMake((33*extraCount),0) animated:YES];
-    ballsScrollView.contentSize = CGSizeMake(ballsScrollView.contentSize.width  + (33*extraCount), ballsScrollView.contentSize.height);
+    ballsScrollView.contentSize = CGSizeMake(ballsScrollView.contentSize.width  - 33, ballsScrollView.contentSize.height);
     
 }
 
 - (void)nextOver:(id)sender{
-	ballNo = 1;
+    for (int i=1; i<=extraCount;i++)
+    {
+        [[ballsScrollView viewWithTag:i] removeFromSuperview];
+        [allBallLabels removeLastObject];
+    }
+    ballNo = 1;
+    [ball1 setFrame:CGRectMake(77, 6, 25, 21)];
 	ball1.text = @"-";
+    [ball2 setFrame:CGRectMake(110, 6, 25, 21)];
 	ball2.text = @"-";
+    [ball3 setFrame:CGRectMake(143, 6, 25, 21)];
 	ball3.text = @"-";
+    [ball4 setFrame:CGRectMake(176, 6, 25, 21)];
 	ball4.text = @"-";
+    [ball5 setFrame:CGRectMake(209, 6, 25, 21)];
 	ball5.text = @"-";
+    [ball6 setFrame:CGRectMake(242, 6, 25, 21)];
 	ball6.text = @"-";
 	[self turnLabelsBlack:sender];
+    [ballsScrollView setContentSize:CGSizeMake(280,33)];
+
 	[self changeBowler];
 	if (even)
 		even = NO;
@@ -1321,6 +1359,11 @@ float inningNumber = 1;
 		batterName1.enabled = true;
 		batterName2.enabled = true;
 	}
+    if (batterReplace == 1 || batterReplace == 2)
+    {
+        [fallOfWickets addObject:[NSString stringWithFormat:@"%@%d%@%@",@"NEW",batterReplace,@"-",newBatsman]];
+        batterReplace = 0;
+    }
 	//animate onto screen
 	CGRect temp = newView.frame;
     temp.origin.y = height;
@@ -1474,6 +1517,7 @@ float inningNumber = 1;
 
 - (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component
 {
+    newBatsman = [NSString stringWithFormat: @"%d", row];
 	if ([pickerView tag] == 30){
 		batterOutInt = row;
 		return;
@@ -1518,7 +1562,6 @@ float inningNumber = 1;
 		else
 			[batterButton setTitle:[awayPlayersArray objectAtIndex:row] forState:UIControlStateNormal];
 	}
-	
 	//set batter integers
 	if ([batterButton isEqual:batterName1]){
 		batter1 = row;
@@ -1816,6 +1859,7 @@ float inningNumber = 1;
 	[self setEnterButton:nil];
 	[self setEndGameButton:nil];
 	[self setCloseInningsButton:nil];
+    [self setCurrentOverLabel:nil];
     [super viewDidUnload];
     // Release any retained subviews of the main view.
 }

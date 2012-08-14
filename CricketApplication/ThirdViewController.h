@@ -46,6 +46,7 @@ float batStats[4][20];
 @property (strong, nonatomic) IBOutlet UIButton *enterButton;
 @property (strong, nonatomic) IBOutlet UIButton *endGameButton;
 @property (strong, nonatomic) IBOutlet UIButton *closeInningsButton;
+@property (strong, nonatomic) IBOutlet UILabel *currentOverLabel;
 
 -(IBAction)showActionSheet: (id) sender;
 -(IBAction)hideActionSheet: (UIBarButtonItem *)_infoButtonItem;
