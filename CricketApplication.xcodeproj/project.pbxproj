@@ -454,6 +454,7 @@
 				BD27828D15D5338100B8788D /* StatsViewController.m in Sources */,
 				BDB0A6C515D966540072341D /* MBProgressHUD.m in Sources */,
 				9F699B1015DA5448005F445C /* MyCutstomViewCell.m in Sources */,
+				BD966F5615DA6C52006AC0BB /* GameListViewController.m in Sources */,
 				9FF866F015DA6F2000400126 /* ScoreViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
