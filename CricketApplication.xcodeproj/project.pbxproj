@@ -160,6 +160,15 @@
 			name = FourthTab;
 			sourceTree = "<group>";
 		};
+		BD966F5715DA6DB4006AC0BB /* Game List View */ = {
+			isa = PBXGroup;
+			children = (
+				BD966F5415DA6C51006AC0BB /* GameListViewController.h */,
+				BD966F5515DA6C51006AC0BB /* GameListViewController.m */,
+			);
+			name = "Game List View";
+			sourceTree = "<group>";
+		};
 		BDA16D9F15D00A1600DD9301 /* Database */ = {
 			isa = PBXGroup;
 			children = (
@@ -209,8 +218,7 @@
 			children = (
 				BDA16D9F15D00A1600DD9301 /* Database */,
 				BDE2B15315C6AA64009E9F40 /* MainStoryboard.storyboard */,
-				BD966F5415DA6C51006AC0BB /* GameListViewController.h */,
-				BD966F5515DA6C51006AC0BB /* GameListViewController.m */,
+				BD966F5715DA6DB4006AC0BB /* Game List View */,
 				BDE2B19215C6ADBA009E9F40 /* FirstTab */,
 				BDE2B19315C6ADCD009E9F40 /* SecondTab */,
 				CE19D6F815C7F25D0023B990 /* ThirdTab */,

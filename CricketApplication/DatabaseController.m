@@ -309,7 +309,11 @@
     sqlite3_stmt *statement;
     if (sqlite3_open(dbpath, &cricketDB) == SQLITE_OK)
     {
-        NSString *string = [NSString stringWithFormat: @"SELECT HomeID, AwayID, GameDate FROM GAMES WHERE GameFinished = %d", status];
+        NSString *string;
+		if (status == 0)
+			string = [NSString stringWithFormat: @"SELECT GameID, HomeID, AwayID, GameDate FROM GAMES WHERE GameFinished = %d", status];
+		else
+			string = @"SELECT GameID, HomeID, AwayID, GameDate FROM GAMES";
 		const char *stmt = [string UTF8String];
 		sqlite3_prepare_v2(cricketDB, stmt, -1, &statement, NULL);
         while (sqlite3_step(statement) == SQLITE_ROW) {
@@ -317,12 +321,13 @@
 			if (counter == 0 && status == 0) [gamesInProgressInDatabase removeAllObjects];
             NSLog(@"\nAccess worked");
             //Put players into array
-            NSString *nameString = [self returnStringFromDatabase:[NSString stringWithFormat:
-																   @"SELECT TeamName FROM TEAMS WHERE TeamID = %d", sqlite3_column_int(statement, 0)]];
+            NSString *nameString = [NSString stringWithFormat:@"%d", sqlite3_column_int(statement, 0)];
+			nameString = [NSString stringWithFormat:@"%@$%@", nameString, [self returnStringFromDatabase:[NSString stringWithFormat:
+																   @"SELECT TeamName FROM TEAMS WHERE TeamID = %d", sqlite3_column_int(statement, 1)]]];
             nameString = [NSString stringWithFormat:@"%@ vs. %@", nameString,
 						  [self returnStringFromDatabase:[NSString stringWithFormat:
-														  @"SELECT TeamName FROM TEAMS WHERE TeamID = %d", sqlite3_column_int(statement, 1)]]];
-			nameString = [NSString stringWithFormat:@"%@ on %s", nameString,sqlite3_column_text(statement, 2)];
+														  @"SELECT TeamName FROM TEAMS WHERE TeamID = %d", sqlite3_column_int(statement, 2)]]];
+			nameString = [NSString stringWithFormat:@"%@ on %s", nameString,sqlite3_column_text(statement, 3)];
 			//NSLog(@"%@",nameString);
             if(status == 1)[gamesInDatabase addObject: nameString];
 			if(status == 0)[gamesInProgressInDatabase addObject:nameString];
@@ -341,7 +346,7 @@
     sqlite3_stmt *statement;
     if (sqlite3_open(dbpath, &cricketDB) == SQLITE_OK)
     {
-        NSString *string = [NSString stringWithFormat: @"DELETE FROM Innings WHERE GameID = (SELECT GameID FROM GAMES WHERE ROWID = %d);", gameID+1];
+        NSString *string = [NSString stringWithFormat: @"DELETE FROM Innings WHERE GameID = (SELECT GameID FROM GAMES WHERE GameID = %d);", gameID];
 		const char *stmt = [string UTF8String];
 		sqlite3_prepare_v2(cricketDB, stmt, -1, &statement, NULL);
 		if (sqlite3_step(statement) == SQLITE_DONE) {
@@ -349,7 +354,7 @@
 		} else {
 			NSLog(@"\nAccess failed");
 		}
-		string = [NSString stringWithFormat: @"DELETE FROM GAMES WHERE ROWID = %d", gameID+1];
+		string = [NSString stringWithFormat: @"DELETE FROM GAMES WHERE GameID = %d", gameID];
 		stmt = [string UTF8String];
 		sqlite3_prepare_v2(cricketDB, stmt, -1, &statement, NULL);
 		if (sqlite3_step(statement) == SQLITE_DONE) {
