@@ -341,9 +341,9 @@ DatabaseController *instance;
 - (void)loadElements{
 	NSLog(@"HELLO");
 	_homeTeamEntered.text = [instance returnStringFromDatabase:[NSString stringWithFormat:@"SELECT TeamName FROM Teams WHERE TeamID = (SELECT HomeID FROM Games WHERE GameID = %d)", currentGameID]];
-	homeTeam = [instance returnStringFromDatabase:@""];
+	homeTeam = [instance returnStringFromDatabase:[NSString stringWithFormat:@"SELECT TeamName FROM Teams WHERE TeamID = (SELECT HomeID FROM Games WHERE GameID = %d)", currentGameID]];
 	_awayTeamEntered.text = [instance returnStringFromDatabase:[NSString stringWithFormat:@"SELECT TeamName FROM Teams WHERE TeamID = (SELECT AwayID FROM Games WHERE GameID = %d)", currentGameID]];
-	awayTeam = [instance returnStringFromDatabase:@""];
+	awayTeam = [instance returnStringFromDatabase:[NSString stringWithFormat:@"SELECT TeamName FROM Teams WHERE TeamID = (SELECT AwayID FROM Games WHERE GameID = %d)", currentGameID]];
 	NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
     [dateFormat setDateFormat:@"dd/MM/yyyy"];
     strDate = [instance returnDateOfMatchFromDatabase];
@@ -369,8 +369,10 @@ DatabaseController *instance;
 		[_overSlide setValue:[instance returnIntFromDatabase:[NSString stringWithFormat:@"SELECT OversOrDays FROM Games WHERE GameID = %d", currentGameID]]];
 		[_overTimeLabel setText:[NSString stringWithFormat:@"%d", [instance returnIntFromDatabase:[NSString stringWithFormat:@"SELECT OversOrDays FROM Games WHERE GameID = %d", currentGameID]]]];
 	}
-//[_umpireOneEntered setText:[instance returnStringFromDatabase:[NSString stringWithFormat:@"SELECT ", currentGameID]]];
-		
+	[_umpireOneEntered setText:[instance returnStringFromDatabase:[NSString stringWithFormat:@"SELECT UmpireOne FROM Games WHERE GameID = %d", currentGameID]]];
+	umpireOne = [instance returnStringFromDatabase:[NSString stringWithFormat:@"SELECT UmpireOne FROM Games WHERE GameID = %d", currentGameID]];
+	[_umpireTwoEntered setText:[instance returnStringFromDatabase:[NSString stringWithFormat:@"SELECT UmpireTwo FROM Games WHERE GameID = %d", currentGameID]]];
+	umpireTwo = [instance returnStringFromDatabase:[NSString stringWithFormat:@"SELECT UmpireTwo FROM Games WHERE GameID = %d", currentGameID]];
 }
 
 - (void)viewDidLoad
