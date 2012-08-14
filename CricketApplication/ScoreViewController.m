@@ -44,6 +44,7 @@ NSMutableArray *awayPlayersDB;
 }
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section{
+    /*
     if (((int)section % 2 == 0) && [firstTeamBatting isEqualToString: @"home"]){
         NSLog(@"%d",1);
         return [NSString stringWithFormat:@"Team : %@",homeTeamName];
@@ -61,14 +62,27 @@ NSMutableArray *awayPlayersDB;
         return [NSString stringWithFormat:@"Second Innings : %@",homeTeamName];
     }
 	else return nil;
+     */
+    if (((int)section % 2 == 0) && [firstTeamBatting isEqualToString: @"home"]){
+        NSLog(@"%d",1);
+        return [NSString stringWithFormat:@"Team : %@",homeTeamName];
+    }
+    else if (((int)section % 2 == 0)&& [firstTeamBatting isEqualToString: @"away"]){
+        NSLog(@"%d",2);
+        return [NSString stringWithFormat:@"Team : %@",awayTeamName];
+    }
+    else if (((int)section % 2 == 1) && [firstTeamBatting isEqualToString: @"home"]){
+        NSLog(@"%d",3);
+        return [NSString stringWithFormat:@"Team : %@",awayTeamName];
+    }
+    else if (((int)section % 2 == 1) && [firstTeamBatting isEqualToString: @"away"]){
+        NSLog(@"%d",4);
+        return [NSString stringWithFormat:@"Team : %@",homeTeamName];
+    }
+	else return nil;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    /*
-     int cellNumber = 0;
-     if ([tableView isEqual:homePlayersTable] && section == 1) cellNumber = [homePlayersArray count];
-     else if ([tableView isEqual:awayPlayersTable] && section == 1) cellNumber = [awayPlayersArray count];
-     */
     
     if ([firstTeamBatting isEqualToString: @"home"])return [playerNamesHome count];
     else if ([firstTeamBatting isEqualToString: @"away"]) return [playerNamesAway count];
@@ -85,11 +99,11 @@ NSMutableArray *awayPlayersDB;
     // Configure the cell.
     // Set the values in the table
     
-    if (indexPath.section == 0){
+    if (((int)indexPath.section % 2 == 0)){
         if ([firstTeamBatting isEqualToString: @"home"]) cell.lblName.text = [homePlayersDB objectAtIndex:indexPath.row];
         else cell.lblName.text = [awayPlayersDB objectAtIndex:indexPath.row];
     }
-    else if (indexPath.section == 1){
+    else if (((int)indexPath.section % 2 == 1)){
         if ([firstTeamBatting isEqualToString: @"home"]) cell.lblName.text = [awayPlayersDB objectAtIndex:indexPath.row];
         else cell.lblName.text = [homePlayersDB objectAtIndex:indexPath.row];
     }
