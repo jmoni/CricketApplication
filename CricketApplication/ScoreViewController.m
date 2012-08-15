@@ -37,6 +37,7 @@ NSMutableArray *awayPlayersDB;
 NSMutableArray *fallOfWicketsArray;
 
 
+
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
     // Total number of innings for entire match (to find out how many sections are needed)
@@ -189,6 +190,21 @@ NSMutableArray *fallOfWicketsArray;
     NSLog(@"Home Players: %@",homePlayersDB);
     NSLog(@"Away Players: %@",awayPlayersDB);
     NSLog(@"Fall of Wickets: %@",fallOfWicketsArray);
+}
+
+- (void)viewWillAppear:(BOOL)animated{
+    NSLog(@"WILL APPEAR");
+    
+    // Create an instance of database controller so we can use its functions
+    DatabaseController *instance = [[DatabaseController alloc] init];
+    
+    // Retrieve max number of innings for home and away team using teamIDs from database
+    homeNumberInnings = [instance returnIntFromDatabase:[NSString stringWithFormat: @"SELECT MAX(InningNumber) FROM Innings WHERE GameID = %d AND BattingTeamID = %d", gameID, homeTeamID]];
+    awayNumberInnings = [instance returnIntFromDatabase:[NSString stringWithFormat: @"SELECT MAX(InningNumber) FROM Innings WHERE GameID = %d AND BattingTeamID = %d", gameID, awayTeamID]];
+    
+    [self.table reloadData];
+    NSLog(@"RELOAD");
+    
 }
 
 - (void)viewDidAppear:(BOOL)animated{
