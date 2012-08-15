@@ -187,7 +187,7 @@ bool bowlerReplace = FALSE;
 		[self resignFirstResponder];
 		[self showHUD:@"Game ended"];
 		NSString *fow = @"";
-		for (int i = [fallOfWickets count]-1; i >= 0; i--){
+		for (int i = 0; i < [fallOfWickets count]; i++){
 			fow = [NSString stringWithFormat:@"%@$%@", fow, [fallOfWickets objectAtIndex:i]];
 		}
 		if ([battingTeam isEqualToString:@"home"]){
@@ -207,7 +207,7 @@ bool bowlerReplace = FALSE;
 	{
 		//close innings
 		NSString *fow = @"";
-		for (int i = [fallOfWickets count]-1; i >= 0; i--){
+		for (int i = 0; i < [fallOfWickets count]; i++){
 			fow = [NSString stringWithFormat:@"%@$%@", fow, [fallOfWickets objectAtIndex:i]];
 		}
 		if ([battingTeam isEqualToString:@"home"]){
