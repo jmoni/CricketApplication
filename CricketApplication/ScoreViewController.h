@@ -14,7 +14,7 @@
     BOOL searching;
     BOOL letUserSelectRow;
 }
-@property (strong, nonatomic) IBOutlet UILabel *firstTeamBatTitle;
+
 @property (strong, nonatomic) IBOutlet UITableView *tableOfPlayers;
 @property (strong, nonatomic) NSArray *playerNamesHome;
 @property (strong, nonatomic) NSArray *playerNamesAway;

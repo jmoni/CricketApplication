@@ -16,7 +16,6 @@
 @end
 
 @implementation ScoreViewController
-@synthesize firstTeamBatTitle = _firstTeamBatTitle;
 @synthesize tableOfPlayers = _tableOfPlayers;
 @synthesize playerNamesHome;
 @synthesize playerNamesAway;
@@ -187,7 +186,7 @@ NSMutableArray *fallOfWicketsArray;
     NSLog(@"Team 2 Name: %@",awayTeamName);
     NSLog(@"Home Players: %@",homePlayersDB);
     NSLog(@"Away Players: %@",awayPlayersDB);
-    NSLog(@"Fall of wickets strings: %@",fallOfWicketsArray);
+    NSLog(@"Fall of wickets string: %@",fallOfWicketsArray);
 }
 
 - (void)viewWillAppear:(BOOL)animated{
@@ -222,7 +221,6 @@ NSMutableArray *fallOfWicketsArray;
 
 - (void)viewDidUnload
 {
-    [self setFirstTeamBatTitle:nil];
     [self setTableOfPlayers:nil];
     [super viewDidUnload];
     // Release any retained subviews of the main view.
