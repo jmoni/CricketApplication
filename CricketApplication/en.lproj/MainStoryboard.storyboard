@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="1.1" toolsVersion="2182" systemVersion="11D50" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" initialViewController="uFg-XV-yPu">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="1.1" toolsVersion="2549" systemVersion="12A269" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" initialViewController="uFg-XV-yPu">
     <dependencies>
         <deployment defaultVersion="1296" identifier="iOS"/>
         <development version="4200" identifier="xcode"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="1181"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="1498"/>
     </dependencies>
     <scenes>
         <!--First View Controller - First Tab-->
@@ -604,36 +604,29 @@
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="M" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" id="Y6y-DR-7sh">
-                                <rect key="frame" x="163" y="54" width="20" height="21"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="B" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" id="Qqf-Xp-jZh">
-                                <rect key="frame" x="196" y="54" width="20" height="21"/>
+                                <rect key="frame" x="169" y="54" width="20" height="21"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="4s" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" id="zOG-L1-Cvw">
-                                <rect key="frame" x="224" y="54" width="25" height="21"/>
+                                <rect key="frame" x="202" y="54" width="25" height="21"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="6s" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" id="3BG-9h-WG3">
-                                <rect key="frame" x="257" y="54" width="31" height="21"/>
+                                <rect key="frame" x="240" y="54" width="31" height="21"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="SR" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" id="phU-fE-NDr">
-                                <rect key="frame" x="286" y="54" width="34" height="21"/>
+                                <rect key="frame" x="279" y="54" width="34" height="21"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
@@ -665,36 +658,29 @@
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                                     <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 </label>
-                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="M" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" id="xEZ-ct-Tfp">
-                                                    <rect key="frame" x="170" y="20" width="20" height="21"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                                    <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                </label>
                                                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="SR" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" id="Aie-j8-PAB">
-                                                    <rect key="frame" x="293" y="20" width="22" height="21"/>
+                                                    <rect key="frame" x="292" y="20" width="22" height="21"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                                     <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 </label>
                                                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="6s" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" id="hXr-sg-BRt">
-                                                    <rect key="frame" x="263" y="20" width="22" height="21"/>
+                                                    <rect key="frame" x="251" y="20" width="22" height="21"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                                     <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 </label>
                                                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="4s" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" id="x1r-dL-9re">
-                                                    <rect key="frame" x="233" y="20" width="22" height="21"/>
+                                                    <rect key="frame" x="213" y="20" width="22" height="21"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                                     <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 </label>
                                                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="B" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" id="ykN-gj-eNV">
-                                                    <rect key="frame" x="203" y="20" width="22" height="21"/>
+                                                    <rect key="frame" x="178" y="20" width="22" height="21"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
@@ -707,7 +693,6 @@
                                             <outlet property="lbl4s" destination="x1r-dL-9re" id="cCz-TH-3R2"/>
                                             <outlet property="lbl6s" destination="hXr-sg-BRt" id="WrZ-Ye-gL7"/>
                                             <outlet property="lblB" destination="ykN-gj-eNV" id="YV1-TH-FIp"/>
-                                            <outlet property="lblM" destination="xEZ-ct-Tfp" id="BQM-oz-7ra"/>
                                             <outlet property="lblName" destination="xIv-Z3-Mhh" id="dES-UL-I8O"/>
                                             <outlet property="lblR" destination="Qob-gE-Apn" id="7sb-T8-11Z"/>
                                             <outlet property="lblSR" destination="Aie-j8-PAB" id="1PP-1S-Xh0"/>
@@ -726,11 +711,12 @@
                     <tabBarItem key="tabBarItem" title="Item" id="OyE-Zd-WDJ"/>
                     <navigationItem key="navigationItem" id="n3d-Wl-Gsi"/>
                     <connections>
+                        <outlet property="table" destination="fNc-0R-hQf" id="gno-rs-UgC"/>
                         <outlet property="tableOfPlayers" destination="fNc-0R-hQf" id="Qa5-iu-T8L"/>
                     </connections>
                 </viewController>
             </objects>
-            <point key="canvasLocation" x="167" y="824"/>
+            <point key="canvasLocation" x="193" y="1058"/>
         </scene>
         <!--Third View Controller - Third Tab-->
         <scene sceneID="dLs-TD-eaK">
@@ -1608,6 +1594,218 @@
         <image name="second.png" width="30" height="30"/>
         <image name="second@2x.png" width="60" height="60"/>
     </resources>
+    <classes>
+        <class className="DatabaseController" superclassName="UITabBarController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/DatabaseController.h"/>
+            <relationships>
+                <relationship kind="action" name="next:"/>
+                <relationship kind="action" name="share:"/>
+                <relationship kind="outlet" name="navBar" candidateClass="UINavigationItem"/>
+                <relationship kind="outlet" name="nextButton" candidateClass="UIBarButtonItem"/>
+                <relationship kind="outlet" name="saveButton" candidateClass="UIBarButtonItem"/>
+                <relationship kind="outlet" name="tabBar" candidateClass="UITabBar"/>
+            </relationships>
+        </class>
+        <class className="DetailViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/DetailViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="CSlider:"/>
+                <relationship kind="action" name="VCSlider:"/>
+                <relationship kind="action" name="WKSlider:"/>
+                <relationship kind="action" name="backgroundTouched:"/>
+                <relationship kind="action" name="battingOrderSliderChanged:"/>
+                <relationship kind="action" name="battingOrderSliderChanging:"/>
+                <relationship kind="action" name="deletePlayer:"/>
+                <relationship kind="action" name="getInitialSlideValue:"/>
+                <relationship kind="action" name="nextPlayer:"/>
+                <relationship kind="action" name="previousPlayer:"/>
+                <relationship kind="action" name="storedPlayersAction:"/>
+                <relationship kind="action" name="textFieldReturn:"/>
+                <relationship kind="outlet" name="CaptainSlider" candidateClass="UISwitch"/>
+                <relationship kind="outlet" name="NavBar" candidateClass="UINavigationItem"/>
+                <relationship kind="outlet" name="ViceCaptainSlider" candidateClass="UISwitch"/>
+                <relationship kind="outlet" name="WicketKeeperSlider" candidateClass="UISwitch"/>
+                <relationship kind="outlet" name="battingOrderSlider" candidateClass="UISlider"/>
+                <relationship kind="outlet" name="bottomToolbar" candidateClass="UIToolbar"/>
+                <relationship kind="outlet" name="choosePlayer" candidateClass="UIPickerView"/>
+                <relationship kind="outlet" name="infoButtonItem" candidateClass="UIBarButtonItem"/>
+                <relationship kind="outlet" name="nextPlayerButton" candidateClass="UIBarButtonItem"/>
+                <relationship kind="outlet" name="playerEditTextBox" candidateClass="UITextField"/>
+                <relationship kind="outlet" name="previousPlayerButton" candidateClass="UIBarButtonItem"/>
+                <relationship kind="outlet" name="sliderValueLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="storedPlayersClicked" candidateClass="UIButton"/>
+            </relationships>
+        </class>
+        <class className="FirstViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/FirstViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="awayButtonClicked:"/>
+                <relationship kind="action" name="changeDate:"/>
+                <relationship kind="action" name="flipSwitch:"/>
+                <relationship kind="action" name="hideActionSheet:" candidateClass="UIBarButtonItem"/>
+                <relationship kind="action" name="homeButtonClicked:"/>
+                <relationship kind="action" name="showActionSheet:"/>
+                <relationship kind="action" name="showStoredTeams:"/>
+                <relationship kind="action" name="sliderUpdate:"/>
+                <relationship kind="action" name="textFieldReturn:"/>
+                <relationship kind="action" name="timeSliderUpdate:"/>
+                <relationship kind="outlet" name="awayTeamEntered" candidateClass="UITextField"/>
+                <relationship kind="outlet" name="chooseTeam" candidateClass="UIPickerView"/>
+                <relationship kind="outlet" name="dateButton" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="datePicker" candidateClass="UIDatePicker"/>
+                <relationship kind="outlet" name="dateText" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="homeTeamEntered" candidateClass="UITextField"/>
+                <relationship kind="outlet" name="infoButtonItem" candidateClass="UIBarButtonItem"/>
+                <relationship kind="outlet" name="overSlide" candidateClass="UISlider"/>
+                <relationship kind="outlet" name="overTimeLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="scrollView" candidateClass="UIScrollView"/>
+                <relationship kind="outlet" name="storedAwayTeamButton" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="storedHomeTeamButton" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="switcher" candidateClass="UISegmentedControl"/>
+                <relationship kind="outlet" name="timeLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="timeSlide" candidateClass="UISlider"/>
+                <relationship kind="outlet" name="umpireOneEntered" candidateClass="UITextField"/>
+                <relationship kind="outlet" name="umpireTwoEntered" candidateClass="UITextField"/>
+            </relationships>
+        </class>
+        <class className="GameListViewController" superclassName="UITableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/GameListViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="addNewGame:"/>
+                <relationship kind="outlet" name="mainTableView" candidateClass="UITableView"/>
+            </relationships>
+        </class>
+        <class className="MyCutstomViewCell" superclassName="UITableViewCell">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/MyCutstomViewCell.h"/>
+            <relationships>
+                <relationship kind="outlet" name="lbl4s" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="lbl6s" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="lblB" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="lblM" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="lblName" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="lblR" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="lblSR" candidateClass="UILabel"/>
+            </relationships>
+        </class>
+        <class className="ScoreViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/ScoreViewController.h"/>
+            <relationships>
+                <relationship kind="outlet" name="firstTeamBatTitle" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="table" candidateClass="UITableView"/>
+                <relationship kind="outlet" name="tableOfPlayers" candidateClass="UITableView"/>
+            </relationships>
+        </class>
+        <class className="SecondViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/SecondViewController.h"/>
+            <relationships>
+                <relationship kind="outlet" name="awayNavBarAddButton" candidateClass="UIBarButtonItem"/>
+                <relationship kind="outlet" name="awayNavBarEditButton" candidateClass="UIBarButtonItem"/>
+                <relationship kind="outlet" name="awayPlayersTable" candidateClass="UITableView"/>
+                <relationship kind="outlet" name="awayWonToss" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="battingButton" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="fieldingButton" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="homeNavBarAddButton" candidateClass="UIBarButtonItem"/>
+                <relationship kind="outlet" name="homeNavBarEditButton" candidateClass="UIBarButtonItem"/>
+                <relationship kind="outlet" name="homePlayersTable" candidateClass="UITableView"/>
+                <relationship kind="outlet" name="homeWonToss" candidateClass="UIButton"/>
+            </relationships>
+        </class>
+        <class className="StatsViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/StatsViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="backgroundTouched:"/>
+                <relationship kind="action" name="deletePlayer:"/>
+                <relationship kind="action" name="textFieldReturn:"/>
+                <relationship kind="outlet" name="CaptainSlider" candidateClass="UISwitch"/>
+                <relationship kind="outlet" name="NavBar" candidateClass="UINavigationItem"/>
+                <relationship kind="outlet" name="ViceCaptainSlider" candidateClass="UISwitch"/>
+                <relationship kind="outlet" name="WicketKeeperSlider" candidateClass="UISwitch"/>
+                <relationship kind="outlet" name="ballsLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="playerEditTextBox" candidateClass="UITextField"/>
+                <relationship kind="outlet" name="runsLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="wayOutLabel" candidateClass="UILabel"/>
+            </relationships>
+        </class>
+        <class className="ThirdViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/ThirdViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="addExtras:"/>
+                <relationship kind="action" name="byeCalc:string:"/>
+                <relationship kind="action" name="byePlusOne:"/>
+                <relationship kind="action" name="closeInnings:"/>
+                <relationship kind="action" name="confirm:"/>
+                <relationship kind="action" name="endGame:"/>
+                <relationship kind="action" name="extraBye:"/>
+                <relationship kind="action" name="extraLegBye:"/>
+                <relationship kind="action" name="extraNoBall:"/>
+                <relationship kind="action" name="extraPen:"/>
+                <relationship kind="action" name="extraWide:"/>
+                <relationship kind="action" name="four:"/>
+                <relationship kind="action" name="fourBye:"/>
+                <relationship kind="action" name="hideActionSheet:" candidateClass="UIBarButtonItem"/>
+                <relationship kind="action" name="hideActionSheetB:"/>
+                <relationship kind="action" name="moveBackBallLabel:"/>
+                <relationship kind="action" name="nextOver:"/>
+                <relationship kind="action" name="noRuns:"/>
+                <relationship kind="action" name="plusOne:"/>
+                <relationship kind="action" name="resetExtra:"/>
+                <relationship kind="action" name="showActionSheet:"/>
+                <relationship kind="action" name="showExtrasOptions:"/>
+                <relationship kind="action" name="showOutOptions:"/>
+                <relationship kind="action" name="six:"/>
+                <relationship kind="action" name="sixBye:"/>
+                <relationship kind="action" name="startGame:"/>
+                <relationship kind="action" name="switchBatter:"/>
+                <relationship kind="action" name="turnLabelsBlack:"/>
+                <relationship kind="action" name="turnLabelsGreen:"/>
+                <relationship kind="action" name="turnLabelsOrange:"/>
+                <relationship kind="action" name="turnLabelsRed:"/>
+                <relationship kind="action" name="undo:"/>
+                <relationship kind="action" name="updateExtrasLabels:"/>
+                <relationship kind="outlet" name="ball1" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="ball2" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="ball3" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="ball4" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="ball5" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="ball6" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="ballsScrollView" candidateClass="UIScrollView"/>
+                <relationship kind="outlet" name="batter1Active" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="batter1BallsLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="batter1RunsLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="batter2Active" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="batter2BallsLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="batter2RunsLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="batterName1" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="batterName2" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="bowlerButton" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="byeLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="choosePlayer" candidateClass="UIPickerView"/>
+                <relationship kind="outlet" name="closeInningsButton" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="currentOverLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="economyLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="endGameButton" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="enterButton" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="infoButtonItem" candidateClass="UIBarButtonItem"/>
+                <relationship kind="outlet" name="legByeLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="maidensLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="nextOverButton" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="noBallLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="oneActive" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="oversLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="penLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="runsLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="scoreLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="startGameButton" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="teamName" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="totLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="twoActive" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="wicketsLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="wideLabel" candidateClass="UILabel"/>
+                <relationship kind="outletCollection" name="ballLabels" candidateClass="UILabel"/>
+                <relationship kind="outletCollection" name="calculatorView" candidateClass="UIButton"/>
+            </relationships>
+        </class>
+    </classes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
         <simulatedOrientationMetrics key="orientation"/>

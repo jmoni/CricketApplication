@@ -11,7 +11,6 @@
 @interface MyCutstomViewCell : UITableViewCell
 @property (strong, nonatomic) IBOutlet UILabel *lblName;
 @property (strong, nonatomic) IBOutlet UILabel *lblR;
-@property (strong, nonatomic) IBOutlet UILabel *lblM;
 @property (strong, nonatomic) IBOutlet UILabel *lblB;
 @property (strong, nonatomic) IBOutlet UILabel *lbl4s;
 @property (strong, nonatomic) IBOutlet UILabel *lbl6s;
