@@ -169,6 +169,10 @@ bool bowlerReplace = FALSE;
 		for(int i = 0; i < [calculatorView count]; i++){
 			[[calculatorView objectAtIndex:i] setHidden:NO];
 		}
+        
+        if (![batter1Active isHidden])[fallOfWickets addObject:[NSString stringWithFormat:@"B%d",batter1]];
+        else [fallOfWickets addObject:[NSString stringWithFormat:@"B%d",batter2]];
+        
 		[ballsScrollView setHidden:NO];
 		[instance firstTabSave];
 		[instance secondTabSave];
