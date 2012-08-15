@@ -137,24 +137,24 @@
     
     //Set players to last played in database based on list in team when game starts - Home Team
     for (int i=0 ; i<[homePlayersArray count] ; i++){
-        [self updatePlayedPlayersHome : [homePlayersArray objectAtIndex:i]];
+        [self updatePlayedPlayersHome : [homePlayersArray objectAtIndex:i]:i];
     }
     //Set players to last played in database based on list in team when game starts - Away Team
     for (int i=0 ; i<[awayPlayersArray count] ; i++){
-        [self updatePlayedPlayersAway : [awayPlayersArray objectAtIndex:i]];
+        [self updatePlayedPlayersAway : [awayPlayersArray objectAtIndex:i]:i];
     }
     
 }
 
 
 //Call function to update the home players who last played
-- (void)updatePlayedPlayersHome:(NSString *)name {
+- (void)updatePlayedPlayersHome:(NSString *)name:(int)order {
 	const char *dbpath = [writableDBPath UTF8String];
 	sqlite3_stmt *statement;
     if (sqlite3_open(dbpath, &cricketDB) == SQLITE_OK)
     {
         
-        NSString *string = [NSString stringWithFormat: @"UPDATE Players SET PreviouslyPlayed = 1 WHERE PlayerName = \"%@\" AND TEAMID = %d", name, homeTeamID];
+        NSString *string = [NSString stringWithFormat: @"UPDATE Players SET PreviouslyPlayed = %d WHERE PlayerName = \"%@\" AND TEAMID = %d",order+1, name, homeTeamID];
 		const char *stmt = [string UTF8String];
 		sqlite3_prepare_v2(cricketDB, stmt, -1, &statement, NULL);
 		while (sqlite3_step(statement) == SQLITE_ROW) {
@@ -170,13 +170,13 @@
 }
 
 //Call function to update the away players who last played
-- (void)updatePlayedPlayersAway:(NSString *)name {
+- (void)updatePlayedPlayersAway:(NSString *)name: (int) order {
 	const char *dbpath = [writableDBPath UTF8String];
 	sqlite3_stmt *statement;
     if (sqlite3_open(dbpath, &cricketDB) == SQLITE_OK)
     {
         
-        NSString *string = [NSString stringWithFormat: @"UPDATE Players SET PreviouslyPlayed = 1 WHERE PlayerName = \"%@\" AND TEAMID = %d", name, awayTeamID];
+        NSString *string = [NSString stringWithFormat: @"UPDATE Players SET PreviouslyPlayed = %d WHERE PlayerName = \"%@\" AND TEAMID = %d",order+1, name, awayTeamID];
 		const char *stmt = [string UTF8String];
 		sqlite3_prepare_v2(cricketDB, stmt, -1, &statement, NULL);
 		while (sqlite3_step(statement) == SQLITE_ROW) {

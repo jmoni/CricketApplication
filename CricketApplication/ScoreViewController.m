@@ -172,6 +172,8 @@ NSMutableArray *fallOfWicketsArray;
     awayPlayersDB = [instance returnArrayFromDatabase:[NSString stringWithFormat:@"SELECT PlayerName FROM Players WHERE TeamID = %d",awayTeamID]];
     
     
+    //Get fall of wickets string from databaser
+    fallOfWicketsArray = [instance returnArrayFromDatabase:[NSString stringWithFormat:@"SELECT FallOfWickets FROM Innings WHERE GameID = %d AND InningNumber != 0",gameID]];    
     
     //-------------------------------------------------------------------testing
     NSLog(@"Game ID : %d",gameID);
