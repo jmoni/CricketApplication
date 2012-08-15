@@ -9,6 +9,7 @@
 #import "DatabaseController.h"
 #import "ThirdViewController.h"
 #import "sqlite3.h"
+#import "SHK.h"
 #include "SecondViewController.h"
 #include "FirstViewController.h"
 #include "GameListViewController.h"
@@ -81,8 +82,22 @@
 }
 
 -(IBAction)share:(id) sender{
-    NSLog(@"changed");
+	// Create the item to share (in this example, a url)
+	NSURL *url = [NSURL URLWithString:@"http://getsharekit.com"];
+	SHKItem *item = [SHKItem URL:url title:@"ShareKit is Awesome!" contentType:SHKURLContentTypeWebpage];
+	
+	// Get the ShareKit action sheet
+	SHKActionSheet *actionSheet = [SHKActionSheet actionSheetForItem:item];
+	
+	// ShareKit detects top view controller (the one intended to present ShareKit UI) automatically,
+	// but sometimes it may not find one. To be safe, set it explicitly
+	[SHK setRootViewController:self];
+	
+	// Display the action sheet
+	[actionSheet showFromTabBar:self.tabBar];
+	[SHK flushOfflineQueue];
 }
+
 - (void) secondTabSave {
     //Set home teamID to be used in second view controller for when adding players from database
     homeTeamID = [self returnIntFromDatabase:[NSString stringWithFormat:

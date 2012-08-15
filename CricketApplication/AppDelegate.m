@@ -7,6 +7,9 @@
 //
 
 #import "AppDelegate.h"
+#import "SHKConfiguration.h"
+#import "MySHKConfiguration.h"
+#import "SHKFacebook.h"
 
 @implementation AppDelegate
 
@@ -15,6 +18,8 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     // Override point for customization after application launch.
+	DefaultSHKConfigurator *configurator = [[MySHKConfiguration alloc] init];
+	[SHKConfiguration sharedInstanceWithConfigurator:configurator];
     return YES;
 }
 							
@@ -43,6 +48,25 @@
 - (void)applicationWillTerminate:(UIApplication *)application
 {
 	// Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+}
+
+- (BOOL)handleOpenURL:(NSURL*)url
+{
+	NSString* scheme = [url scheme];
+	NSString* prefix = [NSString stringWithFormat:@"fb%@", SHKCONFIG(facebookAppId)];
+	if ([scheme hasPrefix:prefix])
+		return [SHKFacebook handleOpenURL:url];
+	return YES;
+}
+
+- (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation
+{
+	return [self handleOpenURL:url];
+}
+
+- (BOOL)application:(UIApplication *)application handleOpenURL:(NSURL *)url
+{
+	return [self handleOpenURL:url];
 }
 
 @end

@@ -1421,8 +1421,8 @@ even = true;
 	else
     {
 		titleString = @"Select Batter";
-        _choosePlayer = [[UIPickerView alloc] initWithFrame: CGRectMake(0,40,320,150)];
-        UISegmentedControl *battingNext = [[UISegmentedControl alloc] initWithFrame:CGRectMake(10,210,300,40)];
+        _choosePlayer = [[UIPickerView alloc] initWithFrame: CGRectMake(0,95,320,150)];
+        UISegmentedControl *battingNext = [[UISegmentedControl alloc] initWithFrame:CGRectMake(10,47,300,40)];
         [battingNext insertSegmentWithTitle:@"Batting Next" atIndex:0 animated:YES];
         [battingNext insertSegmentWithTitle:@"Not Batting Next" atIndex:1 animated:YES];
         [battingNext addTarget:self action:@selector(switchBatter:)  forControlEvents: UIControlEventValueChanged];
@@ -1475,7 +1475,17 @@ even = true;
          
 -(IBAction)switchBatter:(id)sender
 {
-    even = NO;
+	if ([startGameButton isHidden])
+		even = NO;
+	else {
+		if ([batter1Active isHidden]){
+			[batter1Active setHidden:NO];
+			[batter2Active setHidden:YES];
+		} else if ([batter2Active isHidden]){
+			[batter1Active setHidden:YES];
+			[batter2Active setHidden:NO];
+		}
+	}
 }
 
 //Used when clicking the done button
