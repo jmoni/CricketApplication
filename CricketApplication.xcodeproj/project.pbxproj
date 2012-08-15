@@ -20,6 +20,16 @@
 		BDA16DB415D02C4000DD9301 /* cricket.db in Resources */ = {isa = PBXBuildFile; fileRef = BDA16DB315D02C4000DD9301 /* cricket.db */; };
 		BDA16DB615D030D700DD9301 /* CricketDatabase.sql in Resources */ = {isa = PBXBuildFile; fileRef = BDA16DB515D030D700DD9301 /* CricketDatabase.sql */; };
 		BDB0A6C515D966540072341D /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = BDB0A6C415D966540072341D /* MBProgressHUD.m */; };
+		BDB9A17515DBBCEE00EE3624 /* libShareKit.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BDB9A16B15DBBCD400EE3624 /* libShareKit.a */; };
+		BDB9A17615DBBD1200EE3624 /* ShareKit.bundle in Resources */ = {isa = PBXBuildFile; fileRef = BDB9A16D15DBBCD400EE3624 /* ShareKit.bundle */; };
+		BDB9A17815DBBD8C00EE3624 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BDB9A17715DBBD8C00EE3624 /* SystemConfiguration.framework */; };
+		BDB9A17A15DBBD9700EE3624 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BDB9A17915DBBD9600EE3624 /* Security.framework */; };
+		BDB9A17C15DBBDA100EE3624 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BDB9A17B15DBBDA100EE3624 /* MessageUI.framework */; };
+		BDB9A17E15DBBDAC00EE3624 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BDB9A17D15DBBDAC00EE3624 /* CFNetwork.framework */; };
+		BDB9A18015DBBDB700EE3624 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BDB9A17F15DBBDB700EE3624 /* CoreLocation.framework */; };
+		BDB9A18215DBBDC700EE3624 /* Twitter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BDB9A18115DBBDC700EE3624 /* Twitter.framework */; };
+		BDB9A18415DBBDD300EE3624 /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BDB9A18315DBBDD300EE3624 /* CoreFoundation.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
+		BDB9A18715DBBE6E00EE3624 /* MySHKConfiguration.m in Sources */ = {isa = PBXBuildFile; fileRef = BDB9A18615DBBE6E00EE3624 /* MySHKConfiguration.m */; };
 		BDD69ED015C81772002FE1CA /* DetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BDD69ECF15C81772002FE1CA /* DetailViewController.m */; };
 		BDE2B14215C6AA63009E9F40 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BDE2B14115C6AA63009E9F40 /* UIKit.framework */; };
 		BDE2B14415C6AA63009E9F40 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BDE2B14315C6AA63009E9F40 /* Foundation.framework */; };
@@ -53,6 +63,48 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		BDB9A16815DBBCD400EE3624 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BDB9A15D15DBBCD400EE3624 /* ShareKit.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 1D6058910D05DD3D006BFB54;
+			remoteInfo = "Demo App";
+		};
+		BDB9A16A15DBBCD400EE3624 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BDB9A15D15DBBCD400EE3624 /* ShareKit.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 7AB5342E1552AADD00171BCE;
+			remoteInfo = "Static Library";
+		};
+		BDB9A16C15DBBCD400EE3624 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BDB9A15D15DBBCD400EE3624 /* ShareKit.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 7AB5360F1552E26800171BCE;
+			remoteInfo = "Resource Bundle";
+		};
+		BDB9A16E15DBBCD400EE3624 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BDB9A15D15DBBCD400EE3624 /* ShareKit.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 7A0F9246156BA2A0009CB40A;
+			remoteInfo = "Static Library No Submodules";
+		};
+		BDB9A17115DBBCDE00EE3624 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BDB9A15D15DBBCD400EE3624 /* ShareKit.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 7AB5342D1552AADD00171BCE;
+			remoteInfo = "Static Library";
+		};
+		BDB9A17315DBBCE400EE3624 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BDB9A15D15DBBCD400EE3624 /* ShareKit.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 7AB5360E1552E26800171BCE;
+			remoteInfo = "Resource Bundle";
+		};
 		BDE2B16E15C6AA64009E9F40 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = BDE2B13415C6AA63009E9F40 /* Project object */;
@@ -82,6 +134,16 @@
 		BDA16DB515D030D700DD9301 /* CricketDatabase.sql */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = CricketDatabase.sql; path = CricketApplication/CricketDatabase.sql; sourceTree = "<group>"; };
 		BDB0A6C315D966540072341D /* MBProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MBProgressHUD.h; sourceTree = "<group>"; };
 		BDB0A6C415D966540072341D /* MBProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBProgressHUD.m; sourceTree = "<group>"; };
+		BDB9A15D15DBBCD400EE3624 /* ShareKit.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ShareKit.xcodeproj; path = Submodules/ShareKit/ShareKit.xcodeproj; sourceTree = "<group>"; };
+		BDB9A17715DBBD8C00EE3624 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		BDB9A17915DBBD9600EE3624 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
+		BDB9A17B15DBBDA100EE3624 /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
+		BDB9A17D15DBBDAC00EE3624 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
+		BDB9A17F15DBBDB700EE3624 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
+		BDB9A18115DBBDC700EE3624 /* Twitter.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Twitter.framework; path = System/Library/Frameworks/Twitter.framework; sourceTree = SDKROOT; };
+		BDB9A18315DBBDD300EE3624 /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
+		BDB9A18515DBBE6E00EE3624 /* MySHKConfiguration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MySHKConfiguration.h; sourceTree = "<group>"; };
+		BDB9A18615DBBE6E00EE3624 /* MySHKConfiguration.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MySHKConfiguration.m; sourceTree = "<group>"; };
 		BDD69ECE15C81772002FE1CA /* DetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DetailViewController.h; sourceTree = "<group>"; };
 		BDD69ECF15C81772002FE1CA /* DetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DetailViewController.m; sourceTree = "<group>"; };
 		BDE2B13D15C6AA63009E9F40 /* CricketApplication.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CricketApplication.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -128,6 +190,14 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BDB9A17C15DBBDA100EE3624 /* MessageUI.framework in Frameworks */,
+				BDB9A17E15DBBDAC00EE3624 /* CFNetwork.framework in Frameworks */,
+				BDB9A18015DBBDB700EE3624 /* CoreLocation.framework in Frameworks */,
+				BDB9A18215DBBDC700EE3624 /* Twitter.framework in Frameworks */,
+				BDB9A18415DBBDD300EE3624 /* CoreFoundation.framework in Frameworks */,
+				BDB9A17A15DBBD9700EE3624 /* Security.framework in Frameworks */,
+				BDB9A17815DBBD8C00EE3624 /* SystemConfiguration.framework in Frameworks */,
+				BDB9A17515DBBCEE00EE3624 /* libShareKit.a in Frameworks */,
 				CE19D70215C81B500023B990 /* libsqlite3.0.dylib in Frameworks */,
 				CE19D70015C81A260023B990 /* libsqlite3.dylib in Frameworks */,
 				BDE2B14215C6AA63009E9F40 /* UIKit.framework in Frameworks */,
@@ -181,9 +251,21 @@
 			path = ..;
 			sourceTree = "<group>";
 		};
+		BDB9A15E15DBBCD400EE3624 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				BDB9A16915DBBCD400EE3624 /* ShareKitDemo.app */,
+				BDB9A16B15DBBCD400EE3624 /* libShareKit.a */,
+				BDB9A16D15DBBCD400EE3624 /* ShareKit.bundle */,
+				BDB9A16F15DBBCD400EE3624 /* libShareKitNoSubmodules.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		BDE2B13215C6AA63009E9F40 = {
 			isa = PBXGroup;
 			children = (
+				BDB9A15D15DBBCD400EE3624 /* ShareKit.xcodeproj */,
 				BDE2B14715C6AA63009E9F40 /* CricketApplication */,
 				BDE2B17015C6AA64009E9F40 /* CricketApplicationTests */,
 				BDE2B14015C6AA63009E9F40 /* Frameworks */,
@@ -203,6 +285,13 @@
 		BDE2B14015C6AA63009E9F40 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				BDB9A18315DBBDD300EE3624 /* CoreFoundation.framework */,
+				BDB9A18115DBBDC700EE3624 /* Twitter.framework */,
+				BDB9A17F15DBBDB700EE3624 /* CoreLocation.framework */,
+				BDB9A17D15DBBDAC00EE3624 /* CFNetwork.framework */,
+				BDB9A17B15DBBDA100EE3624 /* MessageUI.framework */,
+				BDB9A17915DBBD9600EE3624 /* Security.framework */,
+				BDB9A17715DBBD8C00EE3624 /* SystemConfiguration.framework */,
 				CE19D6FF15C81A260023B990 /* libsqlite3.dylib */,
 				CE19D70115C81B500023B990 /* libsqlite3.0.dylib */,
 				BDE2B14115C6AA63009E9F40 /* UIKit.framework */,
@@ -233,6 +322,8 @@
 		BDE2B14815C6AA63009E9F40 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				BDB9A18515DBBE6E00EE3624 /* MySHKConfiguration.h */,
+				BDB9A18615DBBE6E00EE3624 /* MySHKConfiguration.m */,
 				BDB0A6C315D966540072341D /* MBProgressHUD.h */,
 				BDB0A6C415D966540072341D /* MBProgressHUD.m */,
 				BDE2B14915C6AA63009E9F40 /* CricketApplication-Info.plist */,
@@ -340,6 +431,8 @@
 			buildRules = (
 			);
 			dependencies = (
+				BDB9A17415DBBCE400EE3624 /* PBXTargetDependency */,
+				BDB9A17215DBBCDE00EE3624 /* PBXTargetDependency */,
 			);
 			name = CricketApplication;
 			productName = CricketApplication;
@@ -384,6 +477,12 @@
 			mainGroup = BDE2B13215C6AA63009E9F40;
 			productRefGroup = BDE2B13E15C6AA63009E9F40 /* Products */;
 			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = BDB9A15E15DBBCD400EE3624 /* Products */;
+					ProjectRef = BDB9A15D15DBBCD400EE3624 /* ShareKit.xcodeproj */;
+				},
+			);
 			projectRoot = "";
 			targets = (
 				BDE2B13C15C6AA63009E9F40 /* CricketApplication */,
@@ -392,11 +491,43 @@
 		};
 /* End PBXProject section */
 
+/* Begin PBXReferenceProxy section */
+		BDB9A16915DBBCD400EE3624 /* ShareKitDemo.app */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.application;
+			path = ShareKitDemo.app;
+			remoteRef = BDB9A16815DBBCD400EE3624 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		BDB9A16B15DBBCD400EE3624 /* libShareKit.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libShareKit.a;
+			remoteRef = BDB9A16A15DBBCD400EE3624 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		BDB9A16D15DBBCD400EE3624 /* ShareKit.bundle */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = ShareKit.bundle;
+			remoteRef = BDB9A16C15DBBCD400EE3624 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		BDB9A16F15DBBCD400EE3624 /* libShareKitNoSubmodules.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libShareKitNoSubmodules.a;
+			remoteRef = BDB9A16E15DBBCD400EE3624 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
+
 /* Begin PBXResourcesBuildPhase section */
 		BDE2B13B15C6AA63009E9F40 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BDB9A17615DBBD1200EE3624 /* ShareKit.bundle in Resources */,
 				BDE2B14C15C6AA63009E9F40 /* InfoPlist.strings in Resources */,
 				BDE2B15515C6AA64009E9F40 /* MainStoryboard.storyboard in Resources */,
 				BDE2B15A15C6AA64009E9F40 /* first.png in Resources */,
@@ -464,6 +595,7 @@
 				9F699B1015DA5448005F445C /* MyCutstomViewCell.m in Sources */,
 				BD966F5615DA6C52006AC0BB /* GameListViewController.m in Sources */,
 				9FF8670815DA9C0A00400126 /* ScoreViewController.m in Sources */,
+				BDB9A18715DBBE6E00EE3624 /* MySHKConfiguration.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -478,6 +610,16 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		BDB9A17215DBBCDE00EE3624 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "Static Library";
+			targetProxy = BDB9A17115DBBCDE00EE3624 /* PBXContainerItemProxy */;
+		};
+		BDB9A17415DBBCE400EE3624 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "Resource Bundle";
+			targetProxy = BDB9A17315DBBCE400EE3624 /* PBXContainerItemProxy */;
+		};
 		BDE2B16F15C6AA64009E9F40 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = BDE2B13C15C6AA63009E9F40 /* CricketApplication */;
@@ -569,7 +711,12 @@
 				GCC_PREFIX_HEADER = "CricketApplication/CricketApplication-Prefix.pch";
 				INFOPLIST_FILE = "CricketApplication/CricketApplication-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				OTHER_LDFLAGS = (
+					"-all_load",
+					"-ObjC",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				USER_HEADER_SEARCH_PATHS = "Submodules/**";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -581,7 +728,12 @@
 				GCC_PREFIX_HEADER = "CricketApplication/CricketApplication-Prefix.pch";
 				INFOPLIST_FILE = "CricketApplication/CricketApplication-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				OTHER_LDFLAGS = (
+					"-all_load",
+					"-ObjC",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				USER_HEADER_SEARCH_PATHS = "Submodules/**";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
