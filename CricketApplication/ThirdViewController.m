@@ -933,11 +933,11 @@ bool bowlerReplace = FALSE;
 		if ([batter1Active isHidden]){
 			[batter1Active setHidden:NO];
 			[batter2Active setHidden:YES];
-            [fallOfWickets addObject:[NSString stringWithFormat:@"B1-%d",batter1]];
+            [fallOfWickets addObject:[NSString stringWithFormat:@"B%d",batter1]];
 		} else if ([batter2Active isHidden]){
 			[batter1Active setHidden:YES];
 			[batter2Active setHidden:NO];
-            [fallOfWickets addObject:[NSString stringWithFormat:@"B2-%d",batter2]];
+            [fallOfWickets addObject:[NSString stringWithFormat:@"B%d",batter2]];
 		}
 even = true;
 	}
@@ -1485,12 +1485,12 @@ even = true;
 		if ([batter1Active isHidden]){
 			[batter1Active setHidden:NO];
 			[batter2Active setHidden:YES];
-            [fallOfWickets addObject:[NSString stringWithFormat:@"B1-%d",batter1]];
+            [fallOfWickets addObject:[NSString stringWithFormat:@"B%d",batter1]];
 
 		} else if ([batter2Active isHidden]){
 			[batter1Active setHidden:YES];
 			[batter2Active setHidden:NO];
-            [fallOfWickets addObject:[NSString stringWithFormat:@"B2-%d",batter2]];
+            [fallOfWickets addObject:[NSString stringWithFormat:@"B%d",batter2]];
 		}
 	}
 }
