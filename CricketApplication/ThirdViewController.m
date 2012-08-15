@@ -405,7 +405,7 @@ bool bowlerReplace = FALSE;
 				batStats[1][batter1]++;
 				batStats[0][batter1] = 1;
 				batStats[3][batter1] = [self outTypeToInt];
-                [fallOfWickets addObject:[NSString stringWithFormat:@"%@%d",@"W1-",[self outTypeToInt]]];
+                [fallOfWickets addObject:[NSString stringWithFormat:@"%@%d",@"W",[self outTypeToInt]]];
 				[self removePlayerWhenOut:batter1];
 				[self showActionSheet:batterName1];
 			} else {
@@ -414,7 +414,7 @@ bool bowlerReplace = FALSE;
 				batStats[1][batter2]++;
 				batStats[0][batter2] = 1;
 				batStats[3][batter2] = [self outTypeToInt];
-                [fallOfWickets addObject:[NSString stringWithFormat:@"%@%d",@"W2-",[self outTypeToInt]]];
+                [fallOfWickets addObject:[NSString stringWithFormat:@"%@%d",@"W",[self outTypeToInt]]];
 				[self removePlayerWhenOut:batter2];
 				[self showActionSheet:batterName2];
 			}
@@ -428,7 +428,7 @@ bool bowlerReplace = FALSE;
 				batStats[1][batter1]++;
 				batStats[0][batter1] = 1;
 				batStats[3][batter1] = [self outTypeToInt];
-                [fallOfWickets addObject:[NSString stringWithFormat:@"%@%d",@"W1-",[self outTypeToInt]]];
+                [fallOfWickets addObject:[NSString stringWithFormat:@"%@%d",@"W",[self outTypeToInt]]];
 				[self removePlayerWhenOut:batter1];
 				[self showActionSheet:batterName1];
 			} else {
@@ -437,7 +437,7 @@ bool bowlerReplace = FALSE;
 				batStats[1][batter2]++;
 				batStats[0][batter2] = 1;
 				batStats[3][batter2] = [self outTypeToInt];
-                [fallOfWickets addObject:[NSString stringWithFormat:@"%@%d",@"W2-",[self outTypeToInt]]];
+                [fallOfWickets addObject:[NSString stringWithFormat:@"%@%d",@"W",[self outTypeToInt]]];
 				[self removePlayerWhenOut:batter2];
 				[self showActionSheet:batterName2];
 			}
@@ -937,12 +937,13 @@ bool bowlerReplace = FALSE;
 		if ([batter1Active isHidden]){
 			[batter1Active setHidden:NO];
 			[batter2Active setHidden:YES];
-            [fallOfWickets addObject:[NSString stringWithFormat:@"B%d",batter1]];
+            if([startGameButton isHidden])[fallOfWickets addObject:[NSString stringWithFormat:@"B%d",batter1]];
 		} else if ([batter2Active isHidden]){
 			[batter1Active setHidden:YES];
 			[batter2Active setHidden:NO];
-            [fallOfWickets addObject:[NSString stringWithFormat:@"B%d",batter2]];
+            if([startGameButton isHidden])[fallOfWickets addObject:[NSString stringWithFormat:@"B%d",batter2]];
 		}
+        
 even = true;
 	}
 }
@@ -1484,17 +1485,15 @@ even = true;
 -(IBAction)switchBatter:(id)sender
 {
 	if ([startGameButton isHidden])
+    {
 		even = NO;
-	else {
+	}else {
 		if ([batter1Active isHidden]){
 			[batter1Active setHidden:NO];
 			[batter2Active setHidden:YES];
-            [fallOfWickets addObject:[NSString stringWithFormat:@"B%d",batter1]];
-
 		} else if ([batter2Active isHidden]){
 			[batter1Active setHidden:YES];
 			[batter2Active setHidden:NO];
-            [fallOfWickets addObject:[NSString stringWithFormat:@"B%d",batter2]];
 		}
 	}
 }
@@ -1508,14 +1507,14 @@ even = true;
     if (batterReplace == 1 || batterReplace == 2)
     {
         [self changeBatterFacingBowler];
-        [fallOfWickets addObject:[NSString stringWithFormat:@"%@%d%@%@",@"B",batterReplace,@"-",newBatsman]];
+        [fallOfWickets addObject:[NSString stringWithFormat:@"NB%@",newBatsman]];
         
         batterReplace = 0;
     }
     if (bowlerReplace)
     {
         bowlerReplace = FALSE;
-        [fallOfWickets addObject:[NSString stringWithFormat:@"%@%@",@"OB",newBatsman]];
+        [fallOfWickets addObject:[NSString stringWithFormat:@"OB%@",newBatsman]];
     }
 	//animate onto screen
 	CGRect temp = newView.frame;
@@ -1950,6 +1949,20 @@ even = true;
 	lastBowler = 0;
 	[self fillWayOutArray];
 	
+}
+-(IBAction)readInFallOfWickets:(id)sender{
+    NSMutableArray *temp = [[NSMutableArray alloc]init];
+    DatabaseController *instance = [[DatabaseController alloc] init];
+    temp = [instance returnArrayFromDatabase:[NSString stringWithFormat: @"SELECT FallOfWickets FROM Innings WHERE GameID = %d AND InningNumber != 0",currentGameID]];
+    for (int i = 0; i<[temp count]; i++)
+    {
+        [fallOfWickets addObjectsFromArray: [[temp objectAtIndex:i]componentsSeparatedByString:@"$"]];
+    }
+}
+
+-(IBAction)getDataFromFallOfWickets:(id)sender
+{
+
 }
 
 - (void)viewDidAppear:(BOOL)animated
