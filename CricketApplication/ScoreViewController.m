@@ -33,6 +33,7 @@ NSString *homeTeamName;
 NSString *awayTeamName;
 NSMutableArray *homePlayersDB;
 NSMutableArray *awayPlayersDB;
+NSMutableArray *fallOfWicketsArray;
 
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
@@ -191,10 +192,12 @@ NSMutableArray *awayPlayersDB;
     }
     
     //Read players from database into arrays
-    homePlayersDB = [instance returnPlayersFromDatabase:[NSString stringWithFormat:@"SELECT PlayerName FROM Players WHERE TeamID = %d",homeTeamID]];
-    awayPlayersDB = [instance returnPlayersFromDatabase:[NSString stringWithFormat:@"SELECT PlayerName FROM Players WHERE TeamID = %d",awayTeamID]];
+    homePlayersDB = [instance returnArrayFromDatabase:[NSString stringWithFormat:@"SELECT PlayerName FROM Players WHERE TeamID = %d",homeTeamID]];
+    awayPlayersDB = [instance returnArrayFromDatabase:[NSString stringWithFormat:@"SELECT PlayerName FROM Players WHERE TeamID = %d",awayTeamID]];
     
     
+    //Get fall of wickets string from databaser
+    fallOfWicketsArray = [instance returnArrayFromDatabase:[NSString stringWithFormat:@"SELECT FallOfWickets FROM Innings WHERE GameID = %d AND InningNumber != 0",gameID]];    
     
     //-------------------------------------------------------------------testing
     NSLog(@"Game ID : %d",gameID);
@@ -209,6 +212,7 @@ NSMutableArray *awayPlayersDB;
     NSLog(@"Team 2 Name: %@",awayTeamName);
     NSLog(@"Home Players: %@",homePlayersDB);
     NSLog(@"Away Players: %@",awayPlayersDB);
+    NSLog(@"Fall of Wickets: %@",fallOfWicketsArray);
 }
 
 - (void)viewDidAppear:(BOOL)animated{

@@ -20,8 +20,6 @@
 		BDA16DB415D02C4000DD9301 /* cricket.db in Resources */ = {isa = PBXBuildFile; fileRef = BDA16DB315D02C4000DD9301 /* cricket.db */; };
 		BDA16DB615D030D700DD9301 /* CricketDatabase.sql in Resources */ = {isa = PBXBuildFile; fileRef = BDA16DB515D030D700DD9301 /* CricketDatabase.sql */; };
 		BDB0A6C515D966540072341D /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = BDB0A6C415D966540072341D /* MBProgressHUD.m */; };
-		BDB9A17515DBBCEE00EE3624 /* libShareKit.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BDB9A16B15DBBCD400EE3624 /* libShareKit.a */; };
-		BDB9A17615DBBD1200EE3624 /* ShareKit.bundle in Resources */ = {isa = PBXBuildFile; fileRef = BDB9A16D15DBBCD400EE3624 /* ShareKit.bundle */; };
 		BDB9A17815DBBD8C00EE3624 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BDB9A17715DBBD8C00EE3624 /* SystemConfiguration.framework */; };
 		BDB9A17A15DBBD9700EE3624 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BDB9A17915DBBD9600EE3624 /* Security.framework */; };
 		BDB9A17C15DBBDA100EE3624 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BDB9A17B15DBBDA100EE3624 /* MessageUI.framework */; };
@@ -60,57 +58,59 @@
 		CE19D6FC15C7F27E0023B990 /* ThirdViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CE19D6FB15C7F27E0023B990 /* ThirdViewController.m */; };
 		CE19D70015C81A260023B990 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = CE19D6FF15C81A260023B990 /* libsqlite3.dylib */; settings = {ATTRIBUTES = (Required, ); }; };
 		CE19D70215C81B500023B990 /* libsqlite3.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = CE19D70115C81B500023B990 /* libsqlite3.0.dylib */; };
+		CEA5333E15DBC81C008B132C /* libShareKit.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CEA5333515DBC7F0008B132C /* libShareKit.a */; };
+		CEA5333F15DBC83A008B132C /* ShareKit.bundle in Resources */ = {isa = PBXBuildFile; fileRef = CEA5333715DBC7F0008B132C /* ShareKit.bundle */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		BDB9A16815DBBCD400EE3624 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = BDB9A15D15DBBCD400EE3624 /* ShareKit.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 1D6058910D05DD3D006BFB54;
-			remoteInfo = "Demo App";
-		};
-		BDB9A16A15DBBCD400EE3624 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = BDB9A15D15DBBCD400EE3624 /* ShareKit.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 7AB5342E1552AADD00171BCE;
-			remoteInfo = "Static Library";
-		};
-		BDB9A16C15DBBCD400EE3624 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = BDB9A15D15DBBCD400EE3624 /* ShareKit.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 7AB5360F1552E26800171BCE;
-			remoteInfo = "Resource Bundle";
-		};
-		BDB9A16E15DBBCD400EE3624 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = BDB9A15D15DBBCD400EE3624 /* ShareKit.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 7A0F9246156BA2A0009CB40A;
-			remoteInfo = "Static Library No Submodules";
-		};
-		BDB9A17115DBBCDE00EE3624 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = BDB9A15D15DBBCD400EE3624 /* ShareKit.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = 7AB5342D1552AADD00171BCE;
-			remoteInfo = "Static Library";
-		};
-		BDB9A17315DBBCE400EE3624 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = BDB9A15D15DBBCD400EE3624 /* ShareKit.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = 7AB5360E1552E26800171BCE;
-			remoteInfo = "Resource Bundle";
-		};
 		BDE2B16E15C6AA64009E9F40 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = BDE2B13415C6AA63009E9F40 /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = BDE2B13C15C6AA63009E9F40;
 			remoteInfo = CricketApplication;
+		};
+		CEA5333215DBC7F0008B132C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = CEA5332715DBC7EF008B132C /* ShareKit.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 1D6058910D05DD3D006BFB54;
+			remoteInfo = "Demo App";
+		};
+		CEA5333415DBC7F0008B132C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = CEA5332715DBC7EF008B132C /* ShareKit.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 7AB5342E1552AADD00171BCE;
+			remoteInfo = "Static Library";
+		};
+		CEA5333615DBC7F0008B132C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = CEA5332715DBC7EF008B132C /* ShareKit.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 7AB5360F1552E26800171BCE;
+			remoteInfo = "Resource Bundle";
+		};
+		CEA5333815DBC7F0008B132C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = CEA5332715DBC7EF008B132C /* ShareKit.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 7A0F9246156BA2A0009CB40A;
+			remoteInfo = "Static Library No Submodules";
+		};
+		CEA5333A15DBC805008B132C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = CEA5332715DBC7EF008B132C /* ShareKit.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 7AB5342D1552AADD00171BCE;
+			remoteInfo = "Static Library";
+		};
+		CEA5333C15DBC80B008B132C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = CEA5332715DBC7EF008B132C /* ShareKit.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 7AB5360E1552E26800171BCE;
+			remoteInfo = "Resource Bundle";
 		};
 /* End PBXContainerItemProxy section */
 
@@ -134,7 +134,6 @@
 		BDA16DB515D030D700DD9301 /* CricketDatabase.sql */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = CricketDatabase.sql; path = CricketApplication/CricketDatabase.sql; sourceTree = "<group>"; };
 		BDB0A6C315D966540072341D /* MBProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MBProgressHUD.h; sourceTree = "<group>"; };
 		BDB0A6C415D966540072341D /* MBProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBProgressHUD.m; sourceTree = "<group>"; };
-		BDB9A15D15DBBCD400EE3624 /* ShareKit.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ShareKit.xcodeproj; path = Submodules/ShareKit/ShareKit.xcodeproj; sourceTree = "<group>"; };
 		BDB9A17715DBBD8C00EE3624 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		BDB9A17915DBBD9600EE3624 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		BDB9A17B15DBBDA100EE3624 /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
@@ -183,6 +182,7 @@
 		CE19D6FB15C7F27E0023B990 /* ThirdViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ThirdViewController.m; sourceTree = "<group>"; };
 		CE19D6FF15C81A260023B990 /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
 		CE19D70115C81B500023B990 /* libsqlite3.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.0.dylib; path = usr/lib/libsqlite3.0.dylib; sourceTree = SDKROOT; };
+		CEA5332715DBC7EF008B132C /* ShareKit.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ShareKit.xcodeproj; path = Submodules/ShareKit/ShareKit.xcodeproj; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -190,6 +190,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CEA5333E15DBC81C008B132C /* libShareKit.a in Frameworks */,
 				BDB9A17C15DBBDA100EE3624 /* MessageUI.framework in Frameworks */,
 				BDB9A17E15DBBDAC00EE3624 /* CFNetwork.framework in Frameworks */,
 				BDB9A18015DBBDB700EE3624 /* CoreLocation.framework in Frameworks */,
@@ -197,7 +198,6 @@
 				BDB9A18415DBBDD300EE3624 /* CoreFoundation.framework in Frameworks */,
 				BDB9A17A15DBBD9700EE3624 /* Security.framework in Frameworks */,
 				BDB9A17815DBBD8C00EE3624 /* SystemConfiguration.framework in Frameworks */,
-				BDB9A17515DBBCEE00EE3624 /* libShareKit.a in Frameworks */,
 				CE19D70215C81B500023B990 /* libsqlite3.0.dylib in Frameworks */,
 				CE19D70015C81A260023B990 /* libsqlite3.dylib in Frameworks */,
 				BDE2B14215C6AA63009E9F40 /* UIKit.framework in Frameworks */,
@@ -251,21 +251,10 @@
 			path = ..;
 			sourceTree = "<group>";
 		};
-		BDB9A15E15DBBCD400EE3624 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				BDB9A16915DBBCD400EE3624 /* ShareKitDemo.app */,
-				BDB9A16B15DBBCD400EE3624 /* libShareKit.a */,
-				BDB9A16D15DBBCD400EE3624 /* ShareKit.bundle */,
-				BDB9A16F15DBBCD400EE3624 /* libShareKitNoSubmodules.a */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
 		BDE2B13215C6AA63009E9F40 = {
 			isa = PBXGroup;
 			children = (
-				BDB9A15D15DBBCD400EE3624 /* ShareKit.xcodeproj */,
+				CEA5332715DBC7EF008B132C /* ShareKit.xcodeproj */,
 				BDE2B14715C6AA63009E9F40 /* CricketApplication */,
 				BDE2B17015C6AA64009E9F40 /* CricketApplicationTests */,
 				BDE2B14015C6AA63009E9F40 /* Frameworks */,
@@ -417,6 +406,17 @@
 			name = ThirdTab;
 			sourceTree = "<group>";
 		};
+		CEA5332815DBC7EF008B132C /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				CEA5333315DBC7F0008B132C /* ShareKitDemo.app */,
+				CEA5333515DBC7F0008B132C /* libShareKit.a */,
+				CEA5333715DBC7F0008B132C /* ShareKit.bundle */,
+				CEA5333915DBC7F0008B132C /* libShareKitNoSubmodules.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -431,8 +431,8 @@
 			buildRules = (
 			);
 			dependencies = (
-				BDB9A17415DBBCE400EE3624 /* PBXTargetDependency */,
-				BDB9A17215DBBCDE00EE3624 /* PBXTargetDependency */,
+				CEA5333D15DBC80B008B132C /* PBXTargetDependency */,
+				CEA5333B15DBC805008B132C /* PBXTargetDependency */,
 			);
 			name = CricketApplication;
 			productName = CricketApplication;
@@ -479,8 +479,8 @@
 			projectDirPath = "";
 			projectReferences = (
 				{
-					ProductGroup = BDB9A15E15DBBCD400EE3624 /* Products */;
-					ProjectRef = BDB9A15D15DBBCD400EE3624 /* ShareKit.xcodeproj */;
+					ProductGroup = CEA5332815DBC7EF008B132C /* Products */;
+					ProjectRef = CEA5332715DBC7EF008B132C /* ShareKit.xcodeproj */;
 				},
 			);
 			projectRoot = "";
@@ -492,32 +492,32 @@
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
-		BDB9A16915DBBCD400EE3624 /* ShareKitDemo.app */ = {
+		CEA5333315DBC7F0008B132C /* ShareKitDemo.app */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.application;
 			path = ShareKitDemo.app;
-			remoteRef = BDB9A16815DBBCD400EE3624 /* PBXContainerItemProxy */;
+			remoteRef = CEA5333215DBC7F0008B132C /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		BDB9A16B15DBBCD400EE3624 /* libShareKit.a */ = {
+		CEA5333515DBC7F0008B132C /* libShareKit.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
 			path = libShareKit.a;
-			remoteRef = BDB9A16A15DBBCD400EE3624 /* PBXContainerItemProxy */;
+			remoteRef = CEA5333415DBC7F0008B132C /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		BDB9A16D15DBBCD400EE3624 /* ShareKit.bundle */ = {
+		CEA5333715DBC7F0008B132C /* ShareKit.bundle */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.cfbundle;
 			path = ShareKit.bundle;
-			remoteRef = BDB9A16C15DBBCD400EE3624 /* PBXContainerItemProxy */;
+			remoteRef = CEA5333615DBC7F0008B132C /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		BDB9A16F15DBBCD400EE3624 /* libShareKitNoSubmodules.a */ = {
+		CEA5333915DBC7F0008B132C /* libShareKitNoSubmodules.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
 			path = libShareKitNoSubmodules.a;
-			remoteRef = BDB9A16E15DBBCD400EE3624 /* PBXContainerItemProxy */;
+			remoteRef = CEA5333815DBC7F0008B132C /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 /* End PBXReferenceProxy section */
@@ -527,8 +527,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				BDB9A17615DBBD1200EE3624 /* ShareKit.bundle in Resources */,
 				BDE2B14C15C6AA63009E9F40 /* InfoPlist.strings in Resources */,
+				CEA5333F15DBC83A008B132C /* ShareKit.bundle in Resources */,
 				BDE2B15515C6AA64009E9F40 /* MainStoryboard.storyboard in Resources */,
 				BDE2B15A15C6AA64009E9F40 /* first.png in Resources */,
 				BDE2B15C15C6AA64009E9F40 /* first@2x.png in Resources */,
@@ -610,20 +610,20 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		BDB9A17215DBBCDE00EE3624 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = "Static Library";
-			targetProxy = BDB9A17115DBBCDE00EE3624 /* PBXContainerItemProxy */;
-		};
-		BDB9A17415DBBCE400EE3624 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = "Resource Bundle";
-			targetProxy = BDB9A17315DBBCE400EE3624 /* PBXContainerItemProxy */;
-		};
 		BDE2B16F15C6AA64009E9F40 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = BDE2B13C15C6AA63009E9F40 /* CricketApplication */;
 			targetProxy = BDE2B16E15C6AA64009E9F40 /* PBXContainerItemProxy */;
+		};
+		CEA5333B15DBC805008B132C /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "Static Library";
+			targetProxy = CEA5333A15DBC805008B132C /* PBXContainerItemProxy */;
+		};
+		CEA5333D15DBC80B008B132C /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "Resource Bundle";
+			targetProxy = CEA5333C15DBC80B008B132C /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 

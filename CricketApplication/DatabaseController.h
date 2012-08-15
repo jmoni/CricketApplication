@@ -36,6 +36,6 @@ int currentGameID;
 - (NSString *)returnStringFromDatabase:(NSString *)string;
 - (NSString *)returnDateOfMatchFromDatabase;
 - (int)returnIntFromDatabase:(NSString *)string;
-- (NSMutableArray *)returnPlayersFromDatabase:(NSString *)string;
+- (NSMutableArray *)returnArrayFromDatabase:(NSString *)string;
 
 @end

@@ -537,7 +537,8 @@ bool bowlerReplace = FALSE;
             ballsScrollView.contentSize = CGSizeMake(ballsScrollView.contentSize.width  + 33, ballsScrollView.contentSize.height);
             ballNo--;
             
-		} else if ([batter1Active isHidden]) {
+		}
+        if ([batter1Active isHidden]) {
 			//batter2Runs += value;
 			//batter2Balls++;
 			batStats[1][batter2]++;
@@ -808,13 +809,14 @@ bool bowlerReplace = FALSE;
 }
 
 - (void)nextOver:(id)sender{
+    [fallOfWickets addObject:[NSString stringWithFormat:@"O%d",overs]];
     for (int i=1; i<=extraCount;i++)
     {
         [[ballsScrollView viewWithTag:i] removeFromSuperview];
         [allBallLabels removeLastObject];
     }
     //for (int i=0; i<[fallOfWickets count]; i++)
-    //    NSLog([fallOfWickets objectAtIndex:i]);
+    // NSLog([fallOfWickets objectAtIndex:i]);
     extraCount =0;
     ballNo = 1;
     [ball1 setFrame:CGRectMake(77, 6, 25, 21)];
@@ -931,9 +933,11 @@ bool bowlerReplace = FALSE;
 		if ([batter1Active isHidden]){
 			[batter1Active setHidden:NO];
 			[batter2Active setHidden:YES];
+            [fallOfWickets addObject:[NSString stringWithFormat:@"B1-%d",batter1]];
 		} else if ([batter2Active isHidden]){
 			[batter1Active setHidden:YES];
 			[batter2Active setHidden:NO];
+            [fallOfWickets addObject:[NSString stringWithFormat:@"B2-%d",batter2]];
 		}
 even = true;
 	}
@@ -1481,9 +1485,12 @@ even = true;
 		if ([batter1Active isHidden]){
 			[batter1Active setHidden:NO];
 			[batter2Active setHidden:YES];
+            [fallOfWickets addObject:[NSString stringWithFormat:@"B1-%d",batter1]];
+
 		} else if ([batter2Active isHidden]){
 			[batter1Active setHidden:YES];
 			[batter2Active setHidden:NO];
+            [fallOfWickets addObject:[NSString stringWithFormat:@"B2-%d",batter2]];
 		}
 	}
 }
@@ -1497,14 +1504,14 @@ even = true;
     if (batterReplace == 1 || batterReplace == 2)
     {
         [self changeBatterFacingBowler];
-        [fallOfWickets addObject:[NSString stringWithFormat:@"%@%d%@%@",@"NEW",batterReplace,@"-",newBatsman]];
+        [fallOfWickets addObject:[NSString stringWithFormat:@"%@%d%@%@",@"B",batterReplace,@"-",newBatsman]];
         
         batterReplace = 0;
     }
     if (bowlerReplace)
     {
         bowlerReplace = FALSE;
-        [fallOfWickets addObject:[NSString stringWithFormat:@"%@%@",@"CBOWL",newBatsman]];
+        [fallOfWickets addObject:[NSString stringWithFormat:@"%@%@",@"OB",newBatsman]];
     }
 	//animate onto screen
 	CGRect temp = newView.frame;
