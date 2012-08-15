@@ -188,7 +188,7 @@ NSMutableArray *fallOfWicketsArray;
     NSLog(@"Team 2 Name: %@",awayTeamName);
     NSLog(@"Home Players: %@",homePlayersDB);
     NSLog(@"Away Players: %@",awayPlayersDB);
-    NSLog(@"Fall of wickets string: %@",fallOfWicketsArray);
+    NSLog(@"Fall of Wickets: %@",fallOfWicketsArray);
 }
 
 - (void)viewWillAppear:(BOOL)animated{
