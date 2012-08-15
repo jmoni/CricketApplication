@@ -1950,19 +1950,17 @@ even = true;
 	[self fillWayOutArray];
 	
 }
--(IBAction)readInFallOfWickets:(id)sender{
-    NSMutableArray *temp = [[NSMutableArray alloc]init];
+-(IBAction) readInFallOfWickets:(id)sender :(int) inningNumber
+{
+    NSString *temp = [[NSString alloc]init];
     DatabaseController *instance = [[DatabaseController alloc] init];
-    temp = [instance returnArrayFromDatabase:[NSString stringWithFormat: @"SELECT FallOfWickets FROM Innings WHERE GameID = %d AND InningNumber != 0",currentGameID]];
-    for (int i = 0; i<[temp count]; i++)
-    {
-        [fallOfWickets addObjectsFromArray: [[temp objectAtIndex:i]componentsSeparatedByString:@"$"]];
-    }
+    temp = [instance returnStringFromDatabase:[NSString stringWithFormat: @"SELECT FallOfWickets FROM Innings WHERE GameID = %d AND InningNumber = %d",currentGameID, inningNumber]];
+    [fallOfWickets addObjectsFromArray:[temp componentsSeparatedByString:@"$"]];
 }
 
 -(IBAction)getDataFromFallOfWickets:(id)sender
 {
-
+    
 }
 
 - (void)viewDidAppear:(BOOL)animated
