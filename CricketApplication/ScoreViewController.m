@@ -110,6 +110,14 @@ NSMutableArray *fallOfWicketsArray;
     return self;
 }
 
+- (void)decodeFallOfWickets{
+    int l = [fallOfWicketsArray count];
+
+    for (int i=0; i<l; i++){
+        
+    }
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -168,12 +176,14 @@ NSMutableArray *fallOfWicketsArray;
     }
     
     //Read players from database into arrays
-    homePlayersDB = [instance returnArrayFromDatabase:[NSString stringWithFormat:@"SELECT PlayerName FROM Players WHERE TeamID = %d",homeTeamID]];
-    awayPlayersDB = [instance returnArrayFromDatabase:[NSString stringWithFormat:@"SELECT PlayerName FROM Players WHERE TeamID = %d",awayTeamID]];
+    homePlayersDB = [instance returnArrayFromDatabase:[NSString stringWithFormat:@"SELECT PlayerName FROM Players WHERE TeamID = %d AND PreviouslyPlayed > 0 ORDER BY PreviouslyPlayed",homeTeamID]];
+    awayPlayersDB = [instance returnArrayFromDatabase:[NSString stringWithFormat:@"SELECT PlayerName FROM Players WHERE TeamID = %d AND PreviouslyPlayed > 0 ORDER BY PreviouslyPlayed",awayTeamID]];
     
     
     //Get fall of wickets string from databaser
-    fallOfWicketsArray = [instance returnArrayFromDatabase:[NSString stringWithFormat:@"SELECT FallOfWickets FROM Innings WHERE GameID = %d AND InningNumber != 0",gameID]];    
+    fallOfWicketsArray = [instance returnArrayFromDatabase:[NSString stringWithFormat:@"SELECT FallOfWickets FROM Innings WHERE GameID = %d AND InningNumber > 0",gameID]];
+    
+    [self decodeFallOfWickets];
     
     //-------------------------------------------------------------------testing
     NSLog(@"Game ID : %d",gameID);
