@@ -276,7 +276,7 @@
 }
 
 //Return an array of players
-- (NSMutableArray *)returnPlayersFromDatabase:(NSString *)string {
+- (NSMutableArray *)returnArrayFromDatabase:(NSString *)string {
     NSMutableArray *temp = [[NSMutableArray alloc] init];
     const char *dbpath = [writableDBPath UTF8String];
 	sqlite3_stmt *statement;

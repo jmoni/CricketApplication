@@ -11,11 +11,10 @@
 @implementation MyCutstomViewCell
 @synthesize lblName;    //Player Name
 @synthesize lblR;       //Runs
-@synthesize lblM;       //Maiden
 @synthesize lblB;       //Balls
 @synthesize lbl4s;      //4s
 @synthesize lbl6s;      //6s
-@synthesize lblSR;      //Straight Runs
+@synthesize lblSR;      //Score Rate
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {

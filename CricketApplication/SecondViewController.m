@@ -475,7 +475,7 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
     }
     //Players are in database - hometeam
     else{
-        homePlayersArray = [instance returnPlayersFromDatabase:[NSString stringWithFormat:@"SELECT PlayerName FROM Players WHERE TEAMID = '%d' AND PreviouslyPlayed = 1",
+        homePlayersArray = [instance returnArrayFromDatabase:[NSString stringWithFormat:@"SELECT PlayerName FROM Players WHERE TEAMID = '%d' AND PreviouslyPlayed = 1",
                                  homeTeamID]];
     }
 }
@@ -497,7 +497,7 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
     }
     //Players are in database - hometeam
     else{
-        awayPlayersArray = [instance returnPlayersFromDatabase:[NSString stringWithFormat:@"SELECT PlayerName FROM Players WHERE TEAMID = '%d' AND PreviouslyPlayed = 1",
+        awayPlayersArray = [instance returnArrayFromDatabase:[NSString stringWithFormat:@"SELECT PlayerName FROM Players WHERE TEAMID = '%d' AND PreviouslyPlayed = 1",
                                  awayTeamID]];
     }
 }

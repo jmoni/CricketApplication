@@ -20,6 +20,7 @@
 @synthesize tableOfPlayers = _tableOfPlayers;
 @synthesize playerNamesHome;
 @synthesize playerNamesAway;
+@synthesize table;
 
 int gameID;
 int homeNumberInnings;
@@ -33,6 +34,8 @@ NSString *homeTeamName;
 NSString *awayTeamName;
 NSMutableArray *homePlayersDB;
 NSMutableArray *awayPlayersDB;
+NSMutableArray *fallOfWicketsArray;
+
 
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
@@ -44,40 +47,18 @@ NSMutableArray *awayPlayersDB;
 }
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section{
-    /*
+    NSLog(@"Title");
     if (((int)section % 2 == 0) && [firstTeamBatting isEqualToString: @"home"]){
-        NSLog(@"%d",1);
-        return [NSString stringWithFormat:@"Team : %@",homeTeamName];
+        return [NSString stringWithFormat:@"%@",homeTeamName];
     }
     else if (((int)section % 2 == 0)&& [firstTeamBatting isEqualToString: @"away"]){
-        NSLog(@"%d",2);
-        return [NSString stringWithFormat:@"First Innings : %@",awayTeamName];
+        return [NSString stringWithFormat:@"%@",awayTeamName];
     }
     else if (((int)section % 2 == 1) && [firstTeamBatting isEqualToString: @"home"]){
-        NSLog(@"%d",3);
-        return [NSString stringWithFormat:@"Second Innings : %@",awayTeamName];
+        return [NSString stringWithFormat:@"%@",awayTeamName];
     }
     else if (((int)section % 2 == 1) && [firstTeamBatting isEqualToString: @"away"]){
-        NSLog(@"%d",4);
-        return [NSString stringWithFormat:@"Second Innings : %@",homeTeamName];
-    }
-	else return nil;
-     */
-    if (((int)section % 2 == 0) && [firstTeamBatting isEqualToString: @"home"]){
-        NSLog(@"%d",1);
-        return [NSString stringWithFormat:@"Team : %@",homeTeamName];
-    }
-    else if (((int)section % 2 == 0)&& [firstTeamBatting isEqualToString: @"away"]){
-        NSLog(@"%d",2);
-        return [NSString stringWithFormat:@"Team : %@",awayTeamName];
-    }
-    else if (((int)section % 2 == 1) && [firstTeamBatting isEqualToString: @"home"]){
-        NSLog(@"%d",3);
-        return [NSString stringWithFormat:@"Team : %@",awayTeamName];
-    }
-    else if (((int)section % 2 == 1) && [firstTeamBatting isEqualToString: @"away"]){
-        NSLog(@"%d",4);
-        return [NSString stringWithFormat:@"Team : %@",homeTeamName];
+        return [NSString stringWithFormat:@"%@",homeTeamName];
     }
 	else return nil;
 }
@@ -92,12 +73,16 @@ NSMutableArray *awayPlayersDB;
 // Customize the appearance of table view cells.
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
+    NSLog(@"Cell");
+    
     static NSString *CellIdentifier = @"Cell";
     
     MyCutstomViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     
     // Configure the cell.
     // Set the values in the table
+    
+    NSLog(@"HERE");
     
     if (((int)indexPath.section % 2 == 0)){
         if ([firstTeamBatting isEqualToString: @"home"]) cell.lblName.text = [homePlayersDB objectAtIndex:indexPath.row];
@@ -109,24 +94,12 @@ NSMutableArray *awayPlayersDB;
     }
     
     cell.lblR.text = @"R";
-    cell.lblM.text = @"M";
     cell.lblB.text = @"B";
     cell.lbl4s.text =@"4";
     cell.lbl6s.text =@"6";
     cell.lblSR.text =@"SR";
     
     return cell;
-}
-
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Navigation logic may go here. Create and push another view controller.
-    /*
-     <#DetailViewController#> *detailViewController = [[<#DetailViewController#> alloc] initWithNibName:@"<#Nib name#>" bundle:nil];
-     // ...
-     // Pass the selected object to the new view controller.
-     [self.navigationController pushViewController:detailViewController animated:YES];
-     */
 }
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -141,6 +114,8 @@ NSMutableArray *awayPlayersDB;
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    NSLog(@"ViewLoaded");
     
     gameID = currentGameID;
     homeTeamID = 0;
@@ -172,6 +147,9 @@ NSMutableArray *awayPlayersDB;
     homeTeamName = [instance returnStringFromDatabase:[NSString stringWithFormat: @"SELECT TeamName FROM Teams WHERE TeamID = %d",homeTeamID]];
     awayTeamName = [instance returnStringFromDatabase:[NSString stringWithFormat: @"SELECT TeamName FROM Teams WHERE TeamID = %d",awayTeamID]];
     
+    // Get the fall of wickets string
+    fallOfWicketsArray = [instance returnArrayFromDatabase:[NSString stringWithFormat: @"SELECT FallOfWickets FROM Innings WHERE GameID = %d AND InningNumber != 0",gameID]];
+    
     // Work out which team is batting first
     if ([whoWonToss isEqualToString:@"home"]){
         if ([decisionToBatOrField isEqualToString:@"bat"]){
@@ -191,8 +169,8 @@ NSMutableArray *awayPlayersDB;
     }
     
     //Read players from database into arrays
-    homePlayersDB = [instance returnPlayersFromDatabase:[NSString stringWithFormat:@"SELECT PlayerName FROM Players WHERE TeamID = %d",homeTeamID]];
-    awayPlayersDB = [instance returnPlayersFromDatabase:[NSString stringWithFormat:@"SELECT PlayerName FROM Players WHERE TeamID = %d",awayTeamID]];
+    homePlayersDB = [instance returnArrayFromDatabase:[NSString stringWithFormat:@"SELECT PlayerName FROM Players WHERE TeamID = %d",homeTeamID]];
+    awayPlayersDB = [instance returnArrayFromDatabase:[NSString stringWithFormat:@"SELECT PlayerName FROM Players WHERE TeamID = %d",awayTeamID]];
     
     
     
@@ -209,10 +187,37 @@ NSMutableArray *awayPlayersDB;
     NSLog(@"Team 2 Name: %@",awayTeamName);
     NSLog(@"Home Players: %@",homePlayersDB);
     NSLog(@"Away Players: %@",awayPlayersDB);
+    NSLog(@"Fall of wickets strings: %@",fallOfWicketsArray);
+}
+
+- (void)viewWillAppear:(BOOL)animated{
+    NSLog(@"WILL APPEAR");
+    
+    // Create an instance of database controller so we can use its functions
+    DatabaseController *instance = [[DatabaseController alloc] init];
+    
+    // Retrieve max number of innings for home and away team using teamIDs from database
+    homeNumberInnings = [instance returnIntFromDatabase:[NSString stringWithFormat: @"SELECT MAX(InningNumber) FROM Innings WHERE GameID = %d AND BattingTeamID = %d", gameID, homeTeamID]];
+    awayNumberInnings = [instance returnIntFromDatabase:[NSString stringWithFormat: @"SELECT MAX(InningNumber) FROM Innings WHERE GameID = %d AND BattingTeamID = %d", gameID, awayTeamID]];
+    
+    [self.table reloadData];
+    NSLog(@"RELOAD");
+    
 }
 
 - (void)viewDidAppear:(BOOL)animated{
-    // int c = currentGameID;
+    NSLog(@"DID APPEAR");
+    
+    // Create an instance of database controller so we can use its functions
+    DatabaseController *instance = [[DatabaseController alloc] init];
+    
+    // Retrieve max number of innings for home and away team using teamIDs from database
+    homeNumberInnings = [instance returnIntFromDatabase:[NSString stringWithFormat: @"SELECT MAX(InningNumber) FROM Innings WHERE GameID = %d AND BattingTeamID = %d", gameID, homeTeamID]];
+    awayNumberInnings = [instance returnIntFromDatabase:[NSString stringWithFormat: @"SELECT MAX(InningNumber) FROM Innings WHERE GameID = %d AND BattingTeamID = %d", gameID, awayTeamID]];
+    
+    [self.table reloadData];
+    NSLog(@"RELOAD");
+    
 }
 
 - (void)viewDidUnload

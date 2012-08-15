@@ -18,6 +18,7 @@
 @property (strong, nonatomic) IBOutlet UITableView *tableOfPlayers;
 @property (strong, nonatomic) NSArray *playerNamesHome;
 @property (strong, nonatomic) NSArray *playerNamesAway;
+@property (strong, nonatomic) IBOutlet UITableView *table;
 
 
 @end
