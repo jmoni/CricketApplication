@@ -148,6 +148,8 @@ bool bowlerReplace = FALSE;
 	for(int i = 0; i < [calculatorView count]; i++){
 		[[calculatorView objectAtIndex:i] setHidden:NO];
 	}
+    [fallOfWickets addObject: [NSString stringWithFormat:@"NB%d", batter1]];
+    [fallOfWickets addObject: [NSString stringWithFormat:@"NB%d", batter2]];
     if (![batter1Active isHidden])[fallOfWickets addObject:[NSString stringWithFormat:@"B%d",batter1]];
     else [fallOfWickets addObject:[NSString stringWithFormat:@"B%d",batter2]];
     
@@ -172,7 +174,8 @@ bool bowlerReplace = FALSE;
 		for(int i = 0; i < [calculatorView count]; i++){
 			[[calculatorView objectAtIndex:i] setHidden:NO];
 		}
-        
+        [fallOfWickets addObject: [NSString stringWithFormat:@"NB%d", batter1]];
+        [fallOfWickets addObject: [NSString stringWithFormat:@"NB%d", batter2]];
         if (![batter1Active isHidden])[fallOfWickets addObject:[NSString stringWithFormat:@"B%d",batter1]];
         else [fallOfWickets addObject:[NSString stringWithFormat:@"B%d",batter2]];
         
@@ -619,8 +622,6 @@ bool bowlerReplace = FALSE;
         NSString *fow = @"";
 		for (int i = 0; i < [fallOfWickets count]; i++)
 			fow = [NSString stringWithFormat:@"%@$%@", fow, [fallOfWickets objectAtIndex:i]];
-        
-        NSLog(@"%d", (int) inningNumber);
         if ([battingTeam isEqualToString:@"home"])
         {
         [instance insertStringIntoDatabase:[NSString stringWithFormat: @"UPDATE Innings SET FallOfWickets=\"%@\" WHERE GameId = %d AND InningNumber = %d AND BattingTeamID = %d", fow, currentGameID, (int) inningNumber, homeTeamID]];
@@ -1978,20 +1979,12 @@ even = true;
 }
 -(IBAction) readInFallOfWickets:(id)sender
 {
-    NSMutableArray *temp = [[NSMutableArray alloc]init];
     DatabaseController *instance = [[DatabaseController alloc] init];
-    temp = [instance returnArrayFromDatabase:[NSString stringWithFormat: @"SELECT FallOfWickets FROM Innings WHERE GameID = %d AND InningNumber > 0",currentGameID]];
-    for (int i =0; i<[temp count]; i++)
-        [fallOfWickets addObjectsFromArray:[[[temp objectAtIndex:i] componentsSeparatedByString:@"$"]mutableCopy]];
+    int highestInning = [instance returnIntFromDatabase:[NSString stringWithFormat:@"SELECT MAX(InningNumber) FROM INNINGS WHERE GameID = %d", currentGameID]];
+    NSString *temp = [instance returnStringFromDatabase:[NSString stringWithFormat: @"SELECT FallOfWickets FROM Innings WHERE GameID = %d AND BattingTeamID = %d and InningNumber = %d" ,currentGameID, homeTeamID, highestInning]];
+    [fallOfWickets addObject:[temp componentsSeparatedByString:@"$"]];
 }
 
--(IBAction)getDataFromFallOfWickets:(id)sender
-{
-    for (int i = 0; i<[fallOfWickets count]; i++)
-    {
-        
-    }
-}
 
 - (void)viewDidAppear:(BOOL)animated
 {

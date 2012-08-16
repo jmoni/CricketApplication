@@ -83,5 +83,4 @@ float batStats[4][20];
 -(void)startInningsFunction:(id)sender;
 -(IBAction)switchBatter:(id)sender;
 -(IBAction)readInFallOfWickets:(id)sender;
--(IBAction)getDataFromFallOfWickets:(id)sender;
 @end
