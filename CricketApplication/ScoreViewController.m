@@ -36,7 +36,8 @@ NSMutableArray *awayPlayersDB;
 NSMutableArray *fallOfWicketsArray;
 NSMutableArray *runsH;
 NSMutableArray *ballsH;
-
+NSMutableArray *runsA;
+NSMutableArray *ballsA;
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
@@ -85,16 +86,30 @@ NSMutableArray *ballsH;
     NSLog(@"HERE");
     
     if (((int)indexPath.section % 2 == 0)){
-        if ([firstTeamBatting isEqualToString: @"home"]) cell.lblName.text = [homePlayersDB objectAtIndex:indexPath.row];
-        else cell.lblName.text = [awayPlayersDB objectAtIndex:indexPath.row];
+        if ([firstTeamBatting isEqualToString: @"home"]){
+            cell.lblName.text = [homePlayersDB objectAtIndex:indexPath.row];
+            cell.lblR.text = [runsH objectAtIndex:indexPath.row];
+            cell.lblB.text = [ballsH objectAtIndex:indexPath.row];
+        }
+        else{
+            cell.lblName.text = [awayPlayersDB objectAtIndex:indexPath.row];
+            cell.lblR.text = [runsA objectAtIndex:indexPath.row];
+            cell.lblB.text = [ballsA objectAtIndex:indexPath.row];
+        }
     }
     else if (((int)indexPath.section % 2 == 1)){
-        if ([firstTeamBatting isEqualToString: @"home"]) cell.lblName.text = [awayPlayersDB objectAtIndex:indexPath.row];
-        else cell.lblName.text = [homePlayersDB objectAtIndex:indexPath.row];
+        if ([firstTeamBatting isEqualToString: @"home"]){
+            cell.lblName.text = [awayPlayersDB objectAtIndex:indexPath.row];
+            cell.lblR.text = [runsH objectAtIndex:indexPath.row];
+            cell.lblB.text = [ballsH objectAtIndex:indexPath.row];
+        }
+        else{
+            cell.lblName.text = [homePlayersDB objectAtIndex:indexPath.row];
+            cell.lblR.text = [runsA objectAtIndex:indexPath.row];
+            cell.lblB.text = [ballsA objectAtIndex:indexPath.row];
+        }
     }
     
-    cell.lblR.text = @"R";
-    cell.lblB.text = @"B";
     cell.lbl4s.text =@"4";
     cell.lbl6s.text =@"6";
     cell.lblSR.text =@"SR";
@@ -110,68 +125,69 @@ NSMutableArray *ballsH;
     }
     return self;
 }
-/*
-- (NSMutableArray*) putStringIntoArray{
-    NSMutableArray* temp = [[NSMutableArray alloc]init];
-    int l = [[fallOfWicketsArray objectAtIndex:1] length];
-    for (int i=0; i<l; i++){
-        [temp objectAtIndex:i] = 
-    }
+
+-(NSMutableArray *)readInFallOfWickets:(int) inningNumber{
+    NSMutableArray *temp = [[NSMutableArray alloc]init];
+    DatabaseController *instance = [[DatabaseController alloc] init];
+    NSString *fowString = [instance returnStringFromDatabase:[NSString stringWithFormat: @"SELECT FallOfWickets FROM Innings WHERE GameID = %d AND InningNumber = %d",currentGameID,inningNumber]];
+    [temp addObjectsFromArray: [fowString componentsSeparatedByString:@"$"]];
+    [temp removeObjectAtIndex:0];
+    return temp;
 }
-*/
 
 - (void)decodeFallOfWickets{
     
     NSLog(@"DECODE");
-    NSString *fow = [fallOfWicketsArray objectAtIndex: 0 ];
-    int l = [fow length];
-    runsH = [[NSMutableArray alloc]initWithCapacity:[homePlayersDB count]];
-    ballsH = [[NSMutableArray alloc]initWithCapacity:[homePlayersDB count]];
     
-    NSLog(@"%d",l);
+    NSMutableArray *fow = [self readInFallOfWickets: 1];
+    NSLog(@"%@",fow);
+    int l = [fow count];
     
-    NSString *tempBatter = @"";
-    NSString *tempRuns = @"";
     int batter;
     int runs;
-
-    /*
-    for (int i=0; i<l; i++){
-        //If the letter is equal to B increment to next element...(next number is a batter number)
-        if ([[fow characterAtIndex:i] isEqualToString: @"B"]){
+    int tempRuns;
+    int balls = 0;
+    int tempBalls = 0;
+    NSString *temp;
+    
+    int i=0;
+    while (i<l){
+        //Get the string in the array at position i
+        temp = [fow objectAtIndex:i];
+        
+        //If it starts with B then its going to be a
+        if ([temp hasPrefix:@"B"]){
+            temp = [temp substringFromIndex:1];
+            batter = [temp intValue];
+            NSLog(@"Batter: %d",batter);
             i++;
-            
-            //While the next element is not equal to $, put number into array and increment while it is not a dollar
-            while (![[fallOfWicketsArray objectAtIndex:i] isEqualToString: @"$" ]){
-                tempBatter = [NSString stringWithFormat:@"%@%@",tempBatter,[fallOfWicketsArray objectAtIndex:i]];
-                i++;
-            }
-            //Set the temporary batter number
-            batter = (int)tempBatter;
-            NSLog(@"BATTER : %d",batter);
-
-            //Increment past the $
-            i++;
-            
-            //While it is not B
-            while (![[fallOfWicketsArray objectAtIndex:i] isEqualToString: @"B"]){
-                
-                //Getting the runs number
-                while (![[fallOfWicketsArray objectAtIndex:i] isEqualToString: @"$"]){
-                    [NSString stringWithFormat:@"%@%@",tempRuns,[fallOfWicketsArray objectAtIndex:i]];
-                    i++;
-                }
-                runs = (int)tempRuns;
-                NSLog(@"RUNS : %d",runs);
-                
-                //Increment past the $
-                i++;
-            }
-            
         }
+        else if (![temp hasPrefix:@"B"]){
+            // ------------------------------ CALCULATE RUNS
+            //Get the number of runs from the fall of wickets
+            runs = [temp intValue];
+            //Get the previous number of runs from the array
+            tempRuns = [[runsH objectAtIndex:batter] intValue];
+            //Add the values together
+            runs = runs + tempRuns;
+            //NSLog(@"Runs for batter %d : %d",batter,runs);
+            //Convert and add back into array
+            [runsH replaceObjectAtIndex:batter withObject:[NSString stringWithFormat: @"%d",runs]];
+            
+            // ------------------------------ CALCULATE BALLS
+            //Get the previous number of balls from the array
+            tempBalls = [[ballsH objectAtIndex:batter] intValue];
+            //Add one to it for the new ball thrown
+            balls = tempBalls + 1;
+            //Convert and add back into array
+            [ballsH replaceObjectAtIndex:batter withObject:[NSString stringWithFormat: @"%d",balls]];
 
-    }*/
+            i++;
+        }
+        
+    }
 }
+
 
 - (void)viewDidLoad
 {
@@ -238,6 +254,20 @@ NSMutableArray *ballsH;
     //Get fall of wickets string from databaser
     fallOfWicketsArray = [instance returnArrayFromDatabase:[NSString stringWithFormat:@"SELECT FallOfWickets FROM Innings WHERE GameID = %d AND InningNumber > 0",gameID]];
     
+    //Initialise the arrays to hold the runs and balls
+    runsH = [[NSMutableArray alloc]init];
+    ballsH = [[NSMutableArray alloc]init];
+    
+    //Fills the arrays with zeros to start with
+    for (int i=0 ; i < [homePlayersDB count] ; i++){
+        [runsH insertObject:@"0" atIndex:i];
+        [ballsH insertObject:@"0" atIndex:i];
+        [runsA insertObject:@"0" atIndex:i];
+        [ballsA insertObject:@"0" atIndex:i];
+    }
+ 
+    NSLog(@"%@",ballsH);
+    
     [self decodeFallOfWickets];
     
     //-------------------------------------------------------------------testing
@@ -258,7 +288,7 @@ NSMutableArray *ballsH;
 
 - (void)viewWillAppear:(BOOL)animated{
     NSLog(@"WILL APPEAR");
-    
+      
     // Create an instance of database controller so we can use its functions
     DatabaseController *instance = [[DatabaseController alloc] init];
     
