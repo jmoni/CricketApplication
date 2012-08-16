@@ -145,6 +145,7 @@ bool bowlerReplace = FALSE;
 - (void)startInningsFunction:(id)sender{
 	//start game
 	[startGameButton setHidden:YES];
+    [fallOfWickets addObject:@"I"];
 	for(int i = 0; i < [calculatorView count]; i++){
 		[[calculatorView objectAtIndex:i] setHidden:NO];
 	}
@@ -355,26 +356,37 @@ bool bowlerReplace = FALSE;
 	if (value > -1) {
         if (value<1000){
             if (ballNo == 1){
-                [fallOfWickets addObject: ball1.text];
+                if ([[ball1 text] isEqualToString:@"•"])
+                    [fallOfWickets addObject: @"0"];
+                else [fallOfWickets addObject: ball1.text];
             }
             else if (ballNo == 2){
-                [fallOfWickets addObject: ball2.text];
+                if ([[ball2 text] isEqualToString:@"•"])
+                    [fallOfWickets addObject: @"0"];
+                else[fallOfWickets addObject: ball2.text];
             }
             if (ballNo == 3){
-                [fallOfWickets addObject: ball3.text];
+                if ([[ball3 text] isEqualToString:@"•"])
+                    [fallOfWickets addObject: @"0"];
+                else[fallOfWickets addObject: ball3.text];
             }
             if (ballNo == 4){
-                [fallOfWickets addObject: ball4.text];
+                if ([[ball4 text] isEqualToString:@"•"])
+                    [fallOfWickets addObject: @"0"];
+                else[fallOfWickets addObject: ball4.text];
             }
             if (ballNo == 5){
-                [fallOfWickets addObject: ball5.text];
+                if ([[ball5 text] isEqualToString:@"•"])
+                    [fallOfWickets addObject: @"0"];
+                else[fallOfWickets addObject: ball5.text];
             }
             if (ballNo == 6){
-                [fallOfWickets addObject: ball6.text];
+                if ([[ball6 text] isEqualToString:@"•"])
+                    [fallOfWickets addObject: @"0"];
+                else [fallOfWickets addObject: ball6.text];
             }
         }
 		else if (value == 1000){
-            [self changeBatterFacingBowler];
 			wickets++;
 			value = 0;
             batterReplace = 1;
@@ -382,7 +394,7 @@ bool bowlerReplace = FALSE;
 				//batter1Balls++;
 				batStats[1][batter1]++;
 				batStats[0][batter1] = 1;
-                [fallOfWickets addObject:@"R1"];
+                [fallOfWickets addObject: [NSString stringWithFormat: @"R%d",batter1]];
 				[self changePlayerNameWhenRetired:batter1];
 				[self showActionSheet:batterName1];
 			} else {
@@ -390,12 +402,12 @@ bool bowlerReplace = FALSE;
                 batterReplace = 2;
 				batStats[1][batter2]++;
 				batStats[0][batter2] = 1;
-                [fallOfWickets addObject:@"R2"];
+                [fallOfWickets addObject: [NSString stringWithFormat: @"R%d",batter2]];
 				[self changePlayerNameWhenRetired:batter2];
 				[self showActionSheet:batterName2];
 			}
-        } else if (value == 2000) {
             [self changeBatterFacingBowler];
+        } else if (value == 2000) {
 			fieldStats[4][bowler]++;
 			wickets++;
 			value = 0;
@@ -405,7 +417,7 @@ bool bowlerReplace = FALSE;
 				batStats[1][batter1]++;
 				batStats[0][batter1] = 1;
 				batStats[3][batter1] = [self outTypeToInt];
-                [fallOfWickets addObject:[NSString stringWithFormat:@"%@%d",@"W",[self outTypeToInt]]];
+                [fallOfWickets addObject:[NSString stringWithFormat:@"%@%d%@%d",@"W",[self outTypeToInt],@"-",batter1]];
 				[self removePlayerWhenOut:batter1];
 				[self showActionSheet:batterName1];
 			} else {
@@ -414,12 +426,12 @@ bool bowlerReplace = FALSE;
 				batStats[1][batter2]++;
 				batStats[0][batter2] = 1;
 				batStats[3][batter2] = [self outTypeToInt];
-                [fallOfWickets addObject:[NSString stringWithFormat:@"%@%d",@"W",[self outTypeToInt]]];
+                [fallOfWickets addObject:[NSString stringWithFormat:@"%@%d%@%d",@"W",[self outTypeToInt],@"-",batter2]];
 				[self removePlayerWhenOut:batter2];
 				[self showActionSheet:batterName2];
 			}
-		} else if (value == 3000){
             [self changeBatterFacingBowler];
+		} else if (value == 3000){
 			wickets++;
 			value = 0;
 			if(batterOutInt == 0) {
@@ -428,7 +440,7 @@ bool bowlerReplace = FALSE;
 				batStats[1][batter1]++;
 				batStats[0][batter1] = 1;
 				batStats[3][batter1] = [self outTypeToInt];
-                [fallOfWickets addObject:[NSString stringWithFormat:@"%@%d",@"W",[self outTypeToInt]]];
+                [fallOfWickets addObject:[NSString stringWithFormat:@"%@%d%@%d",@"W",[self outTypeToInt],@"-",batter1]];
 				[self removePlayerWhenOut:batter1];
 				[self showActionSheet:batterName1];
 			} else {
@@ -437,10 +449,11 @@ bool bowlerReplace = FALSE;
 				batStats[1][batter2]++;
 				batStats[0][batter2] = 1;
 				batStats[3][batter2] = [self outTypeToInt];
-                [fallOfWickets addObject:[NSString stringWithFormat:@"%@%d",@"W",[self outTypeToInt]]];
+                [fallOfWickets addObject:[NSString stringWithFormat:@"%@%d%@%d",@"W",[self outTypeToInt],@"-",batter2]];
 				[self removePlayerWhenOut:batter2];
 				[self showActionSheet:batterName2];
 			}
+            [self changeBatterFacingBowler];
         } else if (value == 4000){
             extraCount ++;
             value = 0;
@@ -597,7 +610,7 @@ bool bowlerReplace = FALSE;
 			economy = fieldStats[3][bowler]/fieldStats[1][bowler];
 		[economyLabel setText:[NSString stringWithFormat:@"%.2f", economy]];
 		
-		[self changeBatterFacingBowler];
+        [self changeBatterFacingBowler];
 	}/* else if (value == -2) {
 		fieldStats[4][bowler]++;
 		wickets++;
@@ -607,6 +620,7 @@ bool bowlerReplace = FALSE;
 		wickets++;
 		[scoreLabel setText:[NSString stringWithFormat:@"%.0f/%d (%d Overs)", runs, wickets, overs]];
 	}*/
+    
 }
 
 - (IBAction)undo:(id)sender {
@@ -1429,6 +1443,7 @@ even = true;
     }
 	else
     {
+        even = YES;
 		titleString = @"Select Batter";
         _choosePlayer = [[UIPickerView alloc] initWithFrame: CGRectMake(0,95,320,150)];
         UISegmentedControl *battingNext = [[UISegmentedControl alloc] initWithFrame:CGRectMake(10,47,300,40)];
@@ -1486,7 +1501,7 @@ even = true;
 {
 	if ([startGameButton isHidden])
     {
-		even = NO;
+		even = !even;
 	}else {
 		if ([batter1Active isHidden]){
 			[batter1Active setHidden:NO];
@@ -1506,8 +1521,8 @@ even = true;
 	}
     if (batterReplace == 1 || batterReplace == 2)
     {
-        [self changeBatterFacingBowler];
         [fallOfWickets addObject:[NSString stringWithFormat:@"NB%@",newBatsman]];
+        [self changeBatterFacingBowler];
         
         batterReplace = 0;
     }
@@ -1950,17 +1965,21 @@ even = true;
 	[self fillWayOutArray];
 	
 }
--(IBAction) readInFallOfWickets:(id)sender :(int) inningNumber
+-(IBAction) readInFallOfWickets:(id)sender
 {
-    NSString *temp = [[NSString alloc]init];
+    NSMutableArray *temp = [[NSMutableArray alloc]init];
     DatabaseController *instance = [[DatabaseController alloc] init];
-    temp = [instance returnStringFromDatabase:[NSString stringWithFormat: @"SELECT FallOfWickets FROM Innings WHERE GameID = %d AND InningNumber = %d",currentGameID, inningNumber]];
-    [fallOfWickets addObjectsFromArray:[temp componentsSeparatedByString:@"$"]];
+    temp = [instance returnArrayFromDatabase:[NSString stringWithFormat: @"SELECT FallOfWickets FROM Innings WHERE GameID = %d AND InningNumber > 0",currentGameID]];
+    for (int i =0; i<[temp count]; i++)
+        [fallOfWickets addObjectsFromArray:[[[temp objectAtIndex:i] componentsSeparatedByString:@"$"]mutableCopy]];
 }
 
 -(IBAction)getDataFromFallOfWickets:(id)sender
 {
-    
+    for (int i = 0; i<[fallOfWickets count]; i++)
+    {
+        
+    }
 }
 
 - (void)viewDidAppear:(BOOL)animated
