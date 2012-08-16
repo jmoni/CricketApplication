@@ -127,7 +127,7 @@
 	currentGameID = [self returnIntFromDatabase:[NSString stringWithFormat:
 												 @"SELECT GameID FROM GAMES"]];
 	[self insertStringIntoDatabase:[NSString stringWithFormat:
-									@"INSERT INTO INNINGS (GameID, BattingTeamID, InningNumber, FallOfWickets, Score) VALUES (%d, %d, 0, \"nil\", \"nil\")", currentGameID, homeTeamID]];
+									@"INSERT INTO INNINGS (GameID, BattingTeamID, InningNumber, FallOfWickets, Score) VALUES (%d, %d, 1, \"\", \"nil\")", currentGameID, homeTeamID]];
 	disableElements = YES;
     
     NSLog(@"START GAME %d", currentGameID);

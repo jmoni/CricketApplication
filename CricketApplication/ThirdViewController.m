@@ -145,10 +145,12 @@ bool bowlerReplace = FALSE;
 - (void)startInningsFunction:(id)sender{
 	//start game
 	[startGameButton setHidden:YES];
-    [fallOfWickets addObject:@"I"];
 	for(int i = 0; i < [calculatorView count]; i++){
 		[[calculatorView objectAtIndex:i] setHidden:NO];
 	}
+    if (![batter1Active isHidden])[fallOfWickets addObject:[NSString stringWithFormat:@"B%d",batter1]];
+    else [fallOfWickets addObject:[NSString stringWithFormat:@"B%d",batter2]];
+    
 	[ballsScrollView setHidden:NO];
 	[batterName1 setEnabled:NO];
 	[batterName2 setEnabled:NO];
@@ -208,9 +210,15 @@ bool bowlerReplace = FALSE;
 	{
 		//close innings
 		NSString *fow = @"";
-		for (int i = 0; i < [fallOfWickets count]; i++){
-			fow = [NSString stringWithFormat:@"%@$%@", fow, [fallOfWickets objectAtIndex:i]];
-		}
+        for(int i = 0; i<[fallOfWickets count]; i++)
+            [fallOfWickets removeObjectAtIndex:i];
+        
+		inningNumber+=0.5;
+        if([battingTeam isEqualToString:@"home"])
+			battingTeam = @"away";
+		else
+			battingTeam = @"home";
+        
 		if ([battingTeam isEqualToString:@"home"]){
 			[instance insertStringIntoDatabase:[NSString stringWithFormat:
 												@"INSERT INTO INNINGS (GameID, BattingTeamID, InningNumber, FallOfWickets, Score) VALUES (%d, %d, %d, \"%@\", \"%@\")",
@@ -221,11 +229,6 @@ bool bowlerReplace = FALSE;
 												currentGameID, awayTeamID, (int)inningNumber, fow, [scoreLabel text]]];
 		}
 		
-		inningNumber+=0.5;
-		if([battingTeam isEqualToString:@"home"])
-			battingTeam = @"away";
-		else
-			battingTeam = @"home";
 		for (int i=1; i<=extraCount;i++)
         {
             [[ballsScrollView viewWithTag:i] removeFromSuperview];
@@ -611,16 +614,24 @@ bool bowlerReplace = FALSE;
 		[economyLabel setText:[NSString stringWithFormat:@"%.2f", economy]];
 		
         [self changeBatterFacingBowler];
-	}/* else if (value == -2) {
-		fieldStats[4][bowler]++;
-		wickets++;
-		[scoreLabel setText:[NSString stringWithFormat:@"%.0f/%d (%d Overs)", runs, wickets, overs]];
-		[wicketsLabel setText:[NSString stringWithFormat:@"%.0f", fieldStats[4][bowler]]];
-	} else if (value == -3){
-		wickets++;
-		[scoreLabel setText:[NSString stringWithFormat:@"%.0f/%d (%d Overs)", runs, wickets, overs]];
-	}*/
-    
+        
+        DatabaseController *instance = [[DatabaseController alloc] init];
+        NSString *fow = @"";
+		for (int i = 0; i < [fallOfWickets count]; i++)
+			fow = [NSString stringWithFormat:@"%@$%@", fow, [fallOfWickets objectAtIndex:i]];
+        
+        NSLog(@"%d", (int) inningNumber);
+        if ([battingTeam isEqualToString:@"home"])
+        {
+        [instance insertStringIntoDatabase:[NSString stringWithFormat: @"UPDATE Innings SET FallOfWickets=\"%@\" WHERE GameId = %d AND InningNumber = %d AND BattingTeamID = %d", fow, currentGameID, (int) inningNumber, homeTeamID]];
+            [instance insertStringIntoDatabase:[NSString stringWithFormat: @"UPDATE Innings SET Score=\"%@\" WHERE GameId = %d AND InningNumber = %d AND BattingTeamID = %d", [scoreLabel text], currentGameID, (int) inningNumber, homeTeamID]];
+        }
+        else 
+        {
+        [instance insertStringIntoDatabase:[NSString stringWithFormat: @"UPDATE Innings SET FallOfWickets=\"%@\" WHERE GameId = %d AND InningNumber = %d AND BattingTeamID = %d", fow, currentGameID, (int)inningNumber, awayTeamID]];
+            [instance insertStringIntoDatabase:[NSString stringWithFormat: @"UPDATE Innings SET Score=\"%@\" WHERE GameId = %d AND InningNumber = %d AND BattingTeamID = %d", [scoreLabel text], currentGameID, (int) inningNumber, homeTeamID]];
+        }
+	}        
 }
 
 - (IBAction)undo:(id)sender {
