@@ -34,7 +34,8 @@ NSString *awayTeamName;
 NSMutableArray *homePlayersDB;
 NSMutableArray *awayPlayersDB;
 NSMutableArray *fallOfWicketsArray;
-
+NSMutableArray *runsH;
+NSMutableArray *ballsH;
 
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
@@ -109,13 +110,67 @@ NSMutableArray *fallOfWicketsArray;
     }
     return self;
 }
+/*
+- (NSMutableArray*) putStringIntoArray{
+    NSMutableArray* temp = [[NSMutableArray alloc]init];
+    int l = [[fallOfWicketsArray objectAtIndex:1] length];
+    for (int i=0; i<l; i++){
+        [temp objectAtIndex:i] = 
+    }
+}
+*/
 
 - (void)decodeFallOfWickets{
-    int l = [fallOfWicketsArray count];
+    
+    NSLog(@"DECODE");
+    NSString *fow = [fallOfWicketsArray objectAtIndex: 0 ];
+    int l = [fow length];
+    runsH = [[NSMutableArray alloc]initWithCapacity:[homePlayersDB count]];
+    ballsH = [[NSMutableArray alloc]initWithCapacity:[homePlayersDB count]];
+    
+    NSLog(@"%d",l);
+    
+    NSString *tempBatter = @"";
+    NSString *tempRuns = @"";
+    int batter;
+    int runs;
 
+    /*
     for (int i=0; i<l; i++){
-        
-    }
+        //If the letter is equal to B increment to next element...(next number is a batter number)
+        if ([[fow characterAtIndex:i] isEqualToString: @"B"]){
+            i++;
+            
+            //While the next element is not equal to $, put number into array and increment while it is not a dollar
+            while (![[fallOfWicketsArray objectAtIndex:i] isEqualToString: @"$" ]){
+                tempBatter = [NSString stringWithFormat:@"%@%@",tempBatter,[fallOfWicketsArray objectAtIndex:i]];
+                i++;
+            }
+            //Set the temporary batter number
+            batter = (int)tempBatter;
+            NSLog(@"BATTER : %d",batter);
+
+            //Increment past the $
+            i++;
+            
+            //While it is not B
+            while (![[fallOfWicketsArray objectAtIndex:i] isEqualToString: @"B"]){
+                
+                //Getting the runs number
+                while (![[fallOfWicketsArray objectAtIndex:i] isEqualToString: @"$"]){
+                    [NSString stringWithFormat:@"%@%@",tempRuns,[fallOfWicketsArray objectAtIndex:i]];
+                    i++;
+                }
+                runs = (int)tempRuns;
+                NSLog(@"RUNS : %d",runs);
+                
+                //Increment past the $
+                i++;
+            }
+            
+        }
+
+    }*/
 }
 
 - (void)viewDidLoad
