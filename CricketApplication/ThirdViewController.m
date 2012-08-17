@@ -143,7 +143,24 @@ bool bowlerReplace = FALSE;
 }
 
 - (void)startInningsFunction:(id)sender{
-	//start game
+    DatabaseController *instance = [[DatabaseController alloc]init];
+	//start innings
+    
+    // Miranda moved this initialisation of the innings to when the person clicks start (not when alert view shows)
+    NSString *fow = @"";
+    for(int i = 0; i<[fallOfWickets count]; i++)
+        [fallOfWickets removeObjectAtIndex:i];
+    
+    if ([battingTeam isEqualToString:@"home"]){
+        [instance insertStringIntoDatabase:[NSString stringWithFormat:
+                                            @"INSERT INTO INNINGS (GameID, BattingTeamID, InningNumber, FallOfWickets, Score) VALUES (%d, %d, %d, \"%@\", \"%@\")",
+                                            currentGameID, homeTeamID, (int)inningNumber, fow, [scoreLabel text]]];
+    } else {
+        [instance insertStringIntoDatabase:[NSString stringWithFormat:
+                                            @"INSERT INTO INNINGS (GameID, BattingTeamID, InningNumber, FallOfWickets, Score) VALUES (%d, %d, %d, \"%@\", \"%@\")",
+                                            currentGameID, awayTeamID, (int)inningNumber, fow, [scoreLabel text]]];
+    }
+    
 	[startGameButton setHidden:YES];
 	for(int i = 0; i < [calculatorView count]; i++){
 		[[calculatorView objectAtIndex:i] setHidden:NO];
@@ -157,6 +174,8 @@ bool bowlerReplace = FALSE;
 	[batterName1 setEnabled:NO];
 	[batterName2 setEnabled:NO];
 	ball1.textColor = [UIColor redColor];
+    
+    
 }
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
@@ -212,9 +231,9 @@ bool bowlerReplace = FALSE;
 	else if (alertView.tag == 2)
 	{
 		//close innings
-		NSString *fow = @"";
+		/*NSString *fow = @"";
         for(int i = 0; i<[fallOfWickets count]; i++)
-            [fallOfWickets removeObjectAtIndex:i];
+            [fallOfWickets removeObjectAtIndex:i];*/
         
 		inningNumber+=0.5;
         if([battingTeam isEqualToString:@"home"])
@@ -222,7 +241,7 @@ bool bowlerReplace = FALSE;
 		else
 			battingTeam = @"home";
         
-		if ([battingTeam isEqualToString:@"home"]){
+		/*if ([battingTeam isEqualToString:@"home"]){
 			[instance insertStringIntoDatabase:[NSString stringWithFormat:
 												@"INSERT INTO INNINGS (GameID, BattingTeamID, InningNumber, FallOfWickets, Score) VALUES (%d, %d, %d, \"%@\", \"%@\")",
 												currentGameID, homeTeamID, (int)inningNumber, fow, [scoreLabel text]]];
@@ -230,7 +249,7 @@ bool bowlerReplace = FALSE;
 			[instance insertStringIntoDatabase:[NSString stringWithFormat:
 												@"INSERT INTO INNINGS (GameID, BattingTeamID, InningNumber, FallOfWickets, Score) VALUES (%d, %d, %d, \"%@\", \"%@\")",
 												currentGameID, awayTeamID, (int)inningNumber, fow, [scoreLabel text]]];
-		}
+		}*/
 		
 		for (int i=1; i<=extraCount;i++)
         {
